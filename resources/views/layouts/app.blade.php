@@ -166,7 +166,7 @@
                     <!-- Burger Icon (Always available on mobile; hidden on dashboard desktop) -->
                     <button @click="mobileMenuOpen = !mobileMenuOpen" 
                             type="button" 
-                            class="inline-flex text-blue-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/50 p-1.5 rounded-xl hover:bg-white/10 transition {{ request()->routeIs('dashboard', 'dashboard.*', 'admin.*') || (auth()->check() && auth()->user()->canAccessDashboard() && request()->routeIs('profile.edit')) ? 'md:hidden' : '' }}" 
+                            class="inline-flex text-blue-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/50 p-1.5 rounded-xl hover:bg-white/10 transition {{ request()->routeIs('dashboard', 'dashboard.*', 'admin.*') || (auth()->check() && auth()->user()->canAccessDashboard() && request()->routeIs('profile.edit')) ? 'hidden' : '' }}" 
                             aria-label="Toggle menu">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />

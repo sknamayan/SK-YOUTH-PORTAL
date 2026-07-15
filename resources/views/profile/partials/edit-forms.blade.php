@@ -1,3 +1,15 @@
+    <!-- User Profile Header & Avatar Card (Ticket 003) -->
+    <div class="flex flex-col sm:flex-row items-center gap-4 p-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl shadow-sm mb-6">
+        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#1e40af] dark:bg-blue-900 text-white font-black text-xl sm:text-2xl flex items-center justify-center font-display shadow-md select-none shrink-0">
+            {{ strtoupper(substr($user->first_name ?? $user->name, 0, 1) . substr($user->last_name ?? '', 0, 1)) }}
+        </div>
+        <div class="text-center sm:text-left min-w-0 space-y-1">
+            <h2 class="text-base sm:text-lg font-bold text-slate-850 dark:text-white truncate">{{ $user->first_name }} {{ $user->last_name }}</h2>
+            <p class="text-xs text-slate-400 dark:text-slate-500 truncate">{{ $user->email }}</p>
+            <span class="inline-flex px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 text-[9px] font-black uppercase tracking-wider font-display">{{ $user->role }}</span>
+        </div>
+    </div>
+
     <!-- Section 1: Profile Information -->
     <div class="card space-y-5">
         <div>

@@ -107,32 +107,30 @@ class AppServiceProvider extends ServiceProvider
 
         // Share pending counts with all views for dashboard navigation badges
         view()->composer('*', function ($view) {
-            if (auth()->check()) {
-                $unreadNotificationsCount = auth()->user()->notifications()->whereNull('read_at')->count();
-                $view->with('unreadNotificationsCount', $unreadNotificationsCount);
-
-                if (auth()->user()->canAccessDashboard()) {
-                    $pendingUserApprovalsCount = 0;
-                    if (auth()->user()->isAdmin() || auth()->user()->isDpo()) {
-                        $pendingUserApprovalsCount = \App\Models\User::where('is_approved', false)->count();
-                    }
-
-                    $pendingServiceRequestsCount = \App\Models\HealthRequest::whereIn('status', ['pending', 'review'])->count()
-                        + \App\Models\MedicineRequest::whereIn('status', ['pending', 'review'])->count()
-                        + \App\Models\SilidKarununganRequest::whereIn('status', ['pending', 'review'])->count()
-                        + \App\Models\SportsRegistration::whereIn('status', ['pending', 'review'])->count();
-
-                    $pendingKkProfilesCount = \App\Models\KkProfile::where('status', 'pending')->count();
-
-                    $pendingSportsRegistrationsCount = \App\Models\SportsRegistration::whereIn('status', ['pending', 'review', 'Pending'])->count();
-
-                    $view->with([
-                        'pendingUserApprovalsCount' => $pendingUserApprovalsCount,
-                        'pendingServiceRequestsCount' => $pendingServiceRequestsCount,
-                        'pendingKkProfilesCount' => $pendingKkProfilesCount,
-                        'pendingSportsRegistrationsCount' => $pendingSportsRegistrationsCount,
-                    ]);
+            if (auth()->check() && auth()->user()->canAccessDashboard()) {
+                $pendingUserApprovalsCount = 0;
+                if (auth()->user()->isAdmin() || auth()->user()->isDpo()) {
+                    $pendingUserApprovalsCount = \App\Models\User::where('is_approved', false)->count();
                 }
+
+                $pendingServiceRequestsCount = \App\Models\HealthRequest::whereIn('status', ['pending', 'review'])->count()
+                    + \App\Models\MedicineRequest::whereIn('status', ['pending', 'review'])->count()
+                    + \App\Models\SilidKarununganRequest::whereIn('status', ['pending', 'review'])->count()
+                    + \App\Models\SportsRegistration::whereIn('status', ['pending', 'review'])->count();
+
+                $pendingKkProfilesCount = \App\Models\KkProfile::where('status', 'pending')->count();
+
+                $pendingSportsRegistrationsCount = \App\Models\SportsRegistration::whereIn('status', ['pending', 'review', 'Pending'])->count();
+
+                $pendingConsultationsCount = \App\Models\ConsultationRequest::where('status', 'Open')->count();
+
+                $view->with([
+                    'pendingUserApprovalsCount' => $pendingUserApprovalsCount,
+                    'pendingServiceRequestsCount' => $pendingServiceRequestsCount,
+                    'pendingKkProfilesCount' => $pendingKkProfilesCount,
+                    'pendingSportsRegistrationsCount' => $pendingSportsRegistrationsCount,
+                    'pendingConsultationsCount' => $pendingConsultationsCount,
+                ]);
             }
         });
 

@@ -119,6 +119,15 @@
             window.location.href = url;
         }
     }
+}" x-init="$watch('activeForm', value => {
+    if (value) {
+        document.body.classList.add('overflow-y-hidden');
+    } else {
+        document.body.classList.remove('overflow-y-hidden');
+    }
+});
+if (activeForm) {
+    document.body.classList.add('overflow-y-hidden');
 }" class="space-y-16">
 
     @include('landing.sections.hero-carousel')
@@ -249,7 +258,7 @@
          x-cloak>
 
         <!-- Backdrop shadow -->
-        <div class="fixed inset-0 bg-slate-950/45 backdrop-blur-sm transition-opacity"></div>
+        <div class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity" @click="activeForm = null"></div>
 
         @php
             $timeOptions = [];

@@ -39,7 +39,6 @@
                         'forms.mental-health.create' => 'mental-health',
                         'forms.silid.create' => 'silid',
                         'forms.medicine.create' => 'medicine',
-                        'forms.sports.create' => 'sports',
                         default => null
                     };
                     $btnText = match($qi->form_route) {

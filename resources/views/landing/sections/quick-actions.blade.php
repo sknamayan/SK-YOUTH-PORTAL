@@ -22,8 +22,16 @@
                     4 => 'sports',
                     default => 'logs'
                 };
+                $formName = match($qi->form_route) {
+                    'forms.health.create' => 'health',
+                    'forms.mental-health.create' => 'mental-health',
+                    'forms.silid.create' => 'silid',
+                    'forms.medicine.create' => 'medicine',
+                    default => null
+                };
             @endphp
             <a href="{{ $qi->form_route ? route($qi->form_route) : route('forms.custom.create', $qi->id) }}" 
+               @if($formName) @click.prevent="openForm('{{ $formName }}')" @endif
                class="btn-outline btn-sm space-x-1.5 shadow-sm">
                 <x-category-icon name="{{ $icon }}" class="w-4 h-4 {{ $color }}" />
                 <span>{{ $qi->title }}</span>
