@@ -1,8 +1,8 @@
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal-on-scroll">
     <div class="text-center mb-8">
-        <span class="text-xs font-black tracking-widest text-[#1e40af] uppercase font-display">Interactive Catalog</span>
+        <span class="text-xs font-black tracking-widest text-[#1e40af] uppercase font-display">SK 10 CENTERS OF PARTICIPATION</span>
         <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-slate-800 font-display mt-1.5 uppercase">Our Services</h1>
-        <p class="text-xs text-slate-400 mt-2 max-w-md mx-auto">Select a project area below to see subtopics, check schedules, or apply for service assistance in Barangay Namayan.</p>
+        <p class="text-xs text-slate-400 mt-2 max-w-md mx-auto">Explore opportunities for every Batang Namayan. Select a Center of Participation below to discover projects, programs, activities, and services available to you.</p>
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
