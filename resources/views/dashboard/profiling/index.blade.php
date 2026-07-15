@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div x-data="{ 
+<div x-data="{
     mobileSidebar: false,
     showModal: false,
     showViewModal: false,
@@ -10,7 +10,7 @@
     profileId: null,
     step: 1,
     selectedProfile: {},
-    
+
     // Inputs for edit pre-filling and dynamic validation
     surname: '',
     first_name: '',
@@ -37,7 +37,7 @@
     registered_disability: '',
     highest_educational_attainment: '',
     consent_given: false,
-    
+
     resetForm() {
         this.step = 1;
         this.editMode = false;
@@ -71,13 +71,13 @@
         const form = document.getElementById('profileForm');
         if (form) form.reset();
     },
-    
+
     openEdit(profile) {
         this.resetForm();
         this.editMode = true;
         this.profileId = profile.id;
         this.formAction = `/dashboard/profiling/${profile.id}`;
-        
+
         this.surname = profile.surname;
         this.first_name = profile.first_name;
         this.middle_name = profile.middle_name || '';
@@ -103,10 +103,10 @@
         this.registered_disability = profile.registered_disability || '';
         this.highest_educational_attainment = profile.highest_educational_attainment;
         this.consent_given = profile.consent_given ? true : false;
-        
+
         this.showModal = true;
     },
-    
+
     openView(profile, purokName) {
         this.selectedProfile = {
             ...profile,
@@ -114,7 +114,7 @@
         };
         this.showViewModal = true;
     },
-    
+
     // Client-side validation per step
     validateStep(s) {
         const fields = document.querySelectorAll(`#step-${s} [required]`);
@@ -127,7 +127,7 @@
         });
         return valid;
     },
-    
+
     nextStep() {
         if (this.validateStep(this.step)) {
             if (this.step < 3) {
@@ -135,7 +135,7 @@
             }
         }
     },
-    
+
     prevStep() {
         if (this.step > 1) {
             this.step--;
@@ -147,14 +147,14 @@
     @include('layouts.dashboard-sidebar')
 
     <!-- Overlay back shadow on mobile -->
-    <div x-show="mobileSidebar" 
-         @click="mobileSidebar = false" 
+    <div x-show="mobileSidebar"
+         @click="mobileSidebar = false"
          class="fixed inset-0 bg-slate-900/40 z-20 md:hidden"
          x-cloak></div>
 
     <!-- Main Content Area -->
     <div class="flex-1 flex flex-col min-w-0">
-        
+
         <!-- Mobile Sidebar Trigger Header -->
         <header class="bg-white border-b border-slate-100 h-16 px-4 flex items-center justify-between md:hidden shrink-0">
             <button @click="mobileSidebar = true" class="p-2 text-slate-500 hover:text-slate-800 active:scale-95 transition">
@@ -169,7 +169,7 @@
 
         <!-- Page Main Wrapper -->
         <div class="p-6 md:p-8 space-y-8 flex-1 overflow-y-auto font-sans">
-            
+
             <!-- Breadcrumbs / Top Bar -->
             <div class="flex items-center justify-between pb-4 border-b border-slate-100">
                 <div class="flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider">
@@ -216,7 +216,7 @@
                         <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1e40af] rounded-full"></div>
                     @endif
                 </a>
-                
+
                 <a href="{{ route('dashboard.profiling.index', array_merge(request()->query(), ['status' => 'pending'])) }}"
                    class="pb-3 text-xs font-bold transition flex items-center gap-2 px-1 relative {{ $statusFilter === 'pending' ? 'text-[#1e40af]' : 'text-slate-500 hover:text-slate-800' }}">
                     <span>Pending Review</span>
@@ -247,8 +247,8 @@
 
             <!-- Search Bar & Filters Card -->
             <div class="card p-6 bg-white border border-slate-100 rounded-3xl shadow-sm"
-                 x-data="{ 
-                     lgbt: '{{ $lgbtqiaFilter }}', 
+                 x-data="{
+                     lgbt: '{{ $lgbtqiaFilter }}',
                      pwd: '{{ $pwdFilter }}',
                      toggleLgbt() {
                          this.lgbt = this.lgbt === '1' ? '' : '1';
@@ -273,19 +273,19 @@
                             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             </div>
-                            <input 
-                                type="text" 
-                                name="search" 
-                                value="{{ $search }}" 
-                                placeholder="Search by name, email or contact number..." 
+                            <input
+                                type="text"
+                                name="search"
+                                value="{{ $search }}"
+                                placeholder="Search by name, email or contact number..."
                                 class="pl-10 pr-4 py-2.5 w-full bg-slate-50/70 border border-slate-200/60 rounded-2xl text-xs outline-none focus:bg-white focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition font-sans placeholder-slate-400"
                             >
                         </div>
 
                         <!-- Purok Dropdown (Col span 3) -->
                         <div class="md:col-span-3 relative">
-                            <select 
-                                name="purok" 
+                            <select
+                                name="purok"
                                 onchange="this.form.submit()"
                                 class="block w-full py-2.5 pl-4 pr-10 bg-slate-50/70 border border-slate-200/60 rounded-2xl text-xs text-slate-700 outline-none focus:bg-white focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition cursor-pointer appearance-none"
                             >
@@ -303,8 +303,8 @@
 
                         <!-- Year Picker Dropdown (Col span 3) -->
                         <div class="md:col-span-3 relative">
-                            <select 
-                                name="year" 
+                            <select
+                                name="year"
                                 onchange="this.form.submit()"
                                 class="block w-full py-2.5 pl-4 pr-10 bg-slate-50/70 border border-slate-200/60 rounded-2xl text-xs text-slate-700 outline-none focus:bg-white focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition cursor-pointer appearance-none"
                             >
@@ -324,8 +324,8 @@
                         <div class="flex flex-wrap items-center gap-3">
                             <!-- Page Size Limit select -->
                             <div class="relative w-32 shrink-0">
-                                <select 
-                                    name="limit" 
+                                <select
+                                    name="limit"
                                     onchange="this.form.submit()"
                                     class="block w-full py-2 pl-3 pr-8 bg-slate-50/70 border border-slate-200/60 rounded-2xl text-[11px] text-slate-650 outline-none focus:bg-white focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition cursor-pointer appearance-none font-semibold"
                                 >
@@ -342,8 +342,8 @@
 
                             <!-- Sex Select -->
                             <div class="relative w-32 shrink-0">
-                                <select 
-                                    name="sex" 
+                                <select
+                                    name="sex"
                                     onchange="this.form.submit()"
                                     class="block w-full py-2 pl-3 pr-8 bg-slate-50/70 border border-slate-200/60 rounded-2xl text-[11px] text-slate-650 outline-none focus:bg-white focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition cursor-pointer appearance-none font-semibold"
                                 >
@@ -358,8 +358,8 @@
 
                             <!-- Youth Classification select -->
                             <div class="relative w-44 shrink-0">
-                                <select 
-                                    name="classification" 
+                                <select
+                                    name="classification"
                                     onchange="this.form.submit()"
                                     class="block w-full py-2 pl-3 pr-8 bg-slate-50/70 border border-slate-200/60 rounded-2xl text-[11px] text-slate-650 outline-none focus:bg-white focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition cursor-pointer appearance-none font-semibold"
                                 >
@@ -375,7 +375,7 @@
 
                             <!-- LGBTQIA Toggle Badge -->
                             @if(auth()->user()->isSuperAdmin())
-                            <button type="button" @click="toggleLgbt()" 
+                            <button type="button" @click="toggleLgbt()"
                                     :class="lgbt === '1' ? 'bg-blue-50 border-blue-200 text-[#1e40af] font-black' : 'bg-slate-50 border-slate-100 text-slate-600 hover:bg-slate-100'"
                                     class="px-3.5 py-2 border rounded-2xl text-[11px] font-bold tracking-wide transition active:scale-95 cursor-pointer flex items-center space-x-1.5 select-none"
                             >
@@ -383,7 +383,7 @@
                             </button>
 
                             <!-- PWD Toggle Badge -->
-                            <button type="button" @click="togglePwd()" 
+                            <button type="button" @click="togglePwd()"
                                     :class="pwd === '1' ? 'bg-blue-50 border-blue-200 text-[#1e40af] font-black' : 'bg-slate-50 border-slate-100 text-slate-600 hover:bg-slate-100'"
                                     class="px-3.5 py-2 border rounded-2xl text-[11px] font-bold tracking-wide transition active:scale-95 cursor-pointer flex items-center space-x-1.5 select-none"
                             >
@@ -393,7 +393,7 @@
 
                             <!-- Reset Filter Link -->
                             @if($search || $purokFilter || $classFilter || $yearFilter || $sexFilter || $skVoterFilter || $nationalVoterFilter || $lgbtqiaFilter || $pwdFilter || $limit != 15)
-                                <a href="{{ route('dashboard.profiling.index') }}" 
+                                <a href="{{ route('dashboard.profiling.index') }}"
                                    class="inline-flex items-center text-[11px] font-bold text-slate-450 hover:text-slate-600 transition space-x-1 select-none cursor-pointer pl-2 py-1.5"
                                 >
                                     <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89H18v3.582"></path></svg>
@@ -405,14 +405,14 @@
                         <!-- Right Primary Trigger -->
                         <div class="flex items-center space-x-3 text-right">
                             <button type="submit" class="hidden"></button> <!-- form submission placeholder -->
-                            <a href="{{ route('dashboard.profiling.index', array_merge(request()->query(), ['archive' => $showArchive ? '0' : '1'])) }}" 
+                            <a href="{{ route('dashboard.profiling.index', array_merge(request()->query(), ['archive' => $showArchive ? '0' : '1'])) }}"
                                class="btn-primary text-[11px] font-black uppercase py-2 px-5 flex items-center space-x-1.5 cursor-pointer transition shadow-sm border rounded-2xl {{ $showArchive ? 'bg-[#1e40af] hover:bg-blue-700 text-white border-transparent' : 'bg-slate-100 hover:bg-slate-200/80 text-slate-650 border-slate-250' }}">
                                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                                 </svg>
                                 <span>Archive ({{ $archivedCount }})</span>
                             </a>
-                            <a href="{{ route('dashboard.export', ['profiling']) }}" 
+                            <a href="{{ route('dashboard.export', ['profiling']) }}"
                                class="btn-primary text-[11px] font-black uppercase py-2 px-5 flex items-center space-x-1.5 cursor-pointer bg-emerald-600 hover:bg-emerald-700 active:scale-95 transition shadow-sm border border-transparent rounded-2xl">
                                 <span>Export CSV</span>
                             </a>
@@ -506,7 +506,7 @@
                                                 -
                                             @endif
                                         </td>
-                                        
+
                                         <!-- Registered SK Voter -->
                                         <td class="py-4 px-6 text-center">
                                             @if($profile->registered_sk_voter)
@@ -515,7 +515,7 @@
                                                 <span class="px-2 py-0.5 bg-rose-50 text-rose-700 border border-rose-250 rounded-full text-[9px] font-black uppercase tracking-wide">No</span>
                                             @endif
                                         </td>
-                                        
+
                                         <!-- Registered National Voter -->
                                         <td class="py-4 px-6 text-center">
                                             @if($profile->registered_national_voter)
@@ -524,7 +524,7 @@
                                                 <span class="px-2 py-0.5 bg-rose-50 text-rose-700 border border-rose-250 rounded-full text-[9px] font-black uppercase tracking-wide">No</span>
                                             @endif
                                         </td>
-                                        
+
                                         <!-- Attended KK Assembly -->
                                         <td class="py-4 px-6 text-center">
                                             @if($profile->attended_kk_assembly)
@@ -582,10 +582,10 @@
 
                                         <!-- Highest Educational Attainment -->
                                         <td class="py-4 px-6 font-medium">{{ $profile->highest_educational_attainment }}</td>
-                                        
+
                                         <!-- Purok -->
                                         <td class="py-4 px-6 font-bold text-slate-800">{{ $profile->purok->purok_name }}</td>
-                                        
+
                                         <!-- Street Address -->
                                         <td class="py-4 px-6 text-slate-500">{{ $profile->street_address ?? '-' }}</td>
 
@@ -724,7 +724,7 @@
                                     'kk_profile_deleted' => 'bg-rose-50 text-rose-700 border-rose-150',
                                     default => 'bg-blue-50 text-blue-700 border-blue-150'
                                 };
-                                
+
                                 $actionName = match($log->action) {
                                     'kk_profile_created' => 'Created Profile',
                                     'kk_profile_updated' => 'Updated Profile',
@@ -734,7 +734,7 @@
 
                                 $targetName = $log->payload['name'] ?? 'Unknown Member';
                                 $targetEmail = $log->payload['email'] ?? '';
-                                
+
                                 // Determine processor
                                 $isSelf = $log->payload['self_profiled'] ?? false;
                                 if ($isSelf || ($log->user && $log->user->role === 'user')) {
@@ -749,7 +749,7 @@
                             <div class="relative">
                                 <!-- Dot indicator -->
                                 <div class="absolute -left-[31px] mt-1.5 w-3.5 h-3.5 rounded-full border-2 border-white bg-blue-500 shadow-sm"></div>
-                                
+
                                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
                                     <div class="space-y-1">
                                         <div class="flex flex-wrap items-center gap-2">
@@ -762,7 +762,7 @@
                                             @endif
                                         </div>
                                         <div class="text-[10px] text-slate-450">
-                                            Action performed by: <span class="font-bold text-slate-700">{{ $processor }}</span> 
+                                            Action performed by: <span class="font-bold text-slate-700">{{ $processor }}</span>
                                             <span class="text-[9px] text-slate-400 font-semibold uppercase font-mono">({{ $processorSub }})</span>
                                         </div>
                                     </div>
@@ -782,7 +782,7 @@
     </div>
 
     <!-- View 1: Add New Profile Multi-step Modal Form -->
-    <div x-show="showModal" 
+    <div x-show="showModal"
          class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm"
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0"
@@ -791,15 +791,15 @@
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
          x-cloak>
-         
+
         <!-- Modal Card Container -->
         <div class="bg-white rounded-3xl shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col border border-slate-100 overflow-hidden"
              @click.away="showModal = false">
-             
+
             <!-- Modal Header -->
             <div class="px-6 py-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between shrink-0">
                 <div>
-                    <h2 class="text-sm font-black text-[#1e40af] uppercase tracking-wider font-display">DILG KK Profiling Sheet</h2>
+                    <h2 class="text-sm font-black text-[#1e40af] uppercase tracking-wider font-display">SK Namayan Profiling</h2>
                     <p class="text-[10px] text-slate-400 uppercase font-semibold">Katipunan ng Kabataan Registry Form</p>
                 </div>
                 <button @click="showModal = false" class="p-2 rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition">
@@ -813,7 +813,7 @@
                 <template x-if="editMode">
                     <input type="hidden" name="_method" value="PUT">
                 </template>
-                
+
                 <!-- Step Indicator / Progress Bar -->
                 <div class="border-b border-slate-100 pb-5">
                     <div class="flex items-center justify-between text-xs font-semibold text-slate-400 select-none max-w-xl mx-auto">
@@ -845,7 +845,7 @@
                 <!-- STEP 1: Personal Details -->
                 <div x-show="step === 1" id="step-1" class="space-y-4">
                     <h3 class="text-xs font-black text-[#1e40af] uppercase tracking-wider border-b border-slate-100 pb-2">1. Personal Information</h3>
-                    
+
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Surname <span class="text-rose-500">*</span></label>
@@ -962,7 +962,7 @@
                 <!-- STEP 2: Affiliations -->
                 <div x-show="step === 2" id="step-2" class="space-y-6">
                     <h3 class="text-xs font-black text-[#1e40af] uppercase tracking-wider border-b border-slate-100 pb-2">2. Affiliations & Voter Info</h3>
-                    
+
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs text-slate-700">
                         <!-- Registered SK Voter -->
                         <div class="space-y-2">
@@ -1050,7 +1050,7 @@
                 <!-- STEP 3: Inclusivity & Education -->
                 <div x-show="step === 3" id="step-3" class="space-y-6">
                     <h3 class="text-xs font-black text-[#1e40af] uppercase tracking-wider border-b border-slate-100 pb-2">3. Inclusivity & Education</h3>
-                    
+
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs text-slate-700">
                         <!-- Part of LGBTQIA -->
                         <div class="space-y-2">
@@ -1116,26 +1116,26 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Modal Footer Navigation -->
                 <div class="pt-4 border-t border-slate-100 flex items-center justify-between shrink-0">
-                    <button type="button" 
-                            x-show="step > 1" 
-                            @click="prevStep()" 
+                    <button type="button"
+                            x-show="step > 1"
+                            @click="prevStep()"
                             class="px-4 py-2 border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold rounded-xl transition text-xs uppercase tracking-wider select-none cursor-pointer">
                         &larr; Back
                     </button>
                     <div x-show="step === 1" class="w-10"></div> <!-- Placeholder -->
-                    
-                    <button type="button" 
-                            x-show="step < 3" 
-                            @click="nextStep()" 
+
+                    <button type="button"
+                            x-show="step < 3"
+                            @click="nextStep()"
                             class="btn-primary text-xs uppercase tracking-wider py-2 px-5 font-bold rounded-xl select-none cursor-pointer">
                         Next &rarr;
                     </button>
-                    
-                    <button type="submit" 
-                            x-show="step === 3" 
+
+                    <button type="submit"
+                            x-show="step === 3"
                             class="btn-success text-xs uppercase tracking-wider py-2 px-5 font-bold rounded-xl select-none cursor-pointer">
                         Submit Profile
                     </button>
@@ -1145,7 +1145,7 @@
     </div>
 
     <!-- View 2: Detailed Profile Read-Only Modal Card -->
-    <div x-show="showViewModal" 
+    <div x-show="showViewModal"
          class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm"
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0"
@@ -1154,11 +1154,11 @@
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
          x-cloak>
-         
+
         <!-- Modal Card Container -->
         <div class="bg-white rounded-3xl shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col border border-slate-100 overflow-hidden"
              @click.away="showViewModal = false">
-             
+
             <!-- Modal Header -->
             <div class="px-6 py-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between shrink-0">
                 <div>
