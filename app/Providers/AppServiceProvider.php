@@ -39,6 +39,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Automatically recreate storage symlink if it's missing or broken (useful for shared hosting redeployments)
+        $storageLink = public_path('storage');
+        if (!file_exists($storageLink)) {
+            if (is_link($storageLink)) {
+                @unlink($storageLink);
+            }
+            @symlink(storage_path('app/public'), $storageLink);
+        }
+
         // Register request observers
         HealthRequest::observe(RequestObserver::class);
         MedicineRequest::observe(RequestObserver::class);
