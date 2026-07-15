@@ -31,11 +31,11 @@
                     default => null
                 };
             @endphp
-            <a href="{{ $qi->form_route ? route($qi->form_route) : route('forms.custom.create', $qi->id) }}" 
-               @if($formName) 
-                   @click.prevent="openForm('{{ $formName }}')" 
-               @else 
-                   @click.prevent="openCustomForm({{ json_encode($qi->only(['id', 'title', 'description', 'custom_fields'])) }})" 
+            <a href="{{ $qi->form_route ? route($qi->form_route) : route('forms.custom.create', $qi->id) }}"
+               @if($formName)
+                   @click.prevent="openForm('{{ $formName }}')"
+               @else
+                   @click.prevent="openCustomForm({{ json_encode($qi->only(['id', 'title', 'description', 'custom_fields'])) }})"
                @endif
                class="btn-outline btn-sm space-x-1.5 shadow-sm">
                 <x-category-icon name="{{ $icon }}" class="w-4 h-4 {{ $color }}" />
@@ -44,7 +44,7 @@
         @endforeach
 
         <!-- Sports League (Kept) -->
-        <a href="{{ route('forms.sports.create') }}" @click.prevent="openForm('sports')" class="btn-outline btn-sm space-x-1.5 shadow-sm">
+        <a href="{{ route('forms.sports-registration') }}" @click.prevent="openForm('sports')" class="btn-outline btn-sm space-x-1.5 shadow-sm">
             <x-category-icon name="sports" class="w-4 h-4 text-blue-600" />
             <span>Sports League</span>
         </a>
