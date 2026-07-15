@@ -81,6 +81,43 @@ Route::get('/debug-config', function() {
     ];
 });
 
+// Temporary script to automatically fix hostinger's .env file
+Route::get('/fix-env', function() {
+    try {
+        $envPath = base_path('.env');
+        if (!file_exists($envPath)) {
+            return '.env file not found at ' . $envPath;
+        }
+
+        $content = file_get_contents($envPath);
+
+        // Replace queue connection
+        $content = preg_replace('/^QUEUE_CONNECTION=.*$/m', 'QUEUE_CONNECTION=sync', $content);
+
+        // Replace mail settings
+        $content = preg_replace('/^MAIL_USERNAME=.*$/m', 'MAIL_USERNAME="sknamayan@gmail.com"', $content);
+        $content = preg_replace('/^MAIL_PASSWORD=.*$/m', 'MAIL_PASSWORD="mmerhsmadiwsvmcb"', $content);
+        $content = preg_replace('/^MAIL_FROM_ADDRESS=.*$/m', 'MAIL_FROM_ADDRESS="sknamayan@gmail.com"', $content);
+        $content = preg_replace('/^MAIL_SCHEME=.*$/m', 'MAIL_SCHEME=smtps', $content);
+
+        // If MAIL_SCHEME doesn't exist, append it after MAIL_ENCRYPTION
+        if (strpos($content, 'MAIL_SCHEME=') === false) {
+            $content = preg_replace('/^(MAIL_ENCRYPTION=.*)$/m', "$1\nMAIL_SCHEME=smtps", $content);
+        }
+
+        file_put_contents($envPath, $content);
+
+        // Clear cache
+        \Illuminate\Support\Facades\Artisan::call('config:clear');
+        \Illuminate\Support\Facades\Artisan::call('cache:clear');
+        \Illuminate\Support\Facades\Artisan::call('route:clear');
+
+        return 'Hostinger .env updated successfully and cache cleared!';
+    } catch (\Exception $e) {
+        return 'Error fixing .env: ' . $e->getMessage();
+    }
+});
+
 Route::get('/officials', [GovernanceController::class, 'officialsIndex'])->name('officials.index');
 Route::get('/officials/{slug}', [GovernanceController::class, 'officialShow'])->name('officials.show');
 Route::get('/transparency', [GovernanceController::class, 'transparencyIndex'])->name('transparency.index');
