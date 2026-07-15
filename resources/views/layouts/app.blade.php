@@ -10,6 +10,16 @@
         <!-- Favicon -->
         <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
 
+        <!-- PWA / Add to Home Screen Setup -->
+        <link rel="manifest" href="{{ asset('manifest.json') }}">
+        <meta name="theme-color" content="#1e40af">
+
+        <!-- iOS (iPhone/iPad) PWA Support -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="SK Namayan">
+        <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
+
         <!-- Dark Mode Guard Script -->
         <script>
             if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
