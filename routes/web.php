@@ -45,6 +45,17 @@ Route::get('/clear-cache', function() {
     }
 });
 
+// Temporary helper to view production logs for debugging email issues
+Route::get('/view-logs', function() {
+    $path = storage_path('logs/laravel.log');
+    if (!file_exists($path)) {
+        return 'Log file does not exist.';
+    }
+    $file = file($path);
+    $lines = array_slice($file, -100);
+    return '<pre>' . implode('', $lines) . '</pre>';
+});
+
 Route::get('/officials', [GovernanceController::class, 'officialsIndex'])->name('officials.index');
 Route::get('/officials/{slug}', [GovernanceController::class, 'officialShow'])->name('officials.show');
 Route::get('/transparency', [GovernanceController::class, 'transparencyIndex'])->name('transparency.index');
