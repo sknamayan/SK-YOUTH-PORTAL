@@ -19,7 +19,7 @@
                  :style="`background-image: linear-gradient(to top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.4)), url(${slide.image})`">
 
                 <div class="relative z-10 max-w-2xl space-y-3 sm:space-y-4">
-                    <span class="bg-blue-600/35 border border-blue-400/20 text-blue-200 text-[9px] font-black uppercase tracking-[0.25em] px-3 py-1 rounded-full backdrop-blur-md">Barangay Namayan SK</span>
+                    <span class="bg-blue-600/35 border border-blue-400/20 text-blue-200 text-[9px] font-black uppercase tracking-[0.25em] px-3 py-1 rounded-full backdrop-blur-md">Sangguniang Kabataan ng Namayan</span>
                     <h2 class="text-xl sm:text-4xl md:text-5xl font-extrabold tracking-tight font-display text-white leading-tight" x-text="slide.title"></h2>
                     <p class="text-slate-300 text-[11px] sm:text-sm md:text-base max-w-xl font-medium leading-relaxed" x-text="slide.desc"></p>
                     <div class="flex flex-col gap-2 pt-1 sm:pt-2 w-full sm:max-w-xs">
