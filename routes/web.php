@@ -69,6 +69,18 @@ Route::get('/test-mail', function() {
     }
 });
 
+// Temporary helper to inspect live Laravel configuration values
+Route::get('/debug-config', function() {
+    return [
+        'queue_driver' => config('queue.default'),
+        'mail_mailer' => config('mail.default'),
+        'mail_host' => config('mail.mailers.smtp.host'),
+        'mail_port' => config('mail.mailers.smtp.port'),
+        'mail_scheme' => config('mail.mailers.smtp.scheme'),
+        'mail_from' => config('mail.from.address'),
+    ];
+});
+
 Route::get('/officials', [GovernanceController::class, 'officialsIndex'])->name('officials.index');
 Route::get('/officials/{slug}', [GovernanceController::class, 'officialShow'])->name('officials.show');
 Route::get('/transparency', [GovernanceController::class, 'transparencyIndex'])->name('transparency.index');
