@@ -7,6 +7,7 @@
     showModal: false,
     activeForm: '{{ session('failed_form') ?? request()->query('form') }}',
     isAuthenticated: {{ Auth::check() ? 'true' : 'false' }},
+    customInitiative: null,
     categoriesData: {
         'education': {
             label: 'EDUCATION',
@@ -96,6 +97,14 @@
             return;
         }
         this.activeForm = formName;
+    },
+    openCustomForm(initiative) {
+        if (!this.isAuthenticated) {
+            window.location.href = '{{ route('login') }}';
+            return;
+        }
+        this.customInitiative = initiative;
+        this.activeForm = 'custom';
     },
     handleCtaClick(url) {
         if (!url || url === '#') return;
@@ -587,6 +596,88 @@ if (activeForm) {
                         </div>
                     </x-form-card>
                 </div>
+
+                <!-- 6. CUSTOM DYNAMIC FORM MODAL -->
+                <div x-show="activeForm === 'custom'" class="w-full relative" x-cloak>
+                    <button type="button" @click="activeForm = null"
+                            class="absolute right-4 top-4 text-white hover:text-slate-200 bg-white/10 hover:bg-white/20 p-2 rounded-full transition z-20 focus:outline-none focus:ring-2 focus:ring-white/50">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                    
+                    <div class="card max-w-2xl mx-auto overflow-hidden">
+                        <div class="bg-gradient-to-r from-blue-700 to-blue-900 -mx-6 -mt-6 md:-mx-8 md:-mt-8 px-6 md:px-8 py-5 text-white mb-6">
+                            <h2 class="text-lg font-bold tracking-tight text-white font-display uppercase" x-text="customInitiative?.title"></h2>
+                            <p class="text-xs text-blue-200 mt-1" x-text="customInitiative?.description"></p>
+                        </div>
+
+                        <form method="POST" :action="'/forms/initiative/' + customInitiative?.id" class="space-y-5" enctype="multipart/form-data">
+                            @csrf
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <x-form-input label="First Name" name="first_name" :value="auth()->user()->first_name ?? ''" required="true" />
+                                <x-form-input label="Last Name" name="last_name" :value="auth()->user()->last_name ?? ''" required="true" />
+                            </div>
+                            
+                            <x-form-input label="Email Address" name="email" type="email" :value="auth()->user()->email ?? ''" required="true" />
+
+                            <!-- Dynamic Fields Loop via Alpine.js template -->
+                            <div class="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800" x-show="customInitiative?.custom_fields?.length > 0">
+                                <span class="text-[10px] font-black text-[#1e40af] uppercase tracking-widest block font-display">Additional Information Required</span>
+                                <div class="grid grid-cols-1 gap-4">
+                                    <template x-for="field in customInitiative?.custom_fields" :key="field.name">
+                                        <div class="space-y-1.5">
+                                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                                <span x-text="field.label"></span>
+                                                <span class="text-rose-500 font-extrabold" x-show="field.required">*</span>
+                                            </label>
+                                            
+                                            <!-- Check if type is textarea -->
+                                            <template x-if="field.type === 'textarea'">
+                                                <textarea :name="'custom_fields[' + field.name + ']'"
+                                                          :placeholder="field.placeholder"
+                                                          :required="field.required"
+                                                          rows="3"
+                                                          class="field focus:ring-4 focus:ring-blue-600/10"></textarea>
+                                            </template>
+
+                                            <!-- Check if type is select -->
+                                            <template x-if="field.type === 'select'">
+                                                <select :name="'custom_fields[' + field.name + ']'"
+                                                        :required="field.required"
+                                                        class="field focus:ring-4 focus:ring-blue-600/10 py-3 px-4 bg-white">
+                                                    <option value="" x-text="field.placeholder || 'Select an option'"></option>
+                                                    <template x-for="opt in field.options" :key="opt">
+                                                        <option :value="opt" x-text="opt"></option>
+                                                    </template>
+                                                </select>
+                                            </template>
+
+                                            <!-- Check if type is file -->
+                                            <template x-if="field.type === 'file'">
+                                                <input type="file"
+                                                       :name="'custom_fields[' + field.name + ']'"
+                                                       :required="field.required"
+                                                       class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:uppercase file:bg-blue-50 file:text-[#1e40af] hover:file:bg-blue-100 transition cursor-pointer">
+                                            </template>
+
+                                            <!-- Default text/number/date inputs -->
+                                            <template x-if="['textarea', 'select', 'file'].indexOf(field.type) === -1">
+                                                <input :type="field.type === 'number' ? 'number' : (field.type === 'date' ? 'date' : 'text')"
+                                                       :name="'custom_fields[' + field.name + ']'"
+                                                       :placeholder="field.placeholder"
+                                                       :required="field.required"
+                                                       class="field focus:ring-4 focus:ring-blue-600/10">
+                                            </template>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="pt-4">
+                                <button type="submit" class="btn-primary w-full">Submit Request</button>
+                            </div>
+                        </form>
+                    </div>
 
             </div>
         </div>

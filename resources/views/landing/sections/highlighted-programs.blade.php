@@ -39,6 +39,7 @@
                         'forms.mental-health.create' => 'mental-health',
                         'forms.silid.create' => 'silid',
                         'forms.medicine.create' => 'medicine',
+                        'forms.sports.create' => 'sports',
                         default => null
                     };
                     $btnText = match($qi->form_route) {
@@ -62,7 +63,11 @@
                     </div>
                     <div class="pt-5 border-t border-slate-100 mt-5">
                         <a href="{{ $qi->form_route ? route($qi->form_route) : route('forms.custom.create', $qi->id) }}" 
-                           @if($formName) @click.prevent="openForm('{{ $formName }}')" @endif
+                           @if($formName) 
+                               @click.prevent="openForm('{{ $formName }}')" 
+                           @else 
+                               @click.prevent="openCustomForm({{ json_encode($qi->only(['id', 'title', 'description', 'custom_fields'])) }})" 
+                           @endif
                            class="btn-primary w-full text-center block">
                             {{ $btnText }}
                         </a>
