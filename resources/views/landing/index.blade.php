@@ -108,7 +108,7 @@
     },
     handleCtaClick(url) {
         if (!url || url === '#') return;
-        if (url.includes('health-consultation') || url.includes('mental-health') || url.includes('pabili-medicine') || url.includes('silid-karunungan') || url.includes('sports-registration')) {
+        if (url.includes('health-consultation') || url.includes('mental-health') || url.includes('pabili-medicine') || url.includes('silid-karunungan')) {
             if (!this.isAuthenticated) {
                 window.location.href = '{{ route('login') }}';
                 return;
@@ -122,8 +122,6 @@
             this.activeForm = 'medicine';
         } else if (url.includes('silid-karunungan')) {
             this.activeForm = 'silid';
-        } else if (url.includes('sports-registration')) {
-            this.activeForm = 'sports';
         } else {
             window.location.href = url;
         }
@@ -537,65 +535,6 @@ if (activeForm) {
                     </x-form-card>
                 </div>
 
-                <!-- 5. SPORTS REGISTRATION FORM -->
-                <div x-show="activeForm === 'sports'" class="w-full relative">
-                    <button type="button" @click="activeForm = null"
-                            class="absolute right-4 top-4 text-white hover:text-slate-200 bg-white/10 hover:bg-white/20 p-2 rounded-full transition z-20 focus:outline-none focus:ring-2 focus:ring-white/50">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
-                    </button>
-                    <x-form-card
-                        title="Sports Registration"
-                        subtitle="Apply for local leagues, sports activities, and tournament registrations organized by SK Namayan."
-                        action="{{ route('forms.sports.store') }}"
-                    >
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <x-form-input label="First Name" name="first_name" required="true" />
-                            <x-form-input label="Last Name" name="last_name" required="true" />
-                            <x-form-input label="Middle Name" name="middle_name" />
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <x-form-input label="Age (10–30)" name="age" type="number" min="10" max="30" required="true" />
-                            <x-form-select label="Gender" name="gender" required="true" :options="$genderOptions" />
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <x-form-input label="Email Address" name="email" type="email" required="true" />
-                            <x-form-input label="Contact Number" name="contact_number" required="true" placeholder="e.g. 09123456789" />
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <x-form-select label="Choose Sport" name="sport" required="true" :options="$sportOptions" />
-                            <x-form-input label="Team Name (Optional)" name="team_name" placeholder="Leave empty if signing up individually" />
-                        </div>
-
-                        <x-form-input label="Preferred Event Date" name="event_date" type="date" min="{{ date('Y-m-d') }}" required="true" />
-
-                        <x-form-input label="Remarks / Queries" name="remarks" type="textarea" placeholder="Add any special requirements, team configurations, or general remarks..." />
-
-                        @php $sportsInit = $initiatives['forms.sports.create'] ?? null; @endphp
-                        @if($sportsInit && is_array($sportsInit->custom_fields) && count($sportsInit->custom_fields) > 0)
-                            <div class="space-y-4 pt-4 border-t border-slate-100 mt-4">
-                                <span class="text-[10px] font-black text-[#1e40af] uppercase tracking-widest block font-display">Additional Information Required</span>
-                                <div class="grid grid-cols-1 gap-4">
-                                    @foreach($sportsInit->custom_fields as $field)
-                                        <x-form-input
-                                            label="{{ $field['label'] }}"
-                                            name="custom_fields[{{ $field['name'] }}]"
-                                            type="{{ $field['type'] ?? 'text' }}"
-                                            required="{{ ($field['required'] ?? false) ? 'true' : 'false' }}"
-                                            placeholder="{{ $field['placeholder'] ?? '' }}"
-                                        />
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
-
-                        <div class="pt-4">
-                            <button type="submit" class="btn-primary w-full">Submit Sports Registration</button>
-                        </div>
-                    </x-form-card>
-                </div>
 
                 <!-- 6. CUSTOM DYNAMIC FORM MODAL -->
                 <div x-show="activeForm === 'custom'" class="w-full relative" x-cloak>
