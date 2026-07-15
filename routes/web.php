@@ -56,6 +56,19 @@ Route::get('/view-logs', function() {
     return '<pre>' . implode('', $lines) . '</pre>';
 });
 
+// Temporary helper to test email sending and print the exception if it fails
+Route::get('/test-mail', function() {
+    try {
+        \Illuminate\Support\Facades\Mail::raw('Test email from SK Namayan portal!', function($message) {
+            $message->to('sknamayan@gmail.com')
+                    ->subject('Test Email from SK Namayan Portal');
+        });
+        return 'Test email sent successfully!';
+    } catch (\Exception $e) {
+        return 'Email sending failed with error:<br><pre>' . $e->getMessage() . '</pre>';
+    }
+});
+
 Route::get('/officials', [GovernanceController::class, 'officialsIndex'])->name('officials.index');
 Route::get('/officials/{slug}', [GovernanceController::class, 'officialShow'])->name('officials.show');
 Route::get('/transparency', [GovernanceController::class, 'transparencyIndex'])->name('transparency.index');
