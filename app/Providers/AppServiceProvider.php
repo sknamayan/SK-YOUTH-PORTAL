@@ -39,13 +39,32 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Automatically recreate storage symlink if it's missing or broken (useful for shared hosting redeployments)
+        // Automatically recreate storage symlink if it's missing, broken, or a physical directory (for shared hosting redeployments)
         $storageLink = public_path('storage');
-        if (!file_exists($storageLink)) {
+        $target = storage_path('app/public');
+
+        if (!is_link($storageLink) || !file_exists($storageLink)) {
             if (is_link($storageLink)) {
                 @unlink($storageLink);
+            } elseif (is_dir($storageLink)) {
+                // If it is a physical directory, delete it recursively so we can replace it with the symlink
+                $deleteDir = function ($dir) use (&$deleteDir) {
+                    if (!file_exists($dir)) return;
+                    if (!is_dir($dir) || is_link($dir)) {
+                        @unlink($dir);
+                        return;
+                    }
+                    foreach (scandir($dir) as $item) {
+                        if ($item === '.' || $item === '..') continue;
+                        $deleteDir($dir . '/' . $item);
+                    }
+                    @rmdir($dir);
+                };
+                $deleteDir($storageLink);
+            } else {
+                @unlink($storageLink);
             }
-            @symlink(storage_path('app/public'), $storageLink);
+            @symlink($target, $storageLink);
         }
 
         // Register request observers
