@@ -118,9 +118,15 @@ class AppServiceProvider extends ServiceProvider
                     + \App\Models\SilidKarununganRequest::whereIn('status', ['pending', 'review'])->count()
                     + \App\Models\SportsRegistration::whereIn('status', ['pending', 'review'])->count();
 
+                $pendingKkProfilesCount = \App\Models\KkProfile::where('status', 'pending')->count();
+
+                $pendingSportsRegistrationsCount = \App\Models\SportsRegistration::whereIn('status', ['pending', 'review', 'Pending'])->count();
+
                 $view->with([
                     'pendingUserApprovalsCount' => $pendingUserApprovalsCount,
                     'pendingServiceRequestsCount' => $pendingServiceRequestsCount,
+                    'pendingKkProfilesCount' => $pendingKkProfilesCount,
+                    'pendingSportsRegistrationsCount' => $pendingSportsRegistrationsCount,
                 ]);
             }
         });

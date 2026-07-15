@@ -43,6 +43,9 @@
                     <x-category-icon name="logs" class="w-4 h-4" />
                     <span>Profiling List</span>
                 </div>
+                @if(isset($pendingKkProfilesCount) && $pendingKkProfilesCount > 0)
+                    <span class="bg-rose-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm select-none">{{ $pendingKkProfilesCount }}</span>
+                @endif
             </a>
 
             <!-- Master Calendar Link -->
@@ -51,6 +54,20 @@
                 <x-category-icon name="sports" class="w-4 h-4" />
                 <span>Master Calendar</span>
             </a>
+
+            <!-- Sports League Link -->
+            @if(Auth::user()->isAdmin() || Auth::user()->isDpo())
+            <a href="{{ route('admin.sports-league.index') }}"
+               class="flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.sports-league.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                <div class="flex items-center space-x-3">
+                    <x-category-icon name="sports" class="w-4 h-4" />
+                    <span>Sports League</span>
+                </div>
+                @if(isset($pendingSportsRegistrationsCount) && $pendingSportsRegistrationsCount > 0)
+                    <span class="bg-rose-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm select-none">{{ $pendingSportsRegistrationsCount }}</span>
+                @endif
+            </a>
+            @endif
 
             <!-- Partnerships Link -->
             @if(Route::has('admin.partners.index') && Auth::user()->isSuperAdmin())
