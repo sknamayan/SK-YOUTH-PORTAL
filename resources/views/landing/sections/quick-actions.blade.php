@@ -44,6 +44,12 @@
         @endforeach
 
         <!-- Sports League (Kept) -->
+        <a href="{{ route('forms.sports.create') }}"
+           @click.prevent="openForm('sports')"
+           class="btn-outline btn-sm space-x-1.5 shadow-sm">
+            <x-category-icon name="sports" class="w-4 h-4 text-blue-600" />
+            <span>Sports League</span>
+        </a>
 
         <!-- Track Request (Kept) -->
         <a href="{{ route('track.index') }}" class="btn-primary btn-sm space-x-1.5 shadow-sm">
