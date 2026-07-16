@@ -221,7 +221,7 @@
                     @endif
 
                     <!-- Branding -->
-                    <a href="/" class="flex items-center space-x-2.5 group">
+                    <a href="/" class="hidden md:flex items-center space-x-2.5 group">
                         <img src="{{ asset('images/logo.png') }}" class="w-10 h-10 object-contain rounded-full bg-white p-0.5 border border-blue-200 shadow-sm transition group-hover:scale-105" alt="SK Namayan Logo">
                         <span class="text-sm font-extrabold tracking-wider text-white uppercase font-display">SK Namayan</span>
                     </a>
