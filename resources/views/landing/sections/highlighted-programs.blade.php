@@ -74,7 +74,7 @@
                     @endphp
                     <div class="w-[80%] mx-[2.5%] shrink-0 transition-all duration-500 ease-in-out"
                          :class="activeIndex === {{ $index }} ? 'scale-100 opacity-100 z-10' : 'scale-90 opacity-40 z-0'">
-                        <div class="card flex flex-col justify-between h-full hover:shadow-md transition border border-slate-100">
+                        <div class="card flex flex-col justify-between h-[350px] hover:shadow-md transition border border-slate-100">
                             <div class="space-y-3">
                                 <div class="w-10 h-10 rounded-lg {{ $bgColor }} {{ $color }} flex items-center justify-center">
                                     <x-category-icon name="{{ $icon }}" class="w-5 h-5 {{ $color }}" />
