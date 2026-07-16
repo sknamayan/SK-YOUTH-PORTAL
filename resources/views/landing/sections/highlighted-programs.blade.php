@@ -73,8 +73,7 @@
                         };
                     @endphp
                     <div class="shrink-0 transition-all duration-500 ease-in-out"
-                         style="width: 80%; margin-left: 2.5%; margin-right: 2.5%;"
-                         :style="activeIndex === {{ $index }} ? 'transform: scale(1); opacity: 1; filter: blur(0px); z-index: 10;' : 'transform: scale(0.95); opacity: 0.6; filter: blur(2px); z-index: 0;'">
+                         :style="activeIndex === {{ $index }} ? 'width: 80%; margin-left: 2.5%; margin-right: 2.5%; transform: scale(1); opacity: 1; filter: blur(0px); z-index: 10;' : 'width: 80%; margin-left: 2.5%; margin-right: 2.5%; transform: scale(0.95); opacity: 0.6; filter: blur(2px); z-index: 0;'">
                         <div class="card flex flex-col justify-between hover:shadow-md transition border border-slate-100"
                              style="height: 380px;">
                             <div class="space-y-3">
