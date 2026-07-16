@@ -81,7 +81,7 @@
             }
         </style>
     </head>
-    <body class="bg-[#fefefe] dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased flex flex-col min-h-screen">
+    <body class="bg-[#fefefe] dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased flex flex-col min-h-screen overflow-x-hidden">
         <!-- Global Skeleton Loader (Fades out when window is fully loaded) -->
         <div id="global-page-loader" class="fixed inset-0 z-[9999] bg-[#fefefe] dark:bg-slate-950 flex flex-col pointer-events-none transition-opacity duration-300 opacity-0 md:hidden">
              <!-- Header skeleton -->
@@ -197,28 +197,39 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between relative">
 
                 <!-- Left: Burger & Branding with Logo -->
-                <div class="flex items-center space-x-3">
+                <div class="flex items-center space-x-2 sm:space-x-3 min-w-0">
                     <!-- Burger Icon (Always available on mobile; hidden on dashboard desktop) -->
                     <button @click="mobileMenuOpen = !mobileMenuOpen"
                             type="button"
-                            class="inline-flex text-blue-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/50 p-1.5 rounded-xl hover:bg-white/10 transition {{ request()->routeIs('dashboard', 'dashboard.*', 'admin.*') || (auth()->check() && auth()->user()->canAccessDashboard() && request()->routeIs('profile.edit')) ? 'hidden' : '' }}"
+                            class="inline-flex shrink-0 text-blue-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/50 p-1.5 rounded-xl hover:bg-white/10 transition {{ request()->routeIs('dashboard', 'dashboard.*', 'admin.*') || (auth()->check() && auth()->user()->canAccessDashboard() && request()->routeIs('profile.edit')) ? 'hidden' : '' }}"
                             aria-label="Toggle menu">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
 
+                    <!-- Dashboard Burger Icon (Visible only on mobile/tablet for dashboard/admin routes) -->
+                    @if(request()->routeIs('dashboard', 'dashboard.*', 'admin.*') || (auth()->check() && auth()->user()->canAccessDashboard() && request()->routeIs('profile.edit')))
+                    <button @click="$dispatch('toggle-sidebar')"
+                            type="button"
+                            class="inline-flex md:hidden text-blue-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/50 p-1.5 rounded-xl hover:bg-white/10 transition"
+                            aria-label="Toggle Dashboard Sidebar">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    @endif
 
                     <!-- Branding -->
-                    <a href="/" class="flex items-center space-x-2.5 group">
-                        <img src="{{ asset('images/logo.png') }}" class="w-10 h-10 object-contain rounded-full bg-white p-0.5 border border-blue-200 shadow-sm transition group-hover:scale-105" alt="SK Namayan Logo">
-                        <span class="text-sm font-extrabold tracking-wider text-white uppercase font-display">SK Namayan</span>
+                    <a href="/" class="flex items-center space-x-2.5 group min-w-0">
+                        <img src="{{ asset('images/logo.png') }}" class="w-10 h-10 object-contain rounded-full bg-white p-0.5 border border-blue-200 shadow-sm transition group-hover:scale-105 shrink-0" alt="SK Namayan Logo">
+                        <span class="text-sm font-extrabold tracking-wider text-white uppercase font-display truncate max-w-[8rem] sm:max-w-none">SK Namayan</span>
                     </a>
                 </div>
 
 
                 <!-- Right: Nav options & dropdowns -->
-                <div class="flex items-center space-x-2 sm:space-x-3 text-sm shrink-0"
+                <div class="flex items-center space-x-2 sm:space-x-3 text-sm shrink-0 min-w-0"
                      x-data="{
                          darkMode: window.SKTheme.isDark(),
                          notifOpen: false,

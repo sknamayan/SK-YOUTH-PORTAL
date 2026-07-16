@@ -112,10 +112,10 @@
             <div class="space-y-4">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200">
                     <!-- Tab buttons -->
-                    <div class="flex overflow-x-auto whitespace-nowrap scrollbar-none text-xs font-bold uppercase tracking-wider">
+                    <div class="flex overflow-x-auto whitespace-nowrap scrollbar-none text-xs font-bold uppercase tracking-wider min-w-0">
                         <button @click="setActiveTab('all')"
                                 :class="activeTab === 'all' ? 'border-[#1e40af] text-[#1e40af]' : 'border-transparent text-slate-400 hover:text-slate-650'"
-                                class="py-3 px-5 border-b-2 transition select-none flex items-center space-x-1.5 cursor-pointer">
+                                class="py-3 px-5 border-b-2 transition select-none flex items-center space-x-1.5 cursor-pointer shrink-0 min-w-0 max-w-full">
                             <x-category-icon name="logs" class="w-4 h-4" />
                             <span>All Submissions ({{ $allStats['total'] }})</span>
                             @if($allStats['pending'] > 0)
@@ -137,7 +137,7 @@
                             @endphp
                             <button @click="setActiveTab('init_{{ $init->id }}')"
                                     :class="activeTab === 'init_{{ $init->id }}' ? 'border-[#1e40af] text-[#1e40af]' : 'border-transparent text-slate-400 hover:text-slate-650'"
-                                    class="py-3 px-5 border-b-2 transition select-none flex items-center space-x-1.5 cursor-pointer">
+                                    class="py-3 px-5 border-b-2 transition select-none flex items-center space-x-1.5 cursor-pointer shrink-0 min-w-0 max-w-full">
                                 <x-category-icon name="{{ $icon }}" class="w-4 h-4" />
                                 <span>{{ $init->title }} ({{ $init->stats['total'] }})</span>
                                 @if($init->stats['pending'] > 0)

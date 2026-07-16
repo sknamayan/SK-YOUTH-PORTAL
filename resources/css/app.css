@@ -4,29 +4,74 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    body {
+        overflow-x: hidden;
+        min-width: 0;
+    }
+
+    main,
+    section,
+    article,
+    aside,
+    header,
+    footer,
+    nav,
+    div,
+    span,
+    a,
+    button {
+        min-width: 0;
+        max-width: 100%;
+    }
+}
+
 @layer components {
     .btn-primary {
-        @apply bg-[#1e40af] hover:bg-[#1e3a8a] text-white font-semibold py-2.5 px-5 rounded-xl transition-all duration-200 shadow-md shadow-blue-600/10 hover:shadow-lg hover:shadow-blue-600/20 active:scale-95 inline-flex items-center justify-center text-sm tracking-wide cursor-pointer;
+        @apply bg-[#1e40af] hover:bg-[#1e3a8a] text-white font-semibold py-2.5 px-5 rounded-xl transition-all duration-200 shadow-md shadow-blue-600/10 hover:shadow-lg hover:shadow-blue-600/20 active:scale-95 inline-flex items-center justify-center text-sm tracking-wide cursor-pointer whitespace-nowrap shrink-0 max-w-full overflow-hidden text-ellipsis;
     }
 
     .btn-outline {
-        @apply border border-slate-200 dark:border-slate-200 text-slate-700 dark:text-slate-700 hover:border-[#1e40af] hover:text-[#1e40af] font-semibold py-2.5 px-5 rounded-xl transition-all duration-200 hover:bg-[#eff6ff] active:scale-95 inline-flex items-center justify-center text-sm tracking-wide cursor-pointer;
+        @apply border border-slate-200 dark:border-slate-200 text-slate-700 dark:text-slate-700 hover:border-[#1e40af] hover:text-[#1e40af] font-semibold py-2.5 px-5 rounded-xl transition-all duration-200 hover:bg-[#eff6ff] active:scale-95 inline-flex items-center justify-center text-sm tracking-wide cursor-pointer whitespace-nowrap shrink-0 max-w-full overflow-hidden text-ellipsis;
     }
 
     .btn-secondary {
-        @apply bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-5 rounded-xl transition-all duration-200 active:scale-95 inline-flex items-center justify-center text-sm tracking-wide cursor-pointer;
+        @apply bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-5 rounded-xl transition-all duration-200 active:scale-95 inline-flex items-center justify-center text-sm tracking-wide cursor-pointer whitespace-nowrap shrink-0 max-w-full overflow-hidden text-ellipsis;
     }
 
     .btn-danger {
-        @apply bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2.5 px-5 rounded-xl transition-all duration-200 shadow-md shadow-rose-600/10 hover:shadow-lg hover:shadow-rose-600/20 active:scale-95 inline-flex items-center justify-center text-sm tracking-wide cursor-pointer;
+        @apply bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2.5 px-5 rounded-xl transition-all duration-200 shadow-md shadow-rose-600/10 hover:shadow-lg hover:shadow-rose-600/20 active:scale-95 inline-flex items-center justify-center text-sm tracking-wide cursor-pointer whitespace-nowrap shrink-0 max-w-full overflow-hidden text-ellipsis;
     }
 
     .btn-success {
-        @apply bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-5 rounded-xl transition-all duration-200 shadow-md shadow-emerald-600/10 hover:shadow-lg hover:shadow-emerald-600/20 active:scale-95 inline-flex items-center justify-center text-sm tracking-wide cursor-pointer;
+        @apply bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-5 rounded-xl transition-all duration-200 shadow-md shadow-emerald-600/10 hover:shadow-lg hover:shadow-emerald-600/20 active:scale-95 inline-flex items-center justify-center text-sm tracking-wide cursor-pointer whitespace-nowrap shrink-0 max-w-full overflow-hidden text-ellipsis;
     }
 
     .btn-sm {
-        @apply py-1.5 px-3 text-xs rounded-xl font-bold uppercase tracking-wider;
+        @apply py-1.5 px-3 text-xs rounded-xl font-bold uppercase tracking-wider whitespace-nowrap shrink-0 max-w-full overflow-hidden text-ellipsis;
+    }
+
+    button,
+    [class*="btn-"] {
+        white-space: nowrap;
+        flex-shrink: 0;
+        min-width: 0;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    [class*="btn-"] > span,
+    [class*="btn-"] > div,
+    [class*="btn-"] > strong,
+    [class*="btn-"] > p {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .field {

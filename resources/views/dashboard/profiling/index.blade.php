@@ -192,7 +192,7 @@
             @endif
 
             <!-- Status Filter Tabs -->
-            <div class="flex items-center gap-3 border-b border-slate-100 pb-px mb-6 overflow-x-auto whitespace-nowrap">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-px mb-6 overflow-x-auto whitespace-nowrap scrollbar-none min-w-0">
                 <a href="{{ route('dashboard.profiling.index', array_merge(request()->query(), ['status' => 'approved'])) }}"
                    class="pb-3 text-xs font-bold transition flex items-center gap-2 px-1 relative {{ $statusFilter === 'approved' ? 'text-[#1e40af]' : 'text-slate-500 hover:text-slate-800' }}">
                     <span>Active Registry</span>
