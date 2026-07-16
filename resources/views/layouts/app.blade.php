@@ -192,6 +192,18 @@
                         </svg>
                     </button>
 
+                    <!-- Dashboard Burger Icon (Visible only on mobile/tablet for dashboard/admin routes) -->
+                    @if(request()->routeIs('dashboard', 'dashboard.*', 'admin.*') || (auth()->check() && auth()->user()->canAccessDashboard() && request()->routeIs('profile.edit')))
+                    <button @click="$dispatch('toggle-sidebar')" 
+                            type="button" 
+                            class="inline-flex md:hidden text-blue-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/50 p-1.5 rounded-xl hover:bg-white/10 transition" 
+                            aria-label="Toggle Dashboard Sidebar">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    @endif
+
                     <!-- Branding -->
                     <a href="/" class="flex items-center space-x-2.5 group">
                         <img src="{{ asset('images/logo.png') }}" class="w-10 h-10 object-contain rounded-full bg-white p-0.5 border border-blue-200 shadow-sm transition group-hover:scale-105" alt="SK Namayan Logo">

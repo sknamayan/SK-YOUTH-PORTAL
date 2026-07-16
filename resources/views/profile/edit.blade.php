@@ -16,16 +16,6 @@
 
             <!-- Main Content Pane -->
             <div class="flex-1 flex flex-col min-w-0">
-                <header class="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 h-16 px-4 flex items-center justify-between md:hidden shrink-0">
-                    <button @click="mobileSidebar = true" class="p-2 text-slate-500 hover:text-slate-800 active:scale-95 transition">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                    </button>
-                    <div class="flex items-center space-x-2">
-                        <img src="{{ asset('images/logo.png') }}" class="w-8 h-8 object-contain rounded-full bg-white p-0.5 border" alt="SK Logo">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-display">SK Namayan</span>
-                    </div>
-                    <div class="w-10"></div>
-                </header>
 
                 <div class="p-6 md:p-8 space-y-6 flex-1 overflow-y-auto">
                     <div class="max-w-4xl space-y-6">
