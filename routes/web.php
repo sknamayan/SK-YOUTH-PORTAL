@@ -125,6 +125,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/profiling', [KkProfileController::class, 'selfStore'])->name('profile.profiling.store');
 
     // Notifications
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::patch('/notifications/{notification}/read', [NotificationController::class, 'read'])->name('notifications.read');
     Route::post('/notifications/read-all', [NotificationController::class, 'readAll'])->name('notifications.read-all');
 

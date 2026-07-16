@@ -41,7 +41,7 @@ class SportsFormBuilderTest extends TestCase
         $response = $this->actingAs($admin)->get(route('admin.sports-league.form-builder.create'));
 
         $response->assertStatus(200);
-        $response->assertSee('Sports Registration Form Builder');
+        $response->assertSee('SIKLAB Form Builder');
     }
 
     /**
@@ -129,7 +129,7 @@ class SportsFormBuilderTest extends TestCase
         $response = $this->actingAs($user)->get(route('forms.sports.create'));
 
         $response->assertStatus(200);
-        $response->assertSee('Sports League Registration');
+        $response->assertSee('SIKLAB Registration');
         $response->assertSee('League Category Details');
     }
 
