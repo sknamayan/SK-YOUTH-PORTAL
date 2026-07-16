@@ -10,7 +10,7 @@
             No highlighted programs configured at this moment.
         </div>
     @else
-        <div class="grid grid-cols-1 md:grid-cols-{{ min(3, $highlightedInitiatives->count()) }} gap-6 justify-center">
+        <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 scrollbar-none px-4 -mx-4 md:grid md:grid-cols-{{ min(3, $highlightedInitiatives->count()) }} md:gap-6 md:justify-center md:overflow-x-visible md:snap-none md:pb-0 md:px-0 md:mx-0">
             @foreach($highlightedInitiatives as $qi)
                 @php
                     $color = match($qi->committee_id) {
@@ -50,7 +50,7 @@
                         default => 'Apply Now'
                     };
                 @endphp
-                <div class="card flex flex-col justify-between h-full hover:-translate-y-1 hover:shadow-md transition">
+                <div class="card flex flex-col justify-between h-full hover:-translate-y-1 hover:shadow-md transition snap-center shrink-0 w-[85%] max-w-[320px] md:w-auto md:max-w-none">
                     <div class="space-y-3">
                         <div class="w-10 h-10 rounded-lg {{ $bgColor }} {{ $color }} flex items-center justify-center">
                             <x-category-icon name="{{ $icon }}" class="w-5 h-5 {{ $color }}" />
