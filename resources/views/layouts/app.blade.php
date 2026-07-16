@@ -22,33 +22,45 @@
 
         <!-- Dark Mode Guard Script -->
         <script>
-            (function() {
-                const dbTheme = '{{ auth()->check() ? auth()->user()->theme : 'system' }}';
-                const resolveTheme = function(themePreference) {
+            window.SKTheme = {
+                resolveTheme: function(themePreference) {
                     if (themePreference === 'dark' || themePreference === 'light') {
                         return themePreference;
                     }
 
                     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                };
+                },
+                setTheme: function(themePreference) {
+                    const normalizedPreference = ['dark', 'light', 'system'].includes(themePreference)
+                        ? themePreference
+                        : 'system';
+                    const resolvedTheme = this.resolveTheme(normalizedPreference);
 
-                const applyTheme = function(themePreference) {
-                    const resolvedTheme = resolveTheme(themePreference);
-                    localStorage.setItem('theme', resolvedTheme);
+                    localStorage.setItem('theme', normalizedPreference);
                     document.documentElement.classList.toggle('dark', resolvedTheme === 'dark');
+                    window.dispatchEvent(new CustomEvent('theme:changed', {
+                        detail: {
+                            theme: normalizedPreference,
+                            resolvedTheme: resolvedTheme,
+                        }
+                    }));
+
                     return resolvedTheme;
-                };
+                },
+                isDark: function() {
+                    return this.resolveTheme(localStorage.getItem('theme')) === 'dark';
+                }
+            };
+
+            (function() {
+                const dbTheme = '{{ auth()->check() ? auth()->user()->theme : 'system' }}';
+                const currentTheme = ['dark', 'light', 'system'].includes(dbTheme) ? dbTheme : 'system';
 
                 if ({{ auth()->check() ? 'true' : 'false' }}) {
-                    applyTheme(dbTheme);
-                } else {
-                    const localTheme = localStorage.getItem('theme');
-                    if (localTheme === 'dark' || localTheme === 'light') {
-                        applyTheme(localTheme);
-                    } else {
-                        applyTheme('system');
-                    }
+                    localStorage.setItem('theme', currentTheme);
                 }
+
+                window.SKTheme.setTheme(localStorage.getItem('theme') || currentTheme);
             })();
         </script>
 
@@ -219,25 +231,22 @@
                 <!-- Right: Nav options & dropdowns -->
                 <div class="flex items-center space-x-2 sm:space-x-3 text-sm shrink-0" 
                      x-data="{ 
-                         darkMode: (() => {
-                             const savedTheme = localStorage.getItem('theme');
-                             if (savedTheme === 'dark' || savedTheme === 'light') {
-                                 return savedTheme === 'dark';
-                             }
-
-                             return window.matchMedia('(prefers-color-scheme: dark)').matches;
-                         })(),
+                         darkMode: window.SKTheme.isDark(),
                          notifOpen: false, 
                          profileOpen: false 
                      }"
-                     x-init="$watch('darkMode', val => {
-                         const resolvedTheme = val ? 'dark' : 'light';
-                         localStorage.setItem('theme', resolvedTheme);
-                         document.documentElement.classList.toggle('dark', val);
-                     })">
+                     x-init="
+                         $watch('darkMode', val => {
+                             window.SKTheme.setTheme(val ? 'dark' : 'light');
+                         });
+
+                         window.addEventListener('theme:changed', () => {
+                             darkMode = window.SKTheme.isDark();
+                         });
+                     ">
 
                     <!-- Theme Toggle Switch -->
-                    <button @click="darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light')"
+                    <button @click="darkMode = !darkMode"
                             type="button"
                             class="p-2 rounded-xl text-blue-100 hover:text-white hover:bg-white/10 transition focus:outline-none"
                             aria-label="Toggle theme">

@@ -153,12 +153,7 @@
             <div class="space-y-3" x-data="{
                 currentTheme: '{{ $user->theme }}',
                 syncTheme(themePreference) {
-                    const resolvedTheme = themePreference === 'system'
-                        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-                        : themePreference;
-
-                    localStorage.setItem('theme', resolvedTheme);
-                    document.documentElement.classList.toggle('dark', resolvedTheme === 'dark');
+                    window.SKTheme.setTheme(themePreference);
                 }
             }" x-init="syncTheme(currentTheme)">
                 <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{{ __('Theme') }}</label>

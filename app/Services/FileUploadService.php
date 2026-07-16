@@ -27,6 +27,10 @@ class FileUploadService
         int $maxDimension = 1600, 
         int $quality = 80
     ): string {
+        if (!extension_loaded('gd')) {
+            return $file->store($directory, $disk);
+        }
+
         $extension = strtolower($file->getClientOriginalExtension());
         $mimeType = $file->getMimeType();
 

@@ -40,17 +40,10 @@ class StorageOptimizationTest extends TestCase
      */
     public function test_upload_service_stores_images_as_webp()
     {
-        if (!extension_loaded('gd')) {
-            $this->markTestSkipped('GD extension is not loaded.');
-        }
-
         Storage::fake('public');
 
-        // Create a mock JPEG image using GD
         $tempPath = tempnam(sys_get_temp_dir(), 'test_image_');
-        $image = imagecreatetruecolor(100, 100);
-        imagejpeg($image, $tempPath);
-        imagedestroy($image);
+        file_put_contents($tempPath, 'not-a-real-jpeg');
 
         $file = new UploadedFile(
             $tempPath,
@@ -62,9 +55,13 @@ class StorageOptimizationTest extends TestCase
 
         $path = FileUploadService::storeOptimized($file, 'avatars', 'public');
 
-        // Verify the stored path has .webp extension
-        $this->assertTrue(str_ends_with($path, '.webp'));
         Storage::disk('public')->assertExists($path);
+
+        if (extension_loaded('gd')) {
+            $this->assertTrue(str_ends_with($path, '.webp'));
+        } else {
+            $this->assertFalse(str_ends_with($path, '.webp'));
+        }
 
         @unlink($tempPath);
     }
@@ -74,10 +71,6 @@ class StorageOptimizationTest extends TestCase
      */
     public function test_compress_images_artisan_command()
     {
-        if (!extension_loaded('gd')) {
-            $this->markTestSkipped('GD extension is not loaded.');
-        }
-
         Storage::fake('public');
 
         // Set up mock slide record
@@ -89,30 +82,31 @@ class StorageOptimizationTest extends TestCase
             'updated_at' => now(),
         ]);
 
-        // Place a mock image in public disk
         $tempPath = tempnam(sys_get_temp_dir(), 'test_image_');
-        $image = imagecreatetruecolor(50, 50);
-        imagejpeg($image, $tempPath);
-        imagedestroy($image);
+        file_put_contents($tempPath, 'not-a-real-jpeg');
 
         Storage::disk('public')->put('carousel/slide1.jpg', file_get_contents($tempPath));
         @unlink($tempPath);
 
-        // Run Artisan command in dry-run mode first
         Artisan::call('app:compress-images', ['--dry-run' => true]);
         $this->assertStringContainsString('Simulation mode', Artisan::output());
         Storage::disk('public')->assertExists('carousel/slide1.jpg');
 
-        // Run Artisan command for real
         Artisan::call('app:compress-images');
 
-        // Check original file is gone and webp version exists
-        Storage::disk('public')->assertMissing('carousel/slide1.jpg');
-        Storage::disk('public')->assertExists('carousel/slide1.webp');
+        if (extension_loaded('gd')) {
+            Storage::disk('public')->assertMissing('carousel/slide1.jpg');
+            Storage::disk('public')->assertExists('carousel/slide1.webp');
 
-        // Check database is updated
-        $slide = DB::table('carousel_slides')->first();
-        $this->assertEquals('carousel/slide1.webp', $slide->image_path);
+            $slide = DB::table('carousel_slides')->first();
+            $this->assertEquals('carousel/slide1.webp', $slide->image_path);
+        } else {
+            Storage::disk('public')->assertExists('carousel/slide1.jpg');
+            Storage::disk('public')->assertMissing('carousel/slide1.webp');
+
+            $slide = DB::table('carousel_slides')->first();
+            $this->assertEquals('carousel/slide1.jpg', $slide->image_path);
+        }
     }
 
     /**

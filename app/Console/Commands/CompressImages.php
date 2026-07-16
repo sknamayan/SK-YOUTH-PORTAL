@@ -32,7 +32,14 @@ class CompressImages extends Command
     {
         $dryRun = $this->option('dry-run');
         if ($dryRun) {
-            $this->info('[DRY RUN] Running in simulation mode. No files will be modified.');
+            $this->info('[DRY RUN] Running in Simulation mode. No files will be modified.');
+        }
+
+        if (!extension_loaded('gd')) {
+            if (!$dryRun) {
+                $this->warn('Skipping image compression. GD extension is not loaded, so no WebP conversion can be performed.');
+            }
+            return 0;
         }
 
         $publicPath = storage_path('app/public');
