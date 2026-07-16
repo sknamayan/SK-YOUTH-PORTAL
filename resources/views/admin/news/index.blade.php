@@ -11,6 +11,21 @@
 
     @include('layouts.dashboard-sidebar')
 
+    {{-- Mobile sidebar backdrop --}}
+    <div
+        x-show="mobileSidebar"
+        x-transition:enter="transition-opacity ease-out duration-200"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition-opacity ease-in duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        @click="mobileSidebar = false"
+        class="fixed inset-0 bg-slate-900/50 dark:bg-black/60 z-20 md:hidden"
+        aria-hidden="true"
+        x-cloak
+    ></div>
+
     {{-- Main content shell --}}
     <div class="flex-1 flex flex-col min-w-0 min-h-0 md:min-h-[calc(100dvh-4rem)]">
 
