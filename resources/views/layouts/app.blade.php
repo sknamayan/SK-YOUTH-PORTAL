@@ -81,7 +81,7 @@
             }
         </style>
     </head>
-    <body class="bg-[#fefefe] dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased flex flex-col min-h-screen">
+    <body class="bg-[#fefefe] dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased flex flex-col min-h-screen overflow-x-hidden">
         <!-- Global Skeleton Loader (Fades out when window is fully loaded) -->
         <div id="global-page-loader" class="fixed inset-0 z-[9999] bg-[#fefefe] dark:bg-slate-950 flex flex-col pointer-events-none transition-opacity duration-300 opacity-0 md:hidden">
              <!-- Header skeleton -->
@@ -668,7 +668,7 @@
         @endif
 
         <!-- Main Content Slot -->
-        <main class="flex-1 flex flex-col">
+        <main class="flex-1 flex flex-col min-w-0 w-full overflow-x-hidden">
             @yield('content')
             {{ $slot ?? '' }}
         </main>
