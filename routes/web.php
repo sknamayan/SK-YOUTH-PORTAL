@@ -279,5 +279,19 @@ Route::middleware(['auth', 'admin.only'])->group(function () {
 
 
 
+// Fallback route to serve uploaded files if public storage symlink is missing or broken on production/shared hosting
+Route::get('/storage/{path}', function ($path) {
+    $fullPath = 'public/' . $path;
+    if (!\Illuminate\Support\Facades\Storage::exists($fullPath)) {
+        abort(404);
+    }
+    $file = \Illuminate\Support\Facades\Storage::path($fullPath);
+    $type = mime_content_type($file);
+    return \Illuminate\Support\Facades\Response::file($file, [
+        'Content-Type' => $type,
+        'Cache-Control' => 'public, max-age=31536000',
+    ]);
+})->where('path', '.*');
+
 // Standalone Authentication Routes
 require __DIR__.'/auth.php';
