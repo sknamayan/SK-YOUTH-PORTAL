@@ -1,10 +1,16 @@
 @php
     $quickInitiatives = \App\Models\Initiative::where('show_in_quick_forms', true)->get();
 @endphp
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal-on-scroll">
-    <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 grid grid-cols-2 sm:flex sm:flex-wrap sm:items-center sm:justify-center gap-3">
-        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider px-3 col-span-2 text-center sm:col-span-auto sm:text-left w-full sm:w-auto mb-1 sm:mb-0">Quick Forms:</span>
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal-on-scroll my-12">
+    <!-- Section Header (Matches Our Services design) -->
+    <div class="text-center mb-8">
+        <span class="text-xs font-black tracking-widest text-[#1e40af] uppercase font-display">QUICK FORMS & APPLICATIONS</span>
+        <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-slate-800 font-display mt-1.5 uppercase">Request Online</h1>
+        <p class="text-xs text-slate-400 mt-2 max-w-md mx-auto">Access our services instantly. Select a quick form below to submit a service request, book a facility, or register for sports league.</p>
+    </div>
 
+    <!-- Grid Container -->
+    <div class="bg-slate-50 border border-slate-100 rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <!-- Dynamic Quick Forms -->
         @foreach($quickInitiatives as $qi)
             @php
@@ -36,23 +42,27 @@
                @else
                    @click.prevent="openCustomForm({{ json_encode($qi->only(['id', 'title', 'description', 'custom_fields'])) }})"
                @endif
-               class="btn-outline btn-sm space-x-1.5 shadow-sm justify-center w-full sm:w-auto">
-                <x-category-icon name="{{ $icon }}" class="w-4 h-4 {{ $color }}" />
-                <span>{{ $qi->title }}</span>
+               class="bg-white border border-slate-100 hover:border-[#1e40af] text-slate-700 hover:text-[#1e40af] hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200 rounded-xl p-4 flex items-center space-x-3 w-full justify-center sm:justify-start active:scale-98">
+                <div class="p-2 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <x-category-icon name="{{ $icon }}" class="w-5 h-5 {{ $color }}" />
+                </div>
+                <span class="font-extrabold text-xs tracking-wider uppercase font-display">{{ $qi->title }}</span>
             </a>
         @endforeach
 
         <!-- Sports League (Kept) -->
         <a href="{{ route('forms.sports.create') }}"
-           class="btn-outline btn-sm space-x-1.5 shadow-sm justify-center w-full sm:w-auto">
-            <x-category-icon name="sports" class="w-4 h-4 text-blue-600" />
-            <span>SIKLAB</span>
+           class="bg-white border border-slate-100 hover:border-[#1e40af] text-slate-700 hover:text-[#1e40af] hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200 rounded-xl p-4 flex items-center space-x-3 w-full justify-center sm:justify-start active:scale-98">
+            <div class="p-2 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                <x-category-icon name="sports" class="w-5 h-5 text-blue-600" />
+            </div>
+            <span class="font-extrabold text-xs tracking-wider uppercase font-display">SIKLAB (Sports League)</span>
         </a>
 
         <!-- Track Request (Kept) -->
-        <a href="{{ route('track.index') }}" class="btn-primary btn-sm space-x-1.5 shadow-sm justify-center col-span-2 sm:col-span-auto w-full sm:w-auto">
-            <x-category-icon name="track" class="w-4 h-4" />
-            <span>Track Request</span>
+        <a href="{{ route('track.index') }}" class="bg-[#1e40af] text-white hover:bg-blue-700 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 rounded-xl p-4 flex items-center justify-center space-x-3 w-full col-span-1 sm:col-span-2 lg:col-span-3 active:scale-98">
+            <x-category-icon name="track" class="w-5 h-5 text-white" />
+            <span class="font-black text-xs tracking-widest uppercase font-display">Track Your Request</span>
         </a>
     </div>
 </section>
