@@ -1,18 +1,35 @@
 <!-- Centralized Left Sidebar Navigation -->
-<aside x-data="{ mobileSidebar: false }"
-       @toggle-sidebar.window="mobileSidebar = !mobileSidebar"
+<div x-data="{ mobileSidebar: false }"
+     @toggle-sidebar.window="mobileSidebar = !mobileSidebar"
+     x-cloak>
+    <div x-show="mobileSidebar"
+         x-transition:enter="transition-opacity ease-out duration-200"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition-opacity ease-in duration-150"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         @click="mobileSidebar = false"
+         class="fixed inset-0 bg-slate-950/45 backdrop-blur-[2px] z-20 md:hidden"></div>
+
+    <aside
        :class="mobileSidebar ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
        class="fixed md:sticky md:self-start inset-y-0 md:bottom-auto left-0 w-[78%] max-w-[300px] md:w-80 md:max-w-none md:top-16 md:h-[calc(100vh_-_4rem)] border-r border-slate-100 bg-white z-30 transition-transform duration-300 transform flex flex-col justify-between shrink-0 shadow-sm md:shadow-none">
 
     <!-- Top Menu / Navigation Scrollable Pane -->
     <div class="flex-1 p-6 space-y-6 overflow-y-auto">
         <!-- Sidebar Logo -->
-        <div class="flex items-center space-x-3 pb-4 border-b border-slate-100">
-            <img src="{{ asset('images/logo.png') }}" class="w-11 h-11 object-contain rounded-full bg-white p-0.5 border shadow-sm" alt="SK Logo">
-            <div>
-                <h2 class="text-sm font-bold text-slate-800 font-display uppercase tracking-tight">SK Namayan</h2>
-                <span class="text-[9px] font-black tracking-widest text-[#1e40af] uppercase block">Admin Control</span>
+        <div class="flex items-center justify-between gap-3 pb-4 border-b border-slate-100">
+            <div class="flex items-center space-x-3 min-w-0">
+                <img src="{{ asset('images/logo.png') }}" class="w-11 h-11 object-contain rounded-full bg-white p-0.5 border shadow-sm shrink-0" alt="SK Logo">
+                <div class="min-w-0">
+                    <h2 class="text-sm font-bold text-slate-800 font-display uppercase tracking-tight truncate">SK Namayan</h2>
+                    <span class="text-[9px] font-black tracking-widest text-[#1e40af] uppercase block">Admin Control</span>
+                </div>
             </div>
+            <button @click="mobileSidebar = false" type="button" class="md:hidden p-2 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition" aria-label="Close sidebar">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
         </div>
 
         <!-- Menu links -->
@@ -237,11 +254,12 @@
             <div class="w-9 h-9 rounded-full bg-[#1e40af] text-white font-extrabold text-xs flex items-center justify-center font-display shadow-sm shrink-0">
                 {{ substr(Auth::user()->name, 0, 1) }}
             </div>
-            <div class="truncate">
+            <div class="min-w-0 truncate">
                 <span class="block text-xs font-bold text-slate-800 truncate">{{ Auth::user()->name }}</span>
                 <span class="block text-[9px] font-black uppercase tracking-wider text-slate-400">{{ Auth::user()->role }}</span>
             </div>
         </div>
 
     </div>
-</aside>
+    </aside>
+</div>
