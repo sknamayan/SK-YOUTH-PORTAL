@@ -33,7 +33,17 @@
     [class*="btn-"] {
         white-space: nowrap;
         flex-shrink: 0;
+        min-width: 0;
         max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    [class*="btn-"] > span,
+    [class*="btn-"] > div,
+    [class*="btn-"] > strong,
+    [class*="btn-"] > p {
+        min-width: 0;
         overflow: hidden;
         text-overflow: ellipsis;
     }
