@@ -21,10 +21,10 @@ class FileUploadService
      * @return string
      */
     public static function storeOptimized(
-        UploadedFile $file, 
-        string $directory, 
-        string $disk = 'public', 
-        int $maxDimension = 1600, 
+        UploadedFile $file,
+        string $directory,
+        string $disk = 'public',
+        int $maxDimension = 1600,
         int $quality = 80
     ): string {
         if (!extension_loaded('gd')) {
@@ -37,7 +37,7 @@ class FileUploadService
         // Check if the uploaded file is a compressible image format
         if (in_array($extension, ['jpg', 'jpeg', 'png', 'webp']) || str_starts_with($mimeType, 'image/')) {
             $imagePath = $file->getRealPath();
-            
+
             // Read image resource depending on format
             $image = null;
             if ($extension === 'jpg' || $extension === 'jpeg' || $mimeType === 'image/jpeg') {

@@ -10,7 +10,7 @@
     </div>
 
     <!-- 2-Column Grid Cards (Mobile Only) -->
-    <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 grid grid-cols-2 gap-3">
+    <div class="bg-slate-50 dark:bg-slate-50 border border-slate-100 dark:border-slate-100 rounded-2xl p-4 grid grid-cols-2 gap-3">
         @foreach($quickInitiatives as $qi)
             @php
                 $color = match($qi->committee_id) {
@@ -41,7 +41,7 @@
                @else
                    @click.prevent="openCustomForm({{ json_encode($qi->only(['id', 'title', 'description', 'custom_fields'])) }})"
                @endif
-               class="bg-white border border-slate-100 hover:border-[#1e40af] text-slate-700 hover:text-[#1e40af] hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200 rounded-xl p-2.5 flex items-center space-x-2 w-full justify-start active:scale-98 overflow-hidden">
+               class="bg-white dark:bg-white border border-slate-100 dark:border-slate-100 hover:border-[#1e40af] text-slate-700 dark:text-slate-700 hover:text-[#1e40af] hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200 rounded-xl p-2.5 flex items-center space-x-2 w-full justify-start active:scale-98 overflow-hidden">
                 <div class="p-1 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
                     <x-category-icon name="{{ $icon }}" class="w-4 h-4 {{ $color }}" />
                 </div>
@@ -51,7 +51,7 @@
 
         <!-- Sports League -->
         <a href="{{ route('forms.sports.create') }}"
-           class="bg-white border border-slate-100 hover:border-[#1e40af] text-slate-700 hover:text-[#1e40af] hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200 rounded-xl p-2.5 flex items-center space-x-2 w-full justify-start active:scale-98 overflow-hidden">
+           class="bg-white dark:bg-white border border-slate-100 dark:border-slate-100 hover:border-[#1e40af] text-slate-700 dark:text-slate-700 hover:text-[#1e40af] hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200 rounded-xl p-2.5 flex items-center space-x-2 w-full justify-start active:scale-98 overflow-hidden">
             <div class="p-1 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
                 <x-category-icon name="sports" class="w-4 h-4 text-blue-600" />
             </div>
@@ -59,7 +59,7 @@
         </a>
 
         <!-- Track Request -->
-        <a href="{{ route('track.index') }}" 
+        <a href="{{ route('track.index') }}"
            class="bg-[#1e40af] text-white hover:bg-blue-700 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 rounded-xl p-2.5 flex items-center justify-center space-x-2 w-full col-span-2 active:scale-98">
             <x-category-icon name="track" class="w-4 h-4 text-white" />
             <span class="font-black text-[10px] tracking-widest uppercase font-display whitespace-nowrap">Track Your Request</span>
@@ -69,7 +69,7 @@
 
 <!-- ================= DESKTOP/TABLET VIEW ONLY ================= -->
 <section class="hidden sm:block max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal-on-scroll">
-    <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 flex flex-wrap items-center justify-center gap-3">
+    <div class="bg-slate-50 dark:bg-slate-50 border border-slate-100 dark:border-slate-100 rounded-2xl p-4 flex flex-wrap items-center justify-center gap-3">
         <span class="text-xs font-bold text-slate-500 uppercase tracking-wider px-3">Quick Forms:</span>
 
         @foreach($quickInitiatives as $qi)

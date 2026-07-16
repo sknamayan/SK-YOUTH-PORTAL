@@ -74,7 +74,13 @@
                 <form id="avatar-upload-form" method="POST" action="{{ route('profile.update-avatar') }}">
                     @csrf
                     <input type="hidden" name="avatar_base64" id="avatar_base64">
-                    
+                    <input type="hidden" name="settings_tab" value="account">
+
+                    <label class="inline-flex items-center justify-center min-h-11 px-5 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 font-bold text-xs uppercase tracking-wider rounded-2xl cursor-pointer active:scale-95 transition-all shadow-sm">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        {{ __('Choose New Photo') }}
+                        <input type="file" accept="image/png,image/jpeg,image/jpg,image/webp" class="hidden" @change="handleFileSelect">
+                    </label>
                 </form>
                 <p class="text-[9px] text-slate-400 dark:text-slate-500">{{ __('Accepted formats: PNG, JPG, JPEG or WEBP. Max file size: 5MB.') }}</p>
             </div>
@@ -118,12 +124,13 @@
         <form method="POST" action="{{ route('profile.update-info') }}" class="space-y-4">
             @csrf
             @method('PATCH')
+            <input type="hidden" name="settings_tab" value="account">
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <x-form-input label="First Name" name="first_name" :value="$user->first_name" required="true" />
                 <x-form-input label="Last Name" name="last_name" :value="$user->last_name" required="true" />
             </div>
-            
+
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <x-form-input label="Email Address" name="email" :value="$user->email" type="email" required="true" />
                 <x-form-input label="Contact Number" name="contact_number" :value="$user->contact_number" type="tel" placeholder="09xxxxxxxxx" />
@@ -148,6 +155,7 @@
 
         <form method="POST" action="{{ route('profile.update-preferences') }}" class="space-y-6">
             @csrf
+            <input type="hidden" name="settings_tab" value="display">
 
             <!-- Theme Preferences selector cards (alpine interactive) -->
             <div class="space-y-3" x-data="{
@@ -158,11 +166,11 @@
             }" x-init="syncTheme(currentTheme)">
                 <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{{ __('Theme') }}</label>
                 <input type="hidden" name="theme" :value="currentTheme">
-                
+
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <!-- Light Mode Card -->
-                    <div @click="currentTheme = 'light'; syncTheme(currentTheme)" 
-                         :class="currentTheme === 'light' ? 'border-[#1e40af] bg-blue-50/20 dark:bg-blue-950/10 ring-2 ring-blue-500/10' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850'" 
+                    <div @click="currentTheme = 'light'; syncTheme(currentTheme)"
+                         :class="currentTheme === 'light' ? 'border-[#1e40af] bg-blue-50/20 dark:bg-blue-950/10 ring-2 ring-blue-500/10' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850'"
                          class="border rounded-2xl p-4 flex items-center space-x-3 cursor-pointer transition select-none">
                         <div class="p-2 rounded-xl bg-amber-500/15 text-amber-600">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M14 12a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
@@ -174,8 +182,8 @@
                     </div>
 
                     <!-- Dark Mode Card -->
-                    <div @click="currentTheme = 'dark'; syncTheme(currentTheme)" 
-                         :class="currentTheme === 'dark' ? 'border-[#1e40af] bg-blue-50/20 dark:bg-blue-955/10 ring-2 ring-blue-500/10' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850'" 
+                    <div @click="currentTheme = 'dark'; syncTheme(currentTheme)"
+                         :class="currentTheme === 'dark' ? 'border-[#1e40af] bg-blue-50/20 dark:bg-blue-955/10 ring-2 ring-blue-500/10' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850'"
                          class="border rounded-2xl p-4 flex items-center space-x-3 cursor-pointer transition select-none">
                         <div class="p-2 rounded-xl bg-indigo-500/15 text-indigo-400">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
@@ -187,8 +195,8 @@
                     </div>
 
                     <!-- System Mode Card -->
-                    <div @click="currentTheme = 'system'; syncTheme(currentTheme)" 
-                         :class="currentTheme === 'system' ? 'border-[#1e40af] bg-blue-50/20 dark:bg-blue-955/10 ring-2 ring-blue-500/10' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850'" 
+                    <div @click="currentTheme = 'system'; syncTheme(currentTheme)"
+                         :class="currentTheme === 'system' ? 'border-[#1e40af] bg-blue-50/20 dark:bg-blue-955/10 ring-2 ring-blue-500/10' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850'"
                          class="border rounded-2xl p-4 flex items-center space-x-3 cursor-pointer transition select-none">
                         <div class="p-2 rounded-xl bg-slate-500/15 text-slate-500 dark:text-slate-400">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
@@ -236,9 +244,10 @@
         <form method="POST" action="{{ route('profile.update-password') }}" class="space-y-4">
             @csrf
             @method('PUT')
+            <input type="hidden" name="settings_tab" value="security">
 
             <x-form-input label="Current Password" name="current_password" type="password" required="true" />
-            
+
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <x-form-input label="New Password" name="password" type="password" required="true" />
                 <x-form-input label="Confirm New Password" name="password_confirmation" type="password" required="true" />
@@ -301,6 +310,7 @@
                 <x-modal name="confirm-logout-other-sessions" focusable>
                     <form method="POST" action="{{ route('profile.logout-other-sessions') }}" class="p-6 space-y-4 text-left">
                         @csrf
+                        <input type="hidden" name="settings_tab" value="security">
                         <div>
                             <h2 class="text-sm font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">{{ __('Log out of other browser sessions') }}</h2>
                             <p class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5 leading-relaxed">{{ __('Please enter your account password to confirm logging out of your account on all other devices and browser platforms.') }}</p>
@@ -335,7 +345,8 @@
 
         <form method="POST" action="{{ route('profile.update-preferences') }}" class="space-y-5">
             @csrf
-            
+            <input type="hidden" name="settings_tab" value="notifications">
+
             <!-- Hidden theme/lang fields (preserve state) -->
             <input type="hidden" name="theme" value="{{ $user->theme }}">
             <input type="hidden" name="language" value="{{ $user->language }}">
@@ -409,7 +420,7 @@
                     {{ __('Once your account is deleted, all of its resources and request histories will be permanently deleted. Before proceeding, please download any data or information you wish to retain.') }}
                 </p>
 
-                <button type="button" 
+                <button type="button"
                         x-on:click.prevent="$dispatch('open-modal', 'confirm-account-deletion')"
                         class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition active:scale-95 shadow-sm shadow-rose-600/15">
                     {{ __('Delete Account') }}
@@ -420,7 +431,8 @@
                     <form method="POST" action="{{ route('profile.destroy') }}" class="p-6 space-y-4 text-left">
                         @csrf
                         @method('DELETE')
-                        
+                        <input type="hidden" name="settings_tab" value="privacy">
+
                         <div>
                             <h2 class="text-sm font-bold text-rose-800 dark:text-rose-400 uppercase tracking-wider mb-1">
                                 {{ __('Are you sure you want to delete your account?') }}
@@ -438,12 +450,12 @@
                         </div>
 
                         <div class="flex justify-end space-x-3 pt-3 border-t border-slate-100 dark:border-slate-800">
-                            <button type="button" 
-                                    x-on:click="$dispatch('close')" 
+                            <button type="button"
+                                    x-on:click="$dispatch('close')"
                                     class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-350 font-bold text-xs uppercase tracking-wider rounded-xl transition active:scale-95">
                                 {{ __('Cancel') }}
                             </button>
-                            <button type="submit" 
+                            <button type="submit"
                                     class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition active:scale-95 shadow-sm shadow-rose-600/15">
                                 {{ __('Confirm Permanent Deletion') }}
                             </button>

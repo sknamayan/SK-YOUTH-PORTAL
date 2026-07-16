@@ -69,7 +69,7 @@ class CompressImages extends Command
             }
 
             $originalSize = filesize($filePath);
-            
+
             // Skip extremely small files
             if ($originalSize < 1024) {
                 continue;
@@ -197,7 +197,7 @@ class CompressImages extends Command
                         $value = $newPath;
                     }
                 });
-                
+
                 DB::table('registration_responses')
                     ->where('id', $response->id)
                     ->update(['answers' => json_encode($answers)]);

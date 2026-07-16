@@ -16,6 +16,28 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    private const SETTINGS_TABS = ['account', 'display', 'security', 'notifications', 'privacy'];
+
+    /**
+     * Resolve the settings tab to redirect back to after an action.
+     */
+    private function settingsTab(Request $request, string $default = 'account'): string
+    {
+        $tab = $request->input('settings_tab', $default);
+
+        return in_array($tab, self::SETTINGS_TABS, true) ? $tab : $default;
+    }
+
+    /**
+     * Redirect back to the settings page on the requested tab.
+     */
+    private function redirectToSettings(Request $request, string $defaultTab, string $message, string $flashKey = 'success'): RedirectResponse
+    {
+        return redirect()
+            ->route('profile.edit', ['tab' => $this->settingsTab($request, $defaultTab)])
+            ->with($flashKey, $message);
+    }
+
     /**
      * Display the user's submissions across all 4 request models.
      */
@@ -174,7 +196,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return redirect()->route('profile.edit', ['tab' => 'account'])->with('success', 'Profile information updated successfully.');
+        return $this->redirectToSettings($request, 'account', 'Profile information updated successfully.');
     }
 
     /**
@@ -193,14 +215,16 @@ class ProfileController extends Controller
 
         $user->theme = $request->input('theme');
         $user->language = $request->input('language');
-        $user->notify_request_status = $request->has('notify_request_status');
-        $user->notify_announcements = $request->has('notify_announcements');
+        $user->notify_request_status = $request->boolean('notify_request_status');
+        $user->notify_announcements = $request->boolean('notify_announcements');
         $user->save();
 
         app()->setLocale($user->language);
         session(['locale' => $user->language]);
 
-        return redirect()->route('profile.edit', ['tab' => 'display'])->with('success', 'Preferences updated successfully.');
+        $defaultTab = $this->settingsTab($request, 'display') === 'notifications' ? 'notifications' : 'display';
+
+        return $this->redirectToSettings($request, $defaultTab, 'Preferences updated successfully.');
     }
 
     /**
@@ -238,7 +262,7 @@ class ProfileController extends Controller
             $user->avatar = $filename;
             $user->save();
 
-            return redirect()->route('profile.edit', ['tab' => 'account'])->with('success', 'Profile avatar updated successfully.');
+            return $this->redirectToSettings($request, 'account', 'Profile avatar updated successfully.');
         }
 
         return back()->with('error', 'Failed to upload profile picture.');
@@ -258,7 +282,7 @@ class ProfileController extends Controller
             ->where('id', '!=', $request->session()->getId())
             ->delete();
 
-        return redirect()->route('profile.edit', ['tab' => 'security'])->with('success', 'Logged out of other sessions successfully.');
+        return $this->redirectToSettings($request, 'security', 'Logged out of other sessions successfully.');
     }
 
     /**
@@ -357,7 +381,7 @@ class ProfileController extends Controller
         $user->password = Hash::make($request->input('password'));
         $user->save();
 
-        return redirect()->route('profile.edit', ['tab' => 'security'])->with('success', 'Password changed successfully.');
+        return $this->redirectToSettings($request, 'security', 'Password changed successfully.');
     }
 
     /**
@@ -370,6 +394,15 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+
+        if ($user->isSuperAdmin()) {
+            return $this->redirectToSettings(
+                $request,
+                'privacy',
+                'Superadmin accounts cannot delete their own profile.',
+                'error'
+            );
+        }
 
         Auth::logout();
 

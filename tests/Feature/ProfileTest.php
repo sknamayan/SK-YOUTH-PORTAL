@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -21,6 +22,7 @@ class ProfileTest extends TestCase
             ->get('/profile/edit');
 
         $response->assertOk();
+        $response->assertSee('Choose New Photo', false);
     }
 
     public function test_profile_information_can_be_updated(): void
@@ -55,6 +57,7 @@ class ProfileTest extends TestCase
         $response = $this
             ->actingAs($user)
             ->post('/profile/preferences', [
+                'settings_tab' => 'display',
                 'theme' => 'dark',
                 'language' => 'fil',
                 'notify_request_status' => '1',
@@ -72,6 +75,80 @@ class ProfileTest extends TestCase
         $this->assertTrue($user->notify_request_status);
         $this->assertTrue($user->notify_announcements);
         $this->assertSame('fil', session('locale'));
+    }
+
+    public function test_display_preferences_do_not_force_enable_notifications(): void
+    {
+        $user = User::factory()->create([
+            'notify_request_status' => false,
+            'notify_announcements' => false,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->post('/profile/preferences', [
+                'settings_tab' => 'display',
+                'theme' => 'light',
+                'language' => 'en',
+                'notify_request_status' => '0',
+                'notify_announcements' => '0',
+            ]);
+
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/profile/edit?tab=display');
+
+        $user->refresh();
+
+        $this->assertFalse($user->notify_request_status);
+        $this->assertFalse($user->notify_announcements);
+    }
+
+    public function test_notification_preferences_can_be_updated_from_notifications_tab(): void
+    {
+        $user = User::factory()->create([
+            'theme' => 'system',
+            'language' => 'en',
+            'notify_request_status' => true,
+            'notify_announcements' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->post('/profile/preferences', [
+                'settings_tab' => 'notifications',
+                'theme' => 'system',
+                'language' => 'en',
+            ]);
+
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/profile/edit?tab=notifications');
+
+        $user->refresh();
+
+        $this->assertFalse($user->notify_request_status);
+        $this->assertFalse($user->notify_announcements);
+    }
+
+    public function test_password_can_be_updated(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this
+            ->actingAs($user)
+            ->put('/profile/password', [
+                'settings_tab' => 'security',
+                'current_password' => 'password',
+                'password' => 'new-password-123',
+                'password_confirmation' => 'new-password-123',
+            ]);
+
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/profile/edit?tab=security');
+
+        $this->assertTrue(Hash::check('new-password-123', $user->refresh()->password));
     }
 
     public function test_filipino_settings_labels_are_translated(): void
@@ -155,7 +232,7 @@ class ProfileTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'application/json');
-        
+
         $json = json_decode($response->streamedContent(), true);
 
         $this->assertSame('John', $json['account']['first_name']);
@@ -210,12 +287,15 @@ class ProfileTest extends TestCase
             ->actingAs($user)
             ->from('/profile/edit')
             ->delete('/profile', [
+                'settings_tab' => 'privacy',
                 'password' => 'wrong-password',
             ]);
 
         $response
             ->assertSessionHasErrors('password')
             ->assertRedirect('/profile/edit');
+
+        $this->assertSame('privacy', old('settings_tab'));
 
         $this->assertNotNull($user->fresh());
     }

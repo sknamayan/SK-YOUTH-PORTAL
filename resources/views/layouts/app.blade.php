@@ -148,7 +148,7 @@
                  <div class="max-w-7xl mx-auto w-full p-6 md:p-8 space-y-8 flex-1 overflow-hidden">
                       <!-- Hero Banner skeleton -->
                       <div class="w-full h-56 md:h-72 rounded-3xl skeleton-shimmer"></div>
-                      
+
                       <!-- Cards grid skeleton (representing News / Services / Committees) -->
                       <div class="space-y-4">
                            <div class="w-48 h-6 rounded-lg skeleton-shimmer"></div>
@@ -199,9 +199,9 @@
                 <!-- Left: Burger & Branding with Logo -->
                 <div class="flex items-center space-x-3">
                     <!-- Burger Icon (Always available on mobile; hidden on dashboard desktop) -->
-                    <button @click="mobileMenuOpen = !mobileMenuOpen" 
-                            type="button" 
-                            class="inline-flex text-blue-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/50 p-1.5 rounded-xl hover:bg-white/10 transition {{ request()->routeIs('dashboard', 'dashboard.*', 'admin.*') || (auth()->check() && auth()->user()->canAccessDashboard() && request()->routeIs('profile.edit')) ? 'hidden' : '' }}" 
+                    <button @click="mobileMenuOpen = !mobileMenuOpen"
+                            type="button"
+                            class="inline-flex text-blue-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/50 p-1.5 rounded-xl hover:bg-white/10 transition {{ request()->routeIs('dashboard', 'dashboard.*', 'admin.*') || (auth()->check() && auth()->user()->canAccessDashboard() && request()->routeIs('profile.edit')) ? 'hidden' : '' }}"
                             aria-label="Toggle menu">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -210,9 +210,9 @@
 
                     <!-- Dashboard Burger Icon (Visible only on mobile/tablet for dashboard/admin routes) -->
                     @if(request()->routeIs('dashboard', 'dashboard.*', 'admin.*') || (auth()->check() && auth()->user()->canAccessDashboard() && request()->routeIs('profile.edit')))
-                    <button @click="$dispatch('toggle-sidebar')" 
-                            type="button" 
-                            class="inline-flex md:hidden text-blue-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/50 p-1.5 rounded-xl hover:bg-white/10 transition" 
+                    <button @click="$dispatch('toggle-sidebar')"
+                            type="button"
+                            class="inline-flex md:hidden text-blue-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/50 p-1.5 rounded-xl hover:bg-white/10 transition"
                             aria-label="Toggle Dashboard Sidebar">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -229,11 +229,11 @@
 
 
                 <!-- Right: Nav options & dropdowns -->
-                <div class="flex items-center space-x-2 sm:space-x-3 text-sm shrink-0" 
-                     x-data="{ 
+                <div class="flex items-center space-x-2 sm:space-x-3 text-sm shrink-0"
+                     x-data="{
                          darkMode: window.SKTheme.isDark(),
-                         notifOpen: false, 
-                         profileOpen: false 
+                         notifOpen: false,
+                         profileOpen: false
                      }"
                      x-init="
                          $watch('darkMode', val => {
@@ -263,7 +263,7 @@
                     @if (Route::has('login'))
                         @auth
                             @if(Auth::user()->canAccessDashboard())
-                                <a href="{{ route('dashboard.index') }}" 
+                                <a href="{{ route('dashboard.index') }}"
                                    class="hidden md:inline-flex items-center space-x-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold transition mr-1">
                                     <svg class="w-4 h-4 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" /></svg>
                                     <span>Dashboard</span>
@@ -276,8 +276,8 @@
                                     $unreadCount = Auth::user()->notifications()->whereNull('read_at')->count();
                                     $notifications = Auth::user()->notifications()->take(5)->get();
                                 @endphp
-                                <button @click="notifOpen = !notifOpen; profileOpen = false" 
-                                        type="button" 
+                                <button @click="notifOpen = !notifOpen; profileOpen = false"
+                                        type="button"
                                         class="p-2 rounded-xl text-blue-100 hover:text-white hover:bg-white/10 transition focus:outline-none relative">
                                     <!-- Bell Icon -->
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -292,7 +292,7 @@
                                 </button>
 
                                 <!-- Notifications Dropdown Panel -->
-                                <div x-show="notifOpen" 
+                                <div x-show="notifOpen"
                                      @click.away="notifOpen = false"
                                      x-transition:enter="transition ease-out duration-150"
                                      x-transition:enter-start="opacity-0 scale-95 mt-0"
@@ -349,8 +349,8 @@
                                     $user = Auth::user();
                                     $initials = strtoupper(substr($user->first_name ?? $user->name, 0, 1) . substr($user->last_name ?? '', 0, 1));
                                 @endphp
-                                <button @click="profileOpen = !profileOpen; notifOpen = false" 
-                                        type="button" 
+                                <button @click="profileOpen = !profileOpen; notifOpen = false"
+                                        type="button"
                                         class="flex items-center focus:outline-none active:scale-95 transition"
                                         aria-label="User Menu">
                                     <div class="w-8 h-8 rounded-full bg-white dark:bg-slate-800 text-[#1e40af] dark:text-blue-400 font-extrabold text-xs flex items-center justify-center border border-white/20 shadow-sm">
@@ -359,7 +359,7 @@
                                 </button>
 
                                 <!-- Dropdown Panel -->
-                                <div x-show="profileOpen" 
+                                <div x-show="profileOpen"
                                      @click.away="profileOpen = false"
                                      x-transition:enter="transition ease-out duration-150"
                                      x-transition:enter-start="opacity-0 scale-95 mt-0"
@@ -601,12 +601,12 @@
 
         <!-- Flash Messages Block (Modern Sleek Modal) -->
         @if (session('success') || session('error'))
-            <div x-data="{ showFlashModal: true }" 
-                 x-show="showFlashModal" 
-                 class="fixed inset-0 z-50 flex items-center justify-center p-4" 
+            <div x-data="{ showFlashModal: true }"
+                 x-show="showFlashModal"
+                 class="fixed inset-0 z-50 flex items-center justify-center p-4"
                  x-cloak>
                 <!-- Backdrop with modern blur -->
-                <div class="fixed inset-0 bg-slate-950/60 backdrop-blur-md transition-opacity duration-300" 
+                <div class="fixed inset-0 bg-slate-950/60 backdrop-blur-md transition-opacity duration-300"
                      @click="showFlashModal = false"></div>
 
                 <!-- Card Container -->
@@ -637,7 +637,7 @@
                         </div>
 
                         <!-- Action Button -->
-                        <button @click="showFlashModal = false" 
+                        <button @click="showFlashModal = false"
                                 class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer">
                             Okay
                         </button>
@@ -658,7 +658,7 @@
                         </div>
 
                         <!-- Action Button -->
-                        <button @click="showFlashModal = false" 
+                        <button @click="showFlashModal = false"
                                 class="w-full py-3 bg-rose-600 hover:bg-rose-500 dark:bg-rose-500 dark:hover:bg-rose-400 text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-lg shadow-rose-500/20 hover:shadow-rose-500/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer">
                             Close
                         </button>
@@ -687,7 +687,7 @@
                             Empowering youth governance in Barangay Namayan, Mandaluyong. Offering digitalized solutions for community health, education, sports, and social welfare requests.
                         </p>
                     </div>
- 
+
                     <!-- Column 2: Quick Links -->
                     <div class="space-y-3">
                         <span class="font-bold text-white uppercase tracking-wider font-display">Services Directory</span>
@@ -703,7 +703,7 @@
                             <li><a href="{{ route('about') }}" class="hover:text-white transition">About Us</a></li>
                         </ul>
                     </div>
- 
+
                     <!-- Column 3: Accounts and Contact info -->
                     <div class="space-y-3">
                         <span class="font-bold text-white uppercase tracking-wider font-display">Barangay Desk</span>
@@ -723,9 +723,9 @@
                         </div>
                     </div>
                 </div>
- 
+
                 <hr class="border-slate-800 my-8">
- 
+
                 <div class="flex flex-col sm:flex-row items-center justify-between text-slate-500">
                     <div>
                         &copy; {{ date('Y') }} Sangguniang Kabataan Namayan. All rights reserved.
@@ -754,7 +754,7 @@
                 @include('citizen.skonsulta.floating-chat')
             @endif
         @endauth
- 
+
         @livewireScripts
     </body>
 </html>

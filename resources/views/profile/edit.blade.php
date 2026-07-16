@@ -2,7 +2,9 @@
 
 @section('content')
 @php
-    $activeTab = request('tab', 'account');
+    $validTabs = ['account', 'display', 'security', 'notifications', 'privacy'];
+    $activeTab = request('tab', old('settings_tab', 'account'));
+    $activeTab = in_array($activeTab, $validTabs, true) ? $activeTab : 'account';
 @endphp
 
 <div x-data="{ activeTab: '{{ $activeTab }}' }" class="flex-1 flex flex-col min-h-screen">
