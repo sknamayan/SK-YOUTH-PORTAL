@@ -1,6 +1,5 @@
 <!-- Citizen Left Sidebar Navigation -->
-<aside :class="mobileSidebar ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
-       class="fixed md:sticky md:self-start inset-y-0 md:bottom-auto left-0 w-[86%] max-w-[300px] sm:w-[80%] md:w-80 md:max-w-none md:top-16 md:h-[calc(100vh_-_4rem)] border-r border-slate-100 bg-white z-30 transition-transform duration-300 transform flex flex-col justify-between shrink-0 shadow-sm md:shadow-none overflow-x-hidden">
+<aside        class="fixed md:sticky md:self-start inset-y-0 md:bottom-auto left-0 w-[86%] max-w-[300px] sm:w-[80%] md:w-80 md:max-w-none md:top-16 md:h-[calc(100vh_-_4rem)] border-r border-slate-100 bg-white z-30 transition-transform duration-300 transform flex flex-col justify-between shrink-0 shadow-sm md:shadow-none overflow-x-hidden">
 
     <!-- Top Menu / Navigation Scrollable Pane -->
     <div class="flex-1 p-4 sm:p-6 space-y-5 sm:space-y-6 overflow-y-auto overflow-x-hidden">

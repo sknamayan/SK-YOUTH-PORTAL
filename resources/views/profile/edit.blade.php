@@ -9,12 +9,10 @@
 
 <div x-data="{ activeTab: '{{ $activeTab }}' }" class="flex-1 flex flex-col min-h-screen">
     @if(Auth::user()->canAccessDashboard())
-        <div x-data="{ mobileSidebar: false }" class="flex-1 flex flex-col md:flex-row bg-[#f8fafc] dark:bg-slate-950">
+        <div x-data="{}" class="flex-1 flex flex-col md:flex-row bg-[#f8fafc] dark:bg-slate-950">
 
             <!-- Left Master Sidebar -->
             @include('layouts.dashboard-sidebar')
-
-            <div x-show="mobileSidebar" @click="mobileSidebar = false" class="fixed inset-0 bg-slate-900/40 z-20 md:hidden" x-cloak></div>
 
             <!-- Main Content Pane -->
             <div class="flex-1 flex flex-col min-w-0">

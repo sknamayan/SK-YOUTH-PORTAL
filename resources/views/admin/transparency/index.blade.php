@@ -11,42 +11,10 @@
 
     @include('layouts.dashboard-sidebar')
 
-    {{-- Mobile sidebar backdrop --}}
-    <div
-        x-show="mobileSidebar"
-        x-transition:enter="transition-opacity ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition-opacity ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        @click="mobileSidebar = false"
-        class="fixed inset-0 bg-slate-900/50 dark:bg-black/60 z-20 md:hidden"
-        aria-hidden="true"
-        x-cloak
-    ></div>
-
     {{-- Main content shell --}}
     <div class="flex-1 flex flex-col min-w-0 min-h-0 md:min-h-[calc(100dvh-4rem)]">
 
         {{-- Sticky mobile app bar --}}
-        <header class="sticky top-0 z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 h-14 px-3 flex items-center justify-between md:hidden shrink-0 supports-[padding:max(0px)]:pt-[env(safe-area-inset-top)]">
-            <button
-                type="button"
-                @click="mobileSidebar = true"
-                class="inline-flex items-center justify-center min-w-11 min-h-11 -ml-1 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition"
-                aria-label="Open navigation menu"
-            >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-            <div class="flex items-center gap-2 min-w-0">
-                <img src="{{ asset('images/logo.png') }}" class="w-8 h-8 object-contain rounded-full bg-white dark:bg-slate-800 p-0.5 border border-slate-100 dark:border-slate-700 shrink-0" alt="SK Logo">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-100 font-display truncate">Transparency</span>
-            </div>
-            <div class="w-11 shrink-0" aria-hidden="true"></div>
-        </header>
 
         {{-- Scrollable page body --}}
         <div class="flex-1 overflow-y-auto overscroll-y-contain p-4 md:p-8 space-y-4 md:space-y-6 pb-24 md:pb-8">
@@ -657,7 +625,6 @@
 <script>
     document.addEventListener('alpine:init', () => {
         Alpine.data('transparencyAdmin', (config = {}) => ({
-            mobileSidebar: false,
             openAddPostModal: config.openOnLoad ?? false,
             openEditPostModal: false,
             editPostData: { id: null, title: '', category: '', excerpt: '', content: '', is_active: true, image_url: '', file_url: '' },
@@ -674,13 +641,6 @@
 
                 this.$watch('openEditPostModal', (open) => {
                     this.lockBodyScroll(open);
-                });
-
-                this.$watch('mobileSidebar', (open) => {
-                    if (open) {
-                        this.openAddPostModal = false;
-                        this.openEditPostModal = false;
-                    }
                 });
             },
 

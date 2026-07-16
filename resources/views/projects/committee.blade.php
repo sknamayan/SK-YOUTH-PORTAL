@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div x-data="{ mobileSidebar: false, selectedReport: null, activeSection: 'programs', activeInitiativeId: 'all', showAll: false }" class="flex-1 flex flex-col md:flex-row bg-[#f8fafc]">
+<div x-data="{ selectedReport: null, activeSection: 'programs', activeInitiativeId: 'all', showAll: false }" class="flex-1 flex flex-col md:flex-row bg-[#f8fafc]">
 
     <!-- Left Sidebar (Explorer Navigation Tree) -->
     <aside class="hidden md:flex flex-col w-80 bg-white border-r border-slate-100 shrink-0">

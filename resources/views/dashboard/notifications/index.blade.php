@@ -2,26 +2,15 @@
 
 @section('content')
 @if(Auth::user()->canAccessDashboard())
-    <div x-data="{ mobileSidebar: false }" class="flex-1 flex flex-col md:flex-row bg-[#f8fafc] dark:bg-slate-955 min-h-0">
+    <div x-data="{}" class="flex-1 flex flex-col md:flex-row bg-[#f8fafc] dark:bg-slate-955 min-h-0">
         <!-- Left Sidebar -->
         @include('layouts.dashboard-sidebar')
 
         {{-- Mobile sidebar backdrop --}}
-        <div x-show="mobileSidebar" @click="mobileSidebar = false" class="fixed inset-0 bg-slate-900/50 dark:bg-black/60 z-20 md:hidden" x-cloak></div>
 
         <!-- Main Content Pane -->
         <div class="flex-1 flex flex-col min-w-0 min-h-0 md:min-h-[calc(100dvh-4rem)]">
             {{-- Sticky mobile app bar --}}
-            <header class="sticky top-0 z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 h-14 px-3 flex items-center justify-between md:hidden shrink-0">
-                <button type="button" @click="mobileSidebar = true" class="inline-flex items-center justify-center min-w-11 min-h-11 -ml-1 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
-                <div class="flex items-center gap-2 min-w-0">
-                    <img src="{{ asset('images/logo.png') }}" class="w-8 h-8 object-contain rounded-full bg-white dark:bg-slate-800 p-0.5 border border-slate-100 dark:border-slate-700 shrink-0" alt="SK Logo">
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-100 font-display truncate">Notifications</span>
-                </div>
-                <div class="w-11 shrink-0"></div>
-            </header>
 
             <div class="p-4 md:p-8 space-y-6 flex-1 overflow-y-auto">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">

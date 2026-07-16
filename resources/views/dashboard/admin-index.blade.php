@@ -2,16 +2,12 @@
 
 @section('content')
 <!-- Dashboard double-pane container using Alpine.js for sidebars and tabs -->
-<div x-data="{ mobileSidebar: false }" class="flex-1 flex flex-col md:flex-row bg-[#f8fafc]">
+<div x-data="{}" class="flex-1 flex flex-col md:flex-row bg-[#f8fafc]">
 
     <!-- 1. Left Sidebar Navigation -->
     @include('layouts.dashboard-sidebar')
 
     <!-- Overlay back shadow on mobile when sidebar is open -->
-    <div x-show="mobileSidebar" 
-         @click="mobileSidebar = false" 
-         class="fixed inset-0 bg-slate-900/40 z-20 md:hidden"
-         x-cloak></div>
 
     <!-- 2. Main Content Area -->
     <div class="flex-1 flex flex-col min-w-0">
