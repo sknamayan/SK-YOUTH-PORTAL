@@ -74,6 +74,18 @@ class ProfileTest extends TestCase
         $this->assertSame('fil', session('locale'));
     }
 
+    public function test_filipino_settings_labels_are_translated(): void
+    {
+        app()->setLocale('fil');
+
+        $this->assertSame('Mga Setting ng Portal', __('Settings Portal'));
+        $this->assertSame('Personal na Impormasyon', __('Personal Info'));
+        $this->assertSame('Display at Tema', __('Display & Theme'));
+        $this->assertSame('Mga Setting ng Seguridad', __('Security Settings'));
+        $this->assertSame('Mga Notipikasyon', __('Notifications'));
+        $this->assertSame('Privacy at Data', __('Privacy & Data'));
+    }
+
     public function test_avatar_can_be_uploaded_and_cropped(): void
     {
         Storage::fake('public');

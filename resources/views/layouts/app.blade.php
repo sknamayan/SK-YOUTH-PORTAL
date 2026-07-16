@@ -24,26 +24,30 @@
         <script>
             (function() {
                 const dbTheme = '{{ auth()->check() ? auth()->user()->theme : 'system' }}';
-                let themeToApply = 'light';
-                
-                if ({{ auth()->check() ? 'true' : 'false' }}) {
-                    if (dbTheme === 'system') {
-                        themeToApply = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                    } else {
-                        themeToApply = dbTheme;
+                const resolveTheme = function(themePreference) {
+                    if (themePreference === 'dark' || themePreference === 'light') {
+                        return themePreference;
                     }
-                    localStorage.setItem('theme', themeToApply);
+
+                    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                };
+
+                const applyTheme = function(themePreference) {
+                    const resolvedTheme = resolveTheme(themePreference);
+                    localStorage.setItem('theme', resolvedTheme);
+                    document.documentElement.classList.toggle('dark', resolvedTheme === 'dark');
+                    return resolvedTheme;
+                };
+
+                if ({{ auth()->check() ? 'true' : 'false' }}) {
+                    applyTheme(dbTheme);
                 } else {
                     const localTheme = localStorage.getItem('theme');
-                    if (localTheme === 'dark' || (!localTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                        themeToApply = 'dark';
+                    if (localTheme === 'dark' || localTheme === 'light') {
+                        applyTheme(localTheme);
+                    } else {
+                        applyTheme('system');
                     }
-                }
-
-                if (themeToApply === 'dark') {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
                 }
             })();
         </script>
@@ -215,16 +219,21 @@
                 <!-- Right: Nav options & dropdowns -->
                 <div class="flex items-center space-x-2 sm:space-x-3 text-sm shrink-0" 
                      x-data="{ 
-                         darkMode: localStorage.getItem('theme') === 'dark',
+                         darkMode: (() => {
+                             const savedTheme = localStorage.getItem('theme');
+                             if (savedTheme === 'dark' || savedTheme === 'light') {
+                                 return savedTheme === 'dark';
+                             }
+
+                             return window.matchMedia('(prefers-color-scheme: dark)').matches;
+                         })(),
                          notifOpen: false, 
                          profileOpen: false 
                      }"
                      x-init="$watch('darkMode', val => {
-                         if (val) {
-                             document.documentElement.classList.add('dark');
-                         } else {
-                             document.documentElement.classList.remove('dark');
-                         }
+                         const resolvedTheme = val ? 'dark' : 'light';
+                         localStorage.setItem('theme', resolvedTheme);
+                         document.documentElement.classList.toggle('dark', val);
                      })">
 
                     <!-- Theme Toggle Switch -->

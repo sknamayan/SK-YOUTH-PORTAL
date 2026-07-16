@@ -150,13 +150,23 @@
             @csrf
 
             <!-- Theme Preferences selector cards (alpine interactive) -->
-            <div class="space-y-3" x-data="{ currentTheme: '{{ $user->theme }}' }">
+            <div class="space-y-3" x-data="{
+                currentTheme: '{{ $user->theme }}',
+                syncTheme(themePreference) {
+                    const resolvedTheme = themePreference === 'system'
+                        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+                        : themePreference;
+
+                    localStorage.setItem('theme', resolvedTheme);
+                    document.documentElement.classList.toggle('dark', resolvedTheme === 'dark');
+                }
+            }" x-init="syncTheme(currentTheme)">
                 <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{{ __('Theme') }}</label>
                 <input type="hidden" name="theme" :value="currentTheme">
                 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <!-- Light Mode Card -->
-                    <div @click="currentTheme = 'light'" 
+                    <div @click="currentTheme = 'light'; syncTheme(currentTheme)" 
                          :class="currentTheme === 'light' ? 'border-[#1e40af] bg-blue-50/20 dark:bg-blue-950/10 ring-2 ring-blue-500/10' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850'" 
                          class="border rounded-2xl p-4 flex items-center space-x-3 cursor-pointer transition select-none">
                         <div class="p-2 rounded-xl bg-amber-500/15 text-amber-600">
@@ -169,7 +179,7 @@
                     </div>
 
                     <!-- Dark Mode Card -->
-                    <div @click="currentTheme = 'dark'" 
+                    <div @click="currentTheme = 'dark'; syncTheme(currentTheme)" 
                          :class="currentTheme === 'dark' ? 'border-[#1e40af] bg-blue-50/20 dark:bg-blue-955/10 ring-2 ring-blue-500/10' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850'" 
                          class="border rounded-2xl p-4 flex items-center space-x-3 cursor-pointer transition select-none">
                         <div class="p-2 rounded-xl bg-indigo-500/15 text-indigo-400">
@@ -182,7 +192,7 @@
                     </div>
 
                     <!-- System Mode Card -->
-                    <div @click="currentTheme = 'system'" 
+                    <div @click="currentTheme = 'system'; syncTheme(currentTheme)" 
                          :class="currentTheme === 'system' ? 'border-[#1e40af] bg-blue-50/20 dark:bg-blue-955/10 ring-2 ring-blue-500/10' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850'" 
                          class="border rounded-2xl p-4 flex items-center space-x-3 cursor-pointer transition select-none">
                         <div class="p-2 rounded-xl bg-slate-500/15 text-slate-500 dark:text-slate-400">

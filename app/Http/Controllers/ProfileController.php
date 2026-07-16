@@ -197,6 +197,7 @@ class ProfileController extends Controller
         $user->notify_announcements = $request->has('notify_announcements');
         $user->save();
 
+        app()->setLocale($user->language);
         session(['locale' => $user->language]);
 
         return redirect()->route('profile.edit', ['tab' => 'display'])->with('success', 'Preferences updated successfully.');

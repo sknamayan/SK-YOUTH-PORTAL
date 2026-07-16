@@ -1,10 +1,15 @@
 {
+    "Settings Portal": "Mga Setting ng Portal",
     "Settings & Preferences": "Mga Setting at Kagustuhan",
     "Display & Appearance": "Hitsura at Display",
     "Personal Information": "Impormasyon ng Account",
+    "Personal Info": "Personal na Impormasyon",
     "Security Settings": "Mga Setting ng Seguridad",
     "Notification Preferences": "Kagustuhan sa Notification",
+    "Notifications": "Mga Notipikasyon",
+    "Privacy & Data": "Privacy at Data",
     "Privacy & Data Control": "Privacy at Kontrol sa Data",
+    "Display & Theme": "Display at Tema",
     "Theme": "Tema",
     "Light": "Maliwanag",
     "Dark": "Madilim",
@@ -31,5 +36,6 @@
     "Confirm Permanent Deletion": "Kumpirmahin ang Pagbura",
     "Cancel": "Kanselahin",
     "Are you sure you want to delete your account?": "Sigurado ka ba na nais mong i-delete ang iyong account?",
-    "Once your account is deleted, all of its resources and request histories will be permanently deleted. Please enter your account password to confirm permanent deletion.": "Kapag na-delete ang iyong account, lahat ng records at request history ay tuluyang mabubura. Mangyaring ilagay ang iyong password para kumpirmahin."
+    "Once your account is deleted, all of its resources and request histories will be permanently deleted. Please enter your account password to confirm permanent deletion.": "Kapag na-delete ang iyong account, lahat ng records at request history ay tuluyang mabubura. Mangyaring ilagay ang iyong password para kumpirmahin.",
+    "Manage your account settings, dark mode preferences, security sessions, and data privacy.": "Pamahalaan ang iyong mga setting, kagustuhan sa dark mode, mga session ng seguridad, at privacy ng data."
 }
