@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
             \App\Http\Middleware\SecureHeaders::class,
+            \App\Http\Middleware\LocalizationMiddleware::class,
         ]);
 
         $middleware->alias([

@@ -22,11 +22,30 @@
 
         <!-- Dark Mode Guard Script -->
         <script>
-            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
+            (function() {
+                const dbTheme = '{{ auth()->check() ? auth()->user()->theme : 'system' }}';
+                let themeToApply = 'light';
+                
+                if ({{ auth()->check() ? 'true' : 'false' }}) {
+                    if (dbTheme === 'system') {
+                        themeToApply = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                    } else {
+                        themeToApply = dbTheme;
+                    }
+                    localStorage.setItem('theme', themeToApply);
+                } else {
+                    const localTheme = localStorage.getItem('theme');
+                    if (localTheme === 'dark' || (!localTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                        themeToApply = 'dark';
+                    }
+                }
+
+                if (themeToApply === 'dark') {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            })();
         </script>
 
         <!-- Scripts & Styles -->

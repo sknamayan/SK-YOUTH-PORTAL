@@ -26,6 +26,12 @@ class User extends Authenticatable
         'password',
         'role',
         'is_approved',
+        'contact_number',
+        'avatar',
+        'theme',
+        'language',
+        'notify_request_status',
+        'notify_announcements',
     ];
 
     /**
@@ -49,6 +55,8 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_approved' => 'boolean',
+            'notify_request_status' => 'boolean',
+            'notify_announcements' => 'boolean',
         ];
     }
 

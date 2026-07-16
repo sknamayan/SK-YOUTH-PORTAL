@@ -119,6 +119,19 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile/info', [ProfileController::class, 'updateInfo'])->name('profile.update-info');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.update-avatar');
+    Route::post('/profile/preferences', [ProfileController::class, 'updatePreferences'])->name('profile.update-preferences');
+    Route::post('/profile/sessions/logout-others', [ProfileController::class, 'logoutOtherSessions'])->name('profile.logout-other-sessions');
+    Route::get('/profile/download-data', [ProfileController::class, 'downloadData'])->name('profile.download-data');
+    Route::post('/locale/{locale}', function ($locale) {
+        if (in_array($locale, ['en', 'fil'])) {
+            session(['locale' => $locale]);
+            if (auth()->check()) {
+                auth()->user()->update(['language' => $locale]);
+            }
+        }
+        return back();
+    })->name('locale.switch');
 
     // Citizen Self-Profiling
     Route::get('/profile/profiling', [KkProfileController::class, 'selfCreate'])->name('profile.profiling.create');
