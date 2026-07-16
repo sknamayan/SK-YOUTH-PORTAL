@@ -10,7 +10,108 @@
             No highlighted programs configured at this moment.
         </div>
     @else
-        <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 scrollbar-none px-4 -mx-4 md:grid md:grid-cols-{{ min(3, $highlightedInitiatives->count()) }} md:gap-6 md:justify-center md:overflow-x-visible md:snap-none md:pb-0 md:px-0 md:mx-0">
+        <!-- Mobile Only Carousel -->
+        <div class="block md:hidden relative w-full overflow-hidden" 
+             x-data="{ 
+                activeIndex: 0, 
+                count: {{ $highlightedInitiatives->count() }}, 
+                interval: null, 
+                startAutoPlay() { 
+                    this.stopAutoPlay(); 
+                    this.interval = setInterval(() => { 
+                        this.activeIndex = (this.activeIndex + 1) % this.count; 
+                    }, 4000); 
+                }, 
+                stopAutoPlay() { 
+                    if (this.interval) clearInterval(this.interval); 
+                } 
+             }" 
+             x-init="startAutoPlay()" 
+             @mouseenter="stopAutoPlay()" 
+             @mouseleave="startAutoPlay()">
+             
+            <!-- Track -->
+            <div class="flex transition-transform duration-500 ease-in-out" 
+                 :style="'transform: translateX(calc(7.5% - ' + (activeIndex * 85) + '%))'">
+                @foreach($highlightedInitiatives as $index => $qi)
+                    @php
+                        $color = match($qi->committee_id) {
+                            1 => 'text-indigo-600',
+                            2 => 'text-emerald-600',
+                            3 => 'text-amber-600',
+                            4 => 'text-blue-600',
+                            default => 'text-[#1e40af]'
+                        };
+                        $bgColor = match($qi->committee_id) {
+                            1 => 'bg-indigo-50',
+                            2 => 'bg-emerald-50',
+                            3 => 'bg-amber-50',
+                            4 => 'bg-blue-50',
+                            default => 'bg-blue-50/50'
+                        };
+                        $icon = match($qi->committee_id) {
+                            1 => 'education',
+                            2 => 'health',
+                            3 => 'medicine',
+                            4 => 'sports',
+                            default => 'logs'
+                        };
+                        $formName = match($qi->form_route) {
+                            'forms.health.create' => 'health',
+                            'forms.mental-health.create' => 'mental-health',
+                            'forms.silid.create' => 'silid',
+                            'forms.medicine.create' => 'medicine',
+                            default => null
+                        };
+                        $btnText = match($qi->form_route) {
+                            'forms.health.create' => 'Book Consultation',
+                            'forms.mental-health.create' => 'Get Support',
+                            'forms.silid.create' => 'Book Library Slot',
+                            'forms.medicine.create' => 'Apply for Medicine',
+                            'forms.sports.create' => 'Register for Sports',
+                            default => 'Apply Now'
+                        };
+                    @endphp
+                    <div class="w-[80%] mx-[2.5%] shrink-0 transition-all duration-500 ease-in-out"
+                         :class="activeIndex === {{ $index }} ? 'scale-100 opacity-100 z-10' : 'scale-90 opacity-40 z-0'">
+                        <div class="card flex flex-col justify-between h-full hover:shadow-md transition border border-slate-100">
+                            <div class="space-y-3">
+                                <div class="w-10 h-10 rounded-lg {{ $bgColor }} {{ $color }} flex items-center justify-center">
+                                    <x-category-icon name="{{ $icon }}" class="w-5 h-5 {{ $color }}" />
+                                </div>
+                                <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wide font-display">{{ $qi->title }}</h3>
+                                <p class="text-xs text-slate-500 leading-relaxed font-sans text-justify">
+                                    {{ $qi->description }}
+                                </p>
+                            </div>
+                            <div class="pt-5 border-t border-slate-100 mt-5">
+                                <a href="{{ $qi->form_route ? route($qi->form_route) : route('forms.custom.create', $qi->id) }}" 
+                                   @if($formName) 
+                                       @click.prevent="openForm('{{ $formName }}')" 
+                                   @else 
+                                       @click.prevent="openCustomForm({{ json_encode($qi->only(['id', 'title', 'description', 'custom_fields'])) }})" 
+                                   @endif
+                                   class="btn-primary w-full text-center block">
+                                    {{ $btnText }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <!-- Dots Indicators -->
+            <div class="flex justify-center space-x-2 mt-6">
+                @foreach($highlightedInitiatives as $index => $qi)
+                    <button @click="activeIndex = {{ $index }}; startAutoPlay();" 
+                            class="w-2 h-2 rounded-full transition-all duration-300 focus:outline-none"
+                            :class="activeIndex === {{ $index }} ? 'bg-[#1e40af] w-4' : 'bg-slate-300'"></button>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- Desktop Only Grid -->
+        <div class="hidden md:grid md:grid-cols-{{ min(3, $highlightedInitiatives->count()) }} gap-6 justify-center w-full">
             @foreach($highlightedInitiatives as $qi)
                 @php
                     $color = match($qi->committee_id) {
@@ -50,7 +151,7 @@
                         default => 'Apply Now'
                     };
                 @endphp
-                <div class="card flex flex-col justify-between h-full hover:-translate-y-1 hover:shadow-md transition snap-center shrink-0 w-[85%] max-w-[320px] md:w-auto md:max-w-none">
+                <div class="card flex flex-col justify-between h-full hover:-translate-y-1 hover:shadow-md transition">
                     <div class="space-y-3">
                         <div class="w-10 h-10 rounded-lg {{ $bgColor }} {{ $color }} flex items-center justify-center">
                             <x-category-icon name="{{ $icon }}" class="w-5 h-5 {{ $color }}" />
