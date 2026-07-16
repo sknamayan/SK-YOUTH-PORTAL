@@ -41,28 +41,28 @@
                @else
                    @click.prevent="openCustomForm({{ json_encode($qi->only(['id', 'title', 'description', 'custom_fields'])) }})"
                @endif
-               class="bg-white dark:bg-white border border-slate-100 dark:border-slate-100 hover:border-[#1e40af] text-slate-700 dark:text-slate-700 hover:text-[#1e40af] hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200 rounded-xl p-2.5 flex items-center space-x-2 w-full justify-start active:scale-98 overflow-hidden">
+               class="bg-white dark:bg-white border border-slate-100 dark:border-slate-100 hover:border-[#1e40af] text-slate-700 dark:text-slate-700 hover:text-[#1e40af] hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200 rounded-xl p-2.5 flex items-center gap-2 w-full justify-start active:scale-98 overflow-hidden min-w-0">
                 <div class="p-1 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
                     <x-category-icon name="{{ $icon }}" class="w-4 h-4 {{ $color }}" />
                 </div>
-                <span class="font-extrabold text-[10px] tracking-wider uppercase font-display whitespace-nowrap overflow-hidden text-ellipsis">{{ $qi->title }}</span>
+                <span class="font-extrabold text-[10px] tracking-wider uppercase font-display whitespace-nowrap overflow-hidden text-ellipsis min-w-0 flex-1">{{ $qi->title }}</span>
             </a>
         @endforeach
 
         <!-- Sports League -->
         <a href="{{ route('forms.sports.create') }}"
-           class="bg-white dark:bg-white border border-slate-100 dark:border-slate-100 hover:border-[#1e40af] text-slate-700 dark:text-slate-700 hover:text-[#1e40af] hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200 rounded-xl p-2.5 flex items-center space-x-2 w-full justify-start active:scale-98 overflow-hidden">
+           class="bg-white dark:bg-white border border-slate-100 dark:border-slate-100 hover:border-[#1e40af] text-slate-700 dark:text-slate-700 hover:text-[#1e40af] hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200 rounded-xl p-2.5 flex items-center gap-2 w-full justify-start active:scale-98 overflow-hidden min-w-0">
             <div class="p-1 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
                 <x-category-icon name="sports" class="w-4 h-4 text-blue-600" />
             </div>
-            <span class="font-extrabold text-[10px] tracking-wider uppercase font-display whitespace-nowrap overflow-hidden text-ellipsis">SIKLAB</span>
+            <span class="font-extrabold text-[10px] tracking-wider uppercase font-display whitespace-nowrap overflow-hidden text-ellipsis min-w-0 flex-1">SIKLAB</span>
         </a>
 
         <!-- Track Request -->
         <a href="{{ route('track.index') }}"
-           class="bg-[#1e40af] text-white hover:bg-blue-700 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 rounded-xl p-2.5 flex items-center justify-center space-x-2 w-full col-span-2 active:scale-98">
-            <x-category-icon name="track" class="w-4 h-4 text-white" />
-            <span class="font-black text-[10px] tracking-widest uppercase font-display whitespace-nowrap">Track Your Request</span>
+           class="bg-[#1e40af] text-white hover:bg-blue-700 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 rounded-xl p-2.5 flex items-center justify-center gap-2 w-full col-span-2 active:scale-98 min-w-0">
+            <x-category-icon name="track" class="w-4 h-4 text-white shrink-0" />
+            <span class="font-black text-[10px] tracking-widest uppercase font-display whitespace-nowrap overflow-hidden text-ellipsis min-w-0">Track Your Request</span>
         </a>
     </div>
 </section>

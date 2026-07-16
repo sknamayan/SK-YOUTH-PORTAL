@@ -162,15 +162,15 @@ if (activeForm) {
                 <p class="text-slate-200 text-xs sm:text-sm max-w-sm mx-auto leading-relaxed">
                     Create an account today to easily keep logs of all your requests and submit applications without repetitive typing.
                 </p>
-                <div class="flex items-center justify-center gap-3 pt-3">
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
                     @guest
-                        <a href="{{ route('register') }}" class="px-5 py-2.5 bg-white text-blue-900 hover:bg-blue-50 font-bold text-xs uppercase tracking-wider rounded-xl transition active:scale-95 shadow-md">Create Account</a>
-                        <a href="{{ route('login') }}" class="px-5 py-2.5 border border-white/20 hover:border-white text-white font-bold text-xs uppercase tracking-wider rounded-xl transition hover:bg-white/5 active:scale-95">Sign In</a>
+                        <a href="{{ route('register') }}" class="w-full sm:w-auto px-5 py-2.5 bg-white text-blue-900 hover:bg-blue-50 font-bold text-xs uppercase tracking-wider rounded-xl transition active:scale-95 shadow-md text-center">Create Account</a>
+                        <a href="{{ route('login') }}" class="w-full sm:w-auto px-5 py-2.5 border border-white/20 hover:border-white text-white font-bold text-xs uppercase tracking-wider rounded-xl transition hover:bg-white/5 active:scale-95 text-center">Sign In</a>
                     @else
                         @if(Auth::user()->canAccessDashboard())
-                            <a href="{{ route('dashboard.index') }}" class="px-5 py-2.5 bg-white text-blue-900 hover:bg-blue-50 font-bold text-xs uppercase tracking-wider rounded-xl transition active:scale-95 shadow-md">View Admin Dashboard</a>
+                            <a href="{{ route('dashboard.index') }}" class="w-full sm:w-auto px-5 py-2.5 bg-white text-blue-900 hover:bg-blue-50 font-bold text-xs uppercase tracking-wider rounded-xl transition active:scale-95 shadow-md text-center">View Admin Dashboard</a>
                         @else
-                            <a href="{{ route('profile.my-requests') }}" class="px-5 py-2.5 bg-white text-blue-900 hover:bg-blue-50 font-bold text-xs uppercase tracking-wider rounded-xl transition active:scale-95 shadow-md">View My Dashboard</a>
+                            <a href="{{ route('profile.my-requests') }}" class="w-full sm:w-auto px-5 py-2.5 bg-white text-blue-900 hover:bg-blue-50 font-bold text-xs uppercase tracking-wider rounded-xl transition active:scale-95 shadow-md text-center">View My Dashboard</a>
                         @endif
                     @endguest
                 </div>

@@ -110,16 +110,16 @@
 
             <!-- Tabbed Requests Database Grid -->
             <div class="space-y-4">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200">
+                <div class="flex flex-col gap-3 border-b border-slate-200">
                     <!-- Tab buttons -->
-                    <div class="flex overflow-x-auto whitespace-nowrap scrollbar-none text-xs font-bold uppercase tracking-wider">
+                    <div class="flex overflow-x-auto whitespace-nowrap scrollbar-none text-[10px] sm:text-xs font-bold uppercase tracking-wider min-w-0 flex-nowrap">
                         <button @click="setActiveTab('all')"
                                 :class="activeTab === 'all' ? 'border-[#1e40af] text-[#1e40af]' : 'border-transparent text-slate-400 hover:text-slate-650'"
-                                class="py-3 px-5 border-b-2 transition select-none flex items-center space-x-1.5 cursor-pointer">
-                            <x-category-icon name="logs" class="w-4 h-4" />
-                            <span>All Submissions ({{ $allStats['total'] }})</span>
+                                class="shrink-0 py-3 px-4 sm:px-5 border-b-2 transition select-none flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+                            <x-category-icon name="logs" class="w-4 h-4 shrink-0" />
+                            <span class="truncate">All Submissions ({{ $allStats['total'] }})</span>
                             @if($allStats['pending'] > 0)
-                                <span class="w-2 h-2 bg-rose-600 rounded-full inline-block shadow-sm animate-pulse ml-1 shrink-0"></span>
+                                <span class="w-2 h-2 bg-rose-600 rounded-full inline-block shadow-sm animate-pulse shrink-0"></span>
                             @endif
                         </button>
                          @foreach($initiatives as $init)
@@ -137,15 +137,14 @@
                             @endphp
                             <button @click="setActiveTab('init_{{ $init->id }}')"
                                     :class="activeTab === 'init_{{ $init->id }}' ? 'border-[#1e40af] text-[#1e40af]' : 'border-transparent text-slate-400 hover:text-slate-650'"
-                                    class="py-3 px-5 border-b-2 transition select-none flex items-center space-x-1.5 cursor-pointer">
-                                <x-category-icon name="{{ $icon }}" class="w-4 h-4" />
-                                <span>{{ $init->title }} ({{ $init->stats['total'] }})</span>
+                                    class="shrink-0 py-3 px-4 sm:px-5 border-b-2 transition select-none flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+                                <x-category-icon name="{{ $icon }}" class="w-4 h-4 shrink-0" />
+                                <span class="truncate">{{ $init->title }} ({{ $init->stats['total'] }})</span>
                                 @if($init->stats['pending'] > 0)
-                                    <span class="w-2 h-2 bg-rose-600 rounded-full inline-block shadow-sm animate-pulse ml-1 shrink-0"></span>
+                                    <span class="w-2 h-2 bg-rose-600 rounded-full inline-block shadow-sm animate-pulse shrink-0"></span>
                                 @endif
                             </button>
                         @endforeach
-                    </div>
                     </div>
                 </div>
 
@@ -194,8 +193,8 @@
 
 
                         <!-- Row 2: Limit & Clear Filters -->
-                        <div class="flex items-center justify-between border-t border-slate-100 pt-4 mt-2">
-                            <div class="flex items-center space-x-4">
+                        <div class="flex flex-col gap-3 border-t border-slate-100 pt-4 mt-2 sm:flex-row sm:items-center sm:justify-between">
+                            <div class="flex flex-wrap items-center gap-3">
                                 <!-- Page Size Limit select -->
                                 <div class="relative w-32 shrink-0">
                                     <select name="limit" onchange="this.form.submit()" class="block w-full py-2 pl-3 pr-8 bg-slate-50/70 border border-slate-200/60 rounded-2xl text-[11px] text-slate-650 outline-none focus:bg-white focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition cursor-pointer appearance-none font-semibold">
@@ -212,7 +211,7 @@
 
                                 <!-- Reset Filter Link -->
                                 @if($search || $status || $yearFilter || $limit != 10)
-                                    <a href="{{ route('dashboard.requests.index', ['tab' => $activeTab]) }}" class="inline-flex items-center text-[11px] font-bold text-slate-450 hover:text-slate-600 transition space-x-1 select-none cursor-pointer pl-2 py-1.5">
+                                    <a href="{{ route('dashboard.requests.index', ['tab' => $activeTab]) }}" class="inline-flex items-center text-[11px] font-bold text-slate-450 hover:text-slate-600 transition space-x-1 select-none cursor-pointer py-1.5">
                                         <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89H18v3.582"></path></svg>
                                         <span>Reset Filter</span>
                                     </a>
@@ -220,21 +219,21 @@
                             </div>
 
                             <!-- Right Export CSV trigger -->
-                            <div class="flex items-center space-x-3">
+                            <div class="flex flex-wrap items-center gap-2 sm:justify-end">
                                 <button type="button" @click="setActiveTab(activeTab === 'archive' ? 'all' : 'archive')"
                                         :class="activeTab === 'archive' ? 'bg-[#1e40af] text-white shadow-sm border-transparent' : 'bg-slate-100 hover:bg-slate-200/80 text-slate-650 border border-slate-250'"
-                                        class="px-4 py-2 rounded-2xl text-[11px] font-black transition flex items-center space-x-1.5 cursor-pointer uppercase tracking-wider h-[38px] select-none">
-                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                        class="px-4 py-2 rounded-2xl text-[11px] font-black transition flex items-center gap-1.5 cursor-pointer uppercase tracking-wider h-[38px] select-none whitespace-nowrap">
+                                    <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                                     </svg>
-                                    <span>Archive ({{ $archivedStats['total'] }})</span>
+                                    <span class="truncate">Archive ({{ $archivedStats['total'] }})</span>
                                     @if($archivedStats['pending'] > 0)
                                         <span class="w-2 h-2 bg-rose-500 rounded-full inline-block shadow-sm animate-pulse shrink-0"></span>
                                     @endif
                                 </button>
 
                                 <button type="submit" class="hidden"></button>
-                                <a :href="`{{ url('/dashboard/export') }}/${activeTab}`" class="btn-primary text-[11px] font-black uppercase py-2 px-5 flex items-center space-x-1.5 cursor-pointer bg-emerald-600 hover:bg-emerald-700 active:scale-95 transition shadow-sm border border-transparent rounded-2xl h-[38px]">
+                                <a :href="`{{ url('/dashboard/export') }}/${activeTab}`" class="btn-primary text-[11px] font-black uppercase py-2 px-5 flex items-center gap-1.5 cursor-pointer bg-emerald-600 hover:bg-emerald-700 active:scale-95 transition shadow-sm border border-transparent rounded-2xl h-[38px] whitespace-nowrap">
                                     <span>Export CSV</span>
                                 </a>
                             </div>

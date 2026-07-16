@@ -192,10 +192,10 @@
             @endif
 
             <!-- Status Filter Tabs -->
-            <div class="flex items-center gap-3 border-b border-slate-100 pb-px mb-6 overflow-x-auto whitespace-nowrap">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-px mb-6 overflow-x-auto whitespace-nowrap scrollbar-none min-w-0">
                 <a href="{{ route('dashboard.profiling.index', array_merge(request()->query(), ['status' => 'approved'])) }}"
-                   class="pb-3 text-xs font-bold transition flex items-center gap-2 px-1 relative {{ $statusFilter === 'approved' ? 'text-[#1e40af]' : 'text-slate-500 hover:text-slate-800' }}">
-                    <span>Active Registry</span>
+                   class="shrink-0 pb-3 text-[10px] sm:text-xs font-bold transition flex items-center gap-2 px-1 relative {{ $statusFilter === 'approved' ? 'text-[#1e40af]' : 'text-slate-500 hover:text-slate-800' }}">
+                    <span class="truncate">Active Registry</span>
                     <span class="px-2 py-0.5 rounded-full text-[9px] font-black {{ $statusFilter === 'approved' ? 'bg-blue-100 text-[#1e40af]' : 'bg-slate-100 text-slate-650' }}">{{ $approvedCount }}</span>
                     @if($statusFilter === 'approved')
                         <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1e40af] rounded-full"></div>
@@ -203,8 +203,8 @@
                 </a>
 
                 <a href="{{ route('dashboard.profiling.index', array_merge(request()->query(), ['status' => 'pending'])) }}"
-                   class="pb-3 text-xs font-bold transition flex items-center gap-2 px-1 relative {{ $statusFilter === 'pending' ? 'text-[#1e40af]' : 'text-slate-500 hover:text-slate-800' }}">
-                    <span>Pending Review</span>
+                   class="shrink-0 pb-3 text-[10px] sm:text-xs font-bold transition flex items-center gap-2 px-1 relative {{ $statusFilter === 'pending' ? 'text-[#1e40af]' : 'text-slate-500 hover:text-slate-800' }}">
+                    <span class="truncate">Pending Review</span>
                     <span class="px-2 py-0.5 rounded-full text-[9px] font-black {{ $pendingCount > 0 ? 'bg-rose-100 text-rose-750 animate-pulse' : ($statusFilter === 'pending' ? 'bg-blue-100 text-[#1e40af]' : 'bg-slate-100 text-slate-650') }}">{{ $pendingCount }}</span>
                     @if($statusFilter === 'pending')
                         <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1e40af] rounded-full"></div>
@@ -212,8 +212,8 @@
                 </a>
 
                 <a href="{{ route('dashboard.profiling.index', array_merge(request()->query(), ['status' => 'declined'])) }}"
-                   class="pb-3 text-xs font-bold transition flex items-center gap-2 px-1 relative {{ $statusFilter === 'declined' ? 'text-[#1e40af]' : 'text-slate-500 hover:text-slate-800' }}">
-                    <span>Declined</span>
+                   class="shrink-0 pb-3 text-[10px] sm:text-xs font-bold transition flex items-center gap-2 px-1 relative {{ $statusFilter === 'declined' ? 'text-[#1e40af]' : 'text-slate-500 hover:text-slate-800' }}">
+                    <span class="truncate">Declined</span>
                     <span class="px-2 py-0.5 rounded-full text-[9px] font-black {{ $statusFilter === 'declined' ? 'bg-blue-100 text-[#1e40af]' : 'bg-slate-100 text-slate-650' }}">{{ $declinedCount }}</span>
                     @if($statusFilter === 'declined')
                         <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1e40af] rounded-full"></div>
@@ -221,8 +221,8 @@
                 </a>
 
                 <a href="{{ route('dashboard.profiling.index', array_merge(request()->query(), ['status' => 'all'])) }}"
-                   class="pb-3 text-xs font-bold transition flex items-center gap-2 px-1 relative {{ $statusFilter === 'all' ? 'text-[#1e40af]' : 'text-slate-500 hover:text-slate-800' }}">
-                    <span>All Records</span>
+                   class="shrink-0 pb-3 text-[10px] sm:text-xs font-bold transition flex items-center gap-2 px-1 relative {{ $statusFilter === 'all' ? 'text-[#1e40af]' : 'text-slate-500 hover:text-slate-800' }}">
+                    <span class="truncate">All Records</span>
                     <span class="px-2 py-0.5 rounded-full text-[9px] font-black {{ $statusFilter === 'all' ? 'bg-blue-100 text-[#1e40af]' : 'bg-slate-100 text-slate-650' }}">{{ $approvedCount + $pendingCount + $declinedCount }}</span>
                     @if($statusFilter === 'all')
                         <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1e40af] rounded-full"></div>

@@ -11,6 +11,22 @@
 
     body {
         overflow-x: hidden;
+        min-width: 0;
+    }
+
+    main,
+    section,
+    article,
+    aside,
+    header,
+    footer,
+    nav,
+    div,
+    span,
+    a,
+    button {
+        min-width: 0;
+        max-width: 100%;
     }
 }
 

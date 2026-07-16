@@ -668,7 +668,7 @@
         @endif
 
         <!-- Main Content Slot -->
-        <main class="flex-1 flex flex-col min-w-0 w-full overflow-x-hidden">
+        <main class="flex-1 flex flex-col min-w-0 w-full max-w-full overflow-x-hidden">
             @yield('content')
             {{ $slot ?? '' }}
         </main>
