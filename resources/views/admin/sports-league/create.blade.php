@@ -29,7 +29,7 @@
                 <div class="flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider">
                     <a href="{{ route('dashboard.index') }}" class="text-slate-400 hover:text-[#1e40af]">Dashboard</a>
                     <span class="text-slate-300">/</span>
-                    <a href="{{ route('admin.sports-league.index') }}" class="text-slate-400 hover:text-[#1e40af]">Sports League</a>
+                    <a href="{{ route('admin.sports-league.index') }}" class="text-slate-400 hover:text-[#1e40af]">SIKLAB</a>
                     <span class="text-slate-300">/</span>
                     <span class="text-slate-800">Register Citizen</span>
                 </div>
@@ -235,7 +235,7 @@
                                 <input type="checkbox" name="consent_waiver" value="1" required checked
                                        class="mt-1 w-4 h-4 rounded text-blue-600 border-slate-300 focus:ring-[#1e40af] focus:ring-opacity-25 transition">
                                 <span class="text-xs text-slate-650 leading-relaxed font-semibold">
-                                    I certify that this citizen is fit to participate in the sports league and has agreed to all tournament liability consent waiver terms.
+                                    I certify that this citizen is fit to participate in SIKLAB and has agreed to all tournament liability consent waiver terms.
                                 </span>
                             </label>
                         </div>

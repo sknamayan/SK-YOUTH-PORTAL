@@ -8,6 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class RequestObserver
 {
     /**
+     * Handle the Model "creating" event.
+     */
+    public function creating(Model $model): void
+    {
+        if (empty($model->reference_number)) {
+            $table = $model->getTable();
+            do {
+                $ref = 'SK-REQ-' . strtoupper(\Illuminate\Support\Str::random(8));
+            } while (\Illuminate\Support\Facades\DB::table($table)->where('reference_number', $ref)->exists());
+
+            $model->reference_number = $ref;
+        }
+    }
+
+    /**
      * Handle the Model "created" event.
      */
     public function created(Model $model): void

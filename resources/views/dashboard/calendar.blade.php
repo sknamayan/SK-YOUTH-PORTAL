@@ -183,7 +183,7 @@
                                 <div class="absolute inset-0 border border-transparent rounded-xl peer-checked:border-emerald-300 peer-checked:bg-emerald-50/20 transition-all pointer-events-none"></div>
                                 <div class="flex items-center space-x-2 relative z-10">
                                     <span class="w-2.5 h-2.5 rounded bg-[#10b981] block"></span>
-                                    <span class="text-xs font-bold text-slate-655 dark:text-slate-350 peer-checked:text-emerald-900 transition-colors">Sports Leagues</span>
+                                    <span class="text-xs font-bold text-slate-655 dark:text-slate-350 peer-checked:text-emerald-900 transition-colors">SIKLAB</span>
                                 </div>
                                 <div class="w-8 h-4.5 bg-slate-250 dark:bg-slate-800 peer-checked:bg-emerald-600 rounded-full transition-all relative flex items-center z-10">
                                     <div class="w-3.5 h-3.5 bg-white rounded-full transition-transform transform translate-x-0.5 peer-checked:translate-x-4 shadow-xs"></div>

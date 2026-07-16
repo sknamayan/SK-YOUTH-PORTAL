@@ -29,7 +29,7 @@
                 <div class="flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider">
                     <a href="{{ route('dashboard.index') }}" class="text-slate-400 hover:text-[#1e40af]">Dashboard</a>
                     <span class="text-slate-300">/</span>
-                    <a href="{{ route('admin.sports-league.index') }}" class="text-slate-400 hover:text-[#1e40af]">Sports League</a>
+                    <a href="{{ route('admin.sports-league.index') }}" class="text-slate-400 hover:text-[#1e40af]">SIKLAB</a>
                     <span class="text-slate-300">/</span>
                     <span class="text-slate-800">Registration #{{ $req->id }}</span>
                 </div>

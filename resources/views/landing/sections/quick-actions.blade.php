@@ -6,7 +6,7 @@
     <div class="text-center mb-6">
         <span class="text-xs font-black tracking-widest text-[#1e40af] uppercase font-display">QUICK FORMS & APPLICATIONS</span>
         <h1 class="text-xl font-black tracking-tight text-slate-800 font-display mt-1 uppercase">Request Online</h1>
-        <p class="text-[10px] text-slate-400 mt-1 max-w-xs mx-auto">Select a quick form below to submit a request, book a facility, or register for sports league.</p>
+        <p class="text-[10px] text-slate-400 mt-1 max-w-xs mx-auto">Select a quick form below to submit a request, book a facility, or register for SIKLAB.</p>
     </div>
 
     <!-- 2-Column Grid Cards (Mobile Only) -->

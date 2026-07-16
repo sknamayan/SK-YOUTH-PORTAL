@@ -11,12 +11,12 @@
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
                 <div>
                     <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider mb-2">
-                        <a href="{{ route('admin.sports-league.index') }}" class="text-slate-400 hover:text-[#1e40af] dark:hover:text-blue-400">Sports League</a>
+                        <a href="{{ route('admin.sports-league.index') }}" class="text-slate-400 hover:text-[#1e40af] dark:hover:text-blue-400">SIKLAB</a>
                         <span class="text-slate-300">/</span>
-                        <span class="text-slate-800 dark:text-slate-100">Sports Form Builder</span>
+                        <span class="text-slate-800 dark:text-slate-100">SIKLAB Form Builder</span>
                     </div>
-                    <h1 class="text-2xl font-black tracking-tight text-slate-800 dark:text-white font-display uppercase">Dedicated Sports Registration Form Builder</h1>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Design isolated registration forms specifically tailored for sports leagues, divisions, and team/player lists.</p>
+                    <h1 class="text-2xl font-black tracking-tight text-slate-800 dark:text-white font-display uppercase">Dedicated SIKLAB Registration Form Builder</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Design isolated registration forms specifically tailored for SIKLAB tournaments, divisions, and team/player lists.</p>
                 </div>
                 <a href="{{ route('admin.sports-league.index') }}" class="inline-flex items-center px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 transition">Back to League</a>
             </div>

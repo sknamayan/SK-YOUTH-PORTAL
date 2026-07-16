@@ -113,12 +113,12 @@
             <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-5 min-w-0">
                 <a href="{{ route('landing') }}" class="hover:text-white active:scale-95 shrink-0">Home</a>
                 <span aria-hidden="true" class="shrink-0">/</span>
-                <span class="text-white truncate" aria-current="page">Sports League</span>
+                <span class="text-white truncate" aria-current="page">SIKLAB</span>
             </nav>
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div class="max-w-2xl space-y-2.5">
                     <span class="inline-flex px-2.5 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-[9px] font-black uppercase tracking-widest font-display">Sports Portal</span>
-                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-black font-display uppercase tracking-tight leading-tight">Sports League Registration</h1>
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-black font-display uppercase tracking-tight leading-tight">SIKLAB Registration</h1>
                     <p class="text-sm text-slate-300 leading-relaxed">View active sports tournaments and submit your registration details.</p>
                 </div>
                 @if(!$alreadyRegistered)
@@ -650,7 +650,7 @@
                                   <input type="checkbox" name="consent_waiver" value="1" required class="rounded border-slate-350 text-[#1e40af] focus:ring-0 mt-0.5">
                                   <div class="text-[11px] text-slate-500 dark:text-slate-455 leading-relaxed">
                                       <strong class="font-bold text-slate-750 dark:text-slate-200">Consent Waiver and Liability Agreement:</strong>
-                                      I hereby certify that the above information is true and correct. I declare that I am physically fit to participate in the sports league, and I release the administrative council of Barangay Namayan from any liability for injury or accidents occurring during the tournament.
+                                      I hereby certify that the above information is true and correct. I declare that I am physically fit to participate in SIKLAB, and I release the administrative council of Barangay Namayan from any liability for injury or accidents occurring during the tournament.
                                   </div>
                               </label>
                           </div>

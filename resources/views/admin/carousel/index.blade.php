@@ -97,7 +97,7 @@
                     <div class="text-center py-12 md:py-16 px-4 space-y-4">
                         <div>
                             <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">No Custom Slides Uploaded</h3>
-                            <p class="text-xs text-slate-400 dark:text-slate-500 mt-1 max-w-sm mx-auto leading-relaxed">The landing page will display the default system slides (Study Hub, Sports League, Youth Projects) as a fallback.</p>
+                            <p class="text-xs text-slate-400 dark:text-slate-500 mt-1 max-w-sm mx-auto leading-relaxed">The landing page will display the default system slides (Study Hub, SIKLAB, Youth Projects) as a fallback.</p>
                         </div>
                     </div>
                 @else

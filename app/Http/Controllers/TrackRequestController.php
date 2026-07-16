@@ -27,7 +27,7 @@ class TrackRequestController extends Controller
             $searched = true;
 
             $isEmail = filter_var($searchQuery, FILTER_VALIDATE_EMAIL);
-            $isRef = preg_match('/^SK-(HEA|MED|SIL|SPO|REQ)-(\d+)$/i', $searchQuery, $matches);
+            $isOldRef = preg_match('/^SK-(HEA|MED|SIL|SPO|REQ)-(\d+)$/i', $searchQuery, $matches);
 
             if ($isEmail) {
                 $health = HealthRequest::where('email', $searchQuery)->get();
@@ -37,7 +37,7 @@ class TrackRequestController extends Controller
                 $sports2 = SportsRegistration::where('email', $searchQuery)->get();
                 $sports = $sports1->concat($sports2);
                 $custom = CustomRequest::where('email', $searchQuery)->get();
-            } elseif ($isRef) {
+            } elseif ($isOldRef) {
                 $prefix = strtoupper($matches[1]);
                 $id = intval($matches[2]);
 
@@ -53,11 +53,14 @@ class TrackRequestController extends Controller
                 }
                 $custom = $prefix === 'REQ' ? CustomRequest::where('id', $id)->get() : collect();
             } else {
-                $health = collect();
-                $medicine = collect();
-                $silid = collect();
-                $sports = collect();
-                $custom = collect();
+                // Search by the new unique alphanumeric reference number
+                $health = HealthRequest::where('reference_number', $searchQuery)->get();
+                $medicine = MedicineRequest::where('reference_number', $searchQuery)->get();
+                $silid = SilidKarununganRequest::where('reference_number', $searchQuery)->get();
+                $sports1 = RegistrationResponse::where('reference_number', $searchQuery)->get();
+                $sports2 = SportsRegistration::where('reference_number', $searchQuery)->get();
+                $sports = $sports1->concat($sports2);
+                $custom = CustomRequest::where('reference_number', $searchQuery)->get();
             }
 
             $health = $health->map(function ($item) {

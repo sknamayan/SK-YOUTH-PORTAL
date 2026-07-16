@@ -39,7 +39,7 @@
                     <x-category-icon name="sports" class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
                     <div>
                         <span class="font-bold text-slate-700">Sports Development</span>
-                        <p class="text-xs mt-1">Year-round sports league registrations to encourage active, healthy lifestyles.</p>
+                        <p class="text-xs mt-1">Year-round SIKLAB league registrations to encourage active, healthy lifestyles.</p>
                     </div>
                 </div>
                 <div class="p-3 bg-slate-50 rounded-xl flex items-start space-x-2.5">

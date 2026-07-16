@@ -33,7 +33,7 @@ class RequestReceivedMail extends Mailable implements ShouldQueue
             default => 'REQ'
         };
 
-        $this->referenceNumber = 'SK-' . $prefix . '-' . str_pad($requestModel->id, 5, '0', STR_PAD_LEFT);
+        $this->referenceNumber = $requestModel->reference_number ?? ('SK-' . $prefix . '-' . str_pad($requestModel->id, 5, '0', STR_PAD_LEFT));
 
         $this->typeLabel = match($basename) {
             'HealthRequest' => 'Health Consultation / Mental Health Support',

@@ -94,7 +94,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-200">
                 <div>
                     <span class="text-[9px] font-black text-[#1e40af] uppercase tracking-widest block font-display">SK Sports Committee</span>
-                    <h1 class="text-xl font-black text-slate-800 font-display uppercase tracking-tight">Sports League Console</h1>
+                    <h1 class="text-xl font-black text-slate-800 font-display uppercase tracking-tight">SIKLAB Console</h1>
                 </div>
             </div>
 

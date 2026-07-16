@@ -499,7 +499,7 @@
                                               <svg class="w-4 h-4 text-blue-205" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5a2 2 0 10-2 2h2zm0 13H9m3 0h3M5 7h14a2 2 0 012 2v2a7 7 0 01-14 0V9a2 2 0 012-2z"></path>
                                               </svg>
-                                              <span>Sports League</span>
+                                              <span>SIKLAB</span>
                                           </a>
                                           <a href="{{ route('profile.profiling.create') }}" @click="mobileMenuOpen = false" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-blue-100 hover:text-white hover:bg-white/10 hover:translate-x-1 font-bold font-display uppercase tracking-wider text-[11px] transition-all duration-300">
                                               <svg class="w-4 h-4 text-blue-205" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
@@ -647,7 +647,7 @@
                             <li><a href="{{ route('forms.mental-health.create') }}" class="hover:text-white transition">Mental Support</a></li>
                             <li><a href="{{ route('forms.medicine.create') }}" class="hover:text-white transition">Pabili Medicine</a></li>
                             <li><a href="{{ route('forms.silid.create') }}" class="hover:text-white transition">Silid Karunungan</a></li>
-                            <li><a href="{{ route('forms.sports.create') }}" class="hover:text-white transition">Sports League</a></li>
+                            <li><a href="{{ route('forms.sports.create') }}" class="hover:text-white transition">SIKLAB</a></li>
                             <li><a href="{{ route('track.index') }}" class="hover:text-white transition">Track Request</a></li>
                             <li><a href="{{ route('officials.index') }}" class="hover:text-white transition">SK Officials</a></li>
                             <li><a href="{{ route('transparency.index') }}" class="hover:text-white transition">Transparency Board</a></li>

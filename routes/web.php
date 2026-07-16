@@ -32,14 +32,15 @@ Route::get('/confirmation', [ConfirmationController::class, 'show'])->name('conf
 Route::get('/news', [LandingController::class, 'newsIndex'])->name('news.index');
 Route::get('/news/{slug}', [LandingController::class, 'showNews'])->name('news.show');
 
-// Helper to clear config cache in production hosting
+// Helper to clear config cache and run database migrations in production hosting
 Route::get('/clear-cache', function() {
     try {
         \Illuminate\Support\Facades\Artisan::call('config:clear');
         \Illuminate\Support\Facades\Artisan::call('cache:clear');
         \Illuminate\Support\Facades\Artisan::call('route:clear');
         \Illuminate\Support\Facades\Artisan::call('view:clear');
-        return 'Laravel Cache cleared successfully! New environment variables loaded.';
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        return 'Laravel Cache cleared and database migrations run successfully!';
     } catch (\Exception $e) {
         return 'Error clearing cache: ' . $e->getMessage();
     }

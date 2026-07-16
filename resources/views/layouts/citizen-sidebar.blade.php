@@ -31,7 +31,7 @@
                class="flex items-center justify-between w-full px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs uppercase tracking-wider transition {{ request()->url() === route('forms.sports.create') || request()->query('form') === 'sports' ? 'bg-blue-50 dark:bg-blue-950/40 text-[#1e40af] dark:text-blue-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-white' }}">
                 <div class="flex items-center gap-3 min-w-0">
                     <x-category-icon name="sports" class="w-4 h-4 shrink-0" />
-                    <span class="leading-snug break-words">Sports League</span>
+                    <span class="leading-snug break-words">SIKLAB</span>
                 </div>
             </a>
 

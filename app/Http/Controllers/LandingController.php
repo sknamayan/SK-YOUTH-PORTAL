@@ -60,10 +60,10 @@ class LandingController extends Controller
                      'url1' => route('forms.medicine.create')
                  ],
                  [
-                     'title' => 'SK Sports Leagues & Tournaments',
-                     'desc' => 'Register teams or sign up individually for community basketball, volleyball, badminton, and esports leagues.',
+                     'title' => 'SIKLAB Tournaments & Leagues',
+                     'desc' => 'Register teams or sign up individually for community basketball, volleyball, badminton, and esports SIKLAB leagues.',
                      'image' => 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=80',
-                     'cta1' => 'Register for Sports',
+                     'cta1' => 'Register for SIKLAB',
                      'url1' => route('forms.sports.create')
                  ]
              ];

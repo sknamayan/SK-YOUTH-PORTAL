@@ -65,7 +65,7 @@
                                         <button type="button" @click="activeTab = 'sports'" 
                                            :class="activeTab === 'sports' ? 'border-emerald-650 text-emerald-600 dark:border-emerald-500 dark:text-emerald-400 font-extrabold' : 'border-transparent text-slate-400 hover:text-slate-655 hover:border-slate-300'"
                                            class="border-b-2 pb-3 px-1 text-xs uppercase tracking-wider transition">
-                                            Sports League Forms
+                                            SIKLAB Forms
                                         </button>
                                     </nav>
                                 </div>

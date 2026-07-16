@@ -62,7 +62,7 @@
                class="flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.sports-league.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                 <div class="flex items-center space-x-3">
                     <x-category-icon name="sports" class="w-4 h-4" />
-                    <span>Sports League</span>
+                    <span>SIKLAB</span>
                 </div>
                 @if(isset($pendingSportsRegistrationsCount) && $pendingSportsRegistrationsCount > 0)
                     <span class="bg-rose-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm select-none">{{ $pendingSportsRegistrationsCount }}</span>
