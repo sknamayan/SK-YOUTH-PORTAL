@@ -396,10 +396,10 @@
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
                                             <button type="submit" class="w-full text-left block px-4 py-3 text-sm text-white hover:bg-slate-700 transition-colors">
-                                                <div class="flex items-center space-x-2">
+                                                <span class="flex items-center space-x-2">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                                                     <span>Logout</span>
-                                                </div>
+                                                </span>
                                             </button>
                                         </form>
                                     </div>
