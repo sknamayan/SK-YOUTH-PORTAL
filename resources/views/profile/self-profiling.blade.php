@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex-1 bg-slate-50 dark:bg-slate-950 font-sans min-h-screen pt-8 pb-24 md:py-10" x-data="{
+<div class="flex-1 bg-slate-50 dark:bg-slate-950 font-sans min-h-screen pt-8 pb-36 md:py-10 md:pb-40" x-data="{
     showConfirm: false,
     loading: false,
     step: 1,
@@ -142,7 +142,7 @@
         </div>
     </section>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10 space-y-6 animate-fade-in-up">
+    <div class="max-w-7xl mx-auto w-full overflow-x-hidden px-4 pb-32 sm:px-6 sm:pb-36 lg:px-8 lg:pb-40 py-8 md:py-10 space-y-6 animate-fade-in-up">
         
         <!-- Horizontal Citizen Sub-navigation -->
         @include('profile.partials.citizen-nav')

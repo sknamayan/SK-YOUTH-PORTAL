@@ -34,10 +34,10 @@
     'x-bind:aria-disabled',
     'aria-disabled',
 ])->merge([
-    'class' => 'fixed bottom-0 left-0 right-0 z-40 md:hidden border-t border-white/10 bg-slate-950/90 px-3 py-3 backdrop-blur shadow-[0_-8px_20px_rgba(0,0,0,0.2)] pb-[max(12px,env(safe-area-inset-bottom))]'
+    'class' => 'fixed bottom-0 left-0 right-0 z-40 md:hidden border-t border-white/10 bg-slate-900/95 px-3 pb-[max(0.85rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-xl shadow-[0_-10px_30px_rgba(0,0,0,0.25)]'
 ]) }}
 >
-<div class="mx-auto flex max-w-5xl items-center justify-end pr-20 sm:pr-24">
+<div class="mx-auto flex w-full max-w-5xl items-center justify-end pr-20 sm:pr-24">
         @if($href)
             <a
                 href="{{ $href }}"
