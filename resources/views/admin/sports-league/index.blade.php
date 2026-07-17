@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div x-data="{ 
-    showDeleteModal: false, 
-    deleteActionUrl: '', 
-    showViewModal: false, 
+<div x-data="{
+    showDeleteModal: false,
+    deleteActionUrl: '',
+    showViewModal: false,
     selectedReq: null,
     showRegisterModal: {{ session('failed_modal') === 'register' ? 'true' : 'false' }},
     adminRegStep: {{ session('failed_modal') === 'register' ? '5' : '1' }},
@@ -75,7 +75,7 @@
     <div class="flex-1 flex flex-col min-w-0">
 
         <div class="p-6 md:p-8 pb-24 md:pb-8 space-y-6 flex-1 overflow-y-auto">
-            
+
             <!-- Header section -->
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-200">
                 <div>
@@ -159,7 +159,7 @@
                             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             </div>
-                            <input type="text" name="search" value="{{ $search }}" placeholder="Search by participant name or email..." 
+                            <input type="text" name="search" value="{{ $search }}" placeholder="Search by participant name or email..."
                                    class="pl-9 pr-4 py-2 w-full bg-slate-700 border border-slate-600 rounded-lg text-xs outline-none focus:bg-slate-750 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition text-white placeholder-slate-400 font-sans">
                         </div>
 
@@ -167,7 +167,7 @@
                         <div class="flex flex-wrap items-center gap-3 shrink-0">
                             <!-- Category / Division Dropdown -->
                             <div class="relative min-w-[180px]">
-                                <select name="division" onchange="this.form.submit()" 
+                                <select name="division" onchange="this.form.submit()"
                                         class="block w-full py-2 pl-3 pr-8 bg-slate-700 border border-slate-600 rounded-lg text-xs text-white outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition cursor-pointer appearance-none font-semibold">
                                     <option value="">All Divisions</option>
                                     @foreach($leagues as $lg)
@@ -185,7 +185,7 @@
 
                             <!-- Year Dropdown -->
                             <div class="relative min-w-[120px]">
-                                <select name="year" onchange="this.form.submit()" 
+                                <select name="year" onchange="this.form.submit()"
                                         class="block w-full py-2 pl-3 pr-8 bg-slate-700 border border-slate-600 rounded-lg text-xs text-white outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition cursor-pointer appearance-none font-semibold">
                                     <option value="">All Years</option>
                                     @foreach($years as $yr)
@@ -199,7 +199,7 @@
 
                             <!-- Clear filters helper -->
                             @if($search || $divisionFilter || $yearFilter || $limit != 15)
-                                <a href="{{ route('admin.sports-league.index', ['status' => $status]) }}" 
+                                <a href="{{ route('admin.sports-league.index', ['status' => $status]) }}"
                                    class="inline-flex items-center text-xs font-bold text-slate-350 hover:text-white transition gap-1 px-3 py-2 border border-slate-600 rounded-lg bg-slate-700/40 select-none cursor-pointer">
                                     <span>Reset</span>
                                 </a>
@@ -211,7 +211,7 @@
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-slate-700">
                         <!-- Limit select -->
                         <div class="relative w-32 shrink-0">
-                            <select name="limit" onchange="this.form.submit()" 
+                            <select name="limit" onchange="this.form.submit()"
                                     class="block w-full py-2 pl-3 pr-8 bg-slate-700 border border-slate-600 rounded-lg text-xs text-white outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition cursor-pointer appearance-none font-semibold">
                                 <option value="10" {{ $limit == 10 ? 'selected' : '' }}>10 rows</option>
                                 <option value="15" {{ $limit == 15 ? 'selected' : '' }}>15 rows</option>
@@ -227,20 +227,20 @@
                         <!-- Action Buttons Group (Right Aligned) -->
                         <div class="flex flex-wrap items-center gap-3 sm:ml-auto">
                             <!-- Tertiary: Archive -->
-                            <button type="button" 
+                            <button type="button"
                                     onclick="document.getElementById('bulkArchiveForm').submit()"
                                     class="inline-flex items-center justify-center px-4 py-2 bg-slate-700/60 hover:bg-slate-700 border border-slate-600 hover:border-slate-500 text-slate-350 hover:text-white text-[10px] font-black uppercase tracking-wider rounded-xl transition active:scale-95 select-none cursor-pointer h-9">
                                 Archive
                             </button>
 
                             <!-- Secondary: Export CSV -->
-                            <a href="{{ route('admin.sports-league.export', ['status' => $status, 'search' => $search, 'year' => $yearFilter, 'division' => $divisionFilter]) }}" 
+                            <a href="{{ route('admin.sports-league.export', ['status' => $status, 'search' => $search, 'year' => $yearFilter, 'division' => $divisionFilter]) }}"
                                class="inline-flex items-center justify-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-black uppercase tracking-wider rounded-xl transition active:scale-95 select-none cursor-pointer gap-1.5 shadow-sm h-9">
                                 <span>Export CSV</span>
                             </a>
 
                             <!-- Primary: Register Citizen -->
-                            <a href="{{ route('admin.sports-league.create') }}" 
+                            <a href="{{ route('admin.sports-league.create') }}"
                                @click.prevent="showRegisterModal = true; adminRegStep = 1; adminSport = 'Basketball'; adminDivision = 'Midget'; adminAge = 18"
                                class="inline-flex items-center justify-center px-4 py-2 bg-[#1e40af] hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-wider rounded-xl transition active:scale-95 select-none cursor-pointer gap-1.5 shadow-sm h-9">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
@@ -251,7 +251,7 @@
                 </form>
 
                 <!-- Hidden Bulk Archive Form -->
-                <form id="bulkArchiveForm" action="{{ route('admin.sports-league.bulk-archive') }}" method="POST" class="hidden" 
+                <form id="bulkArchiveForm" action="{{ route('admin.sports-league.bulk-archive') }}" method="POST" class="hidden"
                       onsubmit="return confirm('Are you sure you want to archive all approved, rejected, and completed registrations? This action is soft-delete based.')">
                     @csrf
                 </form>
@@ -287,7 +287,7 @@
                                     <tr class="hover:bg-slate-50/50 transition duration-150 border-b border-slate-200">
                                         <td class="py-4 px-6 text-[10px] text-slate-405 font-bold uppercase">{{ $req->created_at->format('M d, Y') }}</td>
                                         <td class="py-4 px-6 font-bold text-slate-800 hover:text-blue-600 transition">
-                                            <a href="{{ route('admin.sports-league.show', $req->id) }}" 
+                                            <a href="{{ route('admin.sports-league.show', $req->id) }}"
                                                @click.prevent="selectedReq = {
                                                    id: '{{ $req->id }}',
                                                    first_name: '{{ addslashes($req->first_name) }}',
@@ -359,7 +359,7 @@
                                             @endif
                                         </td>
                                         <td class="py-4 px-6 text-right space-x-1.5 whitespace-nowrap">
-                                            <a href="{{ route('admin.sports-league.show', $req->id) }}" 
+                                            <a href="{{ route('admin.sports-league.show', $req->id) }}"
                                                @click.prevent="selectedReq = {
                                                    id: '{{ $req->id }}',
                                                    first_name: '{{ addslashes($req->first_name) }}',
@@ -394,7 +394,7 @@
                                                    created_at_formatted: '{{ $req->created_at->format('M d, Y') }}'
                                                }; showViewModal = true"
                                                class="inline-flex items-center px-2 py-1 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg font-bold text-[9px] uppercase tracking-wider transition">View</a>
-                                            <a href="{{ route('admin.sports-league.edit', $req->id) }}" 
+                                            <a href="{{ route('admin.sports-league.edit', $req->id) }}"
                                                @click.prevent="editReq = {
                                                    id: '{{ $req->id }}',
                                                    first_name: '{{ addslashes($req->first_name) }}',
@@ -446,7 +446,7 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                 <h3 class="text-sm font-black uppercase tracking-wider font-display">Confirm Deletion</h3>
             </div>
-            
+
             <p class="text-slate-500 text-xs leading-relaxed">
                 Are you sure you want to permanently delete this registration? To prevent accidental deletion, please enter your administrator password to proceed.
             </p>
@@ -454,7 +454,7 @@
             <form :action="deleteActionUrl" method="POST" class="space-y-4">
                 @csrf
                 @method('DELETE')
-                
+
                 <div>
                     <label for="admin_password" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Confirm Admin Password</label>
                     <input type="password" name="password" id="admin_password" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-rose-500 transition" placeholder="••••••••">
@@ -492,7 +492,7 @@
             <div class="p-6 overflow-y-auto space-y-6 flex-1 text-xs">
                 <template x-if="selectedReq">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        
+
                         <!-- Left 2 Cols: Info Grid -->
                         <div class="md:col-span-2 space-y-6">
                             <!-- Section: Personal Info -->
@@ -602,7 +602,7 @@
                                     <!-- Guardian ID (Minor) or Voter Cert (Adult) -->
                                     <div class="p-3 bg-slate-50 border rounded-xl space-y-2">
                                         <span class="block text-[9px] font-bold text-slate-400 uppercase" x-text="selectedReq.age < 18 ? 'Guardian Valid ID' : 'Voter Certificate' "></span>
-                                        
+
                                         <!-- If Minor & Guardian ID uploaded -->
                                         <template x-if="selectedReq.age < 18 && selectedReq.guardian_gov_id_url">
                                             <div class="space-y-2">
@@ -634,7 +634,7 @@
                             <!-- Section: Console Decision Desk -->
                             <div class="space-y-3 p-4 bg-slate-50 border border-slate-100 rounded-2xl">
                                 <h4 class="text-[9px] font-black text-slate-800 uppercase tracking-widest border-b pb-1">Decision Desk</h4>
-                                
+
                                 <form :action="'/admin/sports-league/' + selectedReq.id + '/status/approved'" method="POST" class="space-y-2">
                                     @csrf
                                     @method('PATCH')
@@ -654,7 +654,7 @@
                                 <div class="border-t border-slate-200/60 pt-2.5 space-y-2">
                                     <!-- Edit Link -->
                                     <button type="button" @click="editReq = Object.assign({}, selectedReq); showEditModal = true; showViewModal = false" class="block w-full py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold uppercase text-[9px] rounded-lg tracking-wider transition">Edit Details</button>
-                                    
+
                                     <!-- Delete Link -->
                                     <button type="button" @click="deleteActionUrl = '/admin/sports-league/' + selectedReq.id; showDeleteModal = true; showViewModal = false" class="w-full py-2 bg-slate-250 hover:bg-rose-50 hover:text-rose-700 text-slate-600 font-bold uppercase text-[9px] rounded-lg tracking-wider transition">Delete Record</button>
                                 </div>
@@ -664,7 +664,7 @@
                     </div>
                 </template>
             </div>
-            
+
             <!-- Modal Footer -->
             <div class="px-6 py-3 bg-slate-50 border-t border-slate-100 flex justify-end">
                 <button type="button" @click="showViewModal = false" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold uppercase tracking-wider text-[10px] rounded-xl transition">
@@ -677,7 +677,7 @@
     <!-- Register Citizen Modal (Wizard) -->
     <div x-show="showRegisterModal" class="fixed inset-0 z-40 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm" x-cloak>
         <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col border border-slate-100 overflow-hidden animate-fade-in-up" @click.away="showRegisterModal = false">
-            
+
             <!-- Modal Header -->
             <div class="px-6 py-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
                 <div>
@@ -693,39 +693,39 @@
             <div class="bg-slate-50 dark:bg-slate-800/40 px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between text-[10px] font-black uppercase tracking-wider shrink-0 select-none">
                 <!-- Step 1 -->
                 <div class="flex items-center space-x-1.5">
-                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black transition-colors" 
+                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black transition-colors"
                           :class="adminRegStep >= 1 ? 'bg-[#1e40af] text-white shadow-sm shadow-[#1e40af]/30' : 'bg-slate-200 dark:bg-slate-800 text-slate-650 dark:text-slate-400 border border-slate-300 dark:border-slate-700'">1</span>
                     <span :class="adminRegStep >= 1 ? 'text-[#1e40af] dark:text-blue-400 font-extrabold' : 'text-slate-400 dark:text-slate-500'">Sport</span>
                 </div>
                 <div class="flex-1 h-0.5 mx-3 bg-slate-200 dark:bg-slate-800 transition-colors" :class="adminRegStep >= 2 ? 'bg-[#1e40af] dark:bg-blue-500' : ''"></div>
-                
+
                 <!-- Step 2 -->
                 <div class="flex items-center space-x-1.5">
-                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black transition-colors" 
+                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black transition-colors"
                           :class="adminRegStep >= 2 ? 'bg-[#1e40af] text-white shadow-sm shadow-[#1e40af]/30' : 'bg-slate-200 dark:bg-slate-800 text-slate-650 dark:text-slate-400 border border-slate-300 dark:border-slate-700'">2</span>
                     <span :class="adminRegStep >= 2 ? 'text-[#1e40af] dark:text-blue-400 font-extrabold' : 'text-slate-400 dark:text-slate-500'">Division</span>
                 </div>
                 <div class="flex-1 h-0.5 mx-3 bg-slate-200 dark:bg-slate-800 transition-colors" :class="adminRegStep >= 3 ? 'bg-[#1e40af] dark:bg-blue-500' : ''"></div>
-                
+
                 <!-- Step 3 -->
                 <div class="flex items-center space-x-1.5">
-                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black transition-colors" 
+                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black transition-colors"
                           :class="adminRegStep >= 3 ? 'bg-[#1e40af] text-white shadow-sm shadow-[#1e40af]/30' : 'bg-slate-200 dark:bg-slate-800 text-slate-650 dark:text-slate-400 border border-slate-300 dark:border-slate-700'">3</span>
                     <span :class="adminRegStep >= 3 ? 'text-[#1e40af] dark:text-blue-400 font-extrabold' : 'text-slate-400 dark:text-slate-500'">Details</span>
                 </div>
                 <div class="flex-1 h-0.5 mx-3 bg-slate-200 dark:bg-slate-800 transition-colors" :class="adminRegStep >= 4 ? 'bg-[#1e40af] dark:bg-blue-500' : ''"></div>
-                
+
                 <!-- Step 4 -->
                 <div class="flex items-center space-x-1.5">
-                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black transition-colors" 
+                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black transition-colors"
                           :class="adminRegStep >= 4 ? 'bg-[#1e40af] text-white shadow-sm shadow-[#1e40af]/30' : 'bg-slate-200 dark:bg-slate-800 text-slate-650 dark:text-slate-400 border border-slate-300 dark:border-slate-700'">4</span>
                     <span :class="adminRegStep >= 4 ? 'text-[#1e40af] dark:text-blue-400 font-extrabold' : 'text-slate-400 dark:text-slate-500'">Files</span>
                 </div>
                 <div class="flex-1 h-0.5 mx-3 bg-slate-200 dark:bg-slate-800 transition-colors" :class="adminRegStep >= 5 ? 'bg-[#1e40af] dark:bg-blue-500' : ''"></div>
-                
+
                 <!-- Step 5 -->
                 <div class="flex items-center space-x-1.5">
-                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black transition-colors" 
+                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black transition-colors"
                           :class="adminRegStep >= 5 ? 'bg-[#1e40af] text-white shadow-sm shadow-[#1e40af]/30' : 'bg-slate-200 dark:bg-slate-800 text-slate-655 dark:text-slate-400 border border-slate-300 dark:border-slate-700'">5</span>
                     <span :class="adminRegStep >= 5 ? 'text-[#1e40af] dark:text-blue-400 font-extrabold' : 'text-slate-400 dark:text-slate-500'">Consent</span>
                 </div>
@@ -737,20 +737,20 @@
 
                 <!-- Modal Scrollable Fields Area -->
                 <div class="p-6 overflow-y-auto flex-1 space-y-4 text-xs">
-                    
+
                     <!-- STEP 1: Sport Selection -->
                     <div id="admin-reg-step-1" x-show="adminRegStep === 1" class="space-y-4">
                         <h4 class="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider mb-2 font-display">Step 1: Choose Sport / Game</h4>
-                        
+
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <!-- Basketball Card -->
                             <div @click="adminSport = 'Basketball'"
                                  class="p-5 border rounded-3xl cursor-pointer transition-all duration-300 flex flex-col justify-between space-y-4 select-none relative"
                                  :class="adminSport === 'Basketball' ? 'border-[#1e40af] dark:border-blue-500 bg-blue-500/5 dark:bg-blue-950/40 ring-1 ring-blue-500/30' : 'border-slate-200 dark:border-slate-800 bg-[#1e293b]/10 hover:border-slate-400 dark:hover:border-slate-700'">
-                                
+
                                 <div class="flex items-center justify-between">
                                     <span class="text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 font-display">BASKETBALL</span>
-                                    <span class="text-[9px] text-slate-450 font-bold uppercase tracking-wider font-display">Namayan Cup 2026</span>
+                                    <span class="text-[9px] text-slate-450 font-bold uppercase tracking-wider font-display">SIKAP AT ALAB NG BATANG NAMAYAN</span>
                                 </div>
 
                                 <div>
@@ -787,10 +787,10 @@
                             <div @click="adminSport = 'Volleyball'"
                                  class="p-5 border rounded-3xl cursor-pointer transition-all duration-300 flex flex-col justify-between space-y-4 select-none relative"
                                  :class="adminSport === 'Volleyball' ? 'border-[#1e40af] dark:border-blue-500 bg-blue-500/5 dark:bg-blue-950/40 ring-1 ring-blue-500/30' : 'border-slate-200 dark:border-slate-800 bg-[#1e293b]/10 hover:border-slate-400 dark:hover:border-slate-700'">
-                                
+
                                 <div class="flex items-center justify-between">
                                     <span class="text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-display">VOLLEYBALL</span>
-                                    <span class="text-[9px] text-slate-450 font-bold uppercase tracking-wider font-display">Namayan Cup 2026</span>
+                                    <span class="text-[9px] text-slate-450 font-bold uppercase tracking-wider font-display">SIKAP AT ALAB NG BATANG NAMAYAN</span>
                                 </div>
 
                                 <div>
@@ -1020,7 +1020,7 @@
                                 class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold uppercase tracking-wider text-[10px] rounded-xl transition">
                             Cancel
                         </button>
-                        
+
                         <!-- Next Button -->
                         <button type="button" x-show="adminRegStep < 5" @click="nextAdminRegStep()"
                                 class="px-5 py-2 bg-[#1e40af] hover:bg-blue-700 text-white font-bold uppercase tracking-wider text-[10px] rounded-xl transition shadow-sm">
@@ -1042,7 +1042,7 @@
     <!-- Edit Details Modal -->
     <div x-show="showEditModal" class="fixed inset-0 z-40 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm" x-cloak>
         <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col border border-slate-100 overflow-hidden animate-fade-in-up" @click.away="showEditModal = false">
-            
+
             <!-- Modal Header -->
             <div class="px-6 py-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
                 <div>
@@ -1061,7 +1061,7 @@
 
                 <!-- Modal Scrollable Fields Area -->
                 <div class="p-6 overflow-y-auto flex-1 space-y-5 text-xs">
-                    
+
                     <!-- Section: Personal Info -->
                     <div class="space-y-3">
                         <h4 class="text-[10px] font-black text-slate-450 uppercase tracking-wider border-b pb-1 font-display">Participant details</h4>

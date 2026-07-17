@@ -12,7 +12,7 @@
         <div>
             <h2 class="text-lg font-bold text-[#1e40af] font-display uppercase mb-2">Our Mission</h2>
             <p class="text-slate-600">
-                To foster active citizenship, leadership, and community service among the youth of Barangay Namayan. Through responsive health, education, sports, and livelihood initiatives, we aim to build a strong, unified, and progressive youth government.
+                To provide a platform for the youth of Namayan to actively engage in community-building, driven by a deep commitment to service and an uncompromising pursuit of excellence. Through inclusive programs, leadership training, and service-driven initiatives, we inspire a culture of  innovation, and proactive action for the betterment of our community. 
             </p>
         </div>
 
@@ -55,7 +55,7 @@
         <hr class="border-slate-100">
 
         <div>
-            <h2 class="text-lg font-bold text-[#1e40af] font-display uppercase mb-2">Office Desk Contact</h2>
+            <h2 class="text-lg font-bold text-[#1e40af] font-display uppercase mb-2"></h2>
             <p class="text-slate-600">
                 You are welcome to visit our physical office from Monday to Friday, 8:00 AM to 5:00 PM:
             </p>
