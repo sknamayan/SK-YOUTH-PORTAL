@@ -9,7 +9,7 @@
     <!-- Main Pane -->
     <div class="flex-1 flex flex-col min-w-0">
 
-        <div class="p-6 md:p-8 space-y-6 flex-1 overflow-y-auto">
+        <div class="p-6 md:p-8 pb-24 md:pb-8 space-y-6 flex-1 overflow-y-auto">
             
             <!-- Breadcrumbs -->
             <div class="flex items-center justify-between pb-4 border-b border-slate-100">
@@ -39,7 +39,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('admin.sports-league.update', $req->id) }}" method="POST" class="max-w-4xl space-y-6">
+            <form id="edit-sports-registration-form" action="{{ route('admin.sports-league.update', $req->id) }}" method="POST" class="max-w-4xl space-y-6">
                 @csrf
                 @method('PUT')
 
@@ -245,4 +245,8 @@
         </div>
     </div>
 </div>
+
+<x-mobile-bottom-action form="edit-sports-registration-form" type="submit">
+    Save Changes
+</x-mobile-bottom-action>
 @endsection

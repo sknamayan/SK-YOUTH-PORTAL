@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex-1 bg-slate-50 dark:bg-slate-950 font-sans min-h-screen py-8 md:py-10" x-data="{
+<div class="flex-1 bg-slate-50 dark:bg-slate-950 font-sans min-h-screen pt-8 pb-24 md:py-10" x-data="{
     showConfirm: false,
     loading: false,
     step: 1,
@@ -512,4 +512,11 @@
         </div>
     </div>
 </div>
+
+<x-mobile-bottom-action x-show="step < 4" @click="nextStep()">
+    Next Step &rarr;
+</x-mobile-bottom-action>
+<x-mobile-bottom-action x-show="step === 4" @click="if (validateStep(4)) { showConfirm = true; }" :disabled="loading">
+    Submit Profile
+</x-mobile-bottom-action>
 @endsection

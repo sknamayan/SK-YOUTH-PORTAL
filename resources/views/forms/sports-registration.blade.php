@@ -358,7 +358,7 @@
               </div>
               
               <!-- Modal Body (Scrollable Form) -->
-              <div class="p-6 md:p-8 overflow-y-auto flex-1">
+              <div class="p-6 md:p-8 pb-24 md:pb-8 overflow-y-auto flex-1">
                   
                   @if($errors->any())
                       <div class="p-4 mb-6 bg-rose-50 dark:bg-rose-950/40 border border-rose-250 dark:border-rose-900/30 rounded-2xl flex items-start gap-3">
@@ -718,6 +718,13 @@
         </div>
     </div>
 </div>
+
+<x-mobile-bottom-action x-show="showFormModal && regStep < 5" @click="nextRegStep()">
+    Next Step &rarr;
+</x-mobile-bottom-action>
+<x-mobile-bottom-action x-show="showFormModal && regStep === 5" @click="if (validateRegStep(5)) { showConfirm = true; }" :disabled="loading">
+    Submit Registration
+</x-mobile-bottom-action>
 
 <style>
     input[required]:not([type="file"]):not([type="checkbox"]):not([type="radio"]),

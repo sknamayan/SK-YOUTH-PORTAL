@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex-1 bg-[#f8fafc] dark:bg-slate-950 font-sans min-h-screen py-12" x-data="{ showConfirm: false, loading: false }">
+<div class="flex-1 bg-[#f8fafc] dark:bg-slate-950 font-sans min-h-screen pt-12 pb-24 md:py-12" x-data="{ showConfirm: false, loading: false }">
     <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         <!-- Breadcrumbs -->
@@ -147,4 +147,8 @@
         </div>
     </div>
 </div>
+
+<x-mobile-bottom-action @click="showConfirm = true" :disabled="loading">
+    Submit Request
+</x-mobile-bottom-action>
 @endsection

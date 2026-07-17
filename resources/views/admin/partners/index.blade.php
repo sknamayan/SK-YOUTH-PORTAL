@@ -266,19 +266,9 @@
 
         {{-- Mobile FAB: Add sponsor --}}
         @if(Auth::user()->isAdmin())
-            <div class="fixed bottom-0 inset-x-0 z-20 md:hidden pointer-events-none px-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-                <button
-                    type="button"
-                    @click="openAddSponsorModal = true"
-                    class="pointer-events-auto w-full inline-flex items-center justify-center gap-2 min-h-[3.25rem] btn-primary text-xs font-bold uppercase tracking-wider shadow-lg shadow-blue-900/20 rounded-2xl"
-                    aria-label="Add new sponsor partner"
-                >
-                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
-                    </svg>
-                    <span>Add Sponsor Partner</span>
-                </button>
-            </div>
+            <x-mobile-bottom-action @click="openAddSponsorModal = true">
+                Add Sponsor Partner
+            </x-mobile-bottom-action>
         @endif
     </div>
 
