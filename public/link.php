@@ -1,7 +1,7 @@
 <?php
 // Temporary script to create symbolic link on Hostinger
-$target = '/home/u334873024/domains/dodgerblue-fox-693317.hostingersite.com/public_html/storage/app/public';
-$link = '/home/u334873024/domains/dodgerblue-fox-693317.hostingersite.com/public_html/public/storage';
+$target = '/home/u334873024/domains/https://sknamayan.com//public_html/storage/app/public';
+$link = '/home/u334873024/domains/https://sknamayan.com//public_html/public/storage';
 
 header('Content-Type: text/html; charset=utf-8');
 
