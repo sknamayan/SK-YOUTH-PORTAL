@@ -748,7 +748,7 @@
 
         <!-- PWA Install Banner -->
         <div id="pwa-install-banner" class="fixed inset-x-0 bottom-0 z-[100] px-3 pb-3 pt-4 hidden">
-            <div class="mx-auto max-w-md translate-y-3 rounded-t-2xl rounded-b-2xl border border-slate-200/80 bg-white/95 p-4 shadow-2xl backdrop-blur-md transition-transform duration-300 ease-out dark:border-slate-800 dark:bg-slate-900/95">
+            <div class="mx-auto w-full max-w-md translate-y-3 rounded-t-2xl rounded-b-2xl border border-slate-200/80 bg-white/95 p-4 shadow-2xl backdrop-blur-md transition-transform duration-300 ease-out dark:border-slate-800 dark:bg-slate-900/95">
                 <div class="flex items-start gap-3">
                     <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/20">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -774,8 +774,8 @@
         </div>
 
         <!-- iOS Install Guide Banner -->
-        <div id="ios-install-banner" class="fixed bottom-4 left-4 right-4 z-[100] hidden">
-            <div class="mx-auto max-w-md rounded-2xl bg-slate-900 text-white shadow-2xl ring-1 ring-white/10">
+        <div id="ios-install-banner" class="fixed bottom-4 left-0 right-0 z-[100] px-4 hidden">
+            <div class="mx-auto w-full max-w-md rounded-2xl bg-slate-900 text-white shadow-2xl ring-1 ring-white/10">
                 <div class="flex items-start gap-3 p-4">
                     <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/10 text-white">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
