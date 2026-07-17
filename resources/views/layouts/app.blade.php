@@ -302,7 +302,7 @@
      x-transition:leave="transition ease-in duration-100"
      x-transition:leave-start="opacity-100 scale-100 mt-2"
      x-transition:leave-end="opacity-0 scale-95 mt-0"
-     class="absolute right-0 top-full mt-2 w-[calc(100vw-1rem)] max-w-[calc(100vw-1rem)] min-w-0 sm:w-80 sm:min-w-[16rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-lg ring-1 ring-slate-200 dark:ring-slate-700 py-3 z-50 text-slate-800 dark:text-slate-100"
+     class="absolute right-[-3.5rem] sm:right-0 origin-top-right top-full mt-2 w-[calc(100vw-2rem)] sm:w-80 max-w-[calc(100vw-2rem)] min-w-0 rounded-2xl border border-slate-100 bg-white shadow-lg ring-1 ring-slate-200 z-50 text-slate-800 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100 dark:ring-slate-700"
      x-cloak>
                                     <div class="px-4 pb-2 border-b border-slate-100 dark:border-slate-850 flex items-center justify-between">
                                         <span class="font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Notifications</span>
@@ -315,28 +315,28 @@
                                             </form>
                                         @endif
                                     </div>
-                                    <div class="max-h-[70vh] overflow-y-auto">
+                                    <div class="flex flex-col gap-2 p-2">
                                         @forelse($notifications as $notif)
                                             <form method="POST" action="{{ route('notifications.read', $notif) }}" class="block">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit" class="w-full text-left px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-850 transition border-b border-slate-50 dark:border-slate-850/30 flex flex-col space-y-1">
-                                                    <div class="flex items-center justify-between">
-                                                        <span class="font-bold text-xs {{ $notif->read_at ? 'text-slate-500 dark:text-slate-400' : 'text-slate-855 dark:text-white' }}">
+                                                <button type="submit" class="w-full rounded-xl border border-slate-100 px-3 py-3 text-left transition hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800/60 flex flex-col gap-1.5">
+                                                    <div class="flex items-start justify-between gap-2">
+                                                        <span class="font-semibold text-sm {{ $notif->read_at ? 'text-slate-500 dark:text-slate-400' : 'text-slate-800 dark:text-white' }}">
                                                             {{ $notif->title }}
                                                         </span>
                                                         @if(!$notif->read_at)
-                                                            <span class="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0"></span>
+                                                            <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-blue-600"></span>
                                                         @endif
                                                     </div>
-                                                    <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-normal">
+                                                    <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400">
                                                         {{ $notif->message }}
                                                     </p>
-                                                    <span class="text-[9px] text-slate-400">{{ $notif->created_at->diffForHumans() }}</span>
+                                                    <span class="text-[10px] text-slate-400">{{ $notif->created_at->diffForHumans() }}</span>
                                                 </button>
                                             </form>
                                         @empty
-                                            <div class="px-4 py-6 text-center text-xs text-slate-400 dark:text-slate-505">
+                                            <div class="rounded-xl border border-slate-100 px-3 py-6 text-center text-xs text-slate-400 dark:border-slate-800 dark:text-slate-500">
                                                 No notifications yet.
                                             </div>
                                         @endforelse
@@ -369,7 +369,7 @@
                                      x-transition:leave="transition ease-in duration-100"
                                      x-transition:leave-start="opacity-100 scale-100 mt-2"
                                      x-transition:leave-end="opacity-0 scale-95 mt-0"
-                                     class="absolute right-0 top-full mt-2 w-[calc(100vw-1rem)] max-w-[calc(100vw-1rem)] min-w-0 sm:w-56 sm:min-w-[14rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50 text-slate-800 dark:text-slate-100"
+                                     class="absolute right-0 origin-top-right top-full mt-2 w-[calc(100vw-1rem)] max-w-[calc(100vw-1rem)] min-w-0 sm:w-56 sm:min-w-[14rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50 text-slate-800 dark:text-slate-100 overflow-hidden flex flex-col"
                                      x-cloak>
                                     <div class="px-4 py-2.5 border-b border-slate-100 dark:border-slate-850">
                                         <p class="font-extrabold text-xs text-slate-850 dark:text-white truncate">{{ $user->name }}</p>

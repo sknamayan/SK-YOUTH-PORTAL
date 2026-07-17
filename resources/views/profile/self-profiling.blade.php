@@ -95,6 +95,26 @@
         }
     },
 
+    handlePrimaryAction() {
+        if (this.step < 4) {
+            this.nextStep();
+            return;
+        }
+
+        if (this.validateStep(4)) {
+            this.showConfirm = true;
+        }
+    },
+
+    submitProfile() {
+        if (!this.validateStep(4)) {
+            return;
+        }
+
+        this.loading = true;
+        document.getElementById('profileForm').submit();
+    },
+
     prevStep() {
         if (this.step > 1) {
             this.step--;
@@ -475,14 +495,14 @@
                 
                 <button type="button" 
                         x-show="step < 4" 
-                        @click="nextStep()" 
+                        @click="handlePrimaryAction()" 
                         class="btn-primary text-xs uppercase tracking-wider py-2 px-5 font-bold rounded-xl select-none cursor-pointer">
                     Next &rarr;
                 </button>
                 
                 <button type="button" 
                         x-show="step === 4" 
-                        @click="if (validateStep(4)) { showConfirm = true; }"
+                        @click="handlePrimaryAction()"
                         :disabled="loading"
                         class="btn-success text-xs uppercase tracking-wider py-2 px-5 font-bold rounded-xl select-none cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white border border-transparent transition active:scale-95 shadow-sm disabled:opacity-50">
                     <span x-text="loading ? 'Processing...' : 'Submit Profile'"></span>
@@ -505,7 +525,7 @@
                 <button type="button" @click="showConfirm = false" class="flex-1 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold uppercase transition hover:bg-slate-50">
                     Go Back
                 </button>
-                <button type="button" @click="showConfirm = false; loading = true; document.getElementById('profileForm').submit();" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase transition shadow-md active:scale-95">
+                <button type="button" @click="showConfirm = false; submitProfile()" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase transition shadow-md active:scale-95">
                     Yes, Submit
                 </button>
             </div>
@@ -513,10 +533,10 @@
     </div>
 </div>
 
-<x-mobile-bottom-action x-show="step < 4" @click="nextStep()">
+<x-mobile-bottom-action x-show="step < 4" @click="handlePrimaryAction()">
     Next Step &rarr;
 </x-mobile-bottom-action>
-<x-mobile-bottom-action x-show="step === 4" @click="if (validateStep(4)) { showConfirm = true; }" x-bind:disabled="loading">
+<x-mobile-bottom-action x-show="step === 4" @click="handlePrimaryAction()" x-bind:disabled="loading">
     Submit Profile
 </x-mobile-bottom-action>
 @endsection

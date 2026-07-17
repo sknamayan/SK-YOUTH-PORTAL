@@ -27,16 +27,22 @@
         'wire:click',
         'wire:target',
         'wire:loading.attr',
-    ])->merge([
-        'class' => 'fixed bottom-0 left-0 right-0 z-50 md:hidden bg-slate-900/95 border-t border-slate-800/80 backdrop-blur-sm shadow-[0_-4px_12px_rgba(0,0,0,0.15)] pb-[max(12px,env(safe-area-inset-bottom))]'
-    ]) }}
+    'x-bind:disabled',
+    ':disabled',
+    'x-bind:class',
+    ':class',
+    'x-bind:aria-disabled',
+    'aria-disabled',
+])->merge([
+    'class' => 'fixed bottom-0 left-0 right-0 z-40 md:hidden border-t border-white/10 bg-slate-950/90 px-3 py-3 backdrop-blur shadow-[0_-8px_20px_rgba(0,0,0,0.2)] pb-[max(12px,env(safe-area-inset-bottom))]'
+]) }}
 >
-    <div class="px-4 py-3">
+<div class="mx-auto flex max-w-5xl items-center justify-end pr-20 sm:pr-24">
         @if($href)
             <a
                 href="{{ $href }}"
-                {{ $attributes->only(['@click', 'onclick', 'x-on:click', 'wire:click', 'wire:target'])->merge([
-                    'class' => 'block w-full text-center rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 shadow-lg shadow-blue-950/25 transition active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900',
+                {{ $attributes->only(['@click', 'onclick', 'x-on:click', 'wire:click', 'wire:target', 'x-bind:disabled', ':disabled', 'x-bind:class', ':class', 'x-bind:aria-disabled', 'aria-disabled'])->merge([
+                    'class' => 'flex w-full max-w-[16rem] items-center justify-center rounded-2xl bg-gradient-to-r from-[#1e40af] to-blue-600 px-4 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-blue-900/25 transition active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900',
                 ]) }}
                 @if($disabled) aria-disabled="true" tabindex="-1" @endif
             >
@@ -46,8 +52,8 @@
             <button
                 type="{{ $type }}"
                 form="{{ $form }}"
-                {{ $attributes->only(['@click', 'onclick', 'x-on:click', 'wire:click', 'wire:target'])->merge([
-                    'class' => 'w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 shadow-lg shadow-blue-950/25 transition active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900',
+                {{ $attributes->only(['@click', 'onclick', 'x-on:click', 'wire:click', 'wire:target', 'x-bind:disabled', ':disabled', 'x-bind:class', ':class', 'x-bind:aria-disabled', 'aria-disabled'])->merge([
+                    'class' => 'flex w-full max-w-[16rem] items-center justify-center rounded-2xl bg-gradient-to-r from-[#1e40af] to-blue-600 px-4 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-blue-900/25 transition active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900',
                 ]) }}
                 @if($disabled) disabled @endif
             >
@@ -56,8 +62,8 @@
         @else
             <button
                 type="{{ $type }}"
-                {{ $attributes->only(['@click', 'onclick', 'x-on:click', 'wire:click', 'wire:target'])->merge([
-                    'class' => 'w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 shadow-lg shadow-blue-950/25 transition active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900',
+                {{ $attributes->only(['@click', 'onclick', 'x-on:click', 'wire:click', 'wire:target', 'x-bind:disabled', ':disabled', 'x-bind:class', ':class', 'x-bind:aria-disabled', 'aria-disabled'])->merge([
+                    'class' => 'flex w-full max-w-[16rem] items-center justify-center rounded-2xl bg-gradient-to-r from-[#1e40af] to-blue-600 px-4 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-blue-900/25 transition active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900',
                 ]) }}
                 @if($disabled) disabled @endif
             >
