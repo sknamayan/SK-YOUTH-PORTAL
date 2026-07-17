@@ -26,12 +26,12 @@
 
     <!-- Main Content Area -->
     <div class="flex-1 flex flex-col min-w-0">
-        
+
         <!-- Mobile Sidebar Trigger Header -->
 
         <!-- Page Main Wrapper -->
         <div class="p-6 md:p-8 space-y-8 flex-1 overflow-y-auto font-sans">
-            
+
             <!-- Breadcrumbs / Overview Top Bar -->
             <div class="flex items-center justify-between pb-4 border-b border-slate-100">
                 <div class="flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider">
@@ -50,7 +50,7 @@
 
             <!-- Dashboard Analytics Quick Widgets -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                
+
                 <!-- Total Submissions Card -->
                 <div class="card p-5 bg-white border border-slate-100 rounded-3xl shadow-sm flex flex-col justify-between hover:shadow-md transition border-l-4 border-l-blue-500">
                     <div class="flex items-center justify-between">
@@ -154,7 +154,7 @@
                     <form id="filterForm" method="GET" action="{{ route('dashboard.requests.index') }}" class="space-y-4">
                         <input type="hidden" name="tab" :value="activeTab">
                         <input type="hidden" name="division" id="divisionFilterInput" value="{{ $divisionFilter ?? '' }}">
-                        
+
                         <!-- Row 1: Search, Status, Year -->
                         <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
                             <!-- Search -->
@@ -244,7 +244,7 @@
 
                 <!-- Tab Panels Contents -->
                 <div class="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm">
-                    
+
                     @if($paginatedRequests->isEmpty())
                         <div class="text-center py-12 text-slate-400 text-xs">No records match the search filter.</div>
                     @else

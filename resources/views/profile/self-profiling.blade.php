@@ -516,7 +516,7 @@
 <x-mobile-bottom-action x-show="step < 4" @click="nextStep()">
     Next Step &rarr;
 </x-mobile-bottom-action>
-<x-mobile-bottom-action x-show="step === 4" @click="if (validateStep(4)) { showConfirm = true; }" :disabled="loading">
+<x-mobile-bottom-action x-show="step === 4" @click="if (validateStep(4)) { showConfirm = true; }" x-bind:disabled="loading">
     Submit Profile
 </x-mobile-bottom-action>
 @endsection

@@ -148,7 +148,7 @@
     </div>
 </div>
 
-<x-mobile-bottom-action @click="showConfirm = true" :disabled="loading">
+<x-mobile-bottom-action @click="showConfirm = true" x-bind:disabled="loading">
     Submit Request
 </x-mobile-bottom-action>
 @endsection

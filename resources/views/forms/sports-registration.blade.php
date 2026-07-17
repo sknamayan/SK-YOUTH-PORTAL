@@ -722,7 +722,7 @@
 <x-mobile-bottom-action x-show="showFormModal && regStep < 5" @click="nextRegStep()">
     Next Step &rarr;
 </x-mobile-bottom-action>
-<x-mobile-bottom-action x-show="showFormModal && regStep === 5" @click="if (validateRegStep(5)) { showConfirm = true; }" :disabled="loading">
+<x-mobile-bottom-action x-show="showFormModal && regStep === 5" @click="if (validateRegStep(5)) { showConfirm = true; }" x-bind:disabled="loading">
     Submit Registration
 </x-mobile-bottom-action>
 
