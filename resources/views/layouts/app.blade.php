@@ -243,7 +243,7 @@
 
 
                 <!-- Right: Nav options & dropdowns -->
-                <div class="flex items-center space-x-2 sm:space-x-3 text-sm shrink-0 min-w-0"
+                <div class="flex items-center justify-end gap-2 sm:gap-3 text-sm shrink-0 min-w-0 overflow-visible"
                      x-data="{
                          darkMode: window.SKTheme.isDark(),
                          notifOpen: false,
@@ -285,7 +285,7 @@
                             @endif
 
                             <!-- Notification Center Dropdown -->
-                            <div class="relative">
+                            <div class="relative z-50">
                                 @php
                                     $unreadCount = Auth::user()->notifications()->whereNull('read_at')->count();
                                     $notifications = Auth::user()->notifications()->take(5)->get();
@@ -314,7 +314,7 @@
      x-transition:leave="transition ease-in duration-100"
      x-transition:leave-start="opacity-100 scale-100 mt-2"
      x-transition:leave-end="opacity-0 scale-95 mt-0"
-     class="absolute right-0 min-w-[16rem] w-72 sm:w-80 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-lg ring-1 ring-slate-200 dark:ring-slate-700 py-3 z-50 text-slate-800 dark:text-slate-100"
+     class="absolute right-0 top-full mt-2 w-[min(18rem,calc(100vw-1rem))] max-w-[calc(100vw-1rem)] origin-top-right bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-lg ring-1 ring-slate-200 dark:ring-slate-700 py-3 z-50 text-slate-800 dark:text-slate-100"
      x-cloak>
                                     <div class="px-4 pb-2 border-b border-slate-100 dark:border-slate-850 flex items-center justify-between">
                                         <span class="font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Notifications</span>
@@ -327,7 +327,7 @@
                                             </form>
                                         @endif
                                     </div>
-                                    <div class="max-h-64 overflow-y-auto">
+                                    <div class="max-h-96 overflow-y-auto no-scrollbar">
                                         @forelse($notifications as $notif)
                                             <form method="POST" action="{{ route('notifications.read', $notif) }}" class="block">
                                                 @csrf
@@ -357,7 +357,7 @@
                             </div>
 
                             <!-- User Profile Dropdown -->
-                            <div class="relative">
+                            <div class="relative z-50">
                                 @php
                                     $initials = '';
                                     $user = Auth::user();
@@ -381,7 +381,7 @@
                                      x-transition:leave="transition ease-in duration-100"
                                      x-transition:leave-start="opacity-100 scale-100 mt-2"
                                      x-transition:leave-end="opacity-0 scale-95 mt-0"
-                                     class="absolute right-0 w-56 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50 text-slate-800 dark:text-slate-100"
+                                     class="absolute right-0 top-full mt-2 w-[min(16rem,calc(100vw-1rem))] max-w-[calc(100vw-1rem)] origin-top-right bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50 text-slate-800 dark:text-slate-100"
                                      x-cloak>
                                     <div class="px-4 py-2.5 border-b border-slate-100 dark:border-slate-850">
                                         <p class="font-extrabold text-xs text-slate-850 dark:text-white truncate">{{ $user->name }}</p>
@@ -773,13 +773,41 @@
             </div>
         </div>
 
+        <!-- iOS Install Guide Banner -->
+        <div id="ios-install-banner" class="fixed inset-x-0 bottom-4 z-[61] px-4 hidden">
+            <div class="mx-auto max-w-md rounded-2xl border border-slate-200/80 bg-white/95 p-3 shadow-2xl backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95">
+                <div class="flex items-start gap-3">
+                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-white dark:bg-slate-800">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 7-7 7-7-7 7-7z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v11" />
+                        </svg>
+                    </div>
+
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-bold text-slate-900 dark:text-white">Install on your iPhone or iPad</p>
+                        <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">To install this app, tap the Share icon at the bottom of Safari and select “Add to Home Screen”.</p>
+                    </div>
+                </div>
+
+                <div class="mt-3 flex items-center justify-end">
+                    <button id="ios-install-dismiss" type="button" class="rounded-xl bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700">
+                        Got it
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <script>
             (() => {
                 const installBanner = document.getElementById('pwa-install-banner');
                 const installButton = document.getElementById('pwa-install-button');
                 const dismissButton = document.getElementById('pwa-install-dismiss');
+                const iosInstallBanner = document.getElementById('ios-install-banner');
+                const iosDismissButton = document.getElementById('ios-install-dismiss');
 
                 let deferredPrompt = null;
+                const iosDismissKey = 'sknamayan-ios-install-dismissed';
 
                 const hideBanner = () => {
                     if (installBanner) {
@@ -825,6 +853,27 @@
                     deferredPrompt = null;
                     hideBanner();
                 });
+
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+                const isStandalone = window.navigator.standalone === true;
+
+                if (isIOS && !isStandalone && iosInstallBanner) {
+                    const dismissed = window.localStorage.getItem(iosDismissKey) === '1';
+
+                    if (!dismissed) {
+                        iosInstallBanner.classList.remove('hidden');
+                    }
+                }
+
+                if (iosDismissButton) {
+                    iosDismissButton.addEventListener('click', () => {
+                        window.localStorage.setItem(iosDismissKey, '1');
+
+                        if (iosInstallBanner) {
+                            iosInstallBanner.classList.add('hidden');
+                        }
+                    });
+                }
             })();
         </script>
 
