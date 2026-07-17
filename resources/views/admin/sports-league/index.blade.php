@@ -74,7 +74,7 @@
     <!-- Main Pane -->
     <div class="flex-1 flex flex-col min-w-0">
 
-        <div class="p-6 md:p-8 space-y-6 flex-1 overflow-y-auto">
+        <div class="p-6 md:p-8 pb-24 md:pb-8 space-y-6 flex-1 overflow-y-auto">
             
             <!-- Header section -->
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-200">
@@ -1256,4 +1256,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
+
+<x-mobile-bottom-action x-show="!showRegisterModal && !showEditModal && !showViewModal && !showDeleteModal" @click="showRegisterModal = true; adminRegStep = 1; adminSport = 'Basketball'; adminDivision = 'Midget'; adminAge = 18">
+    Register Citizen
+</x-mobile-bottom-action>
 @endsection

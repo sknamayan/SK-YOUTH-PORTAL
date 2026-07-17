@@ -9,7 +9,7 @@
     <!-- Main Content Pane -->
     <div class="flex-1 flex flex-col min-w-0">
 
-        <div class="p-6 md:p-8 space-y-6 flex-1 overflow-y-auto">
+        <div class="p-6 md:p-8 pb-24 md:pb-8 space-y-6 flex-1 overflow-y-auto">
             
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
@@ -138,4 +138,8 @@
     </div>
 
 </div>
+
+<x-mobile-bottom-action href="{{ route('admin.reports.create') }}">
+    Upload New Report
+</x-mobile-bottom-action>
 @endsection

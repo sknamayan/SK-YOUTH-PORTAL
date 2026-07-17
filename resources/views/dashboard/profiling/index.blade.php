@@ -153,7 +153,7 @@
         <!-- Mobile Sidebar Trigger Header -->
 
         <!-- Page Main Wrapper -->
-        <div class="p-6 md:p-8 space-y-8 flex-1 overflow-y-auto font-sans">
+        <div class="p-6 md:p-8 pb-24 md:pb-8 space-y-8 flex-1 overflow-y-auto font-sans">
 
             <!-- Breadcrumbs / Top Bar -->
             <div class="flex items-center justify-between pb-4 border-b border-slate-100">
@@ -1308,4 +1308,8 @@
     </div>
 
 </div>
+
+<x-mobile-bottom-action x-show="!showModal && !showViewModal" @click="resetForm(); showModal = true">
+    Add New Member
+</x-mobile-bottom-action>
 @endsection

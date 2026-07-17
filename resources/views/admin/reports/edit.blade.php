@@ -9,7 +9,7 @@
     <!-- Main Content Pane -->
     <div class="flex-1 flex flex-col min-w-0">
 
-        <div class="p-6 md:p-8 space-y-6 flex-1 overflow-y-auto">
+        <div class="p-6 md:p-8 pb-24 md:pb-8 space-y-6 flex-1 overflow-y-auto">
             
             <div class="mb-4">
                 <a href="{{ route('admin.reports.index') }}" class="inline-flex items-center text-xs font-bold text-slate-500 hover:text-[#1e40af] uppercase tracking-wider transition">
@@ -53,6 +53,9 @@
                         Save Changes
                     </button>
                 </div>
+                <x-mobile-bottom-action type="submit">
+                    Save Changes
+                </x-mobile-bottom-action>
             </x-form-card>
 
         </div>
