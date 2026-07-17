@@ -747,26 +747,26 @@
         </script>
 
         <!-- PWA Install Banner -->
-        <div id="pwa-install-banner" class="fixed inset-x-0 bottom-4 z-[60] px-4 hidden">
-            <div class="mx-auto max-w-md rounded-2xl border border-slate-200/80 bg-white/95 dark:border-slate-800 dark:bg-slate-900/95 p-3 shadow-2xl backdrop-blur-md">
+        <div id="pwa-install-banner" class="fixed inset-x-0 bottom-0 z-[100] px-3 pb-3 pt-4 hidden">
+            <div class="mx-auto max-w-md translate-y-3 rounded-t-2xl rounded-b-2xl border border-slate-200/80 bg-white/95 p-4 shadow-2xl backdrop-blur-md transition-transform duration-300 ease-out dark:border-slate-800 dark:bg-slate-900/95">
                 <div class="flex items-start gap-3">
-                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white shadow-lg shadow-blue-600/20">
+                    <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/20">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0-12l-4 4m4-4l4 4M5 21h14" />
                         </svg>
                     </div>
 
                     <div class="flex-1 min-w-0">
-                        <p class="text-sm font-bold text-slate-900 dark:text-white">Install the SK Namayan Digital Registry</p>
-                        <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Get faster, offline access to the portal from your home screen.</p>
+                        <p class="text-sm font-extrabold tracking-tight text-slate-900 dark:text-white">Install the SK Namayan Digital Registry</p>
+                        <p class="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">Get faster, offline access to the portal from your home screen.</p>
                     </div>
                 </div>
 
-                <div class="mt-3 flex items-center justify-end gap-2">
-                    <button id="pwa-install-dismiss" type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700">
+                <div class="mt-4 flex items-center justify-end gap-2">
+                    <button id="pwa-install-dismiss" type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:bg-slate-50 active:scale-[0.98] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700">
                         Not Now
                     </button>
-                    <button id="pwa-install-button" type="button" class="rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white transition hover:bg-blue-500">
+                    <button id="pwa-install-button" type="button" class="rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500 active:scale-[0.98]">
                         Install App
                     </button>
                 </div>
@@ -774,24 +774,24 @@
         </div>
 
         <!-- iOS Install Guide Banner -->
-        <div id="ios-install-banner" class="fixed inset-x-0 bottom-4 z-[61] px-4 hidden">
-            <div class="mx-auto max-w-md rounded-2xl border border-slate-200/80 bg-white/95 p-3 shadow-2xl backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95">
-                <div class="flex items-start gap-3">
-                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-white dark:bg-slate-800">
+        <div id="ios-install-banner" class="fixed bottom-4 left-4 right-4 z-[100] hidden">
+            <div class="mx-auto max-w-md rounded-2xl bg-slate-900 text-white shadow-2xl ring-1 ring-white/10">
+                <div class="flex items-start gap-3 p-4">
+                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/10 text-white">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 7-7 7-7-7 7-7z" />
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v11" />
                         </svg>
                     </div>
 
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-bold text-slate-900 dark:text-white">Install on your iPhone or iPad</p>
-                        <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">To install this app, tap the Share icon at the bottom of Safari and select “Add to Home Screen”.</p>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-sm font-extrabold text-white">Install on your iPhone or iPad</p>
+                        <p class="mt-1 text-xs leading-5 text-slate-300">To install this app, tap the Share icon at the bottom of Safari and select “Add to Home Screen”.</p>
                     </div>
                 </div>
 
-                <div class="mt-3 flex items-center justify-end">
-                    <button id="ios-install-dismiss" type="button" class="rounded-xl bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700">
+                <div class="flex items-center justify-end border-t border-white/10 px-4 py-3">
+                    <button id="ios-install-dismiss" type="button" class="rounded-xl bg-white/10 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/20 active:scale-[0.98]">
                         Got it
                     </button>
                 </div>
@@ -815,13 +815,21 @@
                     }
                 };
 
+                const showBanner = () => {
+                    if (installBanner) {
+                        installBanner.classList.remove('hidden');
+                        const sheet = installBanner.querySelector('div');
+                        if (sheet) {
+                            sheet.classList.remove('translate-y-3');
+                            sheet.classList.add('translate-y-0');
+                        }
+                    }
+                };
+
                 window.addEventListener('beforeinstallprompt', (event) => {
                     event.preventDefault();
                     deferredPrompt = event;
-
-                    if (installBanner) {
-                        installBanner.classList.remove('hidden');
-                    }
+                    showBanner();
                 });
 
                 if (installButton) {
