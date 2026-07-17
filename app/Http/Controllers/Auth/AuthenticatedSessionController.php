@@ -29,11 +29,12 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $user = Auth::user();
+
         if ($user->canAccessDashboard()) {
-            return redirect()->intended('/dashboard');
+            return redirect()->to(route('dashboard.index'));
         }
 
-        return redirect()->intended('/');
+        return redirect()->to(route('landing'));
     }
 
     /**
@@ -47,6 +48,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->to(route('landing'));
     }
 }

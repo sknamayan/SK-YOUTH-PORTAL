@@ -302,7 +302,7 @@
      x-transition:leave="transition ease-in duration-100"
      x-transition:leave-start="opacity-100 scale-100 mt-2"
      x-transition:leave-end="opacity-0 scale-95 mt-0"
-     class="absolute right-0 min-w-[16rem] w-72 sm:w-80 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-lg ring-1 ring-slate-200 dark:ring-slate-700 py-3 z-50 text-slate-800 dark:text-slate-100"
+     class="absolute right-0 top-full mt-2 w-[calc(100vw-1rem)] max-w-[calc(100vw-1rem)] min-w-0 sm:w-80 sm:min-w-[16rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-lg ring-1 ring-slate-200 dark:ring-slate-700 py-3 z-50 text-slate-800 dark:text-slate-100"
      x-cloak>
                                     <div class="px-4 pb-2 border-b border-slate-100 dark:border-slate-850 flex items-center justify-between">
                                         <span class="font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Notifications</span>
@@ -315,7 +315,7 @@
                                             </form>
                                         @endif
                                     </div>
-                                    <div class="max-h-64 overflow-y-auto">
+                                    <div class="max-h-[70vh] overflow-y-auto">
                                         @forelse($notifications as $notif)
                                             <form method="POST" action="{{ route('notifications.read', $notif) }}" class="block">
                                                 @csrf
@@ -369,7 +369,7 @@
                                      x-transition:leave="transition ease-in duration-100"
                                      x-transition:leave-start="opacity-100 scale-100 mt-2"
                                      x-transition:leave-end="opacity-0 scale-95 mt-0"
-                                     class="absolute right-0 w-56 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50 text-slate-800 dark:text-slate-100"
+                                     class="absolute right-0 top-full mt-2 w-[calc(100vw-1rem)] max-w-[calc(100vw-1rem)] min-w-0 sm:w-56 sm:min-w-[14rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50 text-slate-800 dark:text-slate-100"
                                      x-cloak>
                                     <div class="px-4 py-2.5 border-b border-slate-100 dark:border-slate-850">
                                         <p class="font-extrabold text-xs text-slate-850 dark:text-white truncate">{{ $user->name }}</p>
