@@ -539,4 +539,26 @@
 <x-mobile-bottom-action x-show="step === 4" @click="handlePrimaryAction()" x-bind:disabled="loading">
     Submit Profile
 </x-mobile-bottom-action>
+
+<!-- Example bottom-sheet component (reusable slide-up panel) -->
+<x-bottom-sheet title="Submit Registration" buttonText="Open Registration">
+    {{-- Example form skeleton: no DB logic here; replace with actual fields as needed --}}
+    <form id="bottomSheetForm" method="POST" action="#" class="space-y-4">
+        @csrf
+
+        <div class="grid grid-cols-1 gap-3">
+            <label class="text-xs font-semibold">Full name</label>
+            <input name="name" type="text" class="field rounded-xl w-full" placeholder="e.g., Juan Dela Cruz">
+
+            <label class="text-xs font-semibold">Email</label>
+            <input name="email" type="email" class="field rounded-xl w-full" placeholder="email@example.com">
+        </div>
+
+        <div class="pt-2">
+            <!-- This button demonstrates submitting the main profile form from within the sheet -->
+            <button type="button" onclick="document.getElementById('profileForm').submit();" class="w-full rounded-2xl bg-[#1e40af] hover:bg-blue-700 text-white py-3 font-bold uppercase tracking-wider">Submit Profile</button>
+        </div>
+    </form>
+</x-bottom-sheet>
+
 @endsection
