@@ -314,41 +314,41 @@
      x-transition:leave="transition ease-in duration-100"
      x-transition:leave-start="opacity-100 scale-100 mt-2"
      x-transition:leave-end="opacity-0 scale-95 mt-0"
-     class="absolute right-0 top-full mt-2 w-[min(18rem,calc(100vw-1rem))] max-w-[calc(100vw-1rem)] origin-top-right bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-lg ring-1 ring-slate-200 dark:ring-slate-700 py-3 z-50 text-slate-800 dark:text-slate-100"
+     class="absolute right-0 top-full mt-2 origin-top-right z-50 w-[calc(100vw-2rem)] max-w-[calc(100vw-2rem)] sm:w-80 rounded-2xl bg-slate-800 text-white shadow-2xl ring-1 ring-white/10"
      x-cloak>
-                                    <div class="px-4 pb-2 border-b border-slate-100 dark:border-slate-850 flex items-center justify-between">
-                                        <span class="font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Notifications</span>
+                                    <div class="flex items-center justify-between border-b border-white/10 px-4 py-3">
+                                        <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Notifications</span>
                                         @if($unreadCount > 0)
                                             <form method="POST" action="{{ route('notifications.read-all') }}">
                                                 @csrf
-                                                <button type="submit" class="text-[10px] text-blue-600 dark:text-blue-400 font-bold hover:underline">
+                                                <button type="submit" class="text-[10px] font-bold text-blue-300 hover:text-white hover:underline">
                                                     Mark all read
                                                 </button>
                                             </form>
                                         @endif
                                     </div>
-                                    <div class="max-h-96 overflow-y-auto no-scrollbar">
+                                    <div class="flex flex-col gap-1 px-2 py-2">
                                         @forelse($notifications as $notif)
                                             <form method="POST" action="{{ route('notifications.read', $notif) }}" class="block">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit" class="w-full text-left px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-850 transition border-b border-slate-50 dark:border-slate-850/30 flex flex-col space-y-1">
-                                                    <div class="flex items-center justify-between">
-                                                        <span class="font-bold text-xs {{ $notif->read_at ? 'text-slate-500 dark:text-slate-400' : 'text-slate-855 dark:text-white' }}">
+                                                <button type="submit" class="w-full rounded-xl px-3 py-3 text-left transition hover:bg-white/5 flex flex-col gap-1">
+                                                    <div class="flex items-center justify-between gap-2">
+                                                        <span class="text-xs font-bold {{ $notif->read_at ? 'text-slate-300' : 'text-white' }}">
                                                             {{ $notif->title }}
                                                         </span>
                                                         @if(!$notif->read_at)
-                                                            <span class="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0"></span>
+                                                            <span class="h-1.5 w-1.5 rounded-full bg-blue-400 shrink-0"></span>
                                                         @endif
                                                     </div>
-                                                    <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-normal">
+                                                    <p class="text-[11px] leading-normal text-slate-300">
                                                         {{ $notif->message }}
                                                     </p>
                                                     <span class="text-[9px] text-slate-400">{{ $notif->created_at->diffForHumans() }}</span>
                                                 </button>
                                             </form>
                                         @empty
-                                            <div class="px-4 py-6 text-center text-xs text-slate-400 dark:text-slate-505">
+                                            <div class="px-4 py-6 text-center text-xs text-slate-400">
                                                 No notifications yet.
                                             </div>
                                         @endforelse
@@ -381,33 +381,33 @@
                                      x-transition:leave="transition ease-in duration-100"
                                      x-transition:leave-start="opacity-100 scale-100 mt-2"
                                      x-transition:leave-end="opacity-0 scale-95 mt-0"
-                                     class="absolute right-0 top-full mt-2 w-[min(16rem,calc(100vw-1rem))] max-w-[calc(100vw-1rem)] origin-top-right bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50 text-slate-800 dark:text-slate-100"
+                                     class="absolute right-0 top-full mt-2 origin-top-right z-50 w-[calc(100vw-2rem)] max-w-[calc(100vw-2rem)] sm:w-80 rounded-2xl bg-slate-800 text-white shadow-2xl ring-1 ring-white/10"
                                      x-cloak>
-                                    <div class="px-4 py-2.5 border-b border-slate-100 dark:border-slate-850">
-                                        <p class="font-extrabold text-xs text-slate-850 dark:text-white truncate">{{ $user->name }}</p>
-                                        <p class="text-[10px] text-slate-400 truncate">{{ $user->email }}</p>
+                                    <div class="border-b border-white/10 px-4 py-2.5">
+                                        <p class="truncate text-xs font-extrabold text-white">{{ $user->name }}</p>
+                                        <p class="truncate text-[10px] text-slate-300">{{ $user->email }}</p>
                                     </div>
-                                    <div class="py-1">
+                                    <div class="flex flex-col gap-1 py-2">
                                         @if($user->canAccessDashboard())
-                                            <a href="{{ route('dashboard.index') }}" @click="profileOpen = false" class="flex items-center space-x-2 px-4 py-2 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-850 transition">
-                                                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" /></svg>
+                                            <a href="{{ route('dashboard.index') }}" @click="profileOpen = false" class="flex items-center space-x-2 px-4 py-2 text-xs font-semibold text-white hover:bg-white/5 transition">
+                                                <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" /></svg>
                                                 <span>Dashboard</span>
                                             </a>
                                         @else
-                                            <a href="{{ route('profile.my-requests') }}" @click="profileOpen = false" class="flex items-center space-x-2 px-4 py-2 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-850 transition">
-                                                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                                            <a href="{{ route('profile.my-requests') }}" @click="profileOpen = false" class="flex items-center space-x-2 px-4 py-2 text-xs font-semibold text-white hover:bg-white/5 transition">
+                                                <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
                                                 <span>My Requests</span>
                                             </a>
                                         @endif
-                                        <a href="{{ route('profile.edit') }}" @click="profileOpen = false" class="flex items-center space-x-2 px-4 py-2 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-850 transition">
-                                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                                        <a href="{{ route('profile.edit') }}" @click="profileOpen = false" class="flex items-center space-x-2 px-4 py-2 text-xs font-semibold text-white hover:bg-white/5 transition">
+                                            <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                                             <span>Account Settings</span>
                                         </a>
                                     </div>
-                                    <div class="border-t border-slate-100 dark:border-slate-850 pt-1">
+                                    <div class="border-t border-white/10 pt-1">
                                         <form method="POST" action="{{ route('logout') }}" class="block">
                                             @csrf
-                                            <button type="submit" class="w-full flex items-center space-x-2 px-4 py-2.5 text-xs font-bold text-rose-650 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition text-left">
+                                            <button type="submit" class="w-full flex items-center space-x-2 px-4 py-2.5 text-left text-xs font-bold text-rose-300 hover:bg-white/5 transition">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                                                 <span>Logout</span>
                                             </button>
