@@ -316,19 +316,19 @@ if (activeForm) {
                         enctype="multipart/form-data"
                     >
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <x-form-input label="First Name" name="first_name" required="true" />
-                            <x-form-input label="Last Name" name="last_name" required="true" />
-                            <x-form-input label="Middle Name" name="middle_name" />
+                            <x-form-input label="First Name" name="first_name" required="true" value="{{ $kkProfile?->first_name }}" />
+                            <x-form-input label="Last Name" name="last_name" required="true" value="{{ $kkProfile?->surname }}" />
+                            <x-form-input label="Middle Name" name="middle_name" value="{{ $kkProfile?->middle_name }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <x-form-input label="Age" name="age" type="number" min="0" max="120" required="true" />
-                            <x-form-select label="Gender" name="gender" required="true" :options="$genderOptions" />
+                            <x-form-input label="Age" name="age" type="number" min="0" max="120" required="true" value="{{ $kkProfile?->age }}" />
+                            <x-form-select label="Gender" name="gender" required="true" :options="$genderOptions" selected="{{ $kkProfile?->gender ?? $kkProfile?->sex }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <x-form-input label="Email Address" name="email" type="email" required="true" />
-                            <x-form-input label="Contact Number" name="contact_number" required="true" placeholder="e.g. 09123456789" />
+                            <x-form-input label="Email Address" name="email" type="email" required="true" value="{{ $kkProfile?->email ?? auth()->user()?->email }}" />
+                            <x-form-input label="Contact Number" name="contact_number" required="true" placeholder="e.g. 09123456789" value="{{ $kkProfile?->contact_number }}" />
                         </div>
 
                         <x-form-input label="Concerns" name="concerns" type="textarea" required="true" placeholder="Detail your symptoms, advice needed, or other medical inquiries..." />
@@ -383,19 +383,19 @@ if (activeForm) {
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <x-form-input label="First Name" name="first_name" required="true" />
-                            <x-form-input label="Last Name" name="last_name" required="true" />
-                            <x-form-input label="Middle Name" name="middle_name" />
+                            <x-form-input label="First Name" name="first_name" required="true" value="{{ $kkProfile?->first_name }}" />
+                            <x-form-input label="Last Name" name="last_name" required="true" value="{{ $kkProfile?->surname }}" />
+                            <x-form-input label="Middle Name" name="middle_name" value="{{ $kkProfile?->middle_name }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <x-form-input label="Age" name="age" type="number" min="0" max="120" required="true" />
-                            <x-form-select label="Gender" name="gender" required="true" :options="$genderOptions" />
+                            <x-form-input label="Age" name="age" type="number" min="0" max="120" required="true" value="{{ $kkProfile?->age }}" />
+                            <x-form-select label="Gender" name="gender" required="true" :options="$genderOptions" selected="{{ $kkProfile?->gender ?? $kkProfile?->sex }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <x-form-input label="Email Address" name="email" type="email" required="true" />
-                            <x-form-input label="Contact Number" name="contact_number" required="true" placeholder="e.g. 09123456789" />
+                            <x-form-input label="Email Address" name="email" type="email" required="true" value="{{ $kkProfile?->email ?? auth()->user()?->email }}" />
+                            <x-form-input label="Contact Number" name="contact_number" required="true" placeholder="e.g. 09123456789" value="{{ $kkProfile?->contact_number }}" />
                         </div>
 
                         <x-form-input label="Describe what you are going through (Your mental wellness concerns)" name="concerns" type="textarea" required="true" placeholder="Please feel free to express your mental health queries or challenges..." />
@@ -442,21 +442,21 @@ if (activeForm) {
                         enctype="multipart/form-data"
                     >
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <x-form-input label="Requestor First Name" name="requestor_first_name" required="true" />
-                            <x-form-input label="Requestor Last Name" name="requestor_last_name" required="true" />
+                            <x-form-input label="Requestor First Name" name="requestor_first_name" required="true" value="{{ $kkProfile?->first_name }}" />
+                            <x-form-input label="Requestor Last Name" name="requestor_last_name" required="true" value="{{ $kkProfile?->surname }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <x-form-input label="Requestor Age" name="requestor_age" type="number" min="0" max="120" required="true" />
-                            <x-form-select label="Requestor Gender" name="requestor_gender" required="true" :options="$genderOptions" />
+                            <x-form-input label="Requestor Age" name="requestor_age" type="number" min="0" max="120" required="true" value="{{ $kkProfile?->age }}" />
+                            <x-form-select label="Requestor Gender" name="requestor_gender" required="true" :options="$genderOptions" selected="{{ $kkProfile?->gender ?? $kkProfile?->sex }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <x-form-input label="Email Address" name="email" type="email" required="true" />
-                            <x-form-input label="Contact Number" name="contact_number" required="true" placeholder="e.g. 09123456789" />
+                            <x-form-input label="Email Address" name="email" type="email" required="true" value="{{ $kkProfile?->email ?? auth()->user()?->email }}" />
+                            <x-form-input label="Contact Number" name="contact_number" required="true" placeholder="e.g. 09123456789" value="{{ $kkProfile?->contact_number }}" />
                         </div>
 
-                        <x-form-input label="Complete Delivery Address" name="complete_address" type="textarea" required="true" placeholder="Enter house number, street, barangay, and landmark..." />
+                        <x-form-input label="Complete Delivery Address" name="complete_address" type="textarea" required="true" placeholder="Enter house number, street, barangay, and landmark..." value="{{ $kkProfile?->street_address ? ($kkProfile->street_address . ', Purok ' . ($kkProfile->purok?->purok_name ?? '')) : '' }}" />
 
                         @php $medInit = $initiatives['forms.medicine.create'] ?? null; @endphp
                         @if($medInit && is_array($medInit->custom_fields) && count($medInit->custom_fields) > 0)
@@ -495,15 +495,15 @@ if (activeForm) {
                         enctype="multipart/form-data"
                     >
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <x-form-input label="Requestor First Name" name="requestor_first_name" required="true" />
-                            <x-form-input label="Requestor Last Name" name="requestor_last_name" required="true" />
-                            <x-form-input label="Requestor Middle Name" name="requestor_middle_name" />
+                            <x-form-input label="Requestor First Name" name="requestor_first_name" required="true" value="{{ $kkProfile?->first_name }}" />
+                            <x-form-input label="Requestor Last Name" name="requestor_last_name" required="true" value="{{ $kkProfile?->surname }}" />
+                            <x-form-input label="Requestor Middle Name" name="requestor_middle_name" value="{{ $kkProfile?->middle_name }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <x-form-input label="Requestor Age" name="requestor_age" type="number" min="0" max="120" required="true" />
-                            <x-form-input label="Email Address" name="email" type="email" required="true" />
-                            <x-form-input label="Contact Number" name="contact_number" required="true" placeholder="e.g. 09123456789" />
+                            <x-form-input label="Requestor Age" name="requestor_age" type="number" min="0" max="120" required="true" value="{{ $kkProfile?->age }}" />
+                            <x-form-input label="Email Address" name="email" type="email" required="true" value="{{ $kkProfile?->email ?? auth()->user()?->email }}" />
+                            <x-form-input label="Contact Number" name="contact_number" required="true" placeholder="e.g. 09123456789" value="{{ $kkProfile?->contact_number }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

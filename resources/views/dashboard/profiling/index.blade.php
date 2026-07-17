@@ -337,7 +337,24 @@
                                     <option value="Female" {{ $sexFilter == 'Female' ? 'selected' : '' }}>Female</option>
                                 </select>
                                 <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none text-slate-400">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                                </div>
+                            </div>
+
+                            <!-- Category Filter Dropdown -->
+                            <div class="relative w-44 shrink-0">
+                                <select
+                                    name="category"
+                                    onchange="this.form.submit()"
+                                    class="block w-full py-2 pl-3 pr-8 bg-slate-50/70 border border-slate-200/60 rounded-2xl text-[11px] text-slate-650 outline-none focus:bg-white focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition cursor-pointer appearance-none font-semibold"
+                                >
+                                    <option value="sk_youth" {{ $categoryFilter == 'sk_youth' ? 'selected' : '' }}>Primary SK (15-30)</option>
+                                    <option value="child" {{ $categoryFilter == 'child' ? 'selected' : '' }}>Kids / Children (6-12)</option>
+                                    <option value="adult" {{ $categoryFilter == 'adult' ? 'selected' : '' }}>Older Adults (31-39)</option>
+                                    <option value="all" {{ $categoryFilter == 'all' ? 'selected' : '' }}>All Age Groups</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none text-slate-400">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
                                 </div>
                             </div>
 

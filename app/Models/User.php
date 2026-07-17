@@ -132,6 +132,20 @@ class User extends Authenticatable
         return $this->hasOne(KkProfile::class);
     }
 
+    /**
+     * Fetch the user's completed and approved KK Profile, if it exists.
+     */
+    public function approvedKkProfile(): ?KkProfile
+    {
+        return KkProfile::withoutGlobalScopes()
+            ->where(function ($query) {
+                $query->where('user_id', $this->id)
+                      ->orWhere('email', $this->email);
+            })
+            ->where('status', 'approved')
+            ->first();
+    }
+
     protected static function booted(): void
     {
         static::created(function ($model) {

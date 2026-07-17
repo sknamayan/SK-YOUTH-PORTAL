@@ -97,6 +97,11 @@ class LandingController extends Controller
         $initiatives = \App\Models\Initiative::whereNotNull('form_route')->get()->keyBy('form_route');
         $highlightedInitiatives = \App\Models\Initiative::where('is_highlighted', true)->get();
 
+        $kkProfile = null;
+        if (auth()->check()) {
+            $kkProfile = auth()->user()->approvedKkProfile();
+        }
+
         return view('landing.index', compact(
             'categories', 
             'announcements', 
@@ -105,7 +110,8 @@ class LandingController extends Controller
             'featuredArticle',
             'recentArticles',
             'initiatives',
-            'highlightedInitiatives'
+            'highlightedInitiatives',
+            'kkProfile'
         ));
     }
 

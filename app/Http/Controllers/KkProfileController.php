@@ -33,16 +33,32 @@ class KkProfileController extends Controller
         }
 
         $showArchive = $request->boolean('archive', false);
+        $categoryFilter = $request->input('category', 'sk_youth');
+        if (!in_array($categoryFilter, ['child', 'sk_youth', 'adult', 'all'])) {
+            $categoryFilter = 'sk_youth';
+        }
 
         if ($showArchive) {
-            $query = KkProfile::withTrashed()
+            $query = KkProfile::withoutGlobalScopes()
+                ->withTrashed()
                 ->where(function($q) {
                     $q->whereNotNull('deleted_at')
-                      ->orWhere('age', '>', 30);
+                      ->orWhere('age', '>', 30)
+                      ->orWhere('category', '!=', 'sk_youth');
                 })
                 ->with(['purok', 'processedBy'])->latest();
         } else {
-            $query = KkProfile::where('age', '<=', 30)->with(['purok', 'processedBy'])->latest();
+            $query = KkProfile::withoutGlobalScopes()->with(['purok', 'processedBy'])->latest();
+
+            if ($categoryFilter === 'all') {
+                // No category filter, just active
+            } elseif ($categoryFilter === 'child') {
+                $query->where('category', 'child')->whereBetween('age', [6, 12]);
+            } elseif ($categoryFilter === 'adult') {
+                $query->where('category', 'adult')->whereBetween('age', [31, 39]);
+            } else { // default 'sk_youth'
+                $query->where('category', 'sk_youth')->whereBetween('age', [15, 30]);
+            }
         }
 
         // Search Filter
@@ -98,13 +114,26 @@ class KkProfileController extends Controller
             $statusFilter = 'all';
         }
 
-        $approvedCount = KkProfile::where('status', 'approved')->where('age', '<=', 30)->count();
-        $pendingCount = KkProfile::where('status', 'pending')->where('age', '<=', 30)->count();
-        $declinedCount = KkProfile::where('status', 'declined')->where('age', '<=', 30)->count();
-        $archivedCount = KkProfile::withTrashed()
+        $baseCountQuery = KkProfile::withoutGlobalScopes();
+        if ($categoryFilter === 'all') {
+            // No filter
+        } elseif ($categoryFilter === 'child') {
+            $baseCountQuery->where('category', 'child')->whereBetween('age', [6, 12]);
+        } elseif ($categoryFilter === 'adult') {
+            $baseCountQuery->where('category', 'adult')->whereBetween('age', [31, 39]);
+        } else { // default 'sk_youth'
+            $baseCountQuery->where('category', 'sk_youth')->whereBetween('age', [15, 30]);
+        }
+
+        $approvedCount = (clone $baseCountQuery)->where('status', 'approved')->count();
+        $pendingCount = (clone $baseCountQuery)->where('status', 'pending')->count();
+        $declinedCount = (clone $baseCountQuery)->where('status', 'declined')->count();
+        $archivedCount = KkProfile::withoutGlobalScopes()
+            ->withTrashed()
             ->where(function($q) {
                 $q->whereNotNull('deleted_at')
-                  ->orWhere('age', '>', 30);
+                  ->orWhere('age', '>', 30)
+                  ->orWhere('category', '!=', 'sk_youth');
             })->count();
 
         if ($statusFilter !== 'all') {
@@ -147,7 +176,7 @@ class KkProfileController extends Controller
             'yearFilter', 'sexFilter', 'skVoterFilter', 'nationalVoterFilter',
             'lgbtqiaFilter', 'pwdFilter', 'limit', 'years', 'historyLogs',
             'statusFilter', 'approvedCount', 'pendingCount', 'declinedCount',
-            'showArchive', 'archivedCount'
+            'showArchive', 'archivedCount', 'categoryFilter'
         ));
     }
 
@@ -162,7 +191,18 @@ class KkProfileController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['nullable', 'string', 'max:255'],
             'ext' => ['nullable', 'string', 'max:10'],
-            'age' => ['required', 'integer', 'min:15', 'max:30'],
+            'age' => [
+                'required',
+                'integer',
+                function ($attribute, $value, $fail) {
+                    $isValid = ($value >= 6 && $value <= 12) || 
+                               ($value >= 15 && $value <= 30) || 
+                               ($value >= 31 && $value <= 39);
+                    if (!$isValid) {
+                        $fail('The age must be within the allowed groups (6-12, 15-30, or 31-39).');
+                    }
+                }
+            ],
             'sex' => ['required', 'in:Male,Female'],
             'gender' => ['nullable', 'string', 'max:255'],
             'dob' => ['required', 'date', 'before_or_equal:today'],
@@ -189,8 +229,18 @@ class KkProfileController extends Controller
             'consent_given' => ['required', 'accepted'],
         ]);
 
+        $age = (int) $validated['age'];
+        if ($age >= 6 && $age <= 12) {
+            $category = 'child';
+        } elseif ($age >= 31 && $age <= 39) {
+            $category = 'adult';
+        } else {
+            $category = 'sk_youth';
+        }
+
         $profile = KkProfile::create(array_merge($validated, [
-            'processed_by' => auth()->id()
+            'processed_by' => auth()->id(),
+            'category' => $category,
         ]));
 
         // Record Activity Log
@@ -247,7 +297,18 @@ class KkProfileController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['nullable', 'string', 'max:255'],
             'ext' => ['nullable', 'string', 'max:10'],
-            'age' => ['required', 'integer', 'min:15', 'max:30'],
+            'age' => [
+                'required',
+                'integer',
+                function ($attribute, $value, $fail) {
+                    $isValid = ($value >= 6 && $value <= 12) || 
+                               ($value >= 15 && $value <= 30) || 
+                               ($value >= 31 && $value <= 39);
+                    if (!$isValid) {
+                        $fail('The age must be within the allowed groups (6-12, 15-30, or 31-39).');
+                    }
+                }
+            ],
             'sex' => ['required', 'in:Male,Female'],
             'gender' => ['nullable', 'string', 'max:255'],
             'dob' => ['required', 'date', 'before_or_equal:today'],
@@ -277,9 +338,19 @@ class KkProfileController extends Controller
         // Force user's own email to prevent spoofing
         $validated['email'] = auth()->user()->email;
 
+        $age = (int) $validated['age'];
+        if ($age >= 6 && $age <= 12) {
+            $category = 'child';
+        } elseif ($age >= 31 && $age <= 39) {
+            $category = 'adult';
+        } else {
+            $category = 'sk_youth';
+        }
+
         $profile = KkProfile::create(array_merge($validated, [
             'processed_by' => auth()->id(),
-            'status' => 'pending'
+            'status' => 'pending',
+            'category' => $category,
         ]));
 
         // Record Activity Log
@@ -324,7 +395,18 @@ class KkProfileController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['nullable', 'string', 'max:255'],
             'ext' => ['nullable', 'string', 'max:10'],
-            'age' => ['required', 'integer', 'min:15', 'max:30'],
+            'age' => [
+                'required',
+                'integer',
+                function ($attribute, $value, $fail) {
+                    $isValid = ($value >= 6 && $value <= 12) || 
+                               ($value >= 15 && $value <= 30) || 
+                               ($value >= 31 && $value <= 39);
+                    if (!$isValid) {
+                        $fail('The age must be within the allowed groups (6-12, 15-30, or 31-39).');
+                    }
+                }
+            ],
             'sex' => ['required', 'in:Male,Female'],
             'gender' => ['nullable', 'string', 'max:255'],
             'dob' => ['required', 'date', 'before_or_equal:today'],
@@ -351,8 +433,18 @@ class KkProfileController extends Controller
             'consent_given' => ['required', 'boolean'],
         ]);
 
+        $age = (int) $validated['age'];
+        if ($age >= 6 && $age <= 12) {
+            $category = 'child';
+        } elseif ($age >= 31 && $age <= 39) {
+            $category = 'adult';
+        } else {
+            $category = 'sk_youth';
+        }
+
         $profile->update(array_merge($validated, [
-            'processed_by' => auth()->id()
+            'processed_by' => auth()->id(),
+            'category' => $category,
         ]));
 
         // Record Activity Log

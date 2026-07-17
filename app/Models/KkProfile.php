@@ -40,6 +40,7 @@ class KkProfile extends Model
         'processed_by',
         'status',
         'user_id',
+        'category',
     ];
 
     protected function casts(): array
@@ -122,6 +123,8 @@ class KkProfile extends Model
 
     protected static function booted(): void
     {
+        static::addGlobalScope(new \App\Scopes\SkYouthScope);
+
         static::created(function ($model) {
             app(\App\Services\MailDispatchService::class)->queueKkProfileSubmitted($model);
         });

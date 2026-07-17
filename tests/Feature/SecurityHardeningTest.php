@@ -121,7 +121,7 @@ class SecurityHardeningTest extends TestCase
         $this->assertNotEquals('09998887777', $rawRecord->contact_number);
 
         // Accessing via Eloquent model decrypts automatically
-        $decryptedProfile = KkProfile::find($profile->id);
+        $decryptedProfile = KkProfile::withoutGlobalScopes()->find($profile->id);
         $this->assertEquals('Mercado', $decryptedProfile->middle_name);
         $this->assertEquals('Calamba Street', $decryptedProfile->street_address);
         $this->assertEquals('09998887777', $decryptedProfile->contact_number);
