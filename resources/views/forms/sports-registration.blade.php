@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex-1 bg-slate-50 dark:bg-slate-950 font-sans min-h-screen" 
-     x-data="{ 
+<div class="flex-1 bg-slate-50 dark:bg-slate-950 font-sans min-h-screen"
+     x-data="{
          showFormModal: {{ $errors->any() || session('failed_form') === 'sports' ? 'true' : 'false' }},
-         showConfirm: false, 
-         loading: false, 
+         showConfirm: false,
+         loading: false,
          formConfirmed: false,
          sport: '{{ old('sport', '') }}',
          division: '{{ old('division', '') }}',
@@ -131,7 +131,7 @@
     </section>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10 space-y-6 animate-fade-in-up">
-        
+
         <!-- Horizontal Citizen Sub-navigation -->
         @include('profile.partials.citizen-nav')
 
@@ -161,7 +161,7 @@
                 <div>
                     <h4 class="text-sm font-bold text-amber-805 dark:text-amber-450">Active Sports Registration Detected</h4>
                     <p class="text-xs text-amber-605 dark:text-amber-500 mt-0.5 leading-relaxed">
-                        You already have an active registration for **{{ $alreadyRegistered->sport }}** ({{ $alreadyRegistered->division }} Division). 
+                        You already have an active registration for **{{ $alreadyRegistered->sport }}** ({{ $alreadyRegistered->division }} Division).
                         To maintain league rules, citizens are permitted only **one active registration** across all sports tournaments.
                         You can track your request status under <a href="{{ route('profile.my-requests') }}" class="font-bold underline text-[#1e40af] dark:text-blue-400">My Requests</a>.
                     </p>
@@ -170,7 +170,7 @@
         @endif        <!-- Active Tournaments Section -->
         <div class="space-y-4">
             <h3 class="text-xs font-black text-slate-705 dark:text-slate-350 uppercase tracking-widest block font-display">Active Tournaments</h3>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Basketball Card -->
                 <div class="card p-6 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl flex flex-col justify-between shadow-sm relative transition hover:shadow-md">
@@ -179,11 +179,11 @@
                             <span class="inline-flex px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-[9px] font-black uppercase tracking-wider">
                                 Basketball
                             </span>
-                            <span class="text-xs text-slate-400">Namayan Cup 2026</span>
+                            <span class="text-xs text-slate-400">SIKAP AT ALAB NG BATANG NAMAYAN</span>
                         </div>
                         <h4 class="text-lg font-black text-slate-800 dark:text-white font-display uppercase tracking-tight">Basketball Tournament</h4>
                         <p class="text-xs text-slate-505 dark:text-slate-405 leading-relaxed">Select a division below to start your registration. Minors must fill in guardian details.</p>
-                        
+
                         <div class="space-y-2 pt-2">
                             <!-- Division Midget -->
                             <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-955 border border-slate-100 dark:border-slate-850 rounded-xl hover:bg-slate-100/50 dark:hover:bg-slate-900 transition">
@@ -200,7 +200,7 @@
                                     <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg uppercase tracking-wider">Locked</span>
                                 @endif
                             </div>
-                            
+
                             <!-- Division Juniors -->
                             <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-955 border border-slate-100 dark:border-slate-850 rounded-xl hover:bg-slate-100/50 dark:hover:bg-slate-900 transition">
                                 <div>
@@ -216,7 +216,7 @@
                                     <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg uppercase tracking-wider">Locked</span>
                                 @endif
                             </div>
- 
+
                             <!-- Division Seniors -->
                             <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-955 border border-slate-100 dark:border-slate-850 rounded-xl hover:bg-slate-100/50 dark:hover:bg-slate-900 transition">
                                 <div>
@@ -235,7 +235,7 @@
                         </div>
                     </div>
                 </div>
- 
+
                 <!-- Volleyball Card -->
                 <div class="card p-6 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl flex flex-col justify-between shadow-sm relative transition hover:shadow-md">
                     <div class="space-y-4">
@@ -243,11 +243,11 @@
                             <span class="inline-flex px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[9px] font-black uppercase tracking-wider">
                                 Volleyball
                             </span>
-                            <span class="text-xs text-slate-400">Namayan Cup 2026</span>
+                            <span class="text-xs text-slate-400">SIKAP AT ALAB NG BATANG NAMAYAN</span>
                         </div>
                         <h4 class="text-lg font-black text-slate-800 dark:text-white font-display uppercase tracking-tight">Volleyball Tournament</h4>
                         <p class="text-xs text-slate-505 dark:text-slate-405 leading-relaxed">Select a division below to start your registration. Minors must fill in guardian details.</p>
-                        
+
                         <div class="space-y-2 pt-2">
                             <!-- Men's Division -->
                             <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-955 border border-slate-100 dark:border-slate-850 rounded-xl hover:bg-slate-100/50 dark:hover:bg-slate-900 transition">
@@ -264,7 +264,7 @@
                                     <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg uppercase tracking-wider">Locked</span>
                                 @endif
                             </div>
-                            
+
                             <!-- Women's Division -->
                             <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-955 border border-slate-100 dark:border-slate-850 rounded-xl hover:bg-slate-100/50 dark:hover:bg-slate-900 transition">
                                 <div>
@@ -289,7 +289,7 @@
     </div>
 
     <!-- Registration Modal -->
-    <div x-show="showFormModal" 
+    <div x-show="showFormModal"
          class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0"
@@ -298,7 +298,7 @@
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
          x-cloak>
-         
+
          <!-- Modal Box -->
          <div class="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl relative"
               @click.away="showFormModal = false"
@@ -308,7 +308,7 @@
               x-transition:leave="transition ease-in duration-200 transform scale-100"
               x-transition:leave-start="opacity-100 scale-100"
               x-transition:leave-end="opacity-0 scale-95">
-              
+
               <!-- Modal Header -->
               <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between shrink-0">
                   <div>
@@ -328,21 +328,21 @@
                       <span class="hidden sm:inline text-[9px] uppercase tracking-wider">Sport</span>
                   </div>
                   <div class="flex-1 border-t border-dashed mx-2" :class="regStep >= 2 ? 'border-[#1e40af]' : 'border-slate-200'"></div>
-                  
+
                   <div class="flex items-center gap-1.5" :class="regStep >= 2 ? 'text-[#1e40af] dark:text-blue-400' : 'text-slate-400'">
                       <span class="w-5 h-5 rounded-full border flex items-center justify-center text-[10px] font-bold"
                             :class="regStep >= 2 ? 'border-[#1e40af] bg-[#1e40af] text-white' : 'border-slate-200 bg-white text-slate-400'">2</span>
                       <span class="hidden sm:inline text-[9px] uppercase tracking-wider">Division</span>
                   </div>
                   <div class="flex-1 border-t border-dashed mx-2" :class="regStep >= 3 ? 'border-[#1e40af]' : 'border-slate-200'"></div>
-                  
+
                   <div class="flex items-center gap-1.5" :class="regStep >= 3 ? 'text-[#1e40af] dark:text-blue-400' : 'text-slate-400'">
                       <span class="w-5 h-5 rounded-full border flex items-center justify-center text-[10px] font-bold"
                             :class="regStep >= 3 ? 'border-[#1e40af] bg-[#1e40af] text-white' : 'border-slate-200 bg-white text-slate-400'">3</span>
                       <span class="hidden sm:inline text-[9px] uppercase tracking-wider">Personal</span>
                   </div>
                   <div class="flex-1 border-t border-dashed mx-2" :class="regStep >= 4 ? 'border-[#1e40af]' : 'border-slate-200'"></div>
-                  
+
                   <div class="flex items-center gap-1.5" :class="regStep >= 4 ? 'text-[#1e40af] dark:text-blue-400' : 'text-slate-400'">
                       <span class="w-5 h-5 rounded-full border flex items-center justify-center text-[10px] font-bold"
                             :class="regStep >= 4 ? 'border-[#1e40af] bg-[#1e40af] text-white' : 'border-slate-200 bg-white text-slate-400'">4</span>
@@ -356,10 +356,10 @@
                       <span class="hidden sm:inline text-[9px] uppercase tracking-wider font-display">Waiver</span>
                   </div>
               </div>
-              
+
               <!-- Modal Body (Scrollable Form) -->
               <div class="p-6 md:p-8 pb-24 md:pb-8 overflow-y-auto flex-1">
-                  
+
                   @if($errors->any())
                       <div class="p-4 mb-6 bg-rose-50 dark:bg-rose-950/40 border border-rose-250 dark:border-rose-900/30 rounded-2xl flex items-start gap-3">
                           <span class="text-rose-500 font-bold">⚠</span>
@@ -547,7 +547,7 @@
                                   4. Parent / Guardian Information (Required for Minors)
                               </h3>
                               <p class="text-[11px] text-slate-450 dark:text-slate-400">Because you are under 18 years old, please provide the details of your parent or legal guardian.</p>
-                              
+
                               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                   <div>
                                       <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
@@ -619,7 +619,7 @@
                                   4. Adult Voter Verification
                               </h3>
                               <p class="text-[11px] text-slate-455 dark:text-slate-400">Because you are 18 years or older, please upload your Voter's ID or Comelec Voter Certificate for Barangay verification.</p>
-                              
+
                               <div>
                                   <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
                                       Voter's ID / Comelec Voter Certificate <span class="text-rose-500">*</span>
@@ -635,7 +635,7 @@
                           <h3 class="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-350 border-b border-slate-105 dark:border-slate-850 pb-2">
                               5. Health and Liability Waivers
                           </h3>
-                          
+
                           <div class="space-y-4">
                               <div class="p-4 bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 rounded-2xl space-y-2">
                                   <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 font-display">
@@ -666,28 +666,28 @@
 
                       <!-- Form Buttons -->
                       <div class="flex justify-between items-center pt-4 border-t border-slate-100 dark:border-slate-850 gap-3 shrink-0">
-                          <button type="button" 
-                                  x-show="regStep > 1" 
-                                  @click="prevRegStep()" 
+                          <button type="button"
+                                  x-show="regStep > 1"
+                                  @click="prevRegStep()"
                                   class="inline-flex items-center px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-[10px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition select-none cursor-pointer">
                               &larr; Back
                           </button>
-                          <button type="button" 
-                                  x-show="regStep === 1" 
-                                  @click="showFormModal = false" 
+                          <button type="button"
+                                  x-show="regStep === 1"
+                                  @click="showFormModal = false"
                                   class="inline-flex items-center px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-[10px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition select-none cursor-pointer">
                               Cancel
                           </button>
                           <div class="flex items-center gap-3">
-                              <button type="button" 
-                                      x-show="regStep < 5" 
-                                      @click="nextRegStep()" 
+                              <button type="button"
+                                      x-show="regStep < 5"
+                                      @click="nextRegStep()"
                                       class="inline-flex items-center px-6 py-3 rounded-xl bg-[#1e40af] hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-wider transition active:scale-95 shadow-sm select-none cursor-pointer">
                                   Next &rarr;
                               </button>
-                              <button type="submit" 
-                                      x-show="regStep === 5" 
-                                      :disabled="loading" 
+                              <button type="submit"
+                                      x-show="regStep === 5"
+                                      :disabled="loading"
                                       class="inline-flex items-center px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-black uppercase tracking-wider transition active:scale-95 shadow-sm disabled:opacity-50 select-none cursor-pointer">
                                   <span x-text="loading ? 'Processing...' : 'Submit Registration'"></span>
                               </button>

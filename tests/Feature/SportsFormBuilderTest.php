@@ -21,7 +21,7 @@ class SportsFormBuilderTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         Purok::firstOrCreate([
             'id' => 1,
         ], [
@@ -52,7 +52,7 @@ class SportsFormBuilderTest extends TestCase
         $admin = User::factory()->create(['role' => 'superadmin']);
 
         $response = $this->actingAs($admin)->post(route('admin.sports-league.form-builder.store'), [
-            'league_name' => 'SK Namayan Cup 2026',
+            'league_name' => 'SKILAB',
             'sport' => 'Basketball',
             'division_name' => 'Midget Division',
             'description' => 'Ages 12 to 17',
@@ -77,7 +77,7 @@ class SportsFormBuilderTest extends TestCase
 
         $response->assertRedirect(route('admin.sports-league.index'));
         $this->assertDatabaseHas('leagues', [
-            'name' => 'SK Namayan Cup 2026',
+            'name' => 'SIKLAB',
             'sport' => 'Basketball',
         ]);
 
@@ -347,7 +347,7 @@ class SportsFormBuilderTest extends TestCase
         ]);
 
         $response->assertRedirect(route('admin.sports-league.index'));
-        
+
         $registration->refresh();
         $this->assertEquals('Juanito', $registration->first_name);
         $this->assertEquals('Forward', $registration->position);

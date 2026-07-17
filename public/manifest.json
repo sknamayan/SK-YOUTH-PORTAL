@@ -2,11 +2,16 @@
   "name": "SK Namayan",
   "short_name": "SK Namayan",
   "description": "Katipunan ng Kabataan Portal - Sangguniang Kabataan Barangay Namayan",
+  "lang": "en",
   "start_url": "/",
+  "scope": "/",
+  "id": "/",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
   "orientation": "portrait",
-  "background_color": "#1e40af",
+  "background_color": "#f8fafc",
   "theme_color": "#1e40af",
+  "categories": ["productivity", "government", "education"],
   "icons": [
     {
       "src": "/images/logo.png",

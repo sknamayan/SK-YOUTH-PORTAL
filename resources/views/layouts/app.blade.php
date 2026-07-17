@@ -13,12 +13,24 @@
         <!-- PWA / Add to Home Screen Setup -->
         <link rel="manifest" href="{{ asset('manifest.json') }}">
         <meta name="theme-color" content="#1e40af">
+        <meta name="mobile-web-app-capable" content="yes">
 
         <!-- iOS (iPhone/iPad) PWA Support -->
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="default">
         <meta name="apple-mobile-web-app-title" content="SK Namayan">
         <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
+
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('{{ asset('sw.js') }}', { scope: '/' })
+                        .catch(function (error) {
+                            console.log('Service worker registration failed:', error);
+                        });
+                });
+            }
+        </script>
 
         <!-- Dark Mode Guard Script -->
         <script>
@@ -732,6 +744,88 @@
                     }, 5000);
                 });
             });
+        </script>
+
+        <!-- PWA Install Banner -->
+        <div id="pwa-install-banner" class="fixed inset-x-0 bottom-4 z-[60] px-4 hidden">
+            <div class="mx-auto max-w-md rounded-2xl border border-slate-200/80 bg-white/95 dark:border-slate-800 dark:bg-slate-900/95 p-3 shadow-2xl backdrop-blur-md">
+                <div class="flex items-start gap-3">
+                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white shadow-lg shadow-blue-600/20">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0-12l-4 4m4-4l4 4M5 21h14" />
+                        </svg>
+                    </div>
+
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-bold text-slate-900 dark:text-white">Install the SK Namayan Digital Registry</p>
+                        <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Get faster, offline access to the portal from your home screen.</p>
+                    </div>
+                </div>
+
+                <div class="mt-3 flex items-center justify-end gap-2">
+                    <button id="pwa-install-dismiss" type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700">
+                        Not Now
+                    </button>
+                    <button id="pwa-install-button" type="button" class="rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white transition hover:bg-blue-500">
+                        Install App
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            (() => {
+                const installBanner = document.getElementById('pwa-install-banner');
+                const installButton = document.getElementById('pwa-install-button');
+                const dismissButton = document.getElementById('pwa-install-dismiss');
+
+                let deferredPrompt = null;
+
+                const hideBanner = () => {
+                    if (installBanner) {
+                        installBanner.classList.add('hidden');
+                    }
+                };
+
+                window.addEventListener('beforeinstallprompt', (event) => {
+                    event.preventDefault();
+                    deferredPrompt = event;
+
+                    if (installBanner) {
+                        installBanner.classList.remove('hidden');
+                    }
+                });
+
+                if (installButton) {
+                    installButton.addEventListener('click', async () => {
+                        if (!deferredPrompt) {
+                            return;
+                        }
+
+                        deferredPrompt.prompt();
+
+                        const choiceResult = await deferredPrompt.userChoice;
+
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('PWA installation accepted');
+                        } else {
+                            console.log('PWA installation dismissed');
+                        }
+
+                        deferredPrompt = null;
+                        hideBanner();
+                    });
+                }
+
+                if (dismissButton) {
+                    dismissButton.addEventListener('click', hideBanner);
+                }
+
+                window.addEventListener('appinstalled', () => {
+                    deferredPrompt = null;
+                    hideBanner();
+                });
+            })();
         </script>
 
         @auth
