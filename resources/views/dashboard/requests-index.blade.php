@@ -112,7 +112,7 @@
             <div class="space-y-4">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200">
                     <!-- Tab buttons -->
-                    <div class="flex overflow-x-auto whitespace-nowrap scrollbar-none text-xs font-bold uppercase tracking-wider min-w-0">
+                    <div class="flex overflow-x-auto whitespace-nowrap scrollbar-hide text-xs font-bold uppercase tracking-wider min-w-0">
                         <button @click="setActiveTab('all')"
                                 :class="activeTab === 'all' ? 'border-[#1e40af] text-[#1e40af]' : 'border-transparent text-slate-400 hover:text-slate-650'"
                                 class="py-3 px-5 border-b-2 transition select-none flex items-center space-x-1.5 cursor-pointer shrink-0 min-w-0 max-w-full">
@@ -194,8 +194,8 @@
 
 
                         <!-- Row 2: Limit & Clear Filters -->
-                        <div class="flex items-center justify-between border-t border-slate-100 pt-4 mt-2">
-                            <div class="flex items-center space-x-4">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 border-t border-slate-100 pt-4 mt-2">
+                            <div class="flex flex-wrap items-center gap-3">
                                 <!-- Page Size Limit select -->
                                 <div class="relative w-32 shrink-0">
                                     <select name="limit" onchange="this.form.submit()" class="block w-full py-2 pl-3 pr-8 bg-slate-50/70 border border-slate-200/60 rounded-2xl text-[11px] text-slate-650 outline-none focus:bg-white focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition cursor-pointer appearance-none font-semibold">

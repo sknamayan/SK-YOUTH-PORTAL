@@ -71,11 +71,13 @@
         <style>
             [x-cloak] { display: none !important; }
             .no-scrollbar::-webkit-scrollbar,
-            .scrollbar-none::-webkit-scrollbar {
+            .scrollbar-none::-webkit-scrollbar,
+            .scrollbar-hide::-webkit-scrollbar {
                 display: none !important;
             }
             .no-scrollbar,
-            .scrollbar-none {
+            .scrollbar-none,
+            .scrollbar-hide {
                 -ms-overflow-style: none !important;  /* IE and Edge */
                 scrollbar-width: none !important;  /* Firefox */
             }

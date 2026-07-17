@@ -192,7 +192,7 @@
             @endif
 
             <!-- Status Filter Tabs -->
-            <div class="flex items-center gap-3 border-b border-slate-100 pb-px mb-6 overflow-x-auto whitespace-nowrap scrollbar-none min-w-0">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-px mb-6 overflow-x-auto whitespace-nowrap scrollbar-hide min-w-0">
                 <a href="{{ route('dashboard.profiling.index', array_merge(request()->query(), ['status' => 'approved'])) }}"
                    class="pb-3 text-xs font-bold transition flex items-center gap-2 px-1 relative {{ $statusFilter === 'approved' ? 'text-[#1e40af]' : 'text-slate-500 hover:text-slate-800' }}">
                     <span>Active Registry</span>
@@ -305,7 +305,7 @@
                     </div>
 
                     <!-- Row 2: Limit, Sex, Classification, Badges, Reset, Actions -->
-                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pt-2 border-t border-slate-100/60">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-2 border-t border-slate-100/60">
                         <div class="flex flex-wrap items-center gap-3">
                             <!-- Page Size Limit select -->
                             <div class="relative w-32 shrink-0">
@@ -388,7 +388,7 @@
                         </div>
 
                         <!-- Right Primary Trigger -->
-                        <div class="flex items-center space-x-3 text-right">
+                        <div class="flex flex-wrap items-center justify-end gap-2 text-right">
                             <button type="submit" class="hidden"></button> <!-- form submission placeholder -->
                             <a href="{{ route('dashboard.profiling.index', array_merge(request()->query(), ['archive' => $showArchive ? '0' : '1'])) }}"
                                class="btn-primary text-[11px] font-black uppercase py-2 px-5 flex items-center space-x-1.5 cursor-pointer transition shadow-sm border rounded-2xl {{ $showArchive ? 'bg-[#1e40af] hover:bg-blue-700 text-white border-transparent' : 'bg-slate-100 hover:bg-slate-200/80 text-slate-650 border-slate-250' }}">

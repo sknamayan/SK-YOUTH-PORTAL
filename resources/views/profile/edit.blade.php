@@ -26,7 +26,7 @@
                         </div>
 
                         <!-- Horizontal Settings Tab Navigation -->
-                        <div class="flex items-center gap-2 overflow-x-auto pb-3 border-b border-slate-150 dark:border-slate-800 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none shrink-0">
+                        <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-3 border-b border-slate-150 dark:border-slate-800 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide shrink-0">
                             <button @click="activeTab = 'account'" 
                                     :class="activeTab === 'account' ? 'bg-[#1e40af] text-white shadow-sm' : 'bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-white'" 
                                     class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all shrink-0">
@@ -100,7 +100,7 @@
             @include('profile.partials.citizen-nav')
 
             <!-- Horizontal Settings Tab Navigation (Citizen View) -->
-            <div class="flex items-center gap-2 overflow-x-auto pb-3 border-b border-slate-150 dark:border-slate-800 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none shrink-0">
+            <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-3 border-b border-slate-150 dark:border-slate-800 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide shrink-0">
                 <button @click="activeTab = 'account'" 
                         :class="activeTab === 'account' ? 'bg-[#1e40af] text-white shadow-sm' : 'bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-white'" 
                         class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all shrink-0">
