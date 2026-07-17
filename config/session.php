@@ -47,7 +47,7 @@ return [
     |
     */
 
-    'encrypt' => env('SESSION_ENCRYPT', false),
+    'encrypt' => filter_var(env('SESSION_ENCRYPT', false), FILTER_VALIDATE_BOOLEAN),
 
     /*
     |--------------------------------------------------------------------------
@@ -156,7 +156,7 @@ return [
     |
     */
 
-    'domain' => in_array(env('SESSION_DOMAIN'), [null, 'null'], true) ? null : env('SESSION_DOMAIN'),
+    'domain' => in_array(env('SESSION_DOMAIN'), [null, '', 'null'], true) ? null : env('SESSION_DOMAIN'),
 
     /*
     |--------------------------------------------------------------------------
