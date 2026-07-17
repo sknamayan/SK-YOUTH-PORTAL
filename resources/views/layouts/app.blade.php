@@ -690,29 +690,12 @@
                         </p>
                     </div>
 
-                    <!-- Column 2: Quick Links -->
-                    <div class="space-y-3">
-                        <span class="font-bold text-white uppercase tracking-wider font-display">Services Directory</span>
-                        <ul class="grid grid-cols-2 gap-2 text-slate-400">
-                            <li><a href="{{ route('forms.health.create') }}" class="hover:text-white transition">Health Consult</a></li>
-                            <li><a href="{{ route('forms.mental-health.create') }}" class="hover:text-white transition">Mental Support</a></li>
-                            <li><a href="{{ route('forms.medicine.create') }}" class="hover:text-white transition">Pabili Medicine</a></li>
-                            <li><a href="{{ route('forms.silid.create') }}" class="hover:text-white transition">Silid Karunungan</a></li>
-                            <li><a href="{{ route('forms.sports.create') }}" class="hover:text-white transition">SIKLAB</a></li>
-                            <li><a href="{{ route('track.index') }}" class="hover:text-white transition">Track Request</a></li>
-                            <li><a href="{{ route('officials.index') }}" class="hover:text-white transition">SK Officials</a></li>
-                            <li><a href="{{ route('transparency.index') }}" class="hover:text-white transition">Transparency Board</a></li>
-                            <li><a href="{{ route('about') }}" class="hover:text-white transition">About Us</a></li>
-                        </ul>
-                    </div>
-
                     <!-- Column 3: Accounts and Contact info -->
                     <div class="space-y-3">
                         <span class="font-bold text-white uppercase tracking-wider font-display">Barangay Desk</span>
                         <p class="leading-relaxed">
                             Barangay Namayan SK Office, Mandaluyong City, Metro Manila<br>
-                            Phone: +63 (2) 8532 5001<br>
-                            Email: info@sknamayan.gov.ph
+                            Email: sknamayan@gmail.com
                         </p>
                         <div class="flex items-center space-x-4 pt-1">
                             @guest

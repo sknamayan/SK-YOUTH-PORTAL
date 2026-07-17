@@ -1096,7 +1096,7 @@
                                 <input id="admin_consent_checkbox" name="consent_given" type="checkbox" value="1" x-model="consent_given" required class="focus:ring-[#1e40af] h-4 w-4 text-[#1e40af] border-slate-350 rounded cursor-pointer">
                             </div>
                             <div class="ml-3 text-xs">
-                                <label for="admin_consent_checkbox" class="font-bold text-slate-700 cursor-pointer select-none">Confirm that the citizen has read, signed, and agreed to the Data Privacy Notice (RA 10173).</label>
+                                <label for="admin_consent_checkbox" class="font-bold text-slate-700 cursor-pointer select-none">I confirm that I have read, understood, and voluntarily agreed to the Data Privacy Notice in accordance with the Data Privacy Act of 2012 (Republic Act No. 10173).</label>
                             </div>
                         </div>
                     </div>

@@ -45,9 +45,9 @@ class AnnouncementSeeder extends Seeder
 
         // 3. Warning type announcement
         Announcement::updateOrCreate(
-            ['title' => 'Sports Tournament Age Eligibility'],
+            ['title' => 'SIKLAB Age Eligibility'],
             [
-                'body' => 'Please note that the upcoming SK Sports Tournament registrations are strictly limited to citizens between 10 and 30 years old. Team compositions will be verified during coordination meetings.',
+                'body' => 'Please note that the upcoming SK Sports Tournament registrations are strictly limited to citizens between 10 and 39 years old. Team compositions will be verified during coordination meetings.',
                 'type' => 'warning',
                 'is_active' => true,
                 'published_at' => now(),
