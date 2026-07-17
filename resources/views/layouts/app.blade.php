@@ -12,13 +12,29 @@
 
         <!-- PWA / Add to Home Screen Setup -->
         <link rel="manifest" href="{{ asset('manifest.json') }}">
-        <meta name="theme-color" content="#1e40af">
+        <meta name="theme-color" content="#3b82f6">
+        <meta name="mobile-web-app-capable" content="yes">
 
         <!-- iOS (iPhone/iPad) PWA Support -->
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="default">
         <meta name="apple-mobile-web-app-title" content="SK Namayan">
-        <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
+        <meta name="msapplication-TileColor" content="#3b82f6">
+        <link rel="apple-touch-icon" href="{{ asset('icons/icon-192x192.png') }}">
+
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('{{ asset('sw.js') }}')
+                        .then(function (registration) {
+                            console.log('Service Worker registered with scope:', registration.scope);
+                        })
+                        .catch(function (error) {
+                            console.warn('Service Worker registration failed:', error);
+                        });
+                });
+            }
+        </script>
 
         <!-- Dark Mode Guard Script -->
         <script>
