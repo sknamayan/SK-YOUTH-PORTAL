@@ -24,6 +24,7 @@ class RequestReceivedMail extends Mailable implements ShouldQueue
     {
         $this->requestModel = $requestModel;
 
+        $basename = class_basename($requestModel);
         $this->referenceNumber = $requestModel->reference_number ?? ('SK-REQ-' . str_pad($requestModel->id, 5, '0', STR_PAD_LEFT));
 
         $this->typeLabel = match($basename) {
