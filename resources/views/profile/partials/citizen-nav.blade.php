@@ -1,4 +1,4 @@
-<div class="flex flex-nowrap items-center gap-3 overflow-x-auto pb-3 border-b border-slate-100 -mx-4 px-4 sm:mx-0 sm:px-0 mb-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+<div class="flex flex-nowrap items-center gap-3 w-full overflow-x-auto whitespace-nowrap pb-3 border-b border-slate-100 -mx-4 px-4 sm:mx-0 sm:px-0 mb-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
     <!-- My Requests -->
     <a href="{{ route('profile.my-requests') }}" 
        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap {{ request()->routeIs('profile.my-requests') ? 'bg-[#1e40af] text-white shadow-sm' : 'bg-white border border-slate-200/60 text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
