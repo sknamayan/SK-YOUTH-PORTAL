@@ -294,6 +294,19 @@ Route::middleware(['auth', 'admin.only'])->group(function () {
 
 
 
+Route::get('/fix-storage-link', function () {
+    $publicStoragePath = public_path('storage');
+    if (is_link($publicStoragePath) || file_exists($publicStoragePath)) {
+        if (is_link($publicStoragePath)) {
+            unlink($publicStoragePath);
+        } else {
+            \Illuminate\Support\Facades\File::deleteDirectory($publicStoragePath);
+        }
+    }
+    \Illuminate\Support\Facades\Artisan::call('storage:link');
+    return 'Storage link fixed successfully! Public path is: ' . $publicStoragePath;
+});
+
 // Fallback route to serve uploaded files if public storage symlink is missing or broken on production/shared hosting
 Route::get('/storage/{path}', function ($path) {
     $fullPath = 'public/' . $path;
