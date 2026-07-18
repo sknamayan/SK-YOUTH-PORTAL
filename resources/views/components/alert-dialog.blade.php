@@ -1,8 +1,15 @@
-<div x-data="{ open: false }">
+<div x-data="{ 
+    open: {{ session()->has('success') ? 'true' : 'false' }},
+    message: '{{ session('success') ?? '' }}'
+}"
+@notify.window="if ($event.detail.type === 'success') { message = $event.detail.message; open = true; }"
+class="relative">
     <!-- Trigger Slot -->
-    <div @click="open = true" class="inline-block">
-        {{ $trigger }}
-    </div>
+    @if(isset($trigger))
+        <div @click="open = true" class="inline-block">
+            {{ $trigger }}
+        </div>
+    @endif
 
     <!-- Modal Teleported to Body -->
     <template x-teleport="body">
@@ -42,8 +49,8 @@
                              {{ $title }}
                          </h2>
                      </div>
-                     <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-                         {{ $description }}
+                     <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed" x-text="message ? message : '{{ $description ?? '' }}'">
+                         {{ $description ?? '' }}
                      </p>
                  </div>
 
