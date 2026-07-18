@@ -22,7 +22,7 @@
 
     {{-- Hero --}}
     <section class="bg-gradient-to-br from-[#1e40af] via-[#1e3a8a] to-[#172554] text-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-8 py-8 md:py-12">
             <nav aria-label="Breadcrumb" class="hidden md:flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-blue-200 mb-6 min-w-0">
                 <a href="{{ route('landing') }}" class="hover:text-white shrink-0">Home</a>
                 <span aria-hidden="true">/</span>
@@ -61,7 +61,7 @@
     </section>
 
     {{-- Content --}}
-    <section class="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 md:py-12 space-y-5 md:space-y-8">
+    <section class="max-w-4xl mx-auto w-full px-4 sm:px-8 py-6 md:py-12 space-y-5 md:space-y-8">
         @if($official->bio)
             <article class="rounded-2xl md:rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 md:p-6 space-y-3">
                 <h2 class="text-[10px] font-black text-[#1e40af] dark:text-blue-400 uppercase tracking-widest font-display">About</h2>

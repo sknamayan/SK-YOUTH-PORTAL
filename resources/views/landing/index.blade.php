@@ -150,8 +150,8 @@ if (activeForm) {
     @include('landing.sections.announcements')
 
     <!-- 7. CTA Banner (Full-bleed gradient banner, blobs) -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 reveal-on-scroll">
-        <div class="relative rounded-3xl bg-gradient-to-r from-blue-700 to-indigo-900 text-white py-12 px-6 sm:p-16 overflow-hidden text-center shadow-lg">
+    <section class="max-w-7xl mx-auto px-4 sm:px-8 pb-12 reveal-on-scroll">
+        <div class="relative rounded-3xl bg-gradient-to-r from-blue-700 to-indigo-900 text-white py-12 px-4 sm:p-16 overflow-hidden text-center shadow-lg">
 
             <!-- Decorative gradient blobs -->
             <div class="absolute -top-16 -left-16 w-48 h-48 bg-blue-500/20 rounded-full blur-2xl"></div>
@@ -180,7 +180,7 @@ if (activeForm) {
 
     <!-- 8. Sponsor/Partners logo slider -->
     @if(!$partners->isEmpty())
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 reveal-on-scroll">
+    <section class="max-w-7xl mx-auto px-4 sm:px-8 pb-16 reveal-on-scroll">
         <div class="text-center mb-6">
             <span class="text-[9px] font-black tracking-widest text-slate-400 uppercase font-display block">Sponsors & Partners</span>
             <h2 class="text-lg font-black tracking-tight text-slate-500 font-display uppercase mt-1">Our Community Partners</h2>
@@ -297,7 +297,7 @@ if (activeForm) {
         @endphp
 
         <!-- Modal Wrapper -->
-        <div class="flex min-h-screen items-center justify-center p-4">
+        <div class="flex min-h-screen items-center justify-center px-4 py-8 sm:px-8">
 
             <!-- Modal Box Container -->
             <div class="max-w-2xl w-full relative z-10 transition-all transform max-h-[90vh] flex flex-col overflow-y-auto"

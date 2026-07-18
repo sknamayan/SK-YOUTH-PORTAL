@@ -74,7 +74,7 @@
     <!-- Main Pane -->
     <div class="flex-1 flex flex-col min-w-0">
 
-        <div class="p-6 md:p-8 pb-24 md:pb-8 space-y-6 flex-1 overflow-y-auto">
+        <div class="px-4 py-6 sm:p-8 pb-24 md:pb-8 space-y-6 flex-1 overflow-y-auto">
 
             <!-- Header section -->
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-200">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 flex-1">
+<div class="max-w-3xl mx-auto px-4 sm:px-8 py-12 md:py-16 flex-1">
     
     <div class="text-center mb-10">
         <span class="text-xs font-black tracking-widest text-[#1e40af] uppercase font-display block">Citizens Area</span>

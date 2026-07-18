@@ -5,7 +5,7 @@
 
     <!-- Hero Header Panel -->
     <section class="bg-gradient-to-br from-slate-900 via-slate-800 to-[#1e3a8a] text-white shrink-0">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[max(1.5rem,env(safe-area-inset-top))] pb-10 md:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 pt-[max(1.5rem,env(safe-area-inset-top))] pb-10 md:py-16">
             <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-6 min-w-0">
                 <a href="{{ route('landing') }}" class="hover:text-white active:scale-95 shrink-0">Home</a>
                 <span aria-hidden="true" class="shrink-0">/</span>
@@ -27,7 +27,7 @@
     </section>
 
     <!-- Council Members Grid -->
-    <section class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+    <section class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-10 md:py-14">
         @if($officials->isEmpty())
             <div class="flex flex-col items-center text-center py-20 px-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm animate-fade-in">
                 <h2 class="text-base font-bold text-slate-800 dark:text-slate-200">No Officials Registered</h2>

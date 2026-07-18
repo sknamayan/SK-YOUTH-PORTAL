@@ -4,7 +4,7 @@
 <div class="flex-1 flex flex-col min-h-0 bg-slate-50 dark:bg-slate-950 font-sans">
 
     <section class="bg-gradient-to-br from-slate-900 via-slate-800 to-[#1e3a8a] text-white shrink-0">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[max(1.5rem,env(safe-area-inset-top))] pb-8 md:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 pt-[max(1.5rem,env(safe-area-inset-top))] pb-8 md:py-16">
             <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-5 min-w-0">
                 <a href="{{ route('landing') }}" class="hover:text-white active:scale-95 shrink-0">Home</a>
                 <span aria-hidden="true" class="shrink-0">/</span>
@@ -23,7 +23,7 @@
 
     {{-- Sticky category filter --}}
     <div class="sticky top-16 z-20 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 py-3">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 py-3">
             <div class="flex gap-2 overflow-x-auto snap-x snap-mandatory overscroll-x-contain pb-0.5 -mx-1 px-1 scrollbar-hide" role="tablist" aria-label="Filter by category">
                 <a href="{{ route('transparency.index') }}"
                    role="tab"
@@ -43,7 +43,7 @@
         </div>
     </div>
 
-    <section class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-5 md:py-12 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+    <section class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-8 py-5 md:py-12 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
         @if($posts->isEmpty())
             <div class="flex flex-col items-center text-center py-20 px-6 rounded-3xl bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-700">
                 <h2 class="text-sm font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider">No Documents Found</h2>

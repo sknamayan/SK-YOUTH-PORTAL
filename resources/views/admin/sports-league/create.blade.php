@@ -9,7 +9,7 @@
     <!-- Main Pane -->
     <div class="flex-1 flex flex-col min-w-0">
 
-        <div class="p-6 md:p-8 pb-24 md:pb-8 space-y-6 flex-1 overflow-y-auto">
+        <div class="px-4 py-6 sm:p-8 space-y-6 flex-1 overflow-y-auto">
             
             <!-- Breadcrumbs -->
             <div class="flex items-center justify-between pb-4 border-b border-slate-100">

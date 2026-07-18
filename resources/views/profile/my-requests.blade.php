@@ -4,7 +4,7 @@
 <div class="flex-1 bg-slate-50 dark:bg-slate-955 font-sans min-h-screen">
 
     <section class="bg-gradient-to-br from-slate-900 via-slate-800 to-[#1e3a8a] text-white shrink-0">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[max(1.5rem,env(safe-area-inset-top))] pb-8 md:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 pt-[max(1.5rem,env(safe-area-inset-top))] pb-8 md:py-16">
             <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-5 min-w-0">
                 <a href="{{ route('landing') }}" class="hover:text-white active:scale-95 shrink-0">Home</a>
                 <span aria-hidden="true" class="shrink-0">/</span>
@@ -23,7 +23,7 @@
         </div>
     </section>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10 space-y-6 animate-fade-in-up">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 py-8 md:py-10 space-y-6 animate-fade-in-up">
 
         <!-- Horizontal Citizen Sub-navigation -->
         @include('profile.partials.citizen-nav')

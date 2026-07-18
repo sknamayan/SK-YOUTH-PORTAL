@@ -15,7 +15,7 @@
 
 
         <!-- Page Main Wrapper -->
-        <div class="p-6 md:p-8 space-y-8 flex-1 overflow-y-auto font-sans">
+        <div class="px-4 py-6 sm:p-8 space-y-8 flex-1 overflow-y-auto font-sans">
             
             <!-- Breadcrumbs / Overview Top Bar -->
             <div class="flex items-center justify-between pb-4 border-b border-slate-100">

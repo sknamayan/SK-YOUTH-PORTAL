@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 flex-1 font-sans">
+<div class="max-w-4xl mx-auto px-4 sm:px-8 py-10 md:py-16 flex-1 font-sans">
     
     <!-- Breadcrumbs -->
     <div class="flex items-center space-x-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-400 mb-6 pb-4 border-b border-slate-100">

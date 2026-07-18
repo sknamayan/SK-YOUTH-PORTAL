@@ -10,7 +10,7 @@
     </div>
 
     <!-- 2-Column Grid Cards (Mobile Only) -->
-    <div class="bg-slate-50 dark:bg-slate-50 border border-slate-100 dark:border-slate-100 rounded-2xl p-4 grid grid-cols-2 gap-3">
+    <div class="bg-slate-50 dark:bg-slate-50 border border-slate-100 dark:border-slate-100 rounded-2xl p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
         @foreach($quickInitiatives as $qi)
             @php
                 $color = match($qi->committee_id) {

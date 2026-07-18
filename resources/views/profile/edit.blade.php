@@ -96,7 +96,7 @@
             </div>
         </section>
 
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10 flex-1 font-sans space-y-6">
+        <div class="max-w-4xl mx-auto px-4 sm:px-8 py-8 md:py-10 flex-1 font-sans space-y-6">
             @include('profile.partials.citizen-nav')
 
             <!-- Horizontal Settings Tab Navigation (Citizen View) -->

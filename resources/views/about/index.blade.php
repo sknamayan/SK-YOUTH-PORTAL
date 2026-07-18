@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+<div class="max-w-4xl mx-auto px-4 sm:px-8 py-12 md:py-16">
     <div class="text-center mb-10">
         <img src="{{ asset('images/logo.png') }}" class="w-24 h-24 mx-auto object-contain rounded-full bg-white p-1 border shadow-md mb-4" alt="SK Logo">
         <h1 class="text-3xl font-black text-slate-800 font-display tracking-tight uppercase">About SK Namayan</h1>

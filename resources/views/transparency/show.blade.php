@@ -15,7 +15,7 @@
     </div>
 
     <section class="bg-gradient-to-br from-slate-900 via-slate-800 to-[#1e3a8a] text-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-8 py-6 md:py-12">
             <nav aria-label="Breadcrumb" class="hidden md:flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-6 min-w-0">
                 <a href="{{ route('landing') }}" class="hover:text-white shrink-0">Home</a>
                 <span aria-hidden="true">/</span>
@@ -29,7 +29,7 @@
         </div>
     </section>
 
-    <article class="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-5 md:py-12 space-y-5 md:space-y-8">
+    <article class="max-w-4xl mx-auto w-full px-4 sm:px-8 py-5 md:py-12 space-y-5 md:space-y-8">
         @if($post->imageUrl())
             <div class="rounded-2xl md:rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-sm aspect-video bg-slate-100 dark:bg-slate-800">
                 <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" class="w-full h-full object-cover">
