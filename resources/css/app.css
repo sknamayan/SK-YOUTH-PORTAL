@@ -291,9 +291,29 @@ html {
     background-size: 400% 100%;
 }
 
-/* Enforce uppercase display globally for inputs, textareas, select, and option elements */
-input, textarea, select, option {
+/* Enforce uppercase display only for specific form containers */
+.profiling-form input,
+.profiling-form textarea,
+.profiling-form select,
+.profiling-form option,
+.data-entry input,
+.data-entry textarea,
+.data-entry select,
+.data-entry option,
+.service-request input,
+.service-request textarea,
+.service-request select,
+.service-request option {
     text-transform: uppercase !important;
+}
+
+/* Explicitly exclude #login-form and any inputs within it */
+#login-form,
+#login-form input,
+#login-form textarea,
+#login-form select,
+#login-form option {
+    text-transform: none !important;
 }
 
 
