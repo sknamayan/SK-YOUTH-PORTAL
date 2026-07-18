@@ -290,3 +290,9 @@ html {
     background: linear-gradient(90deg, rgba(30, 41, 59, 0.6) 25%, rgba(51, 65, 85, 0.8) 37%, rgba(30, 41, 59, 0.6) 63%);
     background-size: 400% 100%;
 }
+
+/* Enforce uppercase display for visual text-based inputs */
+input[type="text"], textarea {
+    text-transform: uppercase;
+}
+
