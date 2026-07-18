@@ -1,3 +1,18 @@
+@php
+    $pendingServiceRequestsCount = \App\Models\CustomRequest::where('status', 'pending')->count()
+        + \App\Models\HealthRequest::where('status', 'pending')->count()
+        + \App\Models\MedicineRequest::where('status', 'pending')->count()
+        + \App\Models\SilidKarununganRequest::where('status', 'pending')->count();
+    
+    $pendingKkProfilesCount = \App\Models\KkProfile::where('status', 'pending')->count();
+    
+    $pendingSportsRegistrationsCount = \App\Models\SportsRegistration::where('status', 'pending')->count();
+    
+    $pendingConsultationsCount = \App\Models\ConsultationRequest::where('status', 'Open')->count();
+
+    $pendingUserApprovalsCount = \App\Models\User::where('is_approved', false)->count();
+@endphp
+
 <!-- Centralized Left Sidebar Navigation -->
 <div x-data="{ mobileSidebar: false }"
      @toggle-sidebar.window="mobileSidebar = !mobileSidebar"
@@ -13,7 +28,7 @@
          class="fixed inset-0 bg-slate-950/45 backdrop-blur-[2px] z-20 md:hidden"></div>
 
     <aside :class="mobileSidebar ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
-       class="fixed md:sticky md:self-start inset-y-0 md:bottom-auto left-0 w-[78%] max-w-[300px] md:w-80 md:max-w-none md:top-16 md:h-[calc(100vh_-_4rem)] border-r border-slate-100 bg-white z-30 transition-transform duration-300 transform flex flex-col justify-between shrink-0 shadow-sm md:shadow-none">
+       class="fixed md:sticky md:self-start inset-y-0 md:bottom-auto left-0 w-[78%] max-w-[300px] md:w-64 lg:w-72 xl:w-80 md:max-w-none md:top-16 md:h-[calc(100vh_-_4rem)] border-r border-slate-100 bg-white z-30 transition-transform duration-300 transform flex flex-col justify-between shrink-0 shadow-sm md:shadow-none">
 
     <!-- Top Menu / Navigation Scrollable Pane -->
     <div class="flex-1 p-6 space-y-6 overflow-y-auto">
@@ -37,7 +52,7 @@
             <a href="{{ route('dashboard.index') }}"
                class="flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('dashboard.index') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                 <div class="flex items-center space-x-3">
-                    <x-category-icon name="dashboard" class="w-4 h-4" />
+                    <x-category-icon name="dashboard" class="w-6 h-6" />
                     <span>Dashboard</span>
                 </div>
             </a>
@@ -47,7 +62,7 @@
             <a href="{{ route('dashboard.requests.index') }}"
                class="flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('dashboard.requests.index') || request()->routeIs('dashboard.requests.show') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                 <div class="flex items-center space-x-3">
-                    <x-category-icon name="users" class="w-4 h-4" />
+                    <x-category-icon name="users" class="w-6 h-6" />
                     <span>Service Requests</span>
                 </div>
                 @if(isset($pendingServiceRequestsCount) && $pendingServiceRequestsCount > 0)
@@ -59,7 +74,7 @@
             <a href="{{ route('dashboard.profiling.index') }}"
                class="flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('dashboard.profiling.index') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                 <div class="flex items-center space-x-3">
-                    <x-category-icon name="logs" class="w-4 h-4" />
+                    <x-category-icon name="logs" class="w-6 h-6" />
                     <span>Profiling List</span>
                 </div>
                 @if(isset($pendingKkProfilesCount) && $pendingKkProfilesCount > 0)
@@ -70,7 +85,7 @@
             <!-- Master Calendar Link -->
             <a href="{{ route('dashboard.calendar.index') }}"
                class="flex items-center space-x-3 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('dashboard.calendar.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                <x-category-icon name="sports" class="w-4 h-4" />
+                <x-category-icon name="sports" class="w-6 h-6" />
                 <span>Master Calendar</span>
             </a>
 
@@ -79,7 +94,7 @@
             <a href="{{ route('admin.sports-league.index') }}"
                class="flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.sports-league.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                 <div class="flex items-center space-x-3">
-                    <x-category-icon name="sports" class="w-4 h-4" />
+                    <x-category-icon name="sports" class="w-6 h-6" />
                     <span>SIKLAB</span>
                 </div>
                 @if(isset($pendingSportsRegistrationsCount) && $pendingSportsRegistrationsCount > 0)
@@ -93,7 +108,7 @@
             <a href="{{ route('admin.consultations.index') }}"
                class="flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.consultations.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                 <div class="flex items-center space-x-3">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                     </svg>
                     <span>SKonsulta Chats</span>
@@ -108,7 +123,7 @@
             @if(Route::has('admin.partners.index') && Auth::user()->isSuperAdmin())
             <a href="{{ route('admin.partners.index') }}"
                class="flex items-center space-x-3 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.partners.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                <x-category-icon name="peace-building" class="w-4 h-4" />
+                <x-category-icon name="peace-building" class="w-6 h-6" />
                 <span>Partnerships</span>
             </a>
             @endif
@@ -117,7 +132,7 @@
             @if(Route::has('admin.reports.index') && Auth::user()->isAdmin())
             <a href="{{ route('admin.reports.index') }}"
                class="flex items-center space-x-3 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.reports.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                <x-category-icon name="education" class="w-4 h-4" />
+                <x-category-icon name="education" class="w-6 h-6" />
                 <span>Reports</span>
             </a>
             @endif
@@ -126,7 +141,7 @@
             @if(Auth::user()->isSuperAdmin())
             <a href="{{ route('admin.structure.index') }}"
                class="flex items-center space-x-3 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.structure.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                <x-category-icon name="governance" class="w-4 h-4" />
+                <x-category-icon name="governance" class="w-6 h-6" />
                 <span>Portal Structure</span>
             </a>
             @endif
@@ -135,7 +150,7 @@
             @if(Auth::user()->isSuperAdmin())
             <a href="{{ route('admin.logs.index') }}"
                class="flex items-center space-x-3 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.logs.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                <x-category-icon name="logs" class="w-4 h-4" />
+                <x-category-icon name="logs" class="w-6 h-6" />
                 <span>Audit Logs</span>
             </a>
             @endif
@@ -144,7 +159,7 @@
             @if(Auth::user()->isSuperAdmin())
             <a href="{{ route('admin.carousel.index') }}"
                class="flex items-center space-x-3 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.carousel.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                <x-category-icon name="carousel" class="w-4 h-4" />
+                <x-category-icon name="carousel" class="w-6 h-6" />
                 <span>Hero Slides</span>
             </a>
             @endif
@@ -157,7 +172,8 @@
                     @click="isCommunityBoardOpen = !isCommunityBoardOpen"
                     :aria-expanded="isCommunityBoardOpen"
                 >
-                    <div class="flex items-center">
+                    <div class="flex items-center space-x-3">
+                        <x-category-icon name="website" class="w-6 h-6" />
                         <span>Community Board</span>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': isCommunityBoardOpen }">
@@ -168,19 +184,19 @@
                 <div x-show="isCommunityBoardOpen" x-collapse class="pl-6 space-y-1" style="display: none;">
                     <a href="{{ route('admin.news.index') }}"
                        class="flex items-center space-x-3 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.news.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                        <x-category-icon name="logs" class="w-4 h-4" />
+                        <x-category-icon name="logs" class="w-6 h-6" />
                         <span>News Articles</span>
                     </a>
 
                     <a href="{{ route('admin.transparency.index') }}"
                        class="flex items-center space-x-3 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.transparency.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                        <x-category-icon name="governance" class="w-4 h-4" />
+                        <x-category-icon name="governance" class="w-6 h-6" />
                         <span>Transparency Board</span>
                     </a>
 
                     <a href="{{ route('admin.officials.index') }}"
                        class="flex items-center space-x-3 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.officials.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                        <x-category-icon name="users" class="w-4 h-4" />
+                        <x-category-icon name="users" class="w-6 h-6" />
                         <span>SK Officials</span>
                     </a>
                 </div>
@@ -196,6 +212,7 @@
                         :aria-expanded="isOpened"
                     >
                         <div class="flex items-center space-x-3">
+                            <x-category-icon name="profile" class="w-6 h-6" />
                             <span>Settings</span>
                         </div>
                         <div class="flex items-center space-x-2">
@@ -213,7 +230,7 @@
                         <a href="{{ route('admin.users.index') }}"
                            class="flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.users.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                             <div class="flex items-center space-x-3">
-                                <x-category-icon name="users" class="w-4 h-4" />
+                                <x-category-icon name="users" class="w-6 h-6" />
                                 <span>Account Management</span>
                             </div>
                             @if(isset($pendingUserApprovalsCount) && $pendingUserApprovalsCount > 0)
@@ -224,7 +241,7 @@
                         <!-- My Profile -->
                         <a href="{{ route('profile.edit') }}"
                            class="flex items-center space-x-3 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('profile.edit') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                            <x-category-icon name="profile" class="w-4 h-4" />
+                            <x-category-icon name="profile" class="w-6 h-6" />
                             <span>My Profile</span>
                         </a>
                     </div>
@@ -233,7 +250,7 @@
                 <!-- Standalone My Profile Link for Admin / Staff -->
                 <a href="{{ route('profile.edit') }}"
                    class="flex items-center space-x-3 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('profile.edit') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                    <x-category-icon name="profile" class="w-4 h-4" />
+                    <x-category-icon name="profile" class="w-6 h-6" />
                     <span>My Profile</span>
                 </a>
             @endif
@@ -241,7 +258,7 @@
             <!-- View Website Link -->
             <a href="/"
                class="flex items-center space-x-3 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition text-slate-600 hover:bg-slate-50 hover:text-slate-900">
-                <x-category-icon name="website" class="w-4 h-4" />
+                <x-category-icon name="website" class="w-6 h-6" />
                 <span>View Website</span>
             </a>
         </nav>
