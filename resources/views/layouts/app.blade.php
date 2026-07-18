@@ -603,9 +603,9 @@
             </div>
         </nav>
 
-        <!-- Flash Messages Block (Modern Sleek Modal) -->
         @if (session('success') || session('error'))
             <div x-data="{ showFlashModal: true }"
+                 x-init="showFlashModal = true"
                  x-show="showFlashModal"
                  class="fixed inset-0 z-50 flex items-center justify-center p-4"
                  x-cloak>

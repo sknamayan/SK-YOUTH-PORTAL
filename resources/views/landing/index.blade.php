@@ -625,6 +625,7 @@ if (activeForm) {
     <!-- Submission Success Confirmation Modal -->
     @if(session('submitted_success'))
     <div x-data="{ showSuccess: true }"
+         x-init="showSuccess = true"
          x-show="showSuccess"
          class="fixed inset-0 z-50 overflow-y-auto"
          x-cloak>
