@@ -291,8 +291,9 @@ html {
     background-size: 400% 100%;
 }
 
-/* Enforce uppercase display for visual text-based inputs */
-input[type="text"], textarea {
-    text-transform: uppercase;
+/* Enforce uppercase display globally for inputs, textareas, select, and option elements */
+input, textarea, select, option {
+    text-transform: uppercase !important;
 }
+
 
