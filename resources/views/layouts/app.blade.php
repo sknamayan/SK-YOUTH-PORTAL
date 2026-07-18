@@ -634,7 +634,7 @@
 
                         <!-- Content -->
                         <div class="w-full flex flex-col items-center text-center space-y-2 mb-6">
-                            <h3 class="text-xl font-bold text-slate-950 dark:text-white font-display tracking-tight">Success</h3>
+                            <h3 class="text-xl font-bold text-slate-955 dark:text-white font-display tracking-tight">Success</h3>
                             <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed px-1">
                                 {{ session('success') }}
                             </p>
@@ -646,26 +646,55 @@
                             Okay
                         </button>
                     @else
-                        <!-- Error Icon Box -->
-                        <div class="w-16 h-16 rounded-2xl bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center border border-rose-500/20 dark:border-rose-500/30 shadow-lg shadow-rose-500/5 relative mb-6">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </div>
+                        @if (str_contains(session('error'), 'Profiling') || str_contains(session('error'), 'profiling') || str_contains(session('error'), 'registry'))
+                            <!-- Profile Incomplete / Friendly Invite Icon Box -->
+                            <div class="w-16 h-16 rounded-2xl bg-blue-500/10 dark:bg-blue-500/20 text-[#1e40af] dark:text-blue-400 flex items-center justify-center border border-blue-500/20 dark:border-blue-500/30 shadow-lg shadow-blue-500/5 relative mb-6">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                </svg>
+                            </div>
 
-                        <!-- Content -->
-                        <div class="w-full flex flex-col items-center text-center space-y-2 mb-6">
-                            <h3 class="text-xl font-bold text-slate-955 dark:text-white font-display tracking-tight">Error</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed px-1">
-                                {{ session('error') }}
-                            </p>
-                        </div>
+                            <!-- Content -->
+                            <div class="w-full flex flex-col items-center text-center space-y-2 mb-6">
+                                <h3 class="text-xl font-bold text-slate-955 dark:text-white font-display tracking-tight">Profile Incomplete</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed px-1">
+                                    {{ session('error') }}
+                                </p>
+                            </div>
 
-                        <!-- Action Button -->
-                        <button @click="showFlashModal = false"
-                                class="w-full py-3 bg-rose-600 hover:bg-rose-500 dark:bg-rose-500 dark:hover:bg-rose-400 text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-lg shadow-rose-500/20 hover:shadow-rose-500/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer">
-                            Close
-                        </button>
+                            <!-- Action Buttons -->
+                            <div class="w-full flex flex-col space-y-2">
+                                <a href="{{ route('profile.profiling.create') }}"
+                                   class="w-full py-3 bg-[#1e40af] hover:bg-[#1e3a8a] text-white text-center font-bold text-xs uppercase tracking-wider rounded-2xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer block">
+                                    GO TO KK PROFILING
+                                </a>
+                                <button @click="showFlashModal = false"
+                                        class="w-full py-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs uppercase tracking-wider rounded-2xl active:scale-[0.98] transition-all duration-200 cursor-pointer">
+                                    Maybe Later
+                                </button>
+                            </div>
+                        @else
+                            <!-- Default Error Icon Box -->
+                            <div class="w-16 h-16 rounded-2xl bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center border border-rose-500/20 dark:border-rose-500/30 shadow-lg shadow-rose-500/5 relative mb-6">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="w-full flex flex-col items-center text-center space-y-2 mb-6">
+                                <h3 class="text-xl font-bold text-slate-955 dark:text-white font-display tracking-tight">Error</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed px-1">
+                                    {{ session('error') }}
+                                </p>
+                            </div>
+
+                            <!-- Action Button -->
+                            <button @click="showFlashModal = false"
+                                    class="w-full py-3 bg-rose-600 hover:bg-rose-500 dark:bg-rose-500 dark:hover:bg-rose-400 text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-lg shadow-rose-500/20 hover:shadow-rose-500/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer">
+                                Close
+                            </button>
+                        @endif
                     @endif
                 </div>
             </div>
@@ -691,7 +720,8 @@
                     </div>
 
                     <!-- Social Icons and Quick Links -->
-                    <div class="flex flex-col items-center md:items-end gap-3">
+                    <div class="flex flex-col items-center md:items-end gap-2">
+                        <span class="font-bold text-slate-400 tracking-wider font-display uppercase block text-[10px]">CONNECT WITH US</span>
                         <div class="flex items-center space-x-5 text-slate-500 text-base">
                             <!-- Facebook Icon -->
                             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors duration-200" title="Facebook">
