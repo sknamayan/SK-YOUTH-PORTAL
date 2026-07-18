@@ -19,6 +19,7 @@ class CustomRequest extends Model
         'status',
         'custom_fields',
         'processed_by',
+        'reference_number',
     ];
 
     public function user()

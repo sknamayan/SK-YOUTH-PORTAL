@@ -679,43 +679,56 @@
 
         <!-- Footer -->
         @unless($hideFooter)
-        <footer class="bg-slate-900 text-slate-400 pt-12 pb-[calc(3rem+env(safe-area-inset-bottom)+4.5rem)] md:pb-12 border-t border-slate-800 text-xs mt-auto">
+        <footer class="bg-slate-900 text-slate-400 py-10 md:py-12 border-t border-slate-800 text-xs mt-auto">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Column 1: Brand -->
-                    <div class="space-y-3">
-                        <div class="flex items-center">
-                            <span class="font-bold text-white tracking-wider font-display uppercase">Sangguniang Kabataan Namayan</span>
-                        </div>
-                        <p class="leading-relaxed max-w-sm">
-                            Empowering youth governance in Barangay Namayan, Mandaluyong. Offering digitalized solutions for community health, education, sports, and social welfare requests.
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <!-- Brand & Brief Mission Statement -->
+                    <div class="text-center md:text-left space-y-2">
+                        <span class="font-bold text-white tracking-wider font-display uppercase block text-sm">Sangguniang Kabataan Namayan</span>
+                        <p class="leading-relaxed text-slate-500 max-w-md text-xs">
+                            Empowering youth governance in Barangay Namayan, Mandaluyong. Built with integrity, transparency, and progress.
                         </p>
                     </div>
 
-                    <!-- Column 3: Accounts and Contact info -->
-                    <div class="space-y-3">
-                        <span class="font-bold text-white uppercase tracking-wider font-display">Barangay Desk</span>
-                        <p class="leading-relaxed">
-                            Barangay Namayan SK Office, Mandaluyong City, Metro Manila<br>
-                            Email: sknamayan@gmail.com
-                        </p>
-                        <div class="flex items-center space-x-4 pt-1">
-                            @guest
-                                <a href="{{ route('login') }}" class="hover:text-white transition font-medium">Citizen Login</a>
-                                <span class="text-slate-700">|</span>
-                                <a href="{{ route('register') }}" class="hover:text-white transition font-medium">Create Account</a>
-                            @else
-                                <a href="{{ route('profile.edit') }}" class="hover:text-white transition font-medium">My Account Profile</a>
-                            @endguest
+                    <!-- Social Icons and Quick Links -->
+                    <div class="flex flex-col items-center md:items-end gap-3">
+                        <div class="flex items-center space-x-5 text-slate-500 text-base">
+                            <!-- Facebook Icon -->
+                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors duration-200" title="Facebook">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                            <!-- Instagram Icon -->
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors duration-200" title="Instagram">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.01 3.71.054 1.14.051 1.96.23 2.65.5a4.877 4.877 0 011.77 1.15c.5.5.85 1.01 1.15 1.77.27.69.45 1.51.5 2.65.044.927.054 1.28.054 3.71 0 2.43-.01 2.784-.054 3.71-.051 1.14-.23 1.96-.5 2.65a4.877 4.877 0 01-1.15 1.77c-.5.5-1.01.85-1.77 1.15-.69.27-1.51.45-2.65.5-.927.044-1.28.054-3.71.054-2.43 0-2.784-.01-3.71-.054-1.14-.051-1.96-.23-2.65-.5a4.877 4.877 0 01-1.77-1.15c-.5-.5-.85-1.01-1.15-1.77-.27-.69-.45-1.51-.5-2.65C2.01 14.784 2 14.43 2 12c0-2.43.01-2.784.054-3.71.051-1.14.23-1.96.5-2.65a4.877 4.877 0 011.15-1.77c.5-.5 1.01-.85 1.77-1.15.69-.27 1.51-.45 2.65-.5C9.216 2.01 9.57 2 12 2zm0 1.8c-2.385 0-2.673.01-3.614.053-.873.04-1.347.185-1.662.308a3.076 3.076 0 00-1.143.744 3.076 3.076 0 00-.744 1.143c-.123.315-.268.789-.308 1.662C4.51 9.327 4.5 9.615 4.5 12c0 2.385.01 2.673.053 3.614.04.873.185 1.347.308 1.662.207.533.48 1.01.882 1.412a3.076 3.076 0 001.412.882c.315.123.789.268 1.662.308.941.043 1.229.053 3.614.053 2.385 0 2.673-.01 3.614-.053.873-.04 1.347-.185 1.662-.308a3.076 3.076 0 001.143-.744 3.076 3.076 0 00.744-1.143c.123-.315.268-.789.308-1.662.043-.941.053-1.229.053-3.614 0-2.385-.01-2.673-.053-3.614-.04-.873-.185-1.347-.308-1.662a3.076 3.076 0 00-.744-1.143 3.076 3.076 0 00-1.143-.744c-.315-.123-.789-.268-1.662-.308C14.673 3.81 14.385 3.8 12 3.8zm0 3.077A5.123 5.123 0 1012.001 17.15 5.123 5.123 0 0012 6.877zM12 15a3 3 0 110-6 3 3 0 010 6zm5.884-7.876a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                            <!-- Email/Envelope Icon -->
+                            <a href="mailto:sknamayan@gmail.com" class="hover:text-white transition-colors duration-200" title="Email Us">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                <hr class="border-slate-800 my-8">
+                <hr class="border-slate-800 my-6">
 
-                <div class="flex flex-col sm:flex-row items-center justify-between text-slate-500">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-slate-600 uppercase tracking-widest">
                     <div>
-                        &copy; {{ date('Y') }} Sangguniang Kabataan Namayan. All rights reserved.
+                        &copy; {{ date('Y') }} SK Namayan. All rights reserved.
+                    </div>
+                    <div class="flex space-x-4">
+                        @guest
+                            <a href="{{ route('login') }}" class="hover:text-slate-400 transition-colors">Login</a>
+                            <span>&middot;</span>
+                            <a href="{{ route('register') }}" class="hover:text-slate-400 transition-colors">Register</a>
+                        @else
+                            <a href="{{ route('profile.edit') }}" class="hover:text-slate-400 transition-colors">My Profile</a>
+                        @endguest
                     </div>
                 </div>
             </div>

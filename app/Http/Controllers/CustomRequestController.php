@@ -13,10 +13,20 @@ class CustomRequestController extends Controller
     /**
      * Show the dynamic custom form for a specific initiative.
      */
-    public function create(Initiative $initiative): View
+    public function create(Initiative $initiative): View|\Illuminate\Http\RedirectResponse
     {
         if ($initiative->is_coming_soon) {
             abort(403, 'This form is not yet available for submissions.');
+        }
+
+        $user = auth()->user();
+        $hasProfiling = \App\Models\KkProfile::where('user_id', $user->id)
+            ->orWhere('email', $user->email)
+            ->exists();
+
+        if (!$hasProfiling) {
+            return redirect()->route('profile.profiling.create')
+                ->with('error', 'Please complete your KK Profiling before requesting services.');
         }
 
         return view('forms.custom', compact('initiative'));
@@ -29,6 +39,16 @@ class CustomRequestController extends Controller
     {
         if ($initiative->is_coming_soon) {
             abort(403, 'This form is not yet available for submissions.');
+        }
+
+        $user = auth()->user();
+        $hasProfiling = \App\Models\KkProfile::where('user_id', $user->id)
+            ->orWhere('email', $user->email)
+            ->exists();
+
+        if (!$hasProfiling) {
+            return redirect()->route('profile.profiling.create')
+                ->with('error', 'Please complete your KK Profiling before requesting services.');
         }
 
         $input = $request->all();
@@ -80,6 +100,10 @@ class CustomRequestController extends Controller
 
         $validated = $request->validate($rules, [], $customAttributes);
 
+        do {
+            $ref = 'SK-REQ-' . strtoupper(\Illuminate\Support\Str::random(6));
+        } while (CustomRequest::where('reference_number', $ref)->exists());
+
         $customReq = CustomRequest::create([
             'user_id' => auth()->id(),
             'initiative_id' => $initiative->id,
@@ -88,6 +112,7 @@ class CustomRequestController extends Controller
             'email' => $validated['email'],
             'status' => 'pending',
             'custom_fields' => $validated['custom_fields'] ?? [],
+            'reference_number' => $ref,
         ]);
 
         return redirect()->route('landing')->with([
