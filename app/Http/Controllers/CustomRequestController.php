@@ -77,7 +77,7 @@ class CustomRequestController extends Controller
         return redirect()->route('landing')->with([
             'submitted_success' => true,
             'type' => $initiative->title,
-            'referenceNumber' => $customReq->reference_number ?? ('SK-' . now()->format('y-m') . '-REQ-' . str_pad($customReq->id, 4, '0', STR_PAD_LEFT)),
+            'referenceNumber' => $customReq->reference_number ?? ('SK-REQ-' . str_pad($customReq->id, 5, '0', STR_PAD_LEFT)),
             'name' => $customReq->first_name . ' ' . $customReq->last_name,
             'email' => $customReq->email,
             'detail' => 'Initiative Form Submission',

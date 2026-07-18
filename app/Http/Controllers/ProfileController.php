@@ -51,7 +51,7 @@ class ProfileController extends Controller
 
         $health = HealthRequest::with('processedBy')->where('email', $email)->get()->map(function ($item) {
             $item->type_label = 'Health Consultation';
-            $item->type_prefix = 'HEA';
+            $item->type_prefix = 'REQ';
             $item->icon = '🏥';
             $item->icon_name = 'health';
             $item->detail = 'Appointment: ' . $item->preferred_date->format('M d, Y') . ' @ ' . $item->preferred_time;
@@ -60,7 +60,7 @@ class ProfileController extends Controller
 
         $medicine = MedicineRequest::with('processedBy')->where('email', $email)->get()->map(function ($item) {
             $item->type_label = 'Pabili Medicine Services';
-            $item->type_prefix = 'MED';
+            $item->type_prefix = 'REQ';
             $item->icon = '💊';
             $item->icon_name = 'medicine';
             $item->detail = 'Address: ' . $item->complete_address;
@@ -69,7 +69,7 @@ class ProfileController extends Controller
 
         $silid = SilidKarununganRequest::with('processedBy')->where('email', $email)->get()->map(function ($item) {
             $item->type_label = 'Silid Karunungan Booking';
-            $item->type_prefix = 'SIL';
+            $item->type_prefix = 'REQ';
             $item->icon = '📚';
             $item->icon_name = 'education';
             $item->detail = 'Schedule: ' . $item->preferred_date->format('M d, Y') . ' @ ' . $item->preferred_time;
@@ -78,7 +78,7 @@ class ProfileController extends Controller
 
         $sports = SportsRegistration::with('processedBy')->where('email', $email)->get()->map(function ($item) {
             $item->type_label = 'Sports Registration';
-            $item->type_prefix = 'SPO';
+            $item->type_prefix = 'REQ';
             $item->icon = '⚽';
             $item->icon_name = 'sports';
             $item->detail = 'Sport: ' . $item->sport . ' (Team: ' . ($item->team_name ?? 'None') . ')';

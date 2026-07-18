@@ -21,16 +21,7 @@ class RequestObserver
     public function created(Model $model): void
     {
         if (empty($model->reference_number)) {
-            $basename = class_basename($model);
-            $prefix = match($basename) {
-                'HealthRequest' => 'HEA',
-                'MedicineRequest' => 'MED',
-                'SilidKarununganRequest' => 'SIL',
-                'SportsRegistration', 'RegistrationResponse' => 'SPO',
-                default => 'REQ'
-            };
-
-            $ref = 'SK-' . now()->format('y-m') . '-' . $prefix . '-' . str_pad($model->id, 4, '0', STR_PAD_LEFT);
+            $ref = 'SK-REQ-' . str_pad($model->id, 5, '0', STR_PAD_LEFT);
             $model->reference_number = $ref;
             $model->saveQuietly();
         }

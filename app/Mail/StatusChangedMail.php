@@ -24,16 +24,7 @@ class StatusChangedMail extends Mailable implements ShouldQueue
     {
         $this->requestModel = $requestModel;
 
-        $basename = class_basename($requestModel);
-        $prefix = match($basename) {
-            'HealthRequest' => 'HEA',
-            'MedicineRequest' => 'MED',
-            'SilidKarununganRequest' => 'SIL',
-            'SportsRegistration' => 'SPO',
-            default => 'REQ'
-        };
-
-        $this->referenceNumber = $requestModel->reference_number ?? ('SK-' . now()->format('y-m') . '-' . $prefix . '-' . str_pad($requestModel->id, 4, '0', STR_PAD_LEFT));
+        $this->referenceNumber = $requestModel->reference_number ?? ('SK-REQ-' . str_pad($requestModel->id, 5, '0', STR_PAD_LEFT));
 
         $this->typeLabel = match($basename) {
             'HealthRequest' => 'Health Consultation / Mental Health Support',

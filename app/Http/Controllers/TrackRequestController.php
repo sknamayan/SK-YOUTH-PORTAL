@@ -37,23 +37,8 @@ class TrackRequestController extends Controller
                 $sports2 = SportsRegistration::where('email', $searchQuery)->get();
                 $sports = $sports1->concat($sports2);
                 $custom = CustomRequest::where('email', $searchQuery)->get();
-            } elseif ($isOldRef) {
-                $prefix = strtoupper($matches[1]);
-                $id = intval($matches[2]);
-
-                $health = $prefix === 'HEA' ? HealthRequest::where('id', $id)->get() : collect();
-                $medicine = $prefix === 'MED' ? MedicineRequest::where('id', $id)->get() : collect();
-                $silid = $prefix === 'SIL' ? SilidKarununganRequest::where('id', $id)->get() : collect();
-                if ($prefix === 'SPO') {
-                    $sports1 = RegistrationResponse::where('id', $id)->get();
-                    $sports2 = SportsRegistration::where('id', $id)->get();
-                    $sports = $sports1->concat($sports2);
-                } else {
-                    $sports = collect();
-                }
-                $custom = $prefix === 'REQ' ? CustomRequest::where('id', $id)->get() : collect();
             } else {
-                // Search by the new unique alphanumeric reference number
+                // First search by the exact reference_number column
                 $health = HealthRequest::where('reference_number', $searchQuery)->get();
                 $medicine = MedicineRequest::where('reference_number', $searchQuery)->get();
                 $silid = SilidKarununganRequest::where('reference_number', $searchQuery)->get();
@@ -61,11 +46,29 @@ class TrackRequestController extends Controller
                 $sports2 = SportsRegistration::where('reference_number', $searchQuery)->get();
                 $sports = $sports1->concat($sports2);
                 $custom = CustomRequest::where('reference_number', $searchQuery)->get();
+
+                // Fallback to legacy reference format regex if no exact match is found
+                if ($health->isEmpty() && $medicine->isEmpty() && $silid->isEmpty() && $sports->isEmpty() && $custom->isEmpty() && $isOldRef) {
+                    $prefix = strtoupper($matches[1]);
+                    $id = intval($matches[2]);
+
+                    $health = $prefix === 'HEA' ? HealthRequest::where('id', $id)->get() : collect();
+                    $medicine = $prefix === 'MED' ? MedicineRequest::where('id', $id)->get() : collect();
+                    $silid = $prefix === 'SIL' ? SilidKarununganRequest::where('id', $id)->get() : collect();
+                    if ($prefix === 'SPO') {
+                        $sports1 = RegistrationResponse::where('id', $id)->get();
+                        $sports2 = SportsRegistration::where('id', $id)->get();
+                        $sports = $sports1->concat($sports2);
+                    } else {
+                        $sports = collect();
+                    }
+                    $custom = $prefix === 'REQ' ? CustomRequest::where('id', $id)->get() : collect();
+                }
             }
 
             $health = $health->map(function ($item) {
                 $item->type_label = 'Health Consultation';
-                $item->type_prefix = 'HEA';
+                $item->type_prefix = 'REQ';
                 $item->type_slug = 'health';
                 $item->icon = '🏥';
                 $item->icon_name = 'health';
@@ -97,7 +100,7 @@ class TrackRequestController extends Controller
 
             $medicine = $medicine->map(function ($item) {
                 $item->type_label = 'Pabili Medicine Services';
-                $item->type_prefix = 'MED';
+                $item->type_prefix = 'REQ';
                 $item->type_slug = 'medicine';
                 $item->icon = '💊';
                 $item->icon_name = 'medicine';
@@ -127,7 +130,7 @@ class TrackRequestController extends Controller
 
             $silid = $silid->map(function ($item) {
                 $item->type_label = 'Silid Karunungan Booking';
-                $item->type_prefix = 'SIL';
+                $item->type_prefix = 'REQ';
                 $item->type_slug = 'silid';
                 $item->icon = '📚';
                 $item->icon_name = 'education';
@@ -157,7 +160,7 @@ class TrackRequestController extends Controller
 
             $sports = $sports->map(function ($item) {
                 $item->type_label = 'Sports Registration';
-                $item->type_prefix = 'SPO';
+                $item->type_prefix = 'REQ';
                 $item->type_slug = 'sports';
                 $item->icon = '⚽';
                 $item->icon_name = 'sports';

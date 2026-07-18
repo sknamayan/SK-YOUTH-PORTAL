@@ -298,7 +298,7 @@
                         <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 text-slate-655 dark:text-slate-300">
                             @foreach($results as $req)
                                 @php
-                                    $referenceNumber = 'SK-' . $req->type_prefix . '-' . str_pad($req->id, 5, '0', STR_PAD_LEFT);
+                                    $referenceNumber = 'SK-REQ-' . str_pad($req->id, 5, '0', STR_PAD_LEFT);
                                     
                                     $badgeClass = match($req->status) {
                                         'approved' => 'badge-approved',

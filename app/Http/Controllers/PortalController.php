@@ -48,9 +48,17 @@ class PortalController extends Controller
             'preferred_time' => 'required|string|max:50',
         ]);
 
-        HealthRequest::create($validated);
+        $healthReq = HealthRequest::create($validated);
 
-        return redirect()->back()->with('success', 'Health consultation request submitted successfully!');
+        return redirect()->route('landing')->with([
+            'submitted_success' => true,
+            'type' => 'Health Consultation',
+            'referenceNumber' => $healthReq->reference_number ?? ('SK-REQ-' . str_pad($healthReq->id, 5, '0', STR_PAD_LEFT)),
+            'name' => $healthReq->first_name . ' ' . $healthReq->last_name,
+            'email' => $healthReq->email,
+            'detail' => $healthReq->concerns,
+            'date' => $healthReq->created_at->format('M d, Y h:i A'),
+        ]);
     }
 
     /**
@@ -68,9 +76,17 @@ class PortalController extends Controller
             'complete_address' => 'required|string',
         ]);
 
-        MedicineRequest::create($validated);
+        $medicineReq = MedicineRequest::create($validated);
 
-        return redirect()->back()->with('success', 'Pabili medicine request submitted successfully!');
+        return redirect()->route('landing')->with([
+            'submitted_success' => true,
+            'type' => 'Pabili Medicine Services',
+            'referenceNumber' => $medicineReq->reference_number ?? ('SK-REQ-' . str_pad($medicineReq->id, 5, '0', STR_PAD_LEFT)),
+            'name' => $medicineReq->requestor_first_name . ' ' . $medicineReq->requestor_last_name,
+            'email' => $medicineReq->email,
+            'detail' => $medicineReq->complete_address,
+            'date' => $medicineReq->created_at->format('M d, Y h:i A'),
+        ]);
     }
 
     /**
@@ -89,8 +105,16 @@ class PortalController extends Controller
             'preferred_time' => 'required|string|max:50',
         ]);
 
-        SilidKarununganRequest::create($validated);
+        $silidReq = SilidKarununganRequest::create($validated);
 
-        return redirect()->back()->with('success', 'Silid Karunungan request submitted successfully!');
+        return redirect()->route('landing')->with([
+            'submitted_success' => true,
+            'type' => 'Silid Karunungan Booking',
+            'referenceNumber' => $silidReq->reference_number ?? ('SK-REQ-' . str_pad($silidReq->id, 5, '0', STR_PAD_LEFT)),
+            'name' => $silidReq->requestor_first_name . ' ' . $silidReq->requestor_last_name,
+            'email' => $silidReq->email,
+            'detail' => 'Booking Schedule: ' . $silidReq->preferred_date->format('M d, Y') . ' @ ' . $silidReq->preferred_time,
+            'date' => $silidReq->created_at->format('M d, Y h:i A'),
+        ]);
     }
 }

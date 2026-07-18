@@ -43,7 +43,7 @@ class TrackRequestTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Alice Smith');
-        $response->assertSee('SK-HEA-' . str_pad($health->id, 5, '0', STR_PAD_LEFT));
+        $response->assertSee('SK-REQ-' . str_pad($health->id, 5, '0', STR_PAD_LEFT));
         // Verify that the category-icon SVG structure is not in the page
         $response->assertDontSee('w-10 h-10 bg-blue-50');
     }
@@ -62,7 +62,7 @@ class TrackRequestTest extends TestCase
             'status' => 'pending',
         ]);
 
-        $refCode = 'SK-MED-' . str_pad($med->id, 5, '0', STR_PAD_LEFT);
+        $refCode = 'SK-REQ-' . str_pad($med->id, 5, '0', STR_PAD_LEFT);
 
         $response = $this->post('/track', [
             'email' => $refCode,
@@ -84,7 +84,7 @@ class TrackRequestTest extends TestCase
         $response->assertSee('No requests found');
 
         $response2 = $this->post('/track', [
-            'email' => 'SK-HEA-99999',
+            'email' => 'SK-REQ-99999',
         ]);
 
         $response2->assertStatus(200);
