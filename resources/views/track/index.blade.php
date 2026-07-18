@@ -50,7 +50,7 @@
                 <!-- Result Cards -->
                 @foreach($results as $req)
                     @php
-                        $referenceNumber = 'SK-REQ-' . str_pad($req->id, 5, '0', STR_PAD_LEFT);
+                        $referenceNumber = $req->reference_number ?? ('SK-REQ-' . str_pad($req->id, 5, '0', STR_PAD_LEFT));
                         
                         $badgeClass = match($req->status) {
                             'approved' => 'badge-approved',
