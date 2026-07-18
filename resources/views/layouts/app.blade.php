@@ -614,7 +614,7 @@
                      @click="showFlashModal = false"></div>
 
                 <!-- Card Container -->
-                <div class="relative bg-white dark:bg-slate-900 rounded-[2.25rem] shadow-2xl max-w-[420px] w-full mx-4 border border-slate-150 dark:border-white/10 transform transition-all duration-300 z-50 p-6 sm:p-8 flex flex-col items-center gap-y-5"
+                <div class="relative bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl max-w-md w-full mx-4 border border-slate-150 dark:border-white/10 transform transition-all duration-300 z-50 p-8 sm:p-10 flex flex-col items-center gap-y-6"
                      x-show="showFlashModal"
                      x-transition:enter="transition ease-out duration-300"
                      x-transition:enter-start="opacity-0 translate-y-8 scale-95"
@@ -628,10 +628,10 @@
                         <div class="flex flex-col gap-y-1">
                             @if (session('success'))
                                 <span class="text-[10px] font-black tracking-widest text-emerald-600 dark:text-emerald-400 uppercase font-display block">Notification</span>
-                                <h3 class="text-lg sm:text-xl font-extrabold text-slate-950 dark:text-white font-display tracking-tight leading-tight uppercase">Success</h3>
+                                <h3 class="text-base sm:text-lg font-extrabold text-slate-955 dark:text-white font-display tracking-tight leading-tight uppercase">Success</h3>
                             @else
                                 <span class="text-[10px] font-black tracking-widest text-rose-600 dark:text-rose-400 uppercase font-display block">Notification</span>
-                                <h3 class="text-lg sm:text-xl font-extrabold text-slate-955 dark:text-white font-display tracking-tight leading-tight uppercase">
+                                <h3 class="text-base sm:text-lg font-extrabold text-slate-955 dark:text-white font-display tracking-tight leading-tight uppercase">
                                     {{ (str_contains(session('error'), 'Profiling') || str_contains(session('error'), 'profiling') || str_contains(session('error'), 'registry')) ? 'Profile Incomplete' : 'Error' }}
                                 </h3>
                             @endif
@@ -653,13 +653,13 @@
                         </div>
 
                         <!-- Content -->
-                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed sm:leading-7 text-center w-full px-1">
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed sm:leading-7 text-center w-full px-1">
                             {{ session('success') }}
                         </p>
 
                         <!-- Action Button -->
                         <button @click="showFlashModal = false"
-                                class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer mt-2">
+                                class="w-full py-2.5 px-6 bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer">
                             Okay
                         </button>
                     @else
@@ -672,18 +672,18 @@
                             </div>
 
                             <!-- Content -->
-                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed sm:leading-7 text-center w-full px-1">
+                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed sm:leading-7 text-center w-full px-1">
                                 {{ session('error') }}
                             </p>
 
                             <!-- Action Buttons -->
-                            <div class="w-full flex flex-col gap-2 mt-2">
+                            <div class="w-full flex flex-col gap-2">
                                 <a href="{{ route('profile.profiling.create') }}"
-                                   class="w-full py-3.5 bg-[#1e40af] hover:bg-[#1e3a8a] text-white text-center font-bold text-xs uppercase tracking-wider rounded-2xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer block">
+                                   class="w-full py-2.5 px-6 bg-[#1e40af] hover:bg-[#1e3a8a] text-white text-center font-bold text-xs uppercase tracking-wider rounded-2xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer block">
                                     GO TO KK PROFILING
                                 </a>
                                 <button @click="showFlashModal = false"
-                                        class="w-full py-3.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs uppercase tracking-wider rounded-2xl active:scale-[0.98] transition-all duration-200 cursor-pointer">
+                                        class="w-full py-2.5 px-6 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs uppercase tracking-wider rounded-2xl active:scale-[0.98] transition-all duration-200 cursor-pointer">
                                     Maybe Later
                                 </button>
                             </div>
@@ -696,13 +696,13 @@
                             </div>
 
                             <!-- Content -->
-                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed sm:leading-7 text-center w-full px-1">
+                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed sm:leading-7 text-center w-full px-1">
                                 {{ session('error') }}
                             </p>
 
                             <!-- Action Button -->
                             <button @click="showFlashModal = false"
-                                    class="w-full py-3.5 bg-rose-600 hover:bg-rose-500 dark:bg-rose-500 dark:hover:bg-rose-400 text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-lg shadow-rose-500/20 hover:shadow-rose-500/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer mt-2">
+                                    class="w-full py-2.5 px-6 bg-rose-600 hover:bg-rose-500 dark:bg-rose-500 dark:hover:bg-rose-400 text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-lg shadow-rose-500/20 hover:shadow-rose-500/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer">
                                 Close
                             </button>
                         @endif
