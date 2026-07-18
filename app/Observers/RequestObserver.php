@@ -12,14 +12,7 @@ class RequestObserver
      */
     public function creating(Model $model): void
     {
-        if (empty($model->reference_number)) {
-            $table = $model->getTable();
-            do {
-                $ref = 'SK-REQ-' . strtoupper(\Illuminate\Support\Str::random(8));
-            } while (\Illuminate\Support\Facades\DB::table($table)->where('reference_number', $ref)->exists());
-
-            $model->reference_number = $ref;
-        }
+        // Reference number is generated in the created event to include the DB auto-increment ID.
     }
 
     /**
@@ -27,6 +20,21 @@ class RequestObserver
      */
     public function created(Model $model): void
     {
+        if (empty($model->reference_number)) {
+            $basename = class_basename($model);
+            $prefix = match($basename) {
+                'HealthRequest' => 'HEA',
+                'MedicineRequest' => 'MED',
+                'SilidKarununganRequest' => 'SIL',
+                'SportsRegistration', 'RegistrationResponse' => 'SPO',
+                default => 'REQ'
+            };
+
+            $ref = 'SK-' . now()->format('y-m') . '-' . $prefix . '-' . str_pad($model->id, 4, '0', STR_PAD_LEFT);
+            $model->reference_number = $ref;
+            $model->saveQuietly();
+        }
+
         ActivityLog::record('request_created', $model, [
             'type' => class_basename($model)
         ], null);

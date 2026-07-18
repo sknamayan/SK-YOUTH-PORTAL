@@ -302,7 +302,7 @@
      x-transition:leave="transition ease-in duration-100"
      x-transition:leave-start="opacity-100 scale-100 mt-2"
      x-transition:leave-end="opacity-0 scale-95 mt-0"
-     class="absolute right-[-3.5rem] sm:right-0 origin-top-right top-full mt-2 w-[calc(100vw-2rem)] sm:w-80 max-w-[calc(100vw-2rem)] min-w-0 rounded-2xl border border-slate-100 bg-white shadow-lg ring-1 ring-slate-200 z-50 text-slate-800 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100 dark:ring-slate-700"
+     class="absolute right-[-2rem] sm:right-0 origin-top-right top-full mt-2 w-[90vw] max-w-[90vw] sm:w-80 sm:max-w-xs md:w-96 md:max-w-md rounded-2xl border border-slate-100 bg-white shadow-lg ring-1 ring-slate-200 z-50 text-slate-800 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100 dark:ring-slate-700"
      x-cloak>
                                     <div class="px-4 pb-2 border-b border-slate-100 dark:border-slate-850 flex items-center justify-between">
                                         <span class="font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Notifications</span>
@@ -369,7 +369,7 @@
                                      x-transition:leave="transition ease-in duration-100"
                                      x-transition:leave-start="opacity-100 scale-100 mt-2"
                                      x-transition:leave-end="opacity-0 scale-95 mt-0"
-                                     class="absolute right-0 origin-top-right top-full mt-2 w-[calc(100vw-1rem)] max-w-[calc(100vw-1rem)] min-w-0 sm:w-56 sm:min-w-[14rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50 text-slate-800 dark:text-slate-100 overflow-hidden flex flex-col"
+                                     class="absolute right-0 origin-top-right top-full mt-2 w-[90vw] sm:w-64 min-w-[200px] max-w-[95vw] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50 text-slate-800 dark:text-slate-100 overflow-hidden flex flex-col"
                                      x-cloak>
                                     <div class="px-4 py-2.5 border-b border-slate-100 dark:border-slate-850">
                                         <p class="font-extrabold text-xs text-slate-850 dark:text-white truncate">{{ $user->name }}</p>

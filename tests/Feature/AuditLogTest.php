@@ -75,7 +75,7 @@ class AuditLogTest extends TestCase
             'password' => 'password123'
         ]);
 
-        $response->assertRedirect('/dashboard');
+        $response->assertRedirect('/dashboard/index');
 
         $this->assertDatabaseHas('activity_logs', [
             'action' => 'user_login',

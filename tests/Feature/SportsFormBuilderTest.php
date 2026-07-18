@@ -77,7 +77,7 @@ class SportsFormBuilderTest extends TestCase
 
         $response->assertRedirect(route('admin.sports-league.index'));
         $this->assertDatabaseHas('leagues', [
-            'name' => 'SIKLAB',
+            'name' => 'SKILAB',
             'sport' => 'Basketball',
         ]);
 
