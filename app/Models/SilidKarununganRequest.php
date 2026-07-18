@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use App\Traits\HasComments;
+use App\Traits\GeneratesReferenceNumber;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SilidKarununganRequest extends Model
 {
-    use HasComments, HasFactory;
+    use HasComments, HasFactory, GeneratesReferenceNumber;
 
     protected $fillable = [
+        'reference_number',
         'requestor_first_name',
         'requestor_last_name',
         'requestor_middle_name',

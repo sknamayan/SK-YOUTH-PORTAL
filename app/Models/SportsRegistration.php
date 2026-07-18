@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use App\Traits\HasComments;
+use App\Traits\GeneratesReferenceNumber;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SportsRegistration extends Model
 {
-    use HasComments, HasFactory;
+    use HasComments, HasFactory, GeneratesReferenceNumber;
 
     protected $fillable = [
+        'reference_number',
         'first_name',
         'last_name',
         'middle_name',

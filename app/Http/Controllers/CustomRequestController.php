@@ -100,10 +100,6 @@ class CustomRequestController extends Controller
 
         $validated = $request->validate($rules, [], $customAttributes);
 
-        do {
-            $ref = 'SK-REQ-' . strtoupper(\Illuminate\Support\Str::random(6));
-        } while (CustomRequest::where('reference_number', $ref)->exists());
-
         $customReq = CustomRequest::create([
             'user_id' => auth()->id(),
             'initiative_id' => $initiative->id,
@@ -112,7 +108,6 @@ class CustomRequestController extends Controller
             'email' => $validated['email'],
             'status' => 'pending',
             'custom_fields' => $validated['custom_fields'] ?? [],
-            'reference_number' => $ref,
         ]);
 
         return redirect()->route('landing')->with([
