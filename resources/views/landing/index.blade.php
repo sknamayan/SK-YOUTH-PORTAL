@@ -721,6 +721,30 @@ if (activeForm) {
              </div>
          </div>
     </div>
+
+    <!-- Hidden debug dump for session verification -->
+    <div id="session-debug-dump" style="display: none;" 
+         data-success="true" 
+         data-ref="{{ session('referenceNumber') }}" 
+         data-name="{{ session('name') }}" 
+         data-email="{{ session('email') }}" 
+         data-type="{{ session('type') }}">
+         Session Debug: {{ json_encode(session()->all()) }}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('SK Success Trigger: Session data detected client-side.');
+            // Fail-safe: Force open Alpine model showSuccess if it is registered
+            setTimeout(function() {
+                const modalEl = document.querySelector('[x-data*="showSuccess"]');
+                if (modalEl && modalEl.__x) {
+                    console.log('SK Success Trigger: Auto-initializing Alpine showSuccess modal to true.');
+                    modalEl.__x.$data.showSuccess = true;
+                }
+            }, 100);
+        });
+    </script>
     @endif
 
 </div>
