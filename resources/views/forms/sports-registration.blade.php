@@ -719,11 +719,14 @@
     </div>
 </div>
 
-<x-mobile-bottom-action x-show="showFormModal && regStep < 5" @click="nextRegStep()">
-    Next Step &rarr;
-</x-mobile-bottom-action>
-<x-mobile-bottom-action x-show="showFormModal && regStep === 5" @click="if (validateRegStep(5)) { showConfirm = true; }" x-bind:disabled="loading">
-    Submit Registration
+<x-mobile-bottom-action 
+    x-show="showFormModal" 
+    @click="regStep < 5 ? nextRegStep() : (validateRegStep(5) ? (showConfirm = true) : null)" 
+    x-bind:disabled="loading" 
+    x-cloak
+>
+    <span x-show="regStep < 5">Next Step &rarr;</span>
+    <span x-show="regStep === 5">Submit Registration</span>
 </x-mobile-bottom-action>
 
 <style>

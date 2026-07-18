@@ -532,12 +532,9 @@
         </div>
     </div>
 </div>
-
-<x-mobile-bottom-action x-show="step < 4" @click="handlePrimaryAction()">
-    Next Step &rarr;
-</x-mobile-bottom-action>
-<x-mobile-bottom-action x-show="step === 4" @click="handlePrimaryAction()" x-bind:disabled="loading">
-    Submit Profile
+<x-mobile-bottom-action @click="handlePrimaryAction()" x-bind:disabled="loading" x-cloak>
+    <span x-show="step < 4">Next Step &rarr;</span>
+    <span x-show="step === 4">Submit Profile</span>
 </x-mobile-bottom-action>
 
 <!-- Example bottom-sheet component (reusable slide-up panel) -->

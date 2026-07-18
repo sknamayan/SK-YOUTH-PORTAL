@@ -679,7 +679,7 @@
 
         <!-- Footer -->
         @unless($hideFooter)
-        <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 text-xs mt-auto">
+        <footer class="bg-slate-900 text-slate-400 pt-12 pb-[calc(3rem+env(safe-area-inset-bottom)+4.5rem)] md:pb-12 border-t border-slate-800 text-xs mt-auto">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Column 1: Brand -->
