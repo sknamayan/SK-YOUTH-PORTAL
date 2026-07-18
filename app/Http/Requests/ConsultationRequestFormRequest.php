@@ -5,9 +5,20 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\ConsultationRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\EnforcesUppercaseInputs;
 
 class ConsultationRequestFormRequest extends FormRequest
 {
+    use EnforcesUppercaseInputs;
+
+    /**
+     * Fields to automatically convert to uppercase.
+     */
+    protected array $uppercaseFields = [
+        'subject',
+        'message',
+    ];
+
     /**
      * Determine if the user is authorized to make this request.
      */

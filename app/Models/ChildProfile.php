@@ -13,7 +13,7 @@ class ChildProfile extends KkProfile
         // Override parent booted to apply child-specific scope
         static::addGlobalScope('child_only', function (Builder $builder) {
             $builder->where('category', 'child')
-                    ->whereBetween('age', [6, 12]);
+                    ->whereBetween('age', [6, 14]);
         });
     }
 }

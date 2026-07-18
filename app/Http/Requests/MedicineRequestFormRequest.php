@@ -3,9 +3,21 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Traits\EnforcesUppercaseInputs;
 
 class MedicineRequestFormRequest extends FormRequest
 {
+    use EnforcesUppercaseInputs;
+
+    /**
+     * Fields to automatically convert to uppercase.
+     */
+    protected array $uppercaseFields = [
+        'requestor_first_name',
+        'requestor_last_name',
+        'complete_address',
+    ];
+
     /**
      * Determine if the user is authorized to make this request.
      */

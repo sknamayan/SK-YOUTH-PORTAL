@@ -273,7 +273,7 @@
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Age <span class="text-rose-500">*</span></label>
-                        <input type="number" name="age" value="{{ old('age') }}" x-model="age" min="15" max="30" required class="field focus:ring-4 focus:ring-blue-600/10 text-xs py-2 bg-slate-50/50 border border-slate-200 rounded-xl" placeholder="15 to 30">
+                        <input type="number" name="age" value="{{ old('age') }}" x-model="age" min="6" max="39" required class="field focus:ring-4 focus:ring-blue-600/10 text-xs py-2 bg-slate-50/50 border border-slate-200 rounded-xl" placeholder="6 to 39">
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Sex <span class="text-rose-500">*</span></label>

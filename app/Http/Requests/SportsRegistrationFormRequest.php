@@ -3,9 +3,33 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Traits\EnforcesUppercaseInputs;
 
 class SportsRegistrationFormRequest extends FormRequest
 {
+    use EnforcesUppercaseInputs;
+
+    /**
+     * Fields to automatically convert to uppercase.
+     */
+    protected array $uppercaseFields = [
+        'sport',
+        'division',
+        'position',
+        'first_name',
+        'last_name',
+        'middle_name',
+        'address',
+        'team_name',
+        'remarks',
+        'health_declaration',
+        'guardian_first_name',
+        'guardian_last_name',
+        'guardian_middle_name',
+        'guardian_relation',
+        'guardian_address',
+    ];
+
     /**
      * Determine if the user is authorized to make this request.
      */

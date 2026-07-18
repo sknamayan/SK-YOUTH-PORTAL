@@ -3,9 +3,22 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Traits\EnforcesUppercaseInputs;
 
 class SilidKarununganFormRequest extends FormRequest
 {
+    use EnforcesUppercaseInputs;
+
+    /**
+     * Fields to automatically convert to uppercase.
+     */
+    protected array $uppercaseFields = [
+        'requestor_first_name',
+        'requestor_last_name',
+        'requestor_middle_name',
+        'preferred_time',
+    ];
+
     /**
      * Determine if the user is authorized to make this request.
      */

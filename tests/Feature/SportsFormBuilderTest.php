@@ -199,9 +199,9 @@ class SportsFormBuilderTest extends TestCase
 
         $submission = SportsRegistration::first();
         $this->assertNotNull($submission);
-        $this->assertEquals('Juan', $submission->first_name);
+        $this->assertEquals('JUAN', $submission->first_name);
         $this->assertEquals(15, $submission->age);
-        $this->assertEquals('Pedro', $submission->guardian_first_name);
+        $this->assertEquals('PEDRO', $submission->guardian_first_name);
 
         Storage::disk('public')->assertExists($submission->profile_picture);
         Storage::disk('public')->assertExists($submission->guardian_gov_id);

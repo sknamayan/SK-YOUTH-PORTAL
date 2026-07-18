@@ -53,7 +53,7 @@ class KkProfileController extends Controller
             if ($categoryFilter === 'all') {
                 // No category filter, just active
             } elseif ($categoryFilter === 'child') {
-                $query->where('category', 'child')->whereBetween('age', [6, 12]);
+                $query->where('category', 'child')->whereBetween('age', [6, 14]);
             } elseif ($categoryFilter === 'adult') {
                 $query->where('category', 'adult')->whereBetween('age', [31, 39]);
             } else { // default 'sk_youth'
@@ -118,7 +118,7 @@ class KkProfileController extends Controller
         if ($categoryFilter === 'all') {
             // No filter
         } elseif ($categoryFilter === 'child') {
-            $baseCountQuery->where('category', 'child')->whereBetween('age', [6, 12]);
+            $baseCountQuery->where('category', 'child')->whereBetween('age', [6, 14]);
         } elseif ($categoryFilter === 'adult') {
             $baseCountQuery->where('category', 'adult')->whereBetween('age', [31, 39]);
         } else { // default 'sk_youth'
@@ -185,24 +185,15 @@ class KkProfileController extends Controller
      */
     public function store(Request $request)
     {
+        $this->prepareInputsForUppercase($request);
+
         $validated = $request->validate([
             // Step 1: Personal Details
             'surname' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['nullable', 'string', 'max:255'],
             'ext' => ['nullable', 'string', 'max:10'],
-            'age' => [
-                'required',
-                'integer',
-                function ($attribute, $value, $fail) {
-                    $isValid = ($value >= 6 && $value <= 12) || 
-                               ($value >= 15 && $value <= 30) || 
-                               ($value >= 31 && $value <= 39);
-                    if (!$isValid) {
-                        $fail('The age must be within the allowed groups (6-12, 15-30, or 31-39).');
-                    }
-                }
-            ],
+            'age' => ['required', 'integer', 'min:6', 'max:39'],
             'sex' => ['required', 'in:Male,Female'],
             'gender' => ['nullable', 'string', 'max:255'],
             'dob' => ['required', 'date', 'before_or_equal:today'],
@@ -230,7 +221,7 @@ class KkProfileController extends Controller
         ]);
 
         $age = (int) $validated['age'];
-        if ($age >= 6 && $age <= 12) {
+        if ($age >= 6 && $age <= 14) {
             $category = 'child';
         } elseif ($age >= 31 && $age <= 39) {
             $category = 'adult';
@@ -291,24 +282,15 @@ class KkProfileController extends Controller
             }
         }
 
+        $this->prepareInputsForUppercase($request);
+
         $validated = $request->validate([
             // Step 1: Personal Details
             'surname' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['nullable', 'string', 'max:255'],
             'ext' => ['nullable', 'string', 'max:10'],
-            'age' => [
-                'required',
-                'integer',
-                function ($attribute, $value, $fail) {
-                    $isValid = ($value >= 6 && $value <= 12) || 
-                               ($value >= 15 && $value <= 30) || 
-                               ($value >= 31 && $value <= 39);
-                    if (!$isValid) {
-                        $fail('The age must be within the allowed groups (6-12, 15-30, or 31-39).');
-                    }
-                }
-            ],
+            'age' => ['required', 'integer', 'min:6', 'max:39'],
             'sex' => ['required', 'in:Male,Female'],
             'gender' => ['nullable', 'string', 'max:255'],
             'dob' => ['required', 'date', 'before_or_equal:today'],
@@ -339,7 +321,7 @@ class KkProfileController extends Controller
         $validated['email'] = auth()->user()->email;
 
         $age = (int) $validated['age'];
-        if ($age >= 6 && $age <= 12) {
+        if ($age >= 6 && $age <= 14) {
             $category = 'child';
         } elseif ($age >= 31 && $age <= 39) {
             $category = 'adult';
@@ -389,24 +371,15 @@ class KkProfileController extends Controller
 
         $request->merge($data);
 
+        $this->prepareInputsForUppercase($request);
+
         $validated = $request->validate([
             // Step 1: Personal Details
             'surname' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['nullable', 'string', 'max:255'],
             'ext' => ['nullable', 'string', 'max:10'],
-            'age' => [
-                'required',
-                'integer',
-                function ($attribute, $value, $fail) {
-                    $isValid = ($value >= 6 && $value <= 12) || 
-                               ($value >= 15 && $value <= 30) || 
-                               ($value >= 31 && $value <= 39);
-                    if (!$isValid) {
-                        $fail('The age must be within the allowed groups (6-12, 15-30, or 31-39).');
-                    }
-                }
-            ],
+            'age' => ['required', 'integer', 'min:6', 'max:39'],
             'sex' => ['required', 'in:Male,Female'],
             'gender' => ['nullable', 'string', 'max:255'],
             'dob' => ['required', 'date', 'before_or_equal:today'],
@@ -434,7 +407,7 @@ class KkProfileController extends Controller
         ]);
 
         $age = (int) $validated['age'];
-        if ($age >= 6 && $age <= 12) {
+        if ($age >= 6 && $age <= 14) {
             $category = 'child';
         } elseif ($age >= 31 && $age <= 39) {
             $category = 'adult';
@@ -543,5 +516,35 @@ class KkProfileController extends Controller
 
         return redirect()->route('dashboard.profiling.index', ['archive' => '1'])
             ->with('success', 'Katipunan ng Kabataan profile has been successfully restored.');
+     }
+
+    /**
+     * Transform text fields to uppercase in request data.
+     */
+    private function prepareInputsForUppercase(Request $request): void
+    {
+        $fields = [
+            'surname',
+            'first_name',
+            'middle_name',
+            'ext',
+            'gender',
+            'street_address',
+            'youth_org_name',
+            'registered_disability',
+            'highest_educational_attainment',
+        ];
+
+        $input = $request->all();
+        foreach ($fields as $field) {
+            if ($request->has($field)) {
+                $value = $request->input($field);
+                if (is_string($value)) {
+                    $input[$field] = mb_strtoupper($value, 'UTF-8');
+                }
+            }
+        }
+        $request->merge($input);
     }
 }
+

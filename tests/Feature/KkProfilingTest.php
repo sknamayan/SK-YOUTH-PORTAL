@@ -192,8 +192,8 @@ class KkProfilingTest extends TestCase
         $response->assertSessionHas('success');
 
         $this->assertDatabaseHas('kk_profiles', [
-            'surname' => 'Reyes',
-            'first_name' => 'Jose',
+            'surname' => 'REYES',
+            'first_name' => 'JOSE',
             'email' => 'jose@example.com',
             'purok_id' => 1,
             'processed_by' => $admin->id,
@@ -313,8 +313,8 @@ class KkProfilingTest extends TestCase
 
         // Verify database entry has citizen's own email and is processed_by the citizen
         $this->assertDatabaseHas('kk_profiles', [
-            'surname' => 'Reyes',
-            'first_name' => 'Jose',
+            'surname' => 'REYES',
+            'first_name' => 'JOSE',
             'email' => $citizen->email,
             'processed_by' => $citizen->id,
         ]);
@@ -419,9 +419,9 @@ class KkProfilingTest extends TestCase
 
         $this->assertDatabaseHas('kk_profiles', [
             'id' => $profile->id,
-            'surname' => 'Dela Cruz Updated',
+            'surname' => 'DELA CRUZ UPDATED',
             'age' => 19,
-            'highest_educational_attainment' => 'College Student',
+            'highest_educational_attainment' => 'COLLEGE STUDENT',
             'processed_by' => $admin->id,
         ]);
 
@@ -624,14 +624,14 @@ class KkProfilingTest extends TestCase
 
         // Confirm database values are NOT corrupted/overwritten by empty request values
         $updatedProfile = KkProfile::findOrFail($profile->id);
-        $this->assertEquals('Juan Updated', $updatedProfile->first_name);
+        $this->assertEquals('JUAN UPDATED', $updatedProfile->first_name);
         $this->assertEquals('Married', $updatedProfile->civil_status);
         $this->assertEquals('WY', $updatedProfile->youth_classification);
         $this->assertEquals('2008-01-20', $updatedProfile->dob->format('Y-m-d'));
         $this->assertEquals('09171234567', $updatedProfile->contact_number);
         $this->assertEquals('juan@example.com', $updatedProfile->email);
         $this->assertTrue($updatedProfile->pwd);
-        $this->assertEquals('Visual Impairment', $updatedProfile->registered_disability);
+        $this->assertEquals('VISUAL IMPAIRMENT', $updatedProfile->registered_disability);
     }
 
     public function test_registration_requires_first_and_last_name_and_combines_them(): void
@@ -830,7 +830,7 @@ class KkProfilingTest extends TestCase
         $newProfile = KkProfile::where('email', $citizen->email)->first();
         $this->assertNotNull($newProfile);
         $this->assertEquals('pending', $newProfile->status);
-        $this->assertEquals('Doe-Updated', $newProfile->surname);
+        $this->assertEquals('DOE-UPDATED', $newProfile->surname);
     }
 }
 

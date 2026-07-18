@@ -31,6 +31,22 @@ class CustomRequestController extends Controller
             abort(403, 'This form is not yet available for submissions.');
         }
 
+        $input = $request->all();
+        if (isset($input['first_name']) && is_string($input['first_name'])) {
+            $input['first_name'] = mb_strtoupper($input['first_name'], 'UTF-8');
+        }
+        if (isset($input['last_name']) && is_string($input['last_name'])) {
+            $input['last_name'] = mb_strtoupper($input['last_name'], 'UTF-8');
+        }
+        if (isset($input['custom_fields']) && is_array($input['custom_fields'])) {
+            foreach ($input['custom_fields'] as $key => $val) {
+                if (is_string($val)) {
+                    $input['custom_fields'][$key] = mb_strtoupper($val, 'UTF-8');
+                }
+            }
+        }
+        $request->merge($input);
+
         $rules = [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
