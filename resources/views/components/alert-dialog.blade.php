@@ -1,8 +1,7 @@
 <div x-data="{ 
-    open: {{ session()->has('success') ? 'true' : 'false' }},
-    message: '{{ session('success') ?? '' }}'
+    open: false,
+    message: ''
 }"
-@notify.window="if ($event.detail.type === 'success') { message = $event.detail.message; open = true; }"
 class="relative">
     <!-- Trigger Slot -->
     @if(isset($trigger))

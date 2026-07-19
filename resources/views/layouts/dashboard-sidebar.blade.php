@@ -205,9 +205,9 @@
 
             @if(Auth::user()->isSuperAdmin())
                 <!-- Collapsible Settings Dropdown for Superadmin -->
-                <div x-data="{ isOpened: {{ request()->routeIs('admin.users.*') || request()->routeIs('profile.edit') ? 'true' : 'false' }} }" class="space-y-1">
+                <div x-data="{ isOpened: {{ request()->routeIs('admin.users.*') || request()->routeIs('profile.edit') || request()->routeIs('admin.recycle-bin.*') ? 'true' : 'false' }} }" class="space-y-1">
                     <button
-                        class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.users.*') || request()->routeIs('profile.edit') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}"
+                        class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.users.*') || request()->routeIs('profile.edit') || request()->routeIs('admin.recycle-bin.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}"
                         @click="isOpened = !isOpened"
                         :aria-expanded="isOpened"
                     >
@@ -236,6 +236,13 @@
                             @if(isset($pendingUserApprovalsCount) && $pendingUserApprovalsCount > 0)
                                 <span class="bg-rose-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm select-none">{{ $pendingUserApprovalsCount }}</span>
                             @endif
+                        </a>
+
+                        <!-- Master Recycle Bin -->
+                        <a href="{{ route('admin.recycle-bin.index') }}"
+                           class="flex items-center space-x-3 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.recycle-bin.*') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                            <x-category-icon name="logs" class="w-6 h-6" />
+                            <span>Recycle Bin</span>
                         </a>
 
                         <!-- My Profile -->

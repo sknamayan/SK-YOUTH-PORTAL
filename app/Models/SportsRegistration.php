@@ -7,9 +7,11 @@ use App\Traits\GeneratesReferenceNumber;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class SportsRegistration extends Model
 {
-    use HasComments, HasFactory, GeneratesReferenceNumber;
+    use HasComments, HasFactory, GeneratesReferenceNumber, SoftDeletes;
 
     protected $fillable = [
         'reference_number',

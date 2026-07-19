@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Casts\SafeEncrypted;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class MedicineRequest extends Model
 {
-    use HasComments, HasFactory, GeneratesReferenceNumber;
+    use HasComments, HasFactory, GeneratesReferenceNumber, SoftDeletes;
 
     protected $fillable = [
         'reference_number',
