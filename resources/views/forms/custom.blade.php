@@ -32,14 +32,14 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">First Name <span class="text-rose-500">*</span></label>
-                        <input type="text" name="first_name" required value="{{ old('first_name', auth()->user()->first_name ?? '') }}" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition">
+                        <input type="text" name="first_name" required value="{{ mb_strtoupper(old('first_name', $kkProfile?->first_name ?? auth()->user()->first_name ?? ''), 'UTF-8') }}" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition">
                         @error('first_name')
                             <p class="text-rose-550 text-[10px] font-black mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
                         <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">Last Name <span class="text-rose-500">*</span></label>
-                        <input type="text" name="last_name" required value="{{ old('last_name', auth()->user()->last_name ?? '') }}" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition">
+                        <input type="text" name="last_name" required value="{{ mb_strtoupper(old('last_name', $kkProfile?->surname ?? auth()->user()->last_name ?? ''), 'UTF-8') }}" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition">
                         @error('last_name')
                             <p class="text-rose-550 text-[10px] font-black mt-1">{{ $message }}</p>
                         @enderror
@@ -48,7 +48,7 @@
 
                 <div>
                     <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">Email Address <span class="text-rose-500">*</span></label>
-                    <input type="email" name="email" required value="{{ old('email', auth()->user()->email ?? '') }}" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition font-sans">
+                    <input type="email" name="email" required value="{{ old('email', $kkProfile?->email ?? auth()->user()->email ?? '') }}" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition font-sans">
                     @error('email')
                         <p class="text-rose-550 text-[10px] font-black mt-1">{{ $message }}</p>
                     @enderror

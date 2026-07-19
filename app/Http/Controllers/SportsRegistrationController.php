@@ -20,13 +20,15 @@ class SportsRegistrationController extends Controller
         $leagues = League::where('status', 'Active')->get();
         
         $alreadyRegistered = null;
+        $kkProfile = null;
         if (auth()->check()) {
             $alreadyRegistered = SportsRegistration::where('email', auth()->user()->email)
                 ->whereIn('status', ['pending', 'review', 'approved'])
                 ->first();
+            $kkProfile = auth()->user()->approvedKkProfile();
         }
 
-        return view('forms.sports-registration', compact('leagues', 'alreadyRegistered'));
+        return view('forms.sports-registration', compact('leagues', 'alreadyRegistered', 'kkProfile'));
     }
 
     /**

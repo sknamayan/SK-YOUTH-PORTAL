@@ -177,6 +177,15 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
+        $input = $request->all();
+        if (isset($input['first_name'])) {
+            $input['first_name'] = mb_strtoupper($input['first_name'], 'UTF-8');
+        }
+        if (isset($input['last_name'])) {
+            $input['last_name'] = mb_strtoupper($input['last_name'], 'UTF-8');
+        }
+        $request->merge($input);
+
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],

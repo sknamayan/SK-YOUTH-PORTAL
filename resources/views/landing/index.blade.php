@@ -316,9 +316,9 @@ if (activeForm) {
                         enctype="multipart/form-data"
                     >
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <x-form-input label="First Name" name="first_name" required="true" value="{{ $kkProfile?->first_name }}" />
-                            <x-form-input label="Last Name" name="last_name" required="true" value="{{ $kkProfile?->surname }}" />
-                            <x-form-input label="Middle Name" name="middle_name" value="{{ $kkProfile?->middle_name }}" />
+                            <x-form-input label="First Name" name="first_name" required="true" value="{{ mb_strtoupper($kkProfile?->first_name, 'UTF-8') }}" />
+                            <x-form-input label="Last Name" name="last_name" required="true" value="{{ mb_strtoupper($kkProfile?->surname, 'UTF-8') }}" />
+                            <x-form-input label="Middle Name" name="middle_name" value="{{ mb_strtoupper($kkProfile?->middle_name, 'UTF-8') }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -383,9 +383,9 @@ if (activeForm) {
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <x-form-input label="First Name" name="first_name" required="true" value="{{ $kkProfile?->first_name }}" />
-                            <x-form-input label="Last Name" name="last_name" required="true" value="{{ $kkProfile?->surname }}" />
-                            <x-form-input label="Middle Name" name="middle_name" value="{{ $kkProfile?->middle_name }}" />
+                            <x-form-input label="First Name" name="first_name" required="true" value="{{ mb_strtoupper($kkProfile?->first_name, 'UTF-8') }}" />
+                            <x-form-input label="Last Name" name="last_name" required="true" value="{{ mb_strtoupper($kkProfile?->surname, 'UTF-8') }}" />
+                            <x-form-input label="Middle Name" name="middle_name" value="{{ mb_strtoupper($kkProfile?->middle_name, 'UTF-8') }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -442,13 +442,13 @@ if (activeForm) {
                         enctype="multipart/form-data"
                     >
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <x-form-input label="Requestor First Name" name="requestor_first_name" required="true" value="{{ $kkProfile?->first_name }}" />
-                            <x-form-input label="Requestor Last Name" name="requestor_last_name" required="true" value="{{ $kkProfile?->surname }}" />
+                            <x-form-input label="Requestor First Name" name="requestor_first_name" required="true" value="{{ mb_strtoupper($kkProfile?->first_name, 'UTF-8') }}" />
+                            <x-form-input label="Requestor Last Name" name="requestor_last_name" required="true" value="{{ mb_strtoupper($kkProfile?->surname, 'UTF-8') }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <x-form-input label="Requestor Age" name="requestor_age" type="number" min="0" max="120" required="true" value="{{ $kkProfile?->age }}" />
-                            <x-form-select label="Requestor Gender" name="requestor_gender" required="true" :options="$genderOptions" selected="{{ $kkProfile?->gender ?? $kkProfile?->sex }}" />
+                            <x-form-select label="Requestor Gender" name="requestor_gender" required="true" :options="$genderOptions" selected="{{ mb_strtoupper($kkProfile?->gender ?? $kkProfile?->sex, 'UTF-8') }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -456,7 +456,7 @@ if (activeForm) {
                             <x-form-input label="Contact Number" name="contact_number" required="true" placeholder="e.g. 09123456789" value="{{ $kkProfile?->contact_number }}" />
                         </div>
 
-                        <x-form-input label="Complete Delivery Address" name="complete_address" type="textarea" required="true" placeholder="Enter house number, street, barangay, and landmark..." value="{{ $kkProfile?->street_address ? ($kkProfile->street_address . ', Purok ' . ($kkProfile->purok?->purok_name ?? '')) : '' }}" />
+                        <x-form-input label="Complete Delivery Address" name="complete_address" type="textarea" required="true" placeholder="Enter house number, street, barangay, and landmark..." value="{{ mb_strtoupper($kkProfile?->street_address ? ($kkProfile->street_address . ', Purok ' . ($kkProfile->purok?->purok_name ?? '')) : '', 'UTF-8') }}" />
 
                         @php $medInit = $initiatives['forms.medicine.create'] ?? null; @endphp
                         @if($medInit && is_array($medInit->custom_fields) && count($medInit->custom_fields) > 0)
@@ -495,9 +495,9 @@ if (activeForm) {
                         enctype="multipart/form-data"
                     >
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <x-form-input label="Requestor First Name" name="requestor_first_name" required="true" value="{{ $kkProfile?->first_name }}" />
-                            <x-form-input label="Requestor Last Name" name="requestor_last_name" required="true" value="{{ $kkProfile?->surname }}" />
-                            <x-form-input label="Requestor Middle Name" name="requestor_middle_name" value="{{ $kkProfile?->middle_name }}" />
+                            <x-form-input label="Requestor First Name" name="requestor_first_name" required="true" value="{{ mb_strtoupper($kkProfile?->first_name, 'UTF-8') }}" />
+                            <x-form-input label="Requestor Last Name" name="requestor_last_name" required="true" value="{{ mb_strtoupper($kkProfile?->surname, 'UTF-8') }}" />
+                            <x-form-input label="Requestor Middle Name" name="requestor_middle_name" value="{{ mb_strtoupper($kkProfile?->middle_name, 'UTF-8') }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">

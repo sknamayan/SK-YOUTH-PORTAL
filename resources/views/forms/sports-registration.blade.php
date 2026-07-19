@@ -9,8 +9,8 @@
          formConfirmed: false,
          sport: '{{ old('sport', '') }}',
          division: '{{ old('division', '') }}',
-         birthdate: '{{ old('birthdate') }}',
-         age: '{{ old('age') }}',
+         birthdate: '{{ old('birthdate', $kkProfile?->dob ? $kkProfile->dob->format('Y-m-d') : '') }}',
+         age: '{{ old('age', $kkProfile?->age ?? '') }}',
          regStep: {{ $errors->any() ? '5' : "(localStorage.getItem('sports_reg_step') ? parseInt(localStorage.getItem('sports_reg_step')) : 1)" }},
          validateRegStep(s) {
              const fields = document.querySelectorAll(`#reg-step-${s} [required]`);
@@ -438,21 +438,21 @@
                                   <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
                                       First Name <span class="text-rose-500">*</span>
                                   </label>
-                                  <input type="text" name="first_name" value="{{ old('first_name', auth()->user() ? auth()->user()->first_name : '') }}" required placeholder="First Name"
+                                  <input type="text" name="first_name" value="{{ mb_strtoupper(old('first_name', $kkProfile?->first_name ?? (auth()->user() ? auth()->user()->first_name : '')), 'UTF-8') }}" required placeholder="First Name"
                                          class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition">
                               </div>
                               <div>
                                   <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
                                       Middle Name
                                   </label>
-                                  <input type="text" name="middle_name" value="{{ old('middle_name') }}" placeholder="Middle Name"
+                                  <input type="text" name="middle_name" value="{{ mb_strtoupper(old('middle_name', $kkProfile?->middle_name ?? ''), 'UTF-8') }}" placeholder="Middle Name"
                                          class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition">
                               </div>
                               <div>
                                   <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
                                       Last Name <span class="text-rose-500">*</span>
                                   </label>
-                                  <input type="text" name="last_name" value="{{ old('last_name', auth()->user() ? auth()->user()->last_name : '') }}" required placeholder="Last Name"
+                                  <input type="text" name="last_name" value="{{ mb_strtoupper(old('last_name', $kkProfile?->surname ?? (auth()->user() ? auth()->user()->last_name : '')), 'UTF-8') }}" required placeholder="Last Name"
                                          class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition">
                               </div>
                           </div>
@@ -477,11 +477,14 @@
                                   <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
                                       Gender <span class="text-rose-500">*</span>
                                   </label>
+                                  @php
+                                      $selectedGender = old('gender', $kkProfile?->gender ?? $kkProfile?->sex ?? '');
+                                  @endphp
                                   <select name="gender" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition cursor-pointer">
                                       <option value="">Select Gender</option>
-                                      <option value="Male" {{ old('gender') === 'Male' ? 'selected' : '' }}>Male</option>
-                                      <option value="Female" {{ old('gender') === 'Female' ? 'selected' : '' }}>Female</option>
-                                      <option value="Prefer not to say" {{ old('gender') === 'Prefer not to say' ? 'selected' : '' }}>Prefer not to say</option>
+                                      <option value="Male" {{ $selectedGender === 'Male' ? 'selected' : '' }}>Male</option>
+                                      <option value="Female" {{ $selectedGender === 'Female' ? 'selected' : '' }}>Female</option>
+                                      <option value="Prefer not to say" {{ $selectedGender === 'Prefer not to say' ? 'selected' : '' }}>Prefer not to say</option>
                                   </select>
                               </div>
                           </div>
@@ -491,14 +494,14 @@
                                   <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
                                       Email Address <span class="text-rose-500">*</span>
                                   </label>
-                                  <input type="email" name="email" value="{{ old('email', auth()->user() ? auth()->user()->email : '') }}" required placeholder="e.g. participant@example.com"
+                                  <input type="email" name="email" value="{{ old('email', $kkProfile?->email ?? (auth()->user() ? auth()->user()->email : '')) }}" required placeholder="e.g. participant@example.com"
                                          class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition font-sans">
                               </div>
                               <div>
                                   <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
                                       Contact Number <span class="text-rose-500">*</span>
                                   </label>
-                                  <input type="text" name="contact_number" value="{{ old('contact_number') }}" required placeholder="e.g. 09171234567"
+                                  <input type="text" name="contact_number" value="{{ old('contact_number', $kkProfile?->contact_number ?? '') }}" required placeholder="e.g. 09171234567"
                                          class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition font-sans">
                               </div>
                           </div>
@@ -507,7 +510,7 @@
                               <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
                                   Complete Address <span class="text-rose-500">*</span>
                               </label>
-                              <input type="text" name="address" value="{{ old('address') }}" required placeholder="Block, Lot, Street, Barangay, Mandaluyong City"
+                              <input type="text" name="address" value="{{ mb_strtoupper(old('address', $kkProfile?->street_address ? ($kkProfile->street_address . ', PUROK ' . ($kkProfile->purok?->purok_name ?? '')) : ''), 'UTF-8') }}" required placeholder="Block, Lot, Street, Barangay, Mandaluyong City"
                                      class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition font-sans">
                           </div>
 
@@ -518,12 +521,12 @@
                                   </label>
                                   <div class="flex gap-4 mt-2">
                                       <label class="inline-flex items-center gap-2 text-xs text-slate-700 dark:text-slate-350 cursor-pointer">
-                                          <input type="radio" name="kk_profiling_status" value="Yes" {{ old('kk_profiling_status') === 'Yes' ? 'checked' : '' }} required
+                                          <input type="radio" name="kk_profiling_status" value="Yes" {{ old('kk_profiling_status', $kkProfile ? 'Yes' : 'No') === 'Yes' ? 'checked' : '' }} required
                                                  class="rounded-full border-slate-300 dark:border-slate-750 text-[#1e40af] focus:ring-0">
                                           <span>Yes</span>
                                       </label>
                                       <label class="inline-flex items-center gap-2 text-xs text-slate-700 dark:text-slate-350 cursor-pointer">
-                                          <input type="radio" name="kk_profiling_status" value="No" {{ old('kk_profiling_status', 'No') === 'No' ? 'checked' : '' }} required
+                                          <input type="radio" name="kk_profiling_status" value="No" {{ old('kk_profiling_status', $kkProfile ? 'Yes' : 'No') === 'No' ? 'checked' : '' }} required
                                                  class="rounded-full border-slate-300 dark:border-slate-755 text-[#1e40af] focus:ring-0">
                                           <span>No</span>
                                       </label>

@@ -291,29 +291,89 @@ html {
     background-size: 400% 100%;
 }
 
-/* Enforce uppercase display only for specific form containers */
-.profiling-form input,
-.profiling-form textarea,
-.profiling-form select,
-.profiling-form option,
-.data-entry input,
-.data-entry textarea,
-.data-entry select,
-.data-entry option,
-.service-request input,
-.service-request textarea,
-.service-request select,
-.service-request option {
-    text-transform: uppercase !important;
+/* Global Uppercase Enforcement for Text Inputs, Textareas, and Selects */
+input[type="text"],
+input[type="search"],
+textarea,
+select,
+option {
+    text-transform: uppercase;
 }
 
-/* Explicitly exclude #login-form and any inputs within it */
-#login-form,
+/* Exclusions: sensitive inputs and authentication forms must remain case-sensitive */
+input[type="email"],
+input[type="password"],
+.case-sensitive,
+.case-sensitive input,
+.case-sensitive textarea,
 #login-form input,
 #login-form textarea,
 #login-form select,
-#login-form option {
+#login-form option,
+#register-form input,
+#register-form textarea,
+#register-form select,
+#register-form option,
+#reset-password-form input,
+#update-password-form input,
+.auth-form input,
+.auth-form textarea,
+.auth-form select,
+.auth-form option {
     text-transform: none !important;
 }
+
+/* Citizen Sidebar Lockdown - Force Branded Blue permanent style */
+aside.citizen-sidebar {
+    background-color: #1e40af !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+/* Override dark mode background/border for the citizen sidebar aside element */
+.dark aside.citizen-sidebar {
+    background-color: #1e40af !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Lock navigation links colors within the citizen sidebar */
+aside.citizen-sidebar nav a.sidebar-link-inactive {
+    color: rgba(255, 255, 255, 0.75) !important;
+    background-color: transparent !important;
+}
+
+aside.citizen-sidebar nav a.sidebar-link-inactive:hover {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+aside.citizen-sidebar nav a.sidebar-link-active {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+aside.citizen-sidebar nav a.sidebar-link-active:hover {
+    background-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Lock footer and text styles within the citizen sidebar */
+aside.citizen-sidebar .sidebar-footer {
+    background-color: rgba(15, 23, 42, 0.2) !important;
+    border-top-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+aside.citizen-sidebar .text-slate-800,
+aside.citizen-sidebar .text-slate-600,
+aside.citizen-sidebar .text-slate-400,
+.dark aside.citizen-sidebar .text-slate-800,
+.dark aside.citizen-sidebar .text-slate-650,
+.dark aside.citizen-sidebar .text-slate-400 {
+    color: #ffffff !important;
+}
+
+aside.citizen-sidebar .text-\[\#1e40af\] {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
 
 

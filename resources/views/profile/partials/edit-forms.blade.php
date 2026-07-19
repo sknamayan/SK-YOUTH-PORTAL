@@ -126,14 +126,17 @@
             @method('PATCH')
             <input type="hidden" name="settings_tab" value="account">
 
+            @php
+                $kkProfile = $user->approvedKkProfile();
+            @endphp
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <x-form-input label="First Name" name="first_name" :value="$user->first_name" required="true" />
-                <x-form-input label="Last Name" name="last_name" :value="$user->last_name" required="true" />
+                <x-form-input label="First Name" name="first_name" :value="mb_strtoupper(old('first_name', $user->first_name ?: $kkProfile?->first_name), 'UTF-8')" required="true" />
+                <x-form-input label="Last Name" name="last_name" :value="mb_strtoupper(old('last_name', $user->last_name ?: $kkProfile?->surname), 'UTF-8')" required="true" />
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <x-form-input label="Email Address" name="email" :value="$user->email" type="email" required="true" />
-                <x-form-input label="Contact Number" name="contact_number" :value="$user->contact_number" type="tel" placeholder="09xxxxxxxxx" />
+                <x-form-input label="Email Address" name="email" :value="old('email', $user->email ?: $kkProfile?->email)" type="email" required="true" />
+                <x-form-input label="Contact Number" name="contact_number" :value="old('contact_number', $user->contact_number ?: $kkProfile?->contact_number)" type="tel" placeholder="09xxxxxxxxx" />
             </div>
 
             <div class="flex justify-end pt-2">

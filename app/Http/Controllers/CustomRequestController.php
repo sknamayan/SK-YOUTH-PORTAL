@@ -29,7 +29,8 @@ class CustomRequestController extends Controller
                 ->with('error', 'Please complete your KK Profiling before requesting services.');
         }
 
-        return view('forms.custom', compact('initiative'));
+        $kkProfile = $user->approvedKkProfile();
+        return view('forms.custom', compact('initiative', 'kkProfile'));
     }
 
     /**
