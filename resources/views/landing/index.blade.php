@@ -318,7 +318,7 @@ if (activeForm) {
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <x-form-input label="First Name" name="first_name" required="true" value="{{ mb_strtoupper($kkProfile?->first_name, 'UTF-8') }}" />
                             <x-form-input label="Last Name" name="last_name" required="true" value="{{ mb_strtoupper($kkProfile?->surname, 'UTF-8') }}" />
-                            <x-form-input label="Middle Name" name="middle_name" value="{{ mb_strtoupper($kkProfile?->middle_name, 'UTF-8') }}" />
+                            <x-form-input label="Middle Name (type 'NONE' or 'N/A' if none)" name="middle_name" required="true" value="{{ mb_strtoupper($kkProfile?->middle_name, 'UTF-8') }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -385,7 +385,7 @@ if (activeForm) {
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <x-form-input label="First Name" name="first_name" required="true" value="{{ mb_strtoupper($kkProfile?->first_name, 'UTF-8') }}" />
                             <x-form-input label="Last Name" name="last_name" required="true" value="{{ mb_strtoupper($kkProfile?->surname, 'UTF-8') }}" />
-                            <x-form-input label="Middle Name" name="middle_name" value="{{ mb_strtoupper($kkProfile?->middle_name, 'UTF-8') }}" />
+                            <x-form-input label="Middle Name (type 'NONE' or 'N/A' if none)" name="middle_name" required="true" value="{{ mb_strtoupper($kkProfile?->middle_name, 'UTF-8') }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -497,7 +497,7 @@ if (activeForm) {
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <x-form-input label="Requestor First Name" name="requestor_first_name" required="true" value="{{ mb_strtoupper($kkProfile?->first_name, 'UTF-8') }}" />
                             <x-form-input label="Requestor Last Name" name="requestor_last_name" required="true" value="{{ mb_strtoupper($kkProfile?->surname, 'UTF-8') }}" />
-                            <x-form-input label="Requestor Middle Name" name="requestor_middle_name" value="{{ mb_strtoupper($kkProfile?->middle_name, 'UTF-8') }}" />
+                            <x-form-input label="Requestor Middle Name (type 'NONE' or 'N/A' if none)" name="requestor_middle_name" required="true" value="{{ mb_strtoupper($kkProfile?->middle_name, 'UTF-8') }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">

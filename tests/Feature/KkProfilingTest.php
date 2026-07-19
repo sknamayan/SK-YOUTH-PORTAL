@@ -394,6 +394,8 @@ class KkProfilingTest extends TestCase
         $payload = [
             'surname' => 'Dela Cruz Updated',
             'first_name' => 'Juan',
+            'middle_name' => 'Santiago',
+            'ext' => '',
             'age' => 19,
             'sex' => 'Male',
             'dob' => '2007-01-20',
@@ -599,6 +601,7 @@ class KkProfilingTest extends TestCase
         $payload = [
             'surname' => 'Dela Cruz',
             'first_name' => 'Juan Updated',
+            'middle_name' => 'Santiago',
             'age' => 18,
             'sex' => 'Male',
             'dob' => '', // Empty/Masked Date of Birth
@@ -714,6 +717,7 @@ class KkProfilingTest extends TestCase
         $this->actingAs($citizen)->post('/profile/profiling', [
             'surname' => 'Doe',
             'first_name' => 'John',
+            'middle_name' => 'Santiago',
             'age' => 20,
             'sex' => 'Male',
             'dob' => '2006-05-20',
@@ -804,6 +808,7 @@ class KkProfilingTest extends TestCase
         $responseResubmit = $this->actingAs($citizen)->post('/profile/profiling', [
             'surname' => 'Doe-Updated',
             'first_name' => 'John',
+            'middle_name' => 'Santiago',
             'age' => 20,
             'sex' => 'Male',
             'dob' => '2006-05-20',

@@ -13,7 +13,7 @@
         </div>
     @enderror
 
-    <form method="POST" action="{{ $action }}" class="space-y-5" @if($enctype) enctype="{{ $enctype }}" @endif>
+    <form method="POST" action="{{ $action }}" class="request-form space-y-5" @if($enctype) enctype="{{ $enctype }}" @endif>
         @csrf
         
         {{ $slot }}

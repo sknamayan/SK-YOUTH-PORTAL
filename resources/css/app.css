@@ -291,35 +291,23 @@ html {
     background-size: 400% 100%;
 }
 
-/* Global Uppercase Enforcement for Text Inputs, Textareas, and Selects */
-input[type="text"],
-input[type="search"],
-textarea,
-select,
-option {
+/* Targeted Uppercase Enforcement (Scoped) */
+.profiling-form input,
+.profiling-form textarea,
+.profiling-form select,
+.profiling-form option,
+.request-form input,
+.request-form textarea,
+.request-form select,
+.request-form option {
     text-transform: uppercase;
 }
 
-/* Exclusions: sensitive inputs and authentication forms must remain case-sensitive */
-input[type="email"],
-input[type="password"],
-.case-sensitive,
-.case-sensitive input,
-.case-sensitive textarea,
-#login-form input,
-#login-form textarea,
-#login-form select,
-#login-form option,
-#register-form input,
-#register-form textarea,
-#register-form select,
-#register-form option,
-#reset-password-form input,
-#update-password-form input,
-.auth-form input,
-.auth-form textarea,
-.auth-form select,
-.auth-form option {
+/* Exclusions: sensitive inputs like email and password fields inside these forms must remain case-sensitive */
+.profiling-form input[type="email"],
+.profiling-form input[type="password"],
+.request-form input[type="email"],
+.request-form input[type="password"] {
     text-transform: none !important;
 }
 

@@ -26,7 +26,7 @@
 
         <!-- Form Card -->
         <div class="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
-            <form method="POST" action="{{ route('forms.custom.store', $initiative->id) }}" class="space-y-5" x-ref="customForm">
+            <form method="POST" action="{{ route('forms.custom.store', $initiative->id) }}" class="request-form space-y-5" x-ref="customForm">
                 @csrf
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

@@ -51,7 +51,7 @@ class SportsRegistrationFormRequest extends FormRequest
             'position' => ['required', 'string', 'max:100'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'middle_name' => ['nullable', 'string', 'max:255'],
+            'middle_name' => ['required', 'string', 'max:50'],
             'birthdate' => ['required', 'date'],
             'age' => ['required', 'integer', 'min:1', 'max:120'],
             'gender' => ['required', 'in:Male,Female,Prefer not to say'],

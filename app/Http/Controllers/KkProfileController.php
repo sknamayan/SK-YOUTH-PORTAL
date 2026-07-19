@@ -191,7 +191,7 @@ class KkProfileController extends Controller
             // Step 1: Personal Details
             'surname' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
-            'middle_name' => ['nullable', 'string', 'max:255'],
+            'middle_name' => ['required', 'string', 'max:50'],
             'ext' => ['nullable', 'string', 'max:10'],
             'age' => ['required', 'integer', 'min:6', 'max:39'],
             'sex' => ['required', 'in:Male,Female'],
@@ -288,7 +288,7 @@ class KkProfileController extends Controller
             // Step 1: Personal Details
             'surname' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
-            'middle_name' => ['nullable', 'string', 'max:255'],
+            'middle_name' => ['required', 'string', 'max:50'],
             'ext' => ['nullable', 'string', 'max:10'],
             'age' => ['required', 'integer', 'min:6', 'max:39'],
             'sex' => ['required', 'in:Male,Female'],
@@ -377,7 +377,7 @@ class KkProfileController extends Controller
             // Step 1: Personal Details
             'surname' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
-            'middle_name' => ['nullable', 'string', 'max:255'],
+            'middle_name' => ['required', 'string', 'max:50'],
             'ext' => ['nullable', 'string', 'max:10'],
             'age' => ['required', 'integer', 'min:6', 'max:39'],
             'sex' => ['required', 'in:Male,Female'],

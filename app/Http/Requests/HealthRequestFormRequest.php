@@ -41,7 +41,7 @@ class HealthRequestFormRequest extends FormRequest
         $rules = [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'middle_name' => ['nullable', 'string', 'max:255'],
+            'middle_name' => ['required', 'string', 'max:50'],
             'age' => ['required', 'integer', 'min:0', 'max:120'],
             'gender' => ['required', 'in:Male,Female,Prefer not to say'],
             'email' => ['required', 'email', 'max:255'],

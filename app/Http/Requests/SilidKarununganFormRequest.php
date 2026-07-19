@@ -38,7 +38,7 @@ class SilidKarununganFormRequest extends FormRequest
         $rules = [
             'requestor_first_name' => ['required', 'string', 'max:255'],
             'requestor_last_name' => ['required', 'string', 'max:255'],
-            'requestor_middle_name' => ['nullable', 'string', 'max:255'],
+            'requestor_middle_name' => ['required', 'string', 'max:50'],
             'requestor_age' => ['required', 'integer', 'min:0', 'max:120'],
             'email' => ['required', 'email', 'max:255'],
             'contact_number' => ['required', 'string', 'max:20'],

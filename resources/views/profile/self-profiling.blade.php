@@ -36,6 +36,7 @@
             this.consent_given,
             this.surname,
             this.first_name,
+            this.middle_name,
             this.age,
             this.sex,
             this.dob,
@@ -150,7 +151,7 @@
         <!-- Form Card -->
     <div class="bg-white border border-slate-100 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
         
-        <form id="profileForm" method="POST" action="{{ route('profile.profiling.store') }}" class="p-6 md:p-8 space-y-6">
+        <form id="profileForm" method="POST" action="{{ route('profile.profiling.store') }}" class="profiling-form p-6 md:p-8 space-y-6">
             @csrf
 
             <!-- Validation Errors -->
@@ -254,8 +255,8 @@
                         <input type="text" name="first_name" value="{{ old('first_name', explode(' ', $user->name)[0] ?? '') }}" x-model="first_name" required class="field focus:ring-4 focus:ring-blue-600/10 text-xs py-2 bg-slate-50/50 border border-slate-200 rounded-xl" placeholder="e.g. Juan">
                     </div>
                     <div>
-                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Middle Name</label>
-                        <input type="text" name="middle_name" value="{{ old('middle_name') }}" x-model="middle_name" class="field focus:ring-4 focus:ring-blue-600/10 text-xs py-2 bg-slate-50/50 border border-slate-200 rounded-xl" placeholder="e.g. Santiago">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Middle Name <span class="text-rose-500">*</span> <span class="text-[9px] text-slate-400 font-medium lowercase">(type 'NONE' or 'N/A' if none)</span></label>
+                        <input type="text" name="middle_name" value="{{ old('middle_name') }}" x-model="middle_name" required class="field focus:ring-4 focus:ring-blue-600/10 text-xs py-2 bg-slate-50/50 border border-slate-200 rounded-xl" placeholder="e.g. Santiago or NONE">
                     </div>
                 </div>
 

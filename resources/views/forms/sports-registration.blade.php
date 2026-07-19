@@ -374,7 +374,7 @@
                       </div>
                   @endif
 
-                  <form method="POST" action="{{ route('forms.sports.store') }}" enctype="multipart/form-data" class="space-y-6" x-ref="regForm" id="sportsRegForm" @submit="if (!formConfirmed) { $event.preventDefault(); showConfirm = true; }">
+                  <form method="POST" action="{{ route('forms.sports.store') }}" enctype="multipart/form-data" class="request-form space-y-6" x-ref="regForm" id="sportsRegForm" @submit="if (!formConfirmed) { $event.preventDefault(); showConfirm = true; }">
                       @csrf
 
                       <!-- Step 1: Sport Selection -->
@@ -443,9 +443,9 @@
                               </div>
                               <div>
                                   <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
-                                      Middle Name
+                                      Middle Name <span class="text-rose-500">*</span> <span class="text-[9px] text-slate-400 font-medium lowercase">(type 'NONE' or 'N/A' if none)</span>
                                   </label>
-                                  <input type="text" name="middle_name" value="{{ mb_strtoupper(old('middle_name', $kkProfile?->middle_name ?? ''), 'UTF-8') }}" placeholder="Middle Name"
+                                  <input type="text" name="middle_name" value="{{ mb_strtoupper(old('middle_name', $kkProfile?->middle_name ?? ''), 'UTF-8') }}" required placeholder="Middle Name"
                                          class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition">
                               </div>
                               <div>
