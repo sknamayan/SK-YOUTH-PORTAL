@@ -164,7 +164,7 @@
             aria-label="SKONSULTA Chat Support">
         
         @if(($unreadMessagesCount ?? $unreadChatsCount ?? 0) > 0)
-            <span class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-sm select-none z-10 animate-pulse">
+            <span class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 flex h-5 min-w-[1.25rem] px-1.5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-sm select-none z-10 animate-pulse">
                 {{ $unreadMessagesCount ?? $unreadChatsCount }}
             </span>
         @else
