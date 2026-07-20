@@ -159,18 +159,17 @@
         </div>
     </div>
  
-    <!-- Floating Circle Button Trigger (Slightly smaller, 48px) -->
     <button @click="toggleChat()" 
-            class="w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg transition duration-200 hover:scale-105 active:scale-95 focus:outline-none relative group border border-blue-500/20"
+            class="w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg transition duration-200 hover:scale-105 active:scale-95 focus:outline-none relative group border border-blue-500/20 overflow-visible"
             aria-label="SKONSULTA Chat Support">
         
-        @if(($unreadChatsCount ?? 0) > 0)
-            <span class="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-rose-600 text-[10px] font-black text-white shadow-sm select-none z-10 animate-pulse">
-                {{ $unreadChatsCount }}
+        @if(($unreadMessagesCount ?? $unreadChatsCount ?? 0) > 0)
+            <span class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-sm select-none z-10 animate-pulse">
+                {{ $unreadMessagesCount ?? $unreadChatsCount }}
             </span>
         @else
             <!-- Pulsing indicator if chat has updates -->
-            <span x-show="!open && activeThread" class="absolute -top-0.5 -right-0.5 flex h-3 w-3" x-cloak>
+            <span x-show="!open && activeThread" class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 flex h-3 w-3" x-cloak>
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
             </span>
