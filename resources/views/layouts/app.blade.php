@@ -791,7 +791,7 @@
         </script>
 
         @auth
-            @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
+            @if(in_array(strtolower(auth()->user()->role), ['citizen', 'user']))
                 @include('citizen.skonsulta.floating-chat')
             @endif
         @endauth

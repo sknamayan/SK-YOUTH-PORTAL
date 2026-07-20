@@ -65,6 +65,10 @@
     },
     prevAdminRegStep() {
         this.adminRegStep--;
+    },
+    confirmDelete(url) {
+        this.deleteActionUrl = url;
+        this.showDeleteModal = true;
     }
 }" class="flex-1 flex flex-col md:flex-row bg-[#f8fafc]">
 
@@ -422,7 +426,7 @@
                                                    guardian_address: '{{ $escapedGuardianAddress }}'
                                                }; showEditModal = true"
                                                class="inline-flex items-center px-2 py-1 bg-amber-50 text-amber-700 hover:bg-amber-100 rounded-lg font-bold text-[9px] uppercase tracking-wider transition">Edit</a>
-                                            <button type="button" @click="deleteActionUrl = '{{ route('admin.sports-league.destroy', $req->id) }}'; showDeleteModal = true" class="inline-flex items-center px-2 py-1 bg-rose-50 text-rose-700 hover:bg-rose-100 rounded-lg font-bold text-[9px] uppercase tracking-wider transition cursor-pointer">Delete</button>
+                                            <button type="button" @click="confirmDelete('{{ route('admin.sports-league.destroy', $req->id) }}')" class="inline-flex items-center px-2 py-1 bg-rose-50 text-rose-700 hover:bg-rose-100 rounded-lg font-bold text-[9px] uppercase tracking-wider transition cursor-pointer">Delete</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -656,7 +660,7 @@
                                     <button type="button" @click="editReq = Object.assign({}, selectedReq); showEditModal = true; showViewModal = false" class="block w-full py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold uppercase text-[9px] rounded-lg tracking-wider transition">Edit Details</button>
 
                                     <!-- Delete Link -->
-                                    <button type="button" @click="deleteActionUrl = '/admin/sports-league/' + selectedReq.id; showDeleteModal = true; showViewModal = false" class="w-full py-2 bg-slate-250 hover:bg-rose-50 hover:text-rose-700 text-slate-600 font-bold uppercase text-[9px] rounded-lg tracking-wider transition">Delete Record</button>
+                                    <button type="button" @click="confirmDelete('/admin/sports-league/' + selectedReq.id); showViewModal = false" class="w-full py-2 bg-slate-250 hover:bg-rose-50 hover:text-rose-700 text-slate-600 font-bold uppercase text-[9px] rounded-lg tracking-wider transition">Delete Record</button>
                                 </div>
                             </div>
                         </div>
