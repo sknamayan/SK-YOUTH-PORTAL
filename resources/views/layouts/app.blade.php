@@ -59,11 +59,13 @@
                 const dbTheme = '{{ auth()->check() ? auth()->user()->theme : 'system' }}';
                 const currentTheme = ['dark', 'light', 'system'].includes(dbTheme) ? dbTheme : 'system';
 
-                if ({{ auth()->check() ? 'true' : 'false' }}) {
-                    localStorage.setItem('theme', currentTheme);
+                let savedTheme = localStorage.getItem('theme');
+                if (!savedTheme) {
+                    savedTheme = currentTheme;
+                    localStorage.setItem('theme', savedTheme);
                 }
 
-                window.SKTheme.setTheme(localStorage.getItem('theme') || currentTheme);
+                window.SKTheme.setTheme(savedTheme);
             })();
         </script>
 
