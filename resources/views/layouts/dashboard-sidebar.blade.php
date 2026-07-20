@@ -57,11 +57,11 @@
         }" class="space-y-1.5">
             <!-- Dashboard Link -->
             <a href="{{ route('dashboard.index') }}"
-               class="flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('dashboard.index') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                <div class="flex items-center space-x-3">
+               class="flex items-center px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('dashboard.index') ? 'bg-blue-50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                <div class="flex items-center mr-3 shrink-0">
                     <x-category-icon name="dashboard" class="w-6 h-6" />
-                    <span>Dashboard</span>
                 </div>
+                <span>Dashboard</span>
             </a>
 
             <!-- Operations Group -->
@@ -77,8 +77,10 @@
             <div class="space-y-1">
                 <button type="button" @click="activeGroup = (activeGroup === 'operations' ? '' : 'operations')"
                         class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition duration-150 cursor-pointer select-none {{ $operationsActive ? 'bg-blue-50/50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                    <div class="flex items-center space-x-3">
-                        <x-category-icon name="sports" class="w-6 h-6" />
+                    <div class="flex items-center">
+                        <div class="flex items-center mr-3 shrink-0">
+                            <x-category-icon name="sports" class="w-6 h-6" />
+                        </div>
                         <span>Operations</span>
                     </div>
                     <div class="flex items-center space-x-2">
@@ -102,7 +104,12 @@
                     <!-- Service Requests Link -->
                     <a href="{{ route('dashboard.requests.index') }}"
                        class="flex items-center justify-between px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('dashboard.requests.*') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
-                        <span>Service Requests</span>
+                        <div class="flex items-center">
+                            <div class="flex items-center mr-3 shrink-0">
+                                <x-category-icon name="users" class="w-6 h-6" />
+                            </div>
+                            <span>Service Requests</span>
+                        </div>
                         @if(isset($pendingServiceRequestsCount) && $pendingServiceRequestsCount > 0)
                             <span class="bg-rose-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm select-none">{{ $pendingServiceRequestsCount }}</span>
                         @endif
@@ -111,7 +118,12 @@
                     <!-- Profiling List Link -->
                     <a href="{{ route('dashboard.profiling.index') }}"
                        class="flex items-center justify-between px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('dashboard.profiling.index') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
-                        <span>Profiling List</span>
+                        <div class="flex items-center">
+                            <div class="flex items-center mr-3 shrink-0">
+                                <x-category-icon name="logs" class="w-6 h-6" />
+                            </div>
+                            <span>Profiling List</span>
+                        </div>
                         @if(isset($pendingKkProfilesCount) && $pendingKkProfilesCount > 0)
                             <span class="bg-rose-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm select-none">{{ $pendingKkProfilesCount }}</span>
                         @endif
@@ -120,6 +132,9 @@
                     <!-- Master Calendar Link -->
                     <a href="{{ route('dashboard.calendar.index') }}"
                        class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('dashboard.calendar.*') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <div class="flex items-center mr-3 shrink-0">
+                            <x-category-icon name="sports" class="w-6 h-6" />
+                        </div>
                         <span>Master Calendar</span>
                     </a>
 
@@ -127,7 +142,12 @@
                     @if(Auth::user()->isAdmin() || Auth::user()->isDpo())
                     <a href="{{ route('admin.sports-league.index') }}"
                        class="flex items-center justify-between px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.sports-league.*') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
-                        <span>SIKLAB</span>
+                        <div class="flex items-center">
+                            <div class="flex items-center mr-3 shrink-0">
+                                <x-category-icon name="sports" class="w-6 h-6" />
+                            </div>
+                            <span>SIKLAB</span>
+                        </div>
                         @if(isset($pendingSportsRegistrationsCount) && $pendingSportsRegistrationsCount > 0)
                             <span class="bg-rose-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm select-none">{{ $pendingSportsRegistrationsCount }}</span>
                         @endif
@@ -138,7 +158,14 @@
                     @if(Auth::user()->isAdmin() || Auth::user()->isDpo())
                     <a href="{{ route('admin.consultations.index') }}"
                        class="flex items-center justify-between px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.consultations.*') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
-                        <span>SKonsulta Chats</span>
+                        <div class="flex items-center">
+                            <div class="flex items-center mr-3 shrink-0">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                </svg>
+                            </div>
+                            <span>SKonsulta Chats</span>
+                        </div>
                         @if(isset($pendingConsultationsCount) && $pendingConsultationsCount > 0)
                             <span class="bg-rose-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm select-none">{{ $pendingConsultationsCount }}</span>
                         @endif
@@ -149,6 +176,9 @@
                     @if(Route::has('admin.partners.index') && Auth::user()->isSuperAdmin())
                     <a href="{{ route('admin.partners.index') }}"
                        class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.partners.*') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <div class="flex items-center mr-3 shrink-0">
+                            <x-category-icon name="peace-building" class="w-6 h-6" />
+                        </div>
                         <span>Partnerships</span>
                     </a>
                     @endif
@@ -157,6 +187,9 @@
                     @if(Route::has('admin.reports.index') && Auth::user()->isAdmin())
                     <a href="{{ route('admin.reports.index') }}"
                        class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.reports.*') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <div class="flex items-center mr-3 shrink-0">
+                            <x-category-icon name="education" class="w-6 h-6" />
+                        </div>
                         <span>Reports</span>
                     </a>
                     @endif
@@ -171,8 +204,10 @@
             <div class="space-y-1">
                 <button type="button" @click="activeGroup = (activeGroup === 'content' ? '' : 'content')"
                         class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition duration-150 cursor-pointer select-none {{ $contentActive ? 'bg-blue-50/50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                    <div class="flex items-center space-x-3">
-                        <x-category-icon name="website" class="w-6 h-6" />
+                    <div class="flex items-center">
+                        <div class="flex items-center mr-3 shrink-0">
+                            <x-category-icon name="website" class="w-6 h-6" />
+                        </div>
                         <span>Content Management</span>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" 
@@ -188,16 +223,25 @@
                      style="display: none;">
                     <a href="{{ route('admin.news.index') }}"
                        class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.news.*') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <div class="flex items-center mr-3 shrink-0">
+                            <x-category-icon name="logs" class="w-6 h-6" />
+                        </div>
                         <span>News Articles</span>
                     </a>
 
                     <a href="{{ route('admin.transparency.index') }}"
                        class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.transparency.*') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <div class="flex items-center mr-3 shrink-0">
+                            <x-category-icon name="governance" class="w-6 h-6" />
+                        </div>
                         <span>Transparency Board</span>
                     </a>
 
                     <a href="{{ route('admin.officials.index') }}"
                        class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.officials.*') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <div class="flex items-center mr-3 shrink-0">
+                            <x-category-icon name="users" class="w-6 h-6" />
+                        </div>
                         <span>SK Officials</span>
                     </a>
                 </div>
@@ -212,8 +256,10 @@
             <div class="space-y-1">
                 <button type="button" @click="activeGroup = (activeGroup === 'admin' ? '' : 'admin')"
                         class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition duration-150 cursor-pointer select-none {{ $adminActive ? 'bg-blue-50/50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                    <div class="flex items-center space-x-3">
-                        <x-category-icon name="governance" class="w-6 h-6" />
+                    <div class="flex items-center">
+                        <div class="flex items-center mr-3 shrink-0">
+                            <x-category-icon name="governance" class="w-6 h-6" />
+                        </div>
                         <span>System Admin</span>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" 
@@ -229,16 +275,25 @@
                      style="display: none;">
                     <a href="{{ route('admin.logs.index') }}"
                        class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.logs.*') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <div class="flex items-center mr-3 shrink-0">
+                            <x-category-icon name="logs" class="w-6 h-6" />
+                        </div>
                         <span>Audit Logs</span>
                     </a>
 
                     <a href="{{ route('admin.structure.index') }}"
                        class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.structure.*') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <div class="flex items-center mr-3 shrink-0">
+                            <x-category-icon name="governance" class="w-6 h-6" />
+                        </div>
                         <span>Portal Structure</span>
                     </a>
 
                     <a href="{{ route('admin.carousel.index') }}"
                        class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.carousel.*') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <div class="flex items-center mr-3 shrink-0">
+                            <x-category-icon name="carousel" class="w-6 h-6" />
+                        </div>
                         <span>Hero Slides</span>
                     </a>
                 </div>
@@ -252,8 +307,10 @@
             <div class="space-y-1">
                 <button type="button" @click="activeGroup = (activeGroup === 'settings' ? '' : 'settings')"
                         class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition duration-150 cursor-pointer select-none {{ $settingsActive ? 'bg-blue-50/50 text-[#1e40af]' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                    <div class="flex items-center space-x-3">
-                        <x-category-icon name="profile" class="w-6 h-6" />
+                    <div class="flex items-center">
+                        <div class="flex items-center mr-3 shrink-0">
+                            <x-category-icon name="profile" class="w-6 h-6" />
+                        </div>
                         <span>Settings</span>
                     </div>
                     <div class="flex items-center space-x-2">
@@ -279,7 +336,12 @@
                         <!-- Account Management -->
                         <a href="{{ route('admin.users.index') }}"
                            class="flex items-center justify-between px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.users.*') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
-                            <span>Account Management</span>
+                            <div class="flex items-center">
+                                <div class="flex items-center mr-3 shrink-0">
+                                    <x-category-icon name="users" class="w-6 h-6" />
+                                </div>
+                                <span>Account Management</span>
+                            </div>
                             @if(isset($pendingUserApprovalsCount) && $pendingUserApprovalsCount > 0)
                                 <span class="bg-rose-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm select-none">{{ $pendingUserApprovalsCount }}</span>
                             @endif
@@ -288,13 +350,21 @@
                         <!-- Master Recycle Bin -->
                         <a href="{{ route('admin.recycle-bin.index') }}"
                            class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.recycle-bin.*') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
-                            <span>Recycle Bin</span>
+                            <div class="flex items-center">
+                                <div class="flex items-center mr-3 shrink-0">
+                                    <x-category-icon name="logs" class="w-6 h-6" />
+                                </div>
+                                <span>Recycle Bin</span>
+                            </div>
                         </a>
                     @endif
 
                     <!-- My Profile -->
                     <a href="{{ route('profile.edit') }}"
                        class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('profile.edit') ? 'text-[#1e40af] bg-slate-50/80' : 'text-slate-550 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <div class="flex items-center mr-3 shrink-0">
+                            <x-category-icon name="profile" class="w-6 h-6" />
+                        </div>
                         <span>My Profile</span>
                     </a>
                 </div>
@@ -302,8 +372,10 @@
 
             <!-- View Website Link -->
             <a href="/"
-               class="flex items-center space-x-3 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition text-slate-600 hover:bg-slate-50 hover:text-slate-900">
-                <x-category-icon name="website" class="w-6 h-6" />
+               class="flex items-center px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition text-slate-600 hover:bg-slate-50 hover:text-slate-900">
+                <div class="flex items-center mr-3 shrink-0">
+                    <x-category-icon name="website" class="w-6 h-6" />
+                </div>
                 <span>View Website</span>
             </a>
         </nav>
