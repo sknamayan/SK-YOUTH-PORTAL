@@ -418,7 +418,7 @@
                                class="btn-primary text-[11px] font-black uppercase py-2 px-5 flex items-center space-x-1.5 cursor-pointer bg-emerald-600 hover:bg-emerald-700 active:scale-95 transition shadow-sm border border-transparent rounded-2xl">
                                 <span>Export CSV</span>
                             </a>
-                            <button type="button" @click="resetForm(); showModal = true" class="btn-primary text-[11px] font-black uppercase py-2 px-5 flex items-center space-x-2 cursor-pointer shadow-sm shadow-blue-500/10 active:scale-95 transition">
+                            <button type="button" @click="resetForm(); showModal = true" class="hidden md:flex btn-primary text-[11px] font-black uppercase py-2 px-5 items-center space-x-2 cursor-pointer shadow-sm shadow-blue-500/10 active:scale-95 transition">
                                 <span>Add New Member</span>
                             </button>
                         </div>
@@ -1324,9 +1324,8 @@
         </div>
     </div>
 
+    <x-mobile-bottom-action x-show="!showModal && !showViewModal" @click="resetForm(); showModal = true">
+        Add New Member
+    </x-mobile-bottom-action>
 </div>
-
-<x-mobile-bottom-action x-show="!showModal && !showViewModal" @click="resetForm(); showModal = true">
-    Add New Member
-</x-mobile-bottom-action>
 @endsection

@@ -21,7 +21,11 @@ class AccomplishmentReportController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('admin.reports.index', compact('reports'));
+        $initiatives = Initiative::with('committee')->get()->mapWithKeys(function ($item) {
+            return [$item->id => $item->committee->name . ' - ' . $item->title];
+        });
+
+        return view('admin.reports.index', compact('reports', 'initiatives'));
     }
 
     /**

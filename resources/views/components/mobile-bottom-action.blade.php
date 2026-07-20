@@ -27,22 +27,16 @@
         'wire:click',
         'wire:target',
         'wire:loading.attr',
-    'x-bind:disabled',
-    ':disabled',
-    'x-bind:class',
-    ':class',
-    'x-bind:aria-disabled',
-    'aria-disabled',
 ])->merge([
-    'class' => 'w-full md:hidden border-t border-slate-100 bg-white px-3 py-4 mt-6'
+    'class' => 'fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-lg z-45 md:hidden flex items-center justify-center bg-transparent border-none shadow-none pointer-events-none p-0'
 ]) }}
 >
-<div class="mx-auto flex w-full max-w-5xl items-center justify-center sm:justify-end">
+    <div class="flex w-full items-center justify-center">
         @if($href)
             <a
                 href="{{ $href }}"
                 {{ $attributes->only(['@click', 'onclick', 'x-on:click', 'wire:click', 'wire:target', 'x-bind:disabled', ':disabled', 'x-bind:class', ':class', 'x-bind:aria-disabled', 'aria-disabled'])->merge([
-                    'class' => 'flex w-full max-w-[16rem] items-center justify-center rounded-2xl bg-gradient-to-r from-[#1e40af] to-blue-600 px-4 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-blue-900/25 transition active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900',
+                    'class' => 'flex w-full items-center justify-center rounded-2xl border border-blue-600 dark:border-blue-500 bg-white/95 dark:bg-slate-900/95 text-blue-600 dark:text-sky-400 backdrop-blur-md px-4 py-3.5 text-xs font-black uppercase tracking-widest shadow-lg transition active:scale-[0.98] focus:outline-none pointer-events-auto',
                 ]) }}
                 @if($disabled) aria-disabled="true" tabindex="-1" @endif
             >
@@ -53,7 +47,7 @@
                 type="{{ $type }}"
                 form="{{ $form }}"
                 {{ $attributes->only(['@click', 'onclick', 'x-on:click', 'wire:click', 'wire:target', 'x-bind:disabled', ':disabled', 'x-bind:class', ':class', 'x-bind:aria-disabled', 'aria-disabled'])->merge([
-                    'class' => 'flex w-full max-w-[16rem] items-center justify-center rounded-2xl bg-gradient-to-r from-[#1e40af] to-blue-600 px-4 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-blue-900/25 transition active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900',
+                    'class' => 'flex w-full items-center justify-center rounded-2xl border border-blue-600 dark:border-blue-500 bg-white/95 dark:bg-slate-900/95 text-blue-600 dark:text-sky-400 backdrop-blur-md px-4 py-3.5 text-xs font-black uppercase tracking-widest shadow-lg transition active:scale-[0.98] focus:outline-none pointer-events-auto',
                 ]) }}
                 @if($disabled) disabled @endif
             >
@@ -63,7 +57,7 @@
             <button
                 type="{{ $type }}"
                 {{ $attributes->only(['@click', 'onclick', 'x-on:click', 'wire:click', 'wire:target', 'x-bind:disabled', ':disabled', 'x-bind:class', ':class', 'x-bind:aria-disabled', 'aria-disabled'])->merge([
-                    'class' => 'flex w-full max-w-[16rem] items-center justify-center rounded-2xl bg-gradient-to-r from-[#1e40af] to-blue-600 px-4 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-blue-900/25 transition active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900',
+                    'class' => 'flex w-full items-center justify-center rounded-2xl border border-blue-600 dark:border-blue-500 bg-white/95 dark:bg-slate-900/95 text-blue-600 dark:text-sky-400 backdrop-blur-md px-4 py-3.5 text-xs font-black uppercase tracking-widest shadow-lg transition active:scale-[0.98] focus:outline-none pointer-events-auto',
                 ]) }}
                 @if($disabled) disabled @endif
             >

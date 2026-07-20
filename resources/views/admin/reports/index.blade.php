@@ -1,7 +1,41 @@
 @extends('layouts.app')
 
 @section('content')
-<div x-data="{}" class="flex-1 flex flex-col md:flex-row bg-[#f8fafc]">
+<div x-data="{
+    showModal: false,
+    editMode: false,
+    formAction: '{{ route('admin.reports.store') }}',
+    reportTitle: '',
+    initiativeId: '',
+    reportingPeriod: '',
+    existingFileUrl: null,
+    
+    openCreate() {
+        this.editMode = false;
+        this.formAction = '{{ route('admin.reports.store') }}';
+        this.reportTitle = '';
+        this.initiativeId = '';
+        this.reportingPeriod = '';
+        this.existingFileUrl = null;
+        this.showModal = true;
+        this.$nextTick(() => {
+            window.dispatchEvent(new CustomEvent('report-opened', { detail: { existingUrl: null } }));
+        });
+    },
+    
+    openEdit(report) {
+        this.editMode = true;
+        this.formAction = '/admin/reports/' + report.id;
+        this.reportTitle = report.report_title;
+        this.initiativeId = report.initiative_id;
+        this.reportingPeriod = report.reporting_period;
+        this.existingFileUrl = report.file_path ? '/storage/' + report.file_path : null;
+        this.showModal = true;
+        this.$nextTick(() => {
+            window.dispatchEvent(new CustomEvent('report-opened', { detail: { existingUrl: this.existingFileUrl } }));
+        });
+    }
+}" class="flex-1 flex flex-col md:flex-row bg-[#f8fafc]">
 
     <!-- Left Sidebar -->
     @include('layouts.dashboard-sidebar')
@@ -17,9 +51,9 @@
                     <h1 class="text-2xl font-black tracking-tight text-slate-800 font-display uppercase mt-1">Accomplishment Reports</h1>
                     <p class="text-xs text-slate-500 mt-1">Manage, view, and upload accomplishment reports linked to initiatives.</p>
                 </div>
-                <a href="{{ route('admin.reports.create') }}" class="btn-primary text-xs shrink-0 flex items-center space-x-1">
+                <button type="button" @click="openCreate()" class="hidden md:flex btn-primary text-xs shrink-0 items-center space-x-1">
                     <span>➕ Upload New Report</span>
-                </a>
+                </button>
             </div>
 
 
@@ -32,7 +66,7 @@
                             <p class="text-xs text-slate-400 mt-1 max-w-sm mx-auto">Upload accomplishment reports to link them with project initiatives and show them on the public portal.</p>
                         </div>
                         <div class="pt-2">
-                            <a href="{{ route('admin.reports.create') }}" class="btn-primary text-xs">Upload Your First Report</a>
+                            <button type="button" @click="openCreate()" class="btn-primary text-xs">Upload Your First Report</button>
                         </div>
                     </div>
                 @else
@@ -82,9 +116,9 @@
                                         </td>
                                         <!-- Actions -->
                                         <td class="p-4 pr-6 text-right space-x-1.5 whitespace-nowrap font-medium">
-                                            <a href="{{ route('admin.reports.edit', $rep->id) }}" class="inline-flex items-center px-2.5 py-1 border border-slate-200 text-slate-600 hover:text-[#1e40af] hover:border-[#1e40af] font-bold rounded-lg transition text-[10px] uppercase tracking-wider active:scale-95">
+                                            <button type="button" @click="openEdit({ id: {{ $rep->id }}, report_title: '{{ addslashes($rep->report_title) }}', initiative_id: '{{ $rep->initiative_id }}', reporting_period: '{{ $rep->reporting_period ? $rep->reporting_period->format('Y-m-d') : '' }}', file_path: '{{ $rep->file_path ? addslashes($rep->file_path) : '' }}' })" class="inline-flex items-center px-2.5 py-1 border border-slate-200 text-slate-650 hover:text-[#1e40af] hover:border-[#1e40af] font-bold rounded-lg transition text-[10px] uppercase tracking-wider active:scale-95">
                                                 Edit
-                                            </a>
+                                            </button>
                                                 <x-alert-dialog>
                                                     <x-slot:trigger>
                                                         <button type="button" class="inline-flex items-center px-2.5 py-1 bg-rose-50 text-rose-700 hover:bg-rose-100 font-bold rounded-lg transition text-[10px] uppercase tracking-wider active:scale-95 border border-transparent">
@@ -133,13 +167,94 @@
                 @endif
             </div>
 
+            <!-- Create/Edit Modal -->
+            <div x-show="showModal" class="fixed inset-0 z-40 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm" x-cloak>
+                <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col border border-slate-100 dark:border-slate-800 overflow-hidden animate-fade-in-up" @click.away="showModal = false">
+                    <!-- Modal Header -->
+                    <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                        <div>
+                            <span class="text-[9px] font-black text-[#1e40af] dark:text-sky-400 uppercase tracking-widest block font-display">Report Console</span>
+                            <h3 class="text-sm font-bold text-slate-800 dark:text-slate-105 font-display uppercase tracking-tight" x-text="editMode ? 'Edit Accomplishment Report' : 'Upload Accomplishment Report'"></h3>
+                        </div>
+                        <button @click="showModal = false" class="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 rounded-xl transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+
+                    <!-- Modal Body (Form) -->
+                    <form :action="formAction" method="POST" enctype="multipart/form-data" class="flex-1 overflow-y-auto p-6 space-y-4">
+                        @csrf
+                        <template x-if="editMode">
+                            @method('PUT')
+                        </template>
+
+                        <div class="space-y-4">
+                            <!-- Report Title -->
+                            <div class="space-y-1.5">
+                                <label for="report_title" class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                                    Report Title <span class="text-rose-500 font-extrabold">*</span>
+                                </label>
+                                <input type="text" name="report_title" id="report_title" required x-model="reportTitle" placeholder="e.g. Q1 Booking Attendance Report"
+                                       class="block w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs outline-none focus:bg-white focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition font-semibold text-slate-700 dark:text-slate-300">
+                            </div>
+
+                            <!-- Target Initiative -->
+                            <div class="space-y-1.5">
+                                <label for="initiative_id" class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                                    Target Initiative <span class="text-rose-500 font-extrabold">*</span>
+                                </label>
+                                <select name="initiative_id" id="initiative_id" required x-model="initiativeId"
+                                        class="block w-full py-2.5 pl-4 pr-10 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs text-slate-700 dark:text-slate-300 outline-none focus:bg-white focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition cursor-pointer appearance-none font-semibold">
+                                    <option value="">Select Initiative...</option>
+                                    @foreach($initiatives as $id => $title)
+                                        <option value="{{ $id }}">{{ $title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- Reporting Period -->
+                            <div class="space-y-1.5">
+                                <label for="reporting_period" class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                                    Reporting Period <span class="text-rose-500 font-extrabold">*</span>
+                                </label>
+                                <input type="date" name="reporting_period" id="reporting_period" required x-model="reportingPeriod"
+                                       class="block w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs outline-none focus:bg-white focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition font-semibold text-slate-700 dark:text-slate-300">
+                            </div>
+
+                            <!-- File Upload Input -->
+                            <div class="space-y-1.5">
+                                <label for="file" class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                                    Report Document File <span class="text-rose-500 font-extrabold" x-show="!editMode">*</span>
+                                </label>
+                                <x-file-upload name="file" placeholder="Drag your report file here or click to browse." />
+                                <span class="text-[10px] text-slate-400 mt-1 block">Supports PDF, DOC, DOCX, XLS, XLSX, PNG, JPG, JPEG. Max file size: 2MB.</span>
+                                
+                                <template x-if="editMode && existingFileUrl">
+                                    <div class="mt-2 text-xs">
+                                        <span class="text-slate-500">Current file:</span>
+                                        <a :href="existingFileUrl" target="_blank" class="text-blue-600 hover:underline font-semibold" x-text="existingFileUrl.split('/').pop()"></a>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Modal Actions -->
+                        <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end gap-3">
+                            <button type="button" @click="showModal = false" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-655 dark:text-slate-300 font-bold rounded-xl transition text-xs uppercase tracking-wider">
+                                Cancel
+                            </button>
+                            <button type="submit" class="px-5 py-2.5 bg-[#1e40af] hover:bg-blue-700 text-white font-bold rounded-xl transition text-xs uppercase tracking-wider shadow-sm" x-text="editMode ? 'Save Changes' : 'Upload Report'"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
 
     </div>
 
+    <x-mobile-bottom-action x-show="!showModal" @click="openCreate()">
+        Upload New Report
+    </x-mobile-bottom-action>
 </div>
-
-<x-mobile-bottom-action href="{{ route('admin.reports.create') }}">
-    Upload New Report
-</x-mobile-bottom-action>
 @endsection

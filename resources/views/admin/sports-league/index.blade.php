@@ -246,7 +246,7 @@
                             <!-- Primary: Register Citizen -->
                             <a href="{{ route('admin.sports-league.create') }}"
                                @click.prevent="showRegisterModal = true; adminRegStep = 1; adminSport = 'Basketball'; adminDivision = 'Midget'; adminAge = 18"
-                               class="inline-flex items-center justify-center px-4 py-2 bg-[#1e40af] hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-wider rounded-xl transition active:scale-95 select-none cursor-pointer gap-1.5 shadow-sm h-9">
+                               class="hidden md:inline-flex items-center justify-center px-4 py-2 bg-[#1e40af] hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-wider rounded-xl transition active:scale-95 select-none cursor-pointer gap-1.5 shadow-sm h-9">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
                                 <span>Register Citizen</span>
                             </a>
@@ -1233,6 +1233,9 @@
         </div>
     </div>
 
+    <x-mobile-bottom-action x-show="!showRegisterModal && !showEditModal && !showViewModal && !showDeleteModal" @click="showRegisterModal = true; adminRegStep = 1; adminSport = 'Basketball'; adminDivision = 'Midget'; adminAge = 18">
+        Register Citizen
+    </x-mobile-bottom-action>
 </div>
 
 <style>
@@ -1260,8 +1263,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
-
-<x-mobile-bottom-action x-show="!showRegisterModal && !showEditModal && !showViewModal && !showDeleteModal" @click="showRegisterModal = true; adminRegStep = 1; adminSport = 'Basketball'; adminDivision = 'Midget'; adminAge = 18">
-    Register Citizen
-</x-mobile-bottom-action>
 @endsection

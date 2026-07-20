@@ -20,12 +20,16 @@
         isImage: false,
         
         init() {
+            this.syncPreview();
+        },
+        
+        syncPreview() {
             if (this.previewUrl) {
                 const cleanUrl = this.previewUrl.split('?')[0];
                 const ext = cleanUrl.split('.').pop().toLowerCase();
-                if (['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'].includes(ext)) {
-                    this.isImage = true;
-                }
+                this.isImage = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'].includes(ext);
+            } else {
+                this.isImage = false;
             }
         },
         
@@ -81,6 +85,7 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
         }
     }"
+    x-on:report-opened.window="previewUrl = $event.detail.existingUrl || ''; fileName = ''; fileSize = ''; if($refs.fileInput) $refs.fileInput.value = ''; syncPreview();"
     class="relative font-sans"
 >
     <!-- Drag and Drop Dropzone -->
@@ -99,7 +104,7 @@
             id="{{ $inputId }}"
             accept="{{ $accept }}"
             @change="handleFileChange"
-            @if($required && !$existingUrl) required @endif
+            :required="typeof editMode !== 'undefined' ? !editMode : {{ $required ? 'true' : 'false' }}"
             class="sr-only"
         >
 
