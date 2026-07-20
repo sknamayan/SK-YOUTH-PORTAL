@@ -209,7 +209,7 @@
             @endphp
             <div class="space-y-1">
                 <button type="button" @click="activeGroup = (activeGroup === 'content' ? '' : 'content')"
-                        class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition duration-150 cursor-pointer select-none {{ $contentActive ? 'bg-slate-900 dark:bg-slate-950 text-sky-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
+                        class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition duration-150 cursor-pointer select-none {{ $contentActive ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
                     <div class="flex items-center">
                         <div class="w-8 flex items-center justify-start shrink-0">
                             <x-category-icon name="website" class="w-6 h-6" />
@@ -228,7 +228,7 @@
                      class="pl-4 border-l border-slate-100 dark:border-slate-800 ml-6 space-y-1" 
                      style="display: none;">
                     <a href="{{ route('admin.news.index') }}"
-                       class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.news.*') ? 'text-sky-400 bg-slate-900/50 dark:bg-slate-950/50 font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
+                       class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.news.*') ? 'bg-blue-600 text-white shadow-sm font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
                         <div class="flex items-center">
                             <div class="w-8 flex items-center justify-start shrink-0">
                                 <x-category-icon name="logs" class="w-6 h-6" />
@@ -238,7 +238,7 @@
                     </a>
 
                     <a href="{{ route('admin.transparency.index') }}"
-                       class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.transparency.*') ? 'text-sky-400 bg-slate-900/50 dark:bg-slate-950/50 font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
+                       class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.transparency.*') ? 'bg-blue-600 text-white shadow-sm font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
                         <div class="flex items-center">
                             <div class="w-8 flex items-center justify-start shrink-0">
                                 <x-category-icon name="governance" class="w-6 h-6" />
@@ -248,7 +248,7 @@
                     </a>
 
                     <a href="{{ route('admin.officials.index') }}"
-                       class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.officials.*') ? 'text-sky-400 bg-slate-900/50 dark:bg-slate-950/50 font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
+                       class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.officials.*') ? 'bg-blue-600 text-white shadow-sm font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
                         <div class="flex items-center">
                             <div class="w-8 flex items-center justify-start shrink-0">
                                 <x-category-icon name="users" class="w-6 h-6" />
@@ -267,7 +267,7 @@
             @endphp
             <div class="space-y-1">
                 <button type="button" @click="activeGroup = (activeGroup === 'admin' ? '' : 'admin')"
-                        class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition duration-150 cursor-pointer select-none {{ $adminActive ? 'bg-slate-900 dark:bg-slate-950 text-sky-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
+                        class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition duration-150 cursor-pointer select-none {{ $adminActive ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
                     <div class="flex items-center">
                         <div class="w-8 flex items-center justify-start shrink-0">
                             <x-category-icon name="governance" class="w-6 h-6" />
@@ -286,7 +286,7 @@
                      class="pl-4 border-l border-slate-100 dark:border-slate-800 ml-6 space-y-1" 
                      style="display: none;">
                     <a href="{{ route('admin.logs.index') }}"
-                       class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.logs.*') ? 'text-sky-400 bg-slate-900/50 dark:bg-slate-950/50 font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
+                       class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.logs.*') ? 'bg-blue-600 text-white shadow-sm font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
                         <div class="flex items-center">
                             <div class="w-8 flex items-center justify-start shrink-0">
                                 <x-category-icon name="logs" class="w-6 h-6" />
@@ -296,7 +296,7 @@
                     </a>
 
                     <a href="{{ route('admin.structure.index') }}"
-                       class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.structure.*') ? 'text-sky-400 bg-slate-900/50 dark:bg-slate-950/50 font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
+                       class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.structure.*') ? 'bg-blue-600 text-white shadow-sm font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
                         <div class="flex items-center">
                             <div class="w-8 flex items-center justify-start shrink-0">
                                 <x-category-icon name="governance" class="w-6 h-6" />
@@ -306,7 +306,7 @@
                     </a>
 
                     <a href="{{ route('admin.carousel.index') }}"
-                       class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.carousel.*') ? 'text-sky-400 bg-slate-900/50 dark:bg-slate-950/50 font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
+                       class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.carousel.*') ? 'bg-blue-600 text-white shadow-sm font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
                         <div class="flex items-center">
                             <div class="w-8 flex items-center justify-start shrink-0">
                                 <x-category-icon name="carousel" class="w-6 h-6" />
@@ -324,7 +324,7 @@
             @endphp
             <div class="space-y-1">
                 <button type="button" @click="activeGroup = (activeGroup === 'settings' ? '' : 'settings')"
-                        class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition duration-150 cursor-pointer select-none {{ $settingsActive ? 'bg-slate-900 dark:bg-slate-950 text-sky-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
+                        class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition duration-150 cursor-pointer select-none {{ $settingsActive ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
                     <div class="flex items-center">
                         <div class="w-8 flex items-center justify-start shrink-0">
                             <x-category-icon name="profile" class="w-6 h-6" />
@@ -353,7 +353,7 @@
                     @if(Auth::user()->isSuperAdmin())
                         <!-- Account Management -->
                         <a href="{{ route('admin.users.index') }}"
-                           class="flex items-center justify-between px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.users.*') ? 'text-sky-400 bg-slate-900/50 dark:bg-slate-950/50 font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
+                           class="flex items-center justify-between px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.users.*') ? 'bg-blue-600 text-white shadow-sm font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
                             <div class="flex items-center">
                                 <div class="w-8 flex items-center justify-start shrink-0">
                                     <x-category-icon name="users" class="w-6 h-6" />
@@ -367,7 +367,7 @@
 
                         <!-- Master Recycle Bin -->
                         <a href="{{ route('admin.recycle-bin.index') }}"
-                           class="flex items-center justify-between px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.recycle-bin.*') ? 'text-sky-400 bg-slate-900/50 dark:bg-slate-950/50 font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
+                           class="flex items-center justify-between px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.recycle-bin.*') ? 'bg-blue-600 text-white shadow-sm font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
                             <div class="flex items-center">
                                 <div class="w-8 flex items-center justify-start shrink-0">
                                     <x-category-icon name="logs" class="w-6 h-6" />
@@ -379,7 +379,7 @@
 
                     <!-- My Profile -->
                     <a href="{{ route('profile.edit') }}"
-                       class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('profile.edit') ? 'text-sky-400 bg-slate-900/50 dark:bg-slate-950/50 font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
+                       class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('profile.edit') ? 'bg-blue-600 text-white shadow-sm font-black' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
                         <div class="flex items-center">
                             <div class="w-8 flex items-center justify-start shrink-0">
                                 <x-category-icon name="profile" class="w-6 h-6" />
