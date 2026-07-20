@@ -292,7 +292,7 @@ Route::middleware(['auth', 'admin.only'])->group(function () {
     Route::delete('/admin/carousel/{carousel}', [CarouselSlideController::class, 'destroy'])->name('admin.carousel.destroy');
 
     // Master Recycle Bin
-    Route::middleware(['password.confirm'])->group(function () {
+    Route::middleware(['auth', 'admin.only', 'password.confirm'])->group(function () {
         Route::get('/admin/recycle-bin', [App\Http\Controllers\Admin\RecycleBinController::class, 'index'])->name('admin.recycle-bin.index');
         Route::post('/admin/recycle-bin/{type}/{id}/restore', [App\Http\Controllers\Admin\RecycleBinController::class, 'restore'])->name('admin.recycle-bin.restore');
         Route::delete('/admin/recycle-bin/{type}/{id}/force-delete', [App\Http\Controllers\Admin\RecycleBinController::class, 'forceDelete'])->name('admin.recycle-bin.force-delete');

@@ -426,7 +426,7 @@
                                                    guardian_address: '{{ $escapedGuardianAddress }}'
                                                }; showEditModal = true"
                                                class="inline-flex items-center px-2 py-1 bg-amber-50 text-amber-700 hover:bg-amber-100 rounded-lg font-bold text-[9px] uppercase tracking-wider transition">Edit</a>
-                                            <button type="button" @click="confirmDelete('{{ route('admin.sports-league.destroy', $req->id) }}')" class="inline-flex items-center px-2 py-1 bg-rose-50 text-rose-700 hover:bg-rose-100 rounded-lg font-bold text-[9px] uppercase tracking-wider transition cursor-pointer">Delete</button>
+                                            <x-action-delete :id="$req->id" :route="route('admin.sports-league.destroy', $req->id)" />
                                         </td>
                                     </tr>
                                 @endforeach

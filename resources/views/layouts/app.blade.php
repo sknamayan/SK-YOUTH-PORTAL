@@ -10,6 +10,9 @@
         <!-- Favicon -->
         <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
 
+        <!-- SweetAlert2 CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
         <!-- PWA / Add to Home Screen Setup -->
         <link rel="manifest" href="{{ asset('manifest.json') }}">
         <meta name="theme-color" content="#1e40af">
@@ -790,8 +793,11 @@
             });
         </script>
 
+        <!-- SweetAlert2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         @auth
-            @if(in_array(strtolower(auth()->user()->role), ['citizen', 'user']))
+            @if(in_array(strtolower(auth()->user()->role), ['citizen', 'user']) && !request()->is('admin*') && !request()->routeIs('admin.*'))
                 @include('citizen.skonsulta.floating-chat')
             @endif
         @endauth

@@ -13,6 +13,38 @@ window.flatpickr = flatpickr;
 document.addEventListener('submit', function (e) {
     const form = e.target;
     
+    // Intercept delete action forms with SweetAlert2 confirmation
+    if (form.classList.contains('delete-action-form') && form.dataset.confirmed !== 'true') {
+        e.preventDefault();
+        
+        if (window.Swal) {
+            window.Swal.fire({
+                title: 'Are you sure?',
+                text: 'This item will be soft-deleted and moved to the Recycle Bin.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e11d48', // rose-600
+                cancelButtonColor: '#475569', // slate-600
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    popup: 'rounded-3xl border border-slate-100 dark:bg-slate-900 dark:border-slate-800 text-slate-800 dark:text-slate-100',
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.dataset.confirmed = 'true';
+                    form.submit();
+                }
+            });
+        } else {
+            if (confirm('Are you sure you want to delete this item?')) {
+                form.dataset.confirmed = 'true';
+                form.submit();
+            }
+        }
+        return;
+    }
+    
     // Ignore if the form is already submitting to prevent stack overflow/duplicate event loops
     if (form.dataset.submitting === 'true') {
         e.preventDefault();
