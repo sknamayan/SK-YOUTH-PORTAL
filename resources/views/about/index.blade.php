@@ -16,6 +16,13 @@
             </p>
         </div>
 
+        <div>
+            <h2 class="text-lg font-bold text-[#1e40af] font-display uppercase mb-2">Our Vision</h2>
+            <p class="text-slate-600">
+                A barangay of empowered youth dedicated to the principles of excellence and service, striving to become proactive leaders and beacon of positive change who contribute meaningfully to the growth and development of Namayan.
+            </p>
+        </div>
+
         <hr class="border-slate-100">
 
         <div>

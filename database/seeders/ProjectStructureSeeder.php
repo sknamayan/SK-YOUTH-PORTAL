@@ -30,7 +30,7 @@ class ProjectStructureSeeder extends Seeder
         // 1. Education
         $edu = Committee::updateOrCreate(
             ['slug' => 'education', 'project_id' => $project->id],
-            ['name' => 'Education & Library Services']
+            ['name' => 'Education']
         );
         $silid = Initiative::updateOrCreate(
             ['title' => 'Silid Karunungan Booking', 'committee_id' => $edu->id],
@@ -57,7 +57,7 @@ class ProjectStructureSeeder extends Seeder
         // 2. Health & Wellness (Slug changed to 'health' for consistency)
         $health = Committee::updateOrCreate(
             ['slug' => 'health', 'project_id' => $project->id],
-            ['name' => 'Health & Wellness']
+            ['name' => 'Health']
         );
         $consult = Initiative::updateOrCreate(
             ['title' => 'Health Consultation', 'committee_id' => $health->id],
