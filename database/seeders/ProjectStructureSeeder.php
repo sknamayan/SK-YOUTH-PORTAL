@@ -30,7 +30,7 @@ class ProjectStructureSeeder extends Seeder
         // 1. Education
         $edu = Committee::updateOrCreate(
             ['slug' => 'education', 'project_id' => $project->id],
-            ['name' => 'Education']
+            ['name' => 'Education & Library Services']
         );
         $silid = Initiative::updateOrCreate(
             ['title' => 'Silid Karunungan Booking', 'committee_id' => $edu->id],
@@ -57,7 +57,7 @@ class ProjectStructureSeeder extends Seeder
         // 2. Health & Wellness (Slug changed to 'health' for consistency)
         $health = Committee::updateOrCreate(
             ['slug' => 'health', 'project_id' => $project->id],
-            ['name' => 'Health']
+            ['name' => 'Health & Wellness']
         );
         $consult = Initiative::updateOrCreate(
             ['title' => 'Health Consultation', 'committee_id' => $health->id],
@@ -84,7 +84,7 @@ class ProjectStructureSeeder extends Seeder
         // 3. Governance
         $gov = Committee::updateOrCreate(
             ['slug' => 'governance', 'project_id' => $project->id],
-            ['name' => 'Governance']
+            ['name' => 'Patriotism, Governance & Active Citizenship']
         );
         $assembly = Initiative::updateOrCreate(
             ['title' => 'Sangguniang Kabataan Assembly', 'committee_id' => $gov->id],
@@ -104,7 +104,7 @@ class ProjectStructureSeeder extends Seeder
         // 4. Active Citizenship
         $citizen = Committee::updateOrCreate(
             ['slug' => 'active-citizenship', 'project_id' => $project->id],
-            ['name' => 'Active Citizenship']
+            ['name' => 'Active Citizenship & Leadership']
         );
         $volunteer = Initiative::updateOrCreate(
             ['title' => 'Youth Volunteer Corps', 'committee_id' => $citizen->id],
@@ -117,7 +117,7 @@ class ProjectStructureSeeder extends Seeder
         // 5. Social Inclusion
         $social = Committee::updateOrCreate(
             ['slug' => 'social-inclusion', 'project_id' => $project->id],
-            ['name' => 'Social Inclusion']
+            ['name' => 'Social Inclusion & Gender Equality']
         );
         $medicine = Initiative::updateOrCreate(
             ['title' => 'Pabili Medicine Services', 'committee_id' => $social->id],
@@ -137,7 +137,7 @@ class ProjectStructureSeeder extends Seeder
         // 6. Peace Building
         $peace = Committee::updateOrCreate(
             ['slug' => 'peace-building', 'project_id' => $project->id],
-            ['name' => 'Peace Building']
+            ['name' => 'Peace Building & Security']
         );
         $resolution = Initiative::updateOrCreate(
             ['title' => 'Conflict Resolution Desk', 'committee_id' => $peace->id],
@@ -150,7 +150,7 @@ class ProjectStructureSeeder extends Seeder
         // 7. Environment
         $env = Committee::updateOrCreate(
             ['slug' => 'environment', 'project_id' => $project->id],
-            ['name' => 'Environment']
+            ['name' => 'Climate Change & Disaster Risk Reduction']
         );
         $eco = Initiative::updateOrCreate(
             ['title' => 'Eco-Warriors Volunteer Group', 'committee_id' => $env->id],
@@ -163,7 +163,7 @@ class ProjectStructureSeeder extends Seeder
         // 8. Youth Employment
         $emp = Committee::updateOrCreate(
             ['slug' => 'youth-employment', 'project_id' => $project->id],
-            ['name' => 'Youth Employment & Empowerment']
+            ['name' => 'Youth Employment & Livelihood']
         );
         $internship = Initiative::updateOrCreate(
             ['title' => 'Internship Portal', 'committee_id' => $emp->id],
@@ -183,7 +183,7 @@ class ProjectStructureSeeder extends Seeder
         // 9. Agriculture
         $agri = Committee::updateOrCreate(
             ['slug' => 'agriculture', 'project_id' => $project->id],
-            ['name' => 'Agriculture']
+            ['name' => 'Food Security & Agriculture']
         );
         $agriHub = Initiative::updateOrCreate(
             ['title' => 'Kabataang Agri-Pins Hub', 'committee_id' => $agri->id],
@@ -196,7 +196,7 @@ class ProjectStructureSeeder extends Seeder
         // 10. Global Mobility
         $mobility = Committee::updateOrCreate(
             ['slug' => 'global-mobility', 'project_id' => $project->id],
-            ['name' => 'Global Mobility']
+            ['name' => 'Global Mobility & Scholarship']
         );
         $scholarship = Initiative::updateOrCreate(
             ['title' => 'Scholarship Verification Desk', 'committee_id' => $mobility->id],

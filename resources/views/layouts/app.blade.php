@@ -610,7 +610,7 @@
                                 </svg>
                                 <span
                                     class="text-xs font-semibold text-blue-100 group-hover:text-white transition leading-snug">Education
-                                    & Library Services</span>
+                                </span>
                             </a>
                             <a href="{{ route('projects.committee', ['project_slug' => 'sk-namayan-youth-services', 'committee_slug' => 'health']) }}"
                                 @click="mobileMenuOpen = false"
@@ -622,7 +622,7 @@
                                 </svg>
                                 <span
                                     class="text-xs font-semibold text-blue-100 group-hover:text-white transition leading-snug">Health
-                                    & Wellness</span>
+                                    </span>
                             </a>
                             <a href="{{ route('projects.committee', ['project_slug' => 'sk-namayan-youth-services', 'committee_slug' => 'governance']) }}"
                                 @click="mobileMenuOpen = false"
@@ -633,8 +633,8 @@
                                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                                 </svg>
                                 <span
-                                    class="text-xs font-semibold text-blue-100 group-hover:text-white transition leading-snug">Patriotism,
-                                    Governance & Active Citizenship</span>
+                                    class="text-xs font-semibold text-blue-100 group-hover:text-white transition leading-snug">
+                                    Governance</span>
                             </a>
                             <a href="{{ route('projects.committee', ['project_slug' => 'sk-namayan-youth-services', 'committee_slug' => 'active-citizenship']) }}"
                                 @click="mobileMenuOpen = false"
@@ -646,7 +646,7 @@
                                 </svg>
                                 <span
                                     class="text-xs font-semibold text-blue-100 group-hover:text-white transition leading-snug">Active
-                                    Citizenship & Leadership</span>
+                                    Citizenship</span>
                             </a>
                             <a href="{{ route('projects.committee', ['project_slug' => 'sk-namayan-youth-services', 'committee_slug' => 'social-inclusion']) }}"
                                 @click="mobileMenuOpen = false"
@@ -658,7 +658,7 @@
                                 </svg>
                                 <span
                                     class="text-xs font-semibold text-blue-100 group-hover:text-white transition leading-snug">Social
-                                    Inclusion & Gender Equality</span>
+                                    Inclusion</span>
                             </a>
                             <a href="{{ route('projects.committee', ['project_slug' => 'sk-namayan-youth-services', 'committee_slug' => 'peace-building']) }}"
                                 @click="mobileMenuOpen = false"
@@ -670,7 +670,7 @@
                                 </svg>
                                 <span
                                     class="text-xs font-semibold text-blue-100 group-hover:text-white transition leading-snug">Peace
-                                    Building & Security</span>
+                                    Building</span>
                             </a>
                             <a href="{{ route('projects.committee', ['project_slug' => 'sk-namayan-youth-services', 'committee_slug' => 'environment']) }}"
                                 @click="mobileMenuOpen = false"
@@ -681,8 +681,7 @@
                                         d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707m2.828 9.9a5 5 0 110-7.07" />
                                 </svg>
                                 <span
-                                    class="text-xs font-semibold text-blue-100 group-hover:text-white transition leading-snug">Climate
-                                    Change & Disaster Risk Reduction</span>
+                                    class="text-xs font-semibold text-blue-100 group-hover:text-white transition leading-snug">Environment</span>
                             </a>
                             <a href="{{ route('projects.committee', ['project_slug' => 'sk-namayan-youth-services', 'committee_slug' => 'youth-employment']) }}"
                                 @click="mobileMenuOpen = false"
@@ -694,7 +693,7 @@
                                 </svg>
                                 <span
                                     class="text-xs font-semibold text-blue-100 group-hover:text-white transition leading-snug">Youth
-                                    Employment & Livelihood</span>
+                                    Employment and Empowerment</span>
                             </a>
                             <a href="{{ route('projects.committee', ['project_slug' => 'sk-namayan-youth-services', 'committee_slug' => 'agriculture']) }}"
                                 @click="mobileMenuOpen = false"
@@ -705,8 +704,7 @@
                                         d="M12 19l9 2m-9-2v-8m0 8l-9 2m9-2v-8m0 0a5 5 0 019 3m-9-3a5 5 0 00-9 3m9-3v-1" />
                                 </svg>
                                 <span
-                                    class="text-xs font-semibold text-blue-100 group-hover:text-white transition leading-snug">Food
-                                    Security & Agriculture</span>
+                                    class="text-xs font-semibold text-blue-100 group-hover:text-white transition leading-snug">Agriculture</span>
                             </a>
                             <a href="{{ route('projects.committee', ['project_slug' => 'sk-namayan-youth-services', 'committee_slug' => 'global-mobility']) }}"
                                 @click="mobileMenuOpen = false"
@@ -718,7 +716,7 @@
                                 </svg>
                                 <span
                                     class="text-xs font-semibold text-blue-100 group-hover:text-white transition leading-snug">Global
-                                    Mobility & Scholarship</span>
+                                    Mobility</span>
                             </a>
                         </div>
                     </div>
