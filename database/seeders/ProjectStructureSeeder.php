@@ -91,6 +91,10 @@ class ProjectStructureSeeder extends Seeder
             ['name' => 'Global Mobility']
         );
 
-
+        // Default Initiative for testing / accomplishment reports
+        Initiative::updateOrCreate(
+            ['title' => 'Test Initiative', 'committee_id' => $edu->id],
+            ['description' => 'Default initiative for testing']
+        );
     }
 }

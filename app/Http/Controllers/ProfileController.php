@@ -217,12 +217,13 @@ class ProfileController extends Controller
                 'created_at' => $user->created_at->toIso8601String(),
             ],
             'kk_profile' => $kkProfile ? [
-                'birthdate' => $kkProfile->birthdate,
-                'gender' => $kkProfile->gender,
+                'birthdate' => $kkProfile->dob ?? null,
+                'gender' => $kkProfile->sex ?? null,
                 'registered_voter' => $kkProfile->registered_sk_voter,
                 'classification' => $kkProfile->youth_classification,
                 'status' => $kkProfile->status,
             ] : null,
+            'requests' => [],
         ];
 
         $filename = 'sk-portal-data-' . $user->id . '-' . now()->format('Y-m-d') . '.json';

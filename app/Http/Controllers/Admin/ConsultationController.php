@@ -11,11 +11,6 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
-
-use App\Models\HealthRequest;
-use App\Models\MedicineRequest;
-use App\Models\SilidKarununganRequest;
-use App\Models\SportsRegistration;
 use App\Models\CustomRequest;
 
 class ConsultationController extends Controller
@@ -283,6 +278,29 @@ class ConsultationController extends Controller
 
         return response()->json([
             'threads' => $threads
+        ]);
+    }
+
+    /**
+     * Fetch citizen requests for follow up.
+     */
+    public function citizenRequests(Request $request): JsonResponse
+    {
+        $requests = ConsultationRequest::where('user_id', auth()->id())
+            ->latest()
+            ->get()
+            ->map(function ($req) {
+                return [
+                    'id' => $req->id,
+                    'ref' => $req->tracking_id,
+                    'type' => 'Consultation Request',
+                    'title' => $req->subject,
+                    'status' => $req->status,
+                ];
+            });
+
+        return response()->json([
+            'requests' => $requests
         ]);
     }
 

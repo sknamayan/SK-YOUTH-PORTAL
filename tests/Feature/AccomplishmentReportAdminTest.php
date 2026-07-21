@@ -66,7 +66,13 @@ class AccomplishmentReportAdminTest extends TestCase
         Storage::fake('public');
         $this->seed(ProjectStructureSeeder::class);
         $user = User::factory()->create(['role' => 'admin']);
-        $report = AccomplishmentReport::first();
+        $initiative = Initiative::first();
+        $report = AccomplishmentReport::create([
+            'report_title' => 'Initial Report',
+            'initiative_id' => $initiative->id,
+            'file_path' => 'reports/test.pdf',
+            'reporting_period' => '2026-06-30',
+        ]);
 
         $response = $this->actingAs($user)->put("/admin/reports/{$report->id}", [
             'report_title' => 'Updated Report Title',
@@ -86,7 +92,13 @@ class AccomplishmentReportAdminTest extends TestCase
         Storage::fake('public');
         $this->seed(ProjectStructureSeeder::class);
         $user = User::factory()->create(['role' => 'admin']);
-        $report = AccomplishmentReport::first();
+        $initiative = Initiative::first();
+        $report = AccomplishmentReport::create([
+            'report_title' => 'To Delete Report',
+            'initiative_id' => $initiative->id,
+            'file_path' => 'reports/delete.pdf',
+            'reporting_period' => '2026-06-30',
+        ]);
 
         $response = $this->actingAs($user)->delete("/admin/reports/{$report->id}");
 

@@ -303,17 +303,12 @@ class ConsultationTest extends TestCase
     {
         $user = $this->createProfiledUser();
 
-        \App\Models\HealthRequest::create([
-            'first_name' => 'Jane',
-            'last_name' => 'Doe',
-            'age' => 20,
-            'gender' => 'Female',
-            'email' => $user->email,
-            'contact_number' => '09171234567',
-            'preferred_date' => now()->addDays(2),
-            'preferred_time' => '10:00:00',
-            'status' => 'pending',
-            'concerns' => 'Fever and cold symptoms'
+        ConsultationRequest::create([
+            'user_id' => $user->id,
+            'category' => 'General Concern',
+            'subject' => 'General Inquiry',
+            'message' => 'Fever and cold symptoms',
+            'status' => 'Open'
         ]);
 
         $response = $this->actingAs($user)->getJson(route('skonsulta.api.citizen-requests'));
@@ -324,8 +319,8 @@ class ConsultationTest extends TestCase
             ]
         ]);
         $response->assertJsonFragment([
-            'type' => 'Health Consultation',
-            'status' => 'pending'
+            'type' => 'Consultation Request',
+            'status' => 'Open'
         ]);
     }
 }

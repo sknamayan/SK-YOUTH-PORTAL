@@ -8,7 +8,20 @@ use Illuminate\View\View;
 class TrackRequestController extends Controller
 {
     /**
-     * Search for requests by email.
+     * Display tracking index or search results.
+     */
+    public function index(Request $request): View
+    {
+        $email = session('tracked_email');
+        $searched = !empty($email);
+        $requests = collect();
+        $results = collect();
+
+        return view('track.index', compact('requests', 'results', 'email', 'searched'));
+    }
+
+    /**
+     * Search for requests by email or tracking ID.
      */
     public function search(Request $request): View
     {

@@ -229,21 +229,7 @@ class StructureManagementController extends Controller
 
         // Delete associated predefined requests if a standard form route is matched
         if ($initiative->form_route) {
-            switch ($initiative->form_route) {
-                case 'forms.health.create':
-                case 'forms.mental-health.create':
-                    \App\Models\HealthRequest::query()->delete();
-                    break;
-                case 'forms.medicine.create':
-                    \App\Models\MedicineRequest::query()->delete();
-                    break;
-                case 'forms.silid.create':
-                    \App\Models\SilidKarununganRequest::query()->delete();
-                    break;
-                case 'forms.sports.create':
-                    \App\Models\SportsRegistration::query()->delete();
-                    break;
-            }
+            // Predefined models for health, medicine, silid, and sports deleted.
         }
 
         $initiative->forceDelete();

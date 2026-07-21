@@ -150,17 +150,14 @@ class UserApprovalTest extends TestCase
         User::factory()->create(['role' => 'user', 'is_approved' => false]);
         User::factory()->create(['role' => 'user', 'is_approved' => false]);
 
-        // Create a pending health request
-        \App\Models\HealthRequest::create([
-            'first_name' => 'Test',
-            'last_name' => 'User',
-            'age' => 25,
-            'gender' => 'Male',
-            'email' => 'test@namayan.local',
-            'contact_number' => '09123456789',
-            'preferred_date' => now()->addDays(2),
-            'preferred_time' => '10:00 AM',
-            'concerns' => 'Checkup',
+        // Create a pending custom request
+        $this->seed(\Database\Seeders\ProjectStructureSeeder::class);
+        $initiative = \App\Models\Initiative::first();
+
+        \App\Models\CustomRequest::create([
+            'initiative_id' => $initiative->id,
+            'user_id' => $admin->id,
+            'form_data' => ['concern' => 'Checkup'],
             'status' => 'pending'
         ]);
 

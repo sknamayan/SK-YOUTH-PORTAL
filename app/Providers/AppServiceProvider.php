@@ -3,11 +3,7 @@
 namespace App\Providers;
 
 use App\Models\CustomRequest;
-use App\Models\HealthRequest;
-use App\Models\MedicineRequest;
-use App\Models\SilidKarununganRequest;
 use App\Models\RegistrationResponse;
-use App\Models\SportsRegistration;
 use App\Models\User;
 use App\Models\Committee;
 use App\Models\Initiative;
@@ -68,12 +64,8 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // Register request observers
-        HealthRequest::observe(RequestObserver::class);
-        MedicineRequest::observe(RequestObserver::class);
-        SilidKarununganRequest::observe(RequestObserver::class);
         RegistrationResponse::observe(RequestObserver::class);
         CustomRequest::observe(RequestObserver::class);
-        SportsRegistration::observe(RequestObserver::class);
 
         // Register system audit observers
         User::observe(SystemAuditObserver::class);
@@ -141,10 +133,7 @@ class AppServiceProvider extends ServiceProvider
                     $pendingUserApprovalsCount = \App\Models\User::where('is_approved', false)->count();
                 }
 
-                $pendingServiceRequestsCount = \App\Models\HealthRequest::whereIn('status', ['pending', 'review'])->count()
-                    + \App\Models\MedicineRequest::whereIn('status', ['pending', 'review'])->count()
-                    + \App\Models\SilidKarununganRequest::whereIn('status', ['pending', 'review'])->count()
-                    + \App\Models\SportsRegistration::whereIn('status', ['pending', 'review'])->count();
+                $pendingServiceRequestsCount = \App\Models\CustomRequest::whereIn('status', ['pending', 'review'])->count();
 
                 $pendingKkProfilesCount = \App\Models\KkProfile::where('status', 'pending')->count();
 

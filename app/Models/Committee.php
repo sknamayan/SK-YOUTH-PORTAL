@@ -25,21 +25,7 @@ class Committee extends Model
                     \App\Models\CustomRequest::where('initiative_id', $initiative->id)->delete();
                     // Delete predefined forms associated
                     if ($initiative->form_route) {
-                        switch ($initiative->form_route) {
-                            case 'forms.health.create':
-                            case 'forms.mental-health.create':
-                                \App\Models\HealthRequest::query()->delete();
-                                break;
-                            case 'forms.medicine.create':
-                                \App\Models\MedicineRequest::query()->delete();
-                                break;
-                            case 'forms.silid.create':
-                                \App\Models\SilidKarununganRequest::query()->delete();
-                                break;
-                            case 'forms.sports.create':
-                                \App\Models\SportsRegistration::query()->delete();
-                                break;
-                        }
+                        // Predefined models deleted.
                     }
                     $initiative->forceDelete();
                 });
