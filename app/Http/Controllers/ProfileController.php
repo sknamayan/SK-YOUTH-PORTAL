@@ -33,6 +33,27 @@ class ProfileController extends Controller
             ->with($flashKey, $message);
     }
 
+    public function myRequests(Request $request): View
+    {
+        $user = auth()->user();
+        $email = $user->email;
+
+        $requests = \App\Models\CustomRequest::where('citizen_email', $email)
+            ->orWhere('email', $email)
+            ->latest()
+            ->get();
+
+        $kkProfile = \App\Models\KkProfile::where('user_id', $user->id)
+            ->orWhere('email', $email)
+            ->first();
+
+        $sportsRegistrations = \App\Models\SportsRegistration::where('email', $email)
+            ->latest()
+            ->get();
+
+        return view('profile.my-requests', compact('user', 'requests', 'kkProfile', 'sportsRegistrations'));
+    }
+
     public function edit(Request $request): View
     {
         $sessions = \Illuminate\Support\Facades\DB::table('sessions')
