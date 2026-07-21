@@ -31,7 +31,11 @@ class User extends Authenticatable
         'theme',
         'language',
         'notify_request_status',
+        'notify_request_status',
         'notify_announcements',
+        'otp_code',
+        'otp_expires_at',
+        'otp_attempts',
     ];
 
     /**
@@ -42,6 +46,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'otp_code',
     ];
 
     /**
@@ -53,6 +58,8 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'otp_expires_at' => 'datetime',
+            'otp_attempts' => 'integer',
             'password' => 'hashed',
             'is_approved' => 'boolean',
             'notify_request_status' => 'boolean',

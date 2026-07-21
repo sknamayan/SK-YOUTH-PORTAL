@@ -18,7 +18,13 @@ class SkOfficial extends Model
         'term',
         'sort_order',
         'is_active',
+        'committee_id',
     ];
+
+    public function committee(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Committee::class);
+    }
 
     protected $casts = [
         'is_active' => 'boolean',

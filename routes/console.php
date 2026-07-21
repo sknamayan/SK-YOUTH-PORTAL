@@ -16,3 +16,8 @@ Schedule::command('sk:archive-pending-requests --days=90')
 Schedule::command('sk:generate-lgu-monthly-report')
     ->monthlyOn(1, '06:00')
     ->withoutOverlapping();
+
+// Daily task to permanently purge soft-deleted items older than 30 days
+Schedule::command('sk:purge-soft-deleted --days=30')
+    ->dailyAt('03:00')
+    ->withoutOverlapping();

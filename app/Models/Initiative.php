@@ -12,7 +12,16 @@ class Initiative extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['committee_id', 'title', 'description', 'form_route', 'custom_fields', 'is_coming_soon', 'show_in_quick_forms', 'is_highlighted'];
+    protected $fillable = ['committee_id', 'title', 'description', 'picture_path', 'form_route', 'custom_fields', 'is_coming_soon', 'show_in_quick_forms', 'is_highlighted'];
+
+    public function coverPhotoUrl(): string
+    {
+        if ($this->picture_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->picture_path)) {
+            return asset('storage/' . $this->picture_path);
+        }
+
+        return asset('images/default-initiative-cover.jpg');
+    }
 
     protected function casts(): array
     {
