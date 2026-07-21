@@ -602,13 +602,13 @@
                           <!-- For Adults 18+ -->
                           <div x-show="isAdult" class="space-y-4">
                               <h3 class="text-xs font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-450 border-b border-slate-105 dark:border-slate-850 pb-2">
-                                  4. Adult Voter Verification
+                                  4. Valid goverment ID
                               </h3>
-                              <p class="text-[11px] text-slate-455 dark:text-slate-400">Because you are 18 years or older, please upload your Voter's ID or Comelec Voter Certificate for Barangay verification.</p>
+                              <p class="text-[11px] text-slate-455 dark:text-slate-400">Because you are 18 years or older, please upload your valid goverment ID for Barangay verification.</p>
 
                               <div>
                                   <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
-                                      Voter's ID / Comelec Voter Certificate <span class="text-rose-500">*</span>
+                                      UPLOAD YOUR VALID GOVERMENT ID, FOR SK VERIFICATION <span class="text-rose-500">*</span>
                                   </label>
                                   <input type="file" name="voter_cert" :required="isAdult"
                                          class="w-full text-xs text-slate-505 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:uppercase file:bg-blue-50 file:text-[#1e40af] dark:file:bg-slate-800 dark:file:text-blue-300 hover:file:bg-blue-100 dark:hover:file:bg-slate-755 transition cursor-pointer">

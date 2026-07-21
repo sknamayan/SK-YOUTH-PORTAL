@@ -904,14 +904,6 @@
                                 <input type="email" name="email" id="admin_reg_email" required value="{{ old('email') }}"
                                        class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-[#1e40af] transition font-semibold text-slate-850">
                             </div>
-                            <div>
-                                <label for="admin_reg_kk" class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">KK Profiling?</label>
-                                <select name="kk_profiling_status" id="admin_reg_kk" required
-                                        class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-[#1e40af] transition font-semibold text-slate-850">
-                                    <option value="Yes" {{ old('kk_profiling_status') === 'Yes' ? 'selected' : '' }}>Yes</option>
-                                    <option value="No" {{ old('kk_profiling_status', 'No') === 'No' ? 'selected' : '' }}>No</option>
-                                </select>
-                            </div>
                             <div class="sm:col-span-3">
                                 <label for="admin_reg_address" class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">Complete Address</label>
                                 <input type="text" name="address" id="admin_reg_address" required value="{{ old('address') }}"
@@ -926,7 +918,7 @@
                         <div x-show="adminAge >= 18" class="space-y-4">
                             <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2 font-display">Step 4: Valid Goverment ID</h4>
                             <div>
-                                <label for="admin_reg_voter" class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">UPLOAD YOUR VALID GOVERMENT ID, FOR SK VERIFICATION(Optional)</label>
+                                <label for="admin_reg_voter" class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">UPLOAD YOUR VALID GOVERMENT ID, FOR SK VERIFICATION</label>
                                 <input type="file" name="voter_cert" id="admin_reg_voter"
                                        class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-[9px] file:font-black file:uppercase file:bg-blue-50 file:text-[#1e40af] hover:file:bg-blue-100 cursor-pointer">
                             </div>
