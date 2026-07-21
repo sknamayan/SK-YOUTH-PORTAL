@@ -25,7 +25,7 @@ class SmartBookingForm extends Component
 
     /**
      * Lifecycle hook executed when $preferred_date is updated.
-     * Fetches all booked time slots for the selected date.
+     * Normalizes input date format using Carbon and fetches booked time slots.
      */
     public function updatedPreferredDate($value): void
     {
@@ -34,10 +34,17 @@ class SmartBookingForm extends Component
             return;
         }
 
-        // Query the appointments/requests table for booked time slots on the selected date
-        $this->bookedSlots = SilidKarununganRequest::whereDate('preferred_date', $value)
-            ->pluck('preferred_time')
-            ->toArray();
+        try {
+            // Normalize date format to 'Y-m-d' regardless of UI date picker input format
+            $formattedDate = \Carbon\Carbon::parse($value)->format('Y-m-d');
+
+            // Fetch all booked slots for the normalized date
+            $this->bookedSlots = SilidKarununganRequest::whereDate('preferred_date', $formattedDate)
+                ->pluck('preferred_time')
+                ->toArray();
+        } catch (\Throwable $e) {
+            $this->bookedSlots = [];
+        }
 
         // Reset selected time if it has already been booked for this date
         if (in_array($this->preferred_time, $this->bookedSlots, true)) {
