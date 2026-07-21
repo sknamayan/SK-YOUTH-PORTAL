@@ -2,11 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HealthRequest;
-use App\Models\MedicineRequest;
-use App\Models\SilidKarununganRequest;
-use App\Models\SportsRegistration;
-use App\Models\CustomRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,87 +33,6 @@ class ProfileController extends Controller
             ->with($flashKey, $message);
     }
 
-    /**
-     * Display the user's submissions across all 4 request models.
-     */
-    public function myRequests(Request $request)
-    {
-        if ($request->user()->canAccessDashboard()) {
-            return redirect()->route('dashboard.index');
-        }
-
-        $email = auth()->user()->email;
-
-        $health = HealthRequest::with('processedBy')->where('email', $email)->get()->map(function ($item) {
-            $item->type_label = 'Health Consultation';
-            $item->type_prefix = 'REQ';
-            $item->icon = '🏥';
-            $item->icon_name = 'health';
-            $item->detail = 'Appointment: ' . $item->preferred_date->format('M d, Y') . ' @ ' . $item->preferred_time;
-            return $item;
-        });
-
-        $medicine = MedicineRequest::with('processedBy')->where('email', $email)->get()->map(function ($item) {
-            $item->type_label = 'Pabili Medicine Services';
-            $item->type_prefix = 'REQ';
-            $item->icon = '💊';
-            $item->icon_name = 'medicine';
-            $item->detail = 'Address: ' . $item->complete_address;
-            return $item;
-        });
-
-        $silid = SilidKarununganRequest::with('processedBy')->where('email', $email)->get()->map(function ($item) {
-            $item->type_label = 'Silid Karunungan Booking';
-            $item->type_prefix = 'REQ';
-            $item->icon = '📚';
-            $item->icon_name = 'education';
-            $item->detail = 'Schedule: ' . $item->preferred_date->format('M d, Y') . ' @ ' . $item->preferred_time;
-            return $item;
-        });
-
-        $sports = SportsRegistration::with('processedBy')->where('email', $email)->get()->map(function ($item) {
-            $item->type_label = 'Sports Registration';
-            $item->type_prefix = 'REQ';
-            $item->icon = '⚽';
-            $item->icon_name = 'sports';
-            $item->detail = 'Sport: ' . $item->sport . ' (Team: ' . ($item->team_name ?? 'None') . ')';
-            return $item;
-        });
-
-        $custom = CustomRequest::with('processedBy')->where('email', $email)->get()->map(function ($item) {
-            $item->type_label = $item->initiative ? $item->initiative->title : 'Custom Request';
-            $item->type_prefix = 'REQ';
-            $item->icon = '📝';
-            $item->icon_name = 'forms';
-            $item->detail = 'Form Submission for ' . ($item->initiative ? $item->initiative->title : 'Initiative');
-            return $item;
-        });
-
-        $results = collect()
-            ->concat($health)
-            ->concat($medicine)
-            ->concat($silid)
-            ->concat($sports)
-            ->concat($custom)
-            ->sortByDesc('created_at');
-
-        // Calculate counts
-        $total = $results->count();
-        $pending = $results->whereIn('status', ['pending', 'review'])->count();
-        $approved = $results->where('status', 'approved')->count();
-        $declined = $results->where('status', 'declined')->count();
-
-        // Get KK Profile: query by user_id first, then fallback to email
-        $profile = \App\Models\KkProfile::where('user_id', auth()->id())
-            ->orWhere('email', $email)
-            ->first();
-
-        return view('profile.my-requests', compact('results', 'total', 'pending', 'approved', 'declined', 'profile'));
-    }
-
-    /**
-     * Display the user's profile edit forms.
-     */
     public function edit(Request $request): View
     {
         $sessions = \Illuminate\Support\Facades\DB::table('sessions')
@@ -126,7 +40,6 @@ class ProfileController extends Controller
             ->orderBy('last_activity', 'desc')
             ->get()
             ->map(function ($session) {
-                // Parse user agent
                 $ua = $session->user_agent;
                 $browser = 'Unknown Browser';
                 $platform = 'Unknown OS';
@@ -170,9 +83,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Update the user's basic profile information.
-     */
     public function updateInfo(Request $request): RedirectResponse
     {
         $user = $request->user();
@@ -208,9 +118,6 @@ class ProfileController extends Controller
         return $this->redirectToSettings($request, 'account', 'Profile information updated successfully.');
     }
 
-    /**
-     * Update the user's preferences.
-     */
     public function updatePreferences(Request $request): RedirectResponse
     {
         $user = $request->user();
@@ -236,9 +143,6 @@ class ProfileController extends Controller
         return $this->redirectToSettings($request, $defaultTab, 'Preferences updated successfully.');
     }
 
-    /**
-     * Update the user's profile avatar.
-     */
     public function updateAvatar(Request $request): RedirectResponse
     {
         $user = $request->user();
@@ -277,9 +181,6 @@ class ProfileController extends Controller
         return back()->with('error', 'Failed to upload profile picture.');
     }
 
-    /**
-     * Logout other browser sessions.
-     */
     public function logoutOtherSessions(Request $request): RedirectResponse
     {
         $request->validate([
@@ -294,9 +195,6 @@ class ProfileController extends Controller
         return $this->redirectToSettings($request, 'security', 'Logged out of other sessions successfully.');
     }
 
-    /**
-     * Download the user's data (DPA/GDPR export).
-     */
     public function downloadData(Request $request)
     {
         $user = $request->user();
@@ -305,12 +203,6 @@ class ProfileController extends Controller
         $kkProfile = \App\Models\KkProfile::where('user_id', $user->id)
             ->orWhere('email', $email)
             ->first();
-
-        $health = HealthRequest::where('email', $email)->get();
-        $medicine = MedicineRequest::where('email', $email)->get();
-        $silid = SilidKarununganRequest::where('email', $email)->get();
-        $sports = SportsRegistration::where('email', $email)->get();
-        $custom = CustomRequest::where('email', $email)->get();
 
         $data = [
             'exported_at' => now()->toIso8601String(),
@@ -331,39 +223,6 @@ class ProfileController extends Controller
                 'classification' => $kkProfile->youth_classification,
                 'status' => $kkProfile->status,
             ] : null,
-            'requests' => [
-                'health_consultations' => $health->map(fn($item) => [
-                    'reference_number' => $item->reference_number,
-                    'preferred_date' => $item->preferred_date ? $item->preferred_date->toDateString() : null,
-                    'status' => $item->status,
-                    'created_at' => $item->created_at->toIso8601String(),
-                ]),
-                'medicine_pabili' => $medicine->map(fn($item) => [
-                    'reference_number' => $item->reference_number,
-                    'address' => $item->complete_address,
-                    'status' => $item->status,
-                    'created_at' => $item->created_at->toIso8601String(),
-                ]),
-                'silid_karunungan_bookings' => $silid->map(fn($item) => [
-                    'reference_number' => $item->reference_number,
-                    'preferred_date' => $item->preferred_date ? $item->preferred_date->toDateString() : null,
-                    'status' => $item->status,
-                    'created_at' => $item->created_at->toIso8601String(),
-                ]),
-                'sports_siklab_registrations' => $sports->map(fn($item) => [
-                    'reference_number' => $item->reference_number,
-                    'sport' => $item->sport,
-                    'team_name' => $item->team_name,
-                    'status' => $item->status,
-                    'created_at' => $item->created_at->toIso8601String(),
-                ]),
-                'custom_forms' => $custom->map(fn($item) => [
-                    'reference_number' => $item->reference_number,
-                    'initiative' => $item->initiative ? $item->initiative->title : null,
-                    'status' => $item->status,
-                    'created_at' => $item->created_at->toIso8601String(),
-                ]),
-            ],
         ];
 
         $filename = 'sk-portal-data-' . $user->id . '-' . now()->format('Y-m-d') . '.json';
@@ -375,9 +234,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Update the user's password.
-     */
     public function updatePassword(Request $request): RedirectResponse
     {
         $user = $request->user();
@@ -393,9 +249,6 @@ class ProfileController extends Controller
         return $this->redirectToSettings($request, 'security', 'Password changed successfully.');
     }
 
-    /**
-     * Delete the user's account.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validate([
@@ -414,9 +267,7 @@ class ProfileController extends Controller
         }
 
         Auth::logout();
-
         $user->delete();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

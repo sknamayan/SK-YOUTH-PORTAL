@@ -24,16 +24,11 @@ class StatusChangedMail extends Mailable implements ShouldQueue
     {
         $this->requestModel = $requestModel;
 
-        $basename = class_basename($requestModel);
+        // Kinukuha ang reference number o gumagawa ng default format
         $this->referenceNumber = $requestModel->reference_number ?? ('SK-REQ-' . str_pad($requestModel->id, 5, '0', STR_PAD_LEFT));
 
-        $this->typeLabel = match($basename) {
-            'HealthRequest' => 'Health Consultation / Mental Health Support',
-            'MedicineRequest' => 'Pabili Medicine Services',
-            'SilidKarununganRequest' => 'Silid Karunungan Booking',
-            'SportsRegistration' => 'Sports Tournament Registration',
-            default => 'General Request'
-        };
+        // Ginawang static 'General Request' dahil inalis na ang mga specific models
+        $this->typeLabel = 'General Request';
     }
 
     /**

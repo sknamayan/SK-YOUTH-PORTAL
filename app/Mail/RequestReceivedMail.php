@@ -27,13 +27,6 @@ class RequestReceivedMail extends Mailable implements ShouldQueue
         $basename = class_basename($requestModel);
         $this->referenceNumber = $requestModel->reference_number ?? ('SK-REQ-' . str_pad($requestModel->id, 5, '0', STR_PAD_LEFT));
 
-        $this->typeLabel = match($basename) {
-            'HealthRequest' => 'Health Consultation / Mental Health Support',
-            'MedicineRequest' => 'Pabili Medicine Services',
-            'SilidKarununganRequest' => 'Silid Karunungan Booking',
-            'SportsRegistration' => 'Sports Tournament Registration',
-            default => 'General Request'
-        };
     }
 
     /**

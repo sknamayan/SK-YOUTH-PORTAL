@@ -22,18 +22,10 @@ use Illuminate\Support\Facades\DB;
 class RequestManagementService
 {
     private const TYPE_MAP = [
-        'health' => HealthRequest::class,
-        'medicine' => MedicineRequest::class,
-        'silid' => SilidKarununganRequest::class,
-        'sports' => SportsRegistration::class,
         'custom' => CustomRequest::class,
     ];
 
     private const TYPE_LABELS = [
-        'health' => 'Health Consultation',
-        'medicine' => 'Pabili Medicine Services',
-        'silid' => 'Silid Karunungan Booking',
-        'sports' => 'Sports Registration',
         'custom' => 'Custom Request',
     ];
 

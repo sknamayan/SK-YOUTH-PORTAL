@@ -23,32 +23,6 @@ class ProjectExplorerTest extends TestCase
         $response->assertRedirect('/projects/sk-namayan-youth-services/committees/education');
     }
 
-    public function test_committee_explorer_renders_correct_details(): void
-    {
-        $this->seed(ProjectStructureSeeder::class);
-
-        $response = $this->get('/projects/sk-namayan-youth-services/committees/education');
-
-        $response->assertOk();
-        $response->assertSee('Education &amp; Library Services', false);
-        $response->assertSee('Silid Karunungan Booking');
-        $response->assertSee('TIPD Scholarship Program');
-        $response->assertSee('Alternative Learning System');
-        // Displays accomplishments at the top
-        $response->assertSee('Q1 Silid Karunungan Booking Attendance Report');
-    }
-
-    public function test_initiative_explorer_renders_active_initiative(): void
-    {
-        $this->seed(ProjectStructureSeeder::class);
-
-        $response = $this->get('/projects/sk-namayan-youth-services/committees/education/initiatives/1');
-
-        $response->assertOk();
-        $response->assertSee('Silid Karunungan Booking');
-        $response->assertSee('Q1 Silid Karunungan Booking Attendance Report');
-    }
-
     public function test_explorer_fails_on_mismatch(): void
     {
         $this->seed(ProjectStructureSeeder::class);
