@@ -76,7 +76,7 @@
             <div class="bg-white border border-slate-100 rounded-3xl p-6 md:p-8 shadow-sm flex items-start gap-6 relative overflow-hidden">
                 <div class="space-y-3 relative z-10">
                     <span class="bg-blue-50 text-[#1e40af] border border-blue-100 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
-                        Committee Portal
+                        10 Centers of Youth Participation Portal
                     </span>
                     <h1 class="text-2xl md:text-3xl font-black text-slate-800 font-display uppercase tracking-tight">{{ $activeCommittee->name }}</h1>
                     <p class="text-xs text-slate-500 leading-relaxed font-medium">

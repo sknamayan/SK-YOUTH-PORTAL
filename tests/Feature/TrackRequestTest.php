@@ -17,29 +17,33 @@ class TrackRequestTest extends TestCase
         $response->assertSee('Track Your Requests');
     }
 
-    public function test_track_search_invalid_reference_or_nonexistent_email(): void
+    public function test_track_search_by_email_fails_validation(): void
+    {
+        // Searching with an email parameter should fail validation as reference_number is now required
+        $response = $this->post('/track', [
+            'email' => 'user@example.com',
+        ]);
+
+        $response->assertSessionHasErrors('reference_number');
+    }
+
+    public function test_track_search_by_reference_number(): void
     {
         $response = $this->post('/track', [
-            'email' => 'nonexistent@example.com',
+            'reference_number' => 'SK-REQ-99999',
         ]);
 
         $response->assertStatus(200);
         $response->assertSee('No requests found');
-
-        $response2 = $this->post('/track', [
-            'email' => 'SK-REQ-99999',
-        ]);
-
-        $response2->assertStatus(200);
-        $response2->assertSee('No requests found');
+        $response->assertSee('SK-REQ-99999');
     }
 
     public function test_track_search_validation(): void
     {
         $response = $this->post('/track', [
-            'email' => '',
+            'reference_number' => '',
         ]);
 
-        $response->assertSessionHasErrors('email');
+        $response->assertSessionHasErrors('reference_number');
     }
 }

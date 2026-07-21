@@ -12,25 +12,25 @@ class TrackRequestController extends Controller
      */
     public function index(Request $request): View
     {
-        $email = session('tracked_email');
-        $searched = !empty($email);
+        $referenceNumber = session('tracked_reference_number');
+        $searched = !empty($referenceNumber);
         $requests = collect();
         $results = collect();
 
-        return view('track.index', compact('requests', 'results', 'email', 'searched'));
+        return view('track.index', compact('requests', 'results', 'referenceNumber', 'searched'));
     }
 
     /**
-     * Search for requests by email or tracking ID.
+     * Search for requests exclusively by reference number.
      */
     public function search(Request $request): View
     {
         $request->validate([
-            'email' => ['required', 'string'],
+            'reference_number' => ['required', 'string'],
         ]);
 
-        $email = $request->input('email');
-        session(['tracked_email' => $email]);
+        $referenceNumber = $request->input('reference_number');
+        session(['tracked_reference_number' => $referenceNumber]);
 
         return $this->index($request);
     }
@@ -48,10 +48,12 @@ class TrackRequestController extends Controller
             return abort(403, 'Only pending requests can be cancelled.');
         }
 
-        $email = $req->email;
+        $referenceNumber = $req->reference_number ?? null;
         $req->delete();
 
-        session(['tracked_email' => $email]);
+        if ($referenceNumber) {
+            session(['tracked_reference_number' => $referenceNumber]);
+        }
 
         return redirect()->route('track.index')->with('success', 'Your pending request was successfully cancelled and withdrawn.');
     }

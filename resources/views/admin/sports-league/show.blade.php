@@ -118,10 +118,7 @@
                                 <span class="block text-slate-400 font-bold uppercase tracking-wider mb-1">Complete Address</span>
                                 <span class="text-slate-850 font-semibold text-sm">{{ $req->address ?? 'N/A' }}</span>
                             </div>
-                            <div>
-                                <span class="block text-slate-400 font-bold uppercase tracking-wider mb-1">Registered in KK Profiling?</span>
-                                <span class="text-slate-850 font-semibold text-sm">{{ $req->kk_profiling_status ?? 'N/A' }}</span>
-                            </div>
+
                             <div>
                                 <span class="block text-slate-400 font-bold uppercase tracking-wider mb-1">Consent Waiver Agreement</span>
                                 <span class="text-slate-850 font-semibold text-sm">{{ $req->consent_waiver ? 'Agreed' : 'Not Agreed' }}</span>

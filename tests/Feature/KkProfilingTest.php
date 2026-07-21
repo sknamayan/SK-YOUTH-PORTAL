@@ -670,8 +670,8 @@ class KkProfilingTest extends TestCase
     {
         $citizen = User::factory()->create(['role' => 'user', 'is_approved' => true]);
 
-        // Accessing sports registration should redirect to profile creation
-        $response = $this->actingAs($citizen)->get('/forms/sports-registration');
+        // Accessing KK-protected service (e.g. SKonsulta) should redirect to profile creation
+        $response = $this->actingAs($citizen)->get('/skonsulta');
         $response->assertRedirect('/profile/profiling');
         $response->assertSessionHas('error');
     }
@@ -742,8 +742,8 @@ class KkProfilingTest extends TestCase
         $this->assertNotNull($profile);
         $this->assertEquals('pending', $profile->status);
 
-        // Cannot access sports registration (redirected back to my-requests with warning)
-        $response = $this->actingAs($citizen)->get('/forms/sports-registration');
+        // Cannot access KK-protected service (redirected back to my-requests with warning)
+        $response = $this->actingAs($citizen)->get('/skonsulta');
         $response->assertRedirect('/profile/my-requests');
         $response->assertSessionHas('error', 'Your KK Profiling registry is currently pending review by our desk officers. All services will be unlocked once approved.');
 
@@ -755,8 +755,8 @@ class KkProfilingTest extends TestCase
         $this->assertEquals('approved', $profile->status);
 
         // Citizen can now access forms successfully
-        $responseSuccess = $this->actingAs($citizen)->get('/forms/sports-registration');
-        $responseSuccess->assertOk();
+        $responseSuccess = $this->actingAs($citizen)->get('/skonsulta');
+        $responseSuccess->assertRedirect(route('profile.my-requests', ['skonsulta' => 'open']));
     }
 
     public function test_citizen_can_resubmit_profiling_if_declined(): void
@@ -796,7 +796,7 @@ class KkProfilingTest extends TestCase
         $this->assertEquals('declined', $profile->status);
 
         // Citizen tries to access forms - blocked with declined warning
-        $responseBlock = $this->actingAs($citizen)->get('/forms/sports-registration');
+        $responseBlock = $this->actingAs($citizen)->get('/skonsulta');
         $responseBlock->assertRedirect('/profile/my-requests');
         $responseBlock->assertSessionHas('error', 'Your KK Profiling registry has been declined. Please re-submit your profiling details.');
 

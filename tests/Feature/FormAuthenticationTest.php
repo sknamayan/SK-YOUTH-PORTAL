@@ -50,11 +50,9 @@ class FormAuthenticationTest extends TestCase
             $response->assertRedirect(route('landing', ['form' => $formName]));
         }
 
-        // 1. Without KK profile, it should redirect to /profile/profiling
+        // Sports registration form can be accessed directly without KK profile
         $responseNoProfile = $this->actingAs($user)->get('/forms/sports-registration');
-        $responseNoProfile->assertRedirect('/profile/profiling');
-
-        // 2. With approved KK profile, it should load successfully (200)
+        $responseNoProfile->assertStatus(200);
         \App\Models\KkProfile::create([
             'surname' => 'Doe',
             'first_name' => 'Jane',

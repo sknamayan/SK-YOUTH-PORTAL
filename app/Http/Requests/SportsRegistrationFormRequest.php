@@ -58,7 +58,6 @@ class SportsRegistrationFormRequest extends FormRequest
             'email' => ['required', 'email', 'max:255'],
             'contact_number' => ['required', 'string', 'max:20'],
             'address' => ['required', 'string', 'max:500'],
-            'kk_profiling_status' => ['required', 'in:Yes,No'],
             'profile_picture' => ['required', 'file', 'image', 'max:5120'], // 5MB max
             'team_name' => ['nullable', 'string', 'max:255'],
             'remarks' => ['nullable', 'string', 'max:1000'],
@@ -113,7 +112,6 @@ class SportsRegistrationFormRequest extends FormRequest
             'email' => 'Email Address',
             'contact_number' => 'Contact Number',
             'address' => 'Complete Address',
-            'kk_profiling_status' => 'KK Profiling Status',
             'profile_picture' => 'Profile Picture',
             'team_name' => 'Team Name',
             'guardian_first_name' => 'Guardian First Name',

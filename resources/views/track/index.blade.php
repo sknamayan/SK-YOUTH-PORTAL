@@ -6,7 +6,7 @@
     <div class="text-center mb-10">
         <span class="text-xs font-black tracking-widest text-[#1e40af] uppercase font-display block">Citizens Area</span>
         <h1 class="text-3xl font-black tracking-tight text-slate-800 font-display mt-1.5 uppercase">Track Your Requests</h1>
-        <p class="text-xs text-slate-400 mt-2 max-w-md mx-auto">Enter the email address or request reference number (e.g., SK-HEA-00033) to view historical and active request statuses.</p>
+        <p class="text-xs text-slate-400 mt-2 max-w-md mx-auto">Enter your request reference number (e.g., SK-REQ-00033) to view historical and active request statuses.</p>
     </div>
 
     <!-- Search Input Card -->
@@ -16,13 +16,13 @@
             <div class="flex-1">
                 <input 
                     type="text" 
-                    name="email" 
-                    value="{{ old('email', $email) }}" 
-                    placeholder="Enter email address or reference number..." 
+                    name="reference_number" 
+                    value="{{ old('reference_number', $referenceNumber ?? '') }}" 
+                    placeholder="Enter reference number (e.g., SK-REQ-00033)..." 
                     required 
                     class="field focus:ring-4 focus:ring-blue-600/10"
                 >
-                @error('email')
+                @error('reference_number')
                     <span class="text-rose-600 text-xs font-semibold mt-1 block">{{ $message }}</span>
                 @enderror
             </div>
@@ -33,14 +33,14 @@
     <!-- Results list -->
     @if($searched)
         <div class="space-y-4">
-            <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest font-display mb-2">Search Results for: <span class="text-slate-700 font-mono">{{ $email }}</span></h2>
+            <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest font-display mb-2">Search Results for: <span class="text-slate-700 font-mono">{{ $referenceNumber }}</span></h2>
             
             @if($results->isEmpty())
                 <!-- Empty State -->
                 <div class="card text-center py-12 space-y-4 border-2 border-dashed border-slate-200">
                     <div>
                         <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wide">No requests found</h3>
-                        <p class="text-xs text-slate-400 mt-1 max-w-xs mx-auto">We couldn't find any filed submissions matching the query <span class="font-mono text-slate-600">{{ $email }}</span>.</p>
+                        <p class="text-xs text-slate-400 mt-1 max-w-xs mx-auto">We couldn't find any filed submissions matching the reference number <span class="font-mono text-slate-600">{{ $referenceNumber }}</span>.</p>
                     </div>
                     <div class="pt-2">
                         <a href="/" class="btn-primary text-xs">File a New Request</a>

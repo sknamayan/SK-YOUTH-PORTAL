@@ -104,15 +104,7 @@
                                    class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-[#1e40af] transition font-semibold text-slate-800">
                         </div>
 
-                        <!-- KK Profiling Status -->
-                        <div>
-                            <label for="kk_profiling_status" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Registered in KK Profiling?</label>
-                            <select name="kk_profiling_status" id="kk_profiling_status" required 
-                                    class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-[#1e40af] transition font-semibold text-slate-800">
-                                <option value="Yes" {{ old('kk_profiling_status', $req->kk_profiling_status) === 'Yes' ? 'selected' : '' }}>Yes</option>
-                                <option value="No" {{ old('kk_profiling_status', $req->kk_profiling_status) === 'No' ? 'selected' : '' }}>No</option>
-                            </select>
-                        </div>
+
 
                         <!-- Address -->
                         <div class="sm:col-span-3">

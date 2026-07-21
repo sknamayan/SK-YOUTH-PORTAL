@@ -151,7 +151,6 @@ class SportsLeagueController extends Controller
             'position' => ['required', 'string', 'max:255'],
             'remarks' => ['nullable', 'string'],
             'address' => ['required', 'string', 'max:255'],
-            'kk_profiling_status' => ['required', 'string', 'in:Yes,No'],
             'health_declaration' => ['nullable', 'string'],
             'consent_waiver' => ['required', 'boolean'],
             'profile_picture' => ['nullable', 'image', 'max:2048'],

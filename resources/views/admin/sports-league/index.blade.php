@@ -515,10 +515,7 @@
                                         <span class="block text-slate-400 font-bold uppercase tracking-wider mb-0.5">Age / Gender</span>
                                         <span class="text-slate-800 font-semibold" x-text="selectedReq.age + ' yrs / ' + selectedReq.gender"></span>
                                     </div>
-                                    <div>
-                                        <span class="block text-slate-400 font-bold uppercase tracking-wider mb-0.5">KK Profiling Status</span>
-                                        <span class="text-slate-800 font-semibold" x-text="'Registered: ' + selectedReq.kk_profiling_status"></span>
-                                    </div>
+
                                     <div class="col-span-2">
                                         <span class="block text-slate-400 font-bold uppercase tracking-wider mb-0.5">Complete Address</span>
                                         <span class="text-slate-800 font-semibold" x-text="selectedReq.address"></span>
@@ -1101,14 +1098,7 @@
                                 <input type="email" name="email" id="edit_email" required x-model="editReq.email"
                                        class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-[#1e40af] transition font-semibold text-slate-855">
                             </div>
-                            <div>
-                                <label for="edit_kk" class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">KK Profiling Status</label>
-                                <select name="kk_profiling_status" id="edit_kk" required x-model="editReq.kk_profiling_status"
-                                        class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-[#1e40af] transition font-semibold text-slate-855">
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </div>
+
                             <div class="sm:col-span-3">
                                 <label for="edit_address" class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">Complete Address</label>
                                 <input type="text" name="address" id="edit_address" required x-model="editReq.address"

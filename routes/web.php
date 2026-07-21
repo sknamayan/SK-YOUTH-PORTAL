@@ -118,10 +118,8 @@ Route::middleware(['auth', 'throttle:forms'])->group(function () {
         ]);
     })->name('api.silid.booked-slots');
 
-    Route::middleware('kk.profile.completed')->group(function () {
-        Route::get('/forms/sports-registration', [\App\Http\Controllers\SportsRegistrationController::class, 'showRegistrationForm'])->name('forms.sports.create');
-        Route::post('/forms/sports-registration', [\App\Http\Controllers\SportsRegistrationController::class, 'submitRegistration'])->name('forms.sports.store');
-    });
+    Route::get('/forms/sports-registration', [\App\Http\Controllers\SportsRegistrationController::class, 'showRegistrationForm'])->name('forms.sports.create');
+    Route::post('/forms/sports-registration', [\App\Http\Controllers\SportsRegistrationController::class, 'submitRegistration'])->name('forms.sports.store');
 });
 
 // Authenticated User Profile Routes
