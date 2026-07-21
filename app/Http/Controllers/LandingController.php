@@ -21,7 +21,7 @@ class LandingController extends Controller
              'governance' => ['label' => 'GOVERNANCE'],
              'active-citizenship' => ['label' => 'ACTIVE CITIZENSHIP'],
              'social-inclusion' => ['label' => 'SOCIAL INCLUSION'],
-             'peace-building' => ['label' => 'PEACE BUILDING'],
+             'peace-building' => ['label' => 'PEACE BUILDING, DISASTER RISK REDUCTION MANAGEMENT '],
              'environment' => ['label' => 'ENVIRONMENT'],
              'youth-employment' => ['label' => 'YOUTH EMPLOYMENT & EMPOWERMENT'],
              'agriculture' => ['label' => 'AGRICULTURE'],
