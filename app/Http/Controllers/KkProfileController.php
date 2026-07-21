@@ -269,6 +269,12 @@ class KkProfileController extends Controller
      */
     public function selfStore(Request $request)
     {
+        \Illuminate\Support\Facades\Log::info('KK Profiling selfStore endpoint hit', [
+            'user_id' => auth()->id(),
+            'email' => auth()->user()->email,
+            'input_keys' => array_keys($request->all()),
+        ]);
+
         // Check if citizen has already completed profiling
         $existingProfile = KkProfile::where('user_id', auth()->id())
             ->orWhere('email', auth()->user()->email)
@@ -284,38 +290,45 @@ class KkProfileController extends Controller
 
         $this->prepareInputsForUppercase($request);
 
-        $validated = $request->validate([
-            // Step 1: Personal Details
-            'surname' => ['required', 'string', 'max:255'],
-            'first_name' => ['required', 'string', 'max:255'],
-            'middle_name' => ['required', 'string', 'max:50'],
-            'ext' => ['nullable', 'string', 'max:10'],
-            'age' => ['required', 'integer', 'min:6', 'max:39'],
-            'sex' => ['required', 'in:Male,Female'],
-            'gender' => ['nullable', 'string', 'max:255'],
-            'dob' => ['required', 'date', 'before_or_equal:today'],
-            'civil_status' => ['required', 'in:Single,Married,Widowed,Divorced,Separated'],
-            'purok_id' => ['required', 'exists:puroks,id'],
-            'street_address' => ['nullable', 'string', 'max:500'],
-            'youth_classification' => ['required', 'in:ISY,OSY,WY'],
-            'contact_number' => ['required', 'string', 'max:20'],
-            'email' => ['required', 'email', 'max:255'],
+        try {
+            $validated = $request->validate([
+                // Step 1: Personal Details
+                'surname' => ['required', 'string', 'max:255'],
+                'first_name' => ['required', 'string', 'max:255'],
+                'middle_name' => ['required', 'string', 'max:50'],
+                'ext' => ['nullable', 'string', 'max:10'],
+                'age' => ['required', 'integer', 'min:6', 'max:39'],
+                'sex' => ['required', 'in:Male,Female'],
+                'gender' => ['nullable', 'string', 'max:255'],
+                'dob' => ['required', 'date', 'before_or_equal:today'],
+                'civil_status' => ['required', 'in:Single,Married,Widowed,Divorced,Separated'],
+                'purok_id' => ['required', 'exists:puroks,id'],
+                'street_address' => ['nullable', 'string', 'max:500'],
+                'youth_classification' => ['required', 'in:ISY,OSY,WY'],
+                'contact_number' => ['required', 'string', 'max:20'],
+                'email' => ['required', 'email', 'max:255'],
 
-            // Step 2: Affiliations
-            'registered_sk_voter' => ['required', 'boolean'],
-            'registered_national_voter' => ['required', 'boolean'],
-            'attended_kk_assembly' => ['required', 'boolean'],
-            'part_of_youth_org' => ['required', 'boolean'],
-            'youth_org_name' => ['required_if:part_of_youth_org,1', 'nullable', 'string', 'max:255'],
-            'interested_in_joining' => ['required', 'boolean'],
+                // Step 2: Affiliations
+                'registered_sk_voter' => ['required', 'boolean'],
+                'registered_national_voter' => ['required', 'boolean'],
+                'attended_kk_assembly' => ['required', 'boolean'],
+                'part_of_youth_org' => ['required', 'boolean'],
+                'youth_org_name' => ['required_if:part_of_youth_org,1', 'nullable', 'string', 'max:255'],
+                'interested_in_joining' => ['required', 'boolean'],
 
-            // Step 3: Inclusivity & Education
-            'part_of_lgbtqia' => ['required', 'boolean'],
-            'pwd' => ['required', 'boolean'],
-            'registered_disability' => ['required_if:pwd,1', 'nullable', 'string', 'max:255'],
-            'highest_educational_attainment' => ['required', 'string', 'max:255'],
-            'consent_given' => ['required', 'accepted'],
-        ]);
+                // Step 3: Inclusivity & Education
+                'part_of_lgbtqia' => ['required', 'boolean'],
+                'pwd' => ['required', 'boolean'],
+                'registered_disability' => ['required_if:pwd,1', 'nullable', 'string', 'max:255'],
+                'highest_educational_attainment' => ['required', 'string', 'max:255'],
+                'consent_given' => ['required', 'accepted'],
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Illuminate\Support\Facades\Log::error('KK Profiling selfStore Validation Failed', [
+                'errors' => $e->errors(),
+            ]);
+            throw $e;
+        }
 
         // Force user's own email to prevent spoofing
         $validated['email'] = auth()->user()->email;
@@ -331,9 +344,12 @@ class KkProfileController extends Controller
 
         $profile = KkProfile::create(array_merge($validated, [
             'processed_by' => auth()->id(),
+            'user_id' => auth()->id(),
             'status' => 'pending',
             'category' => $category,
         ]));
+
+        \Illuminate\Support\Facades\Log::info('KK Profiling Created Successfully', ['profile_id' => $profile->id]);
 
         // Record Activity Log
         ActivityLog::record('kk_profile_created', $profile, [
