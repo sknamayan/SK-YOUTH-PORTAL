@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-8 py-12 flex-1">
-    
+
     @php
         $genderOptions = [
             'Male' => 'Male',
             'Female' => 'Female',
             'Prefer not to say' => 'Prefer not to say'
         ];
-        
+
         $sportOptions = [
             'Basketball' => 'Basketball',
             'Volleyball' => 'Volleyball',
@@ -33,14 +33,6 @@
             }
         }
 
-        $typeLabel = match($type) {
-            'health' => 'Health Consultation',
-            'medicine' => 'Pabili Medicine Services',
-            'silid' => 'Silid Karunungan Booking',
-            'sports' => 'Sports Registration',
-            'custom' => ($req->initiative ? $req->initiative->title : 'Custom Request'),
-            default => 'Request'
-        };
     @endphp
 
     <div class="mb-6">
@@ -49,9 +41,9 @@
         </a>
     </div>
 
-    <x-form-card 
-        title="Edit {{ $typeLabel }}" 
-        subtitle="Modify your pending request details. Changes will be reflected instantly." 
+    <x-form-card
+        title="Edit {{ $typeLabel }}"
+        subtitle="Modify your pending request details. Changes will be reflected instantly."
         action="{{ route('track.update', [$type, $req->id]) }}"
     >
         @method('PUT')
@@ -158,12 +150,12 @@
                             $fieldName = $field['name'] ?? '';
                             $val = $req->custom_fields[$fieldName] ?? '';
                         @endphp
-                        <x-form-input 
-                            label="{{ $field['label'] }}" 
-                            name="custom_fields[{{ $fieldName }}]" 
-                            type="{{ $field['type'] ?? 'text' }}" 
-                            required="{{ ($field['required'] ?? false) ? 'true' : 'false' }}" 
-                            placeholder="{{ $field['placeholder'] ?? '' }}" 
+                        <x-form-input
+                            label="{{ $field['label'] }}"
+                            name="custom_fields[{{ $fieldName }}]"
+                            type="{{ $field['type'] ?? 'text' }}"
+                            required="{{ ($field['required'] ?? false) ? 'true' : 'false' }}"
+                            placeholder="{{ $field['placeholder'] ?? '' }}"
                             value="{{ $val }}"
                         />
                     @endforeach

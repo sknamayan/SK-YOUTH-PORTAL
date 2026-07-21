@@ -39,44 +39,6 @@ class CalendarController extends Controller
 
         $events = [];
 
-        // 1. Health Consultation Requests
-        $health = HealthRequest::whereBetween('preferred_date', [$startDate, $endDate])->get();
-        foreach ($health as $item) {
-            $events[] = [
-                'id' => 'health_' . $item->id,
-                'title' => 'Health Consult: ' . $item->first_name . ' ' . $item->last_name,
-                'start' => $item->preferred_date->format('Y-m-d') . 'T' . ($item->preferred_time ?? '09:00:00'),
-                'url' => route('dashboard.requests.show', ['health', $item->id]),
-                'backgroundColor' => '#eff6ff',
-                'borderColor' => '#3b82f6',
-                'textColor' => '#1d4ed8',
-                'extendedProps' => [
-                    'type' => 'health',
-                    'status' => $item->status,
-                    'time' => $item->preferred_time
-                ]
-            ];
-        }
-
-        // 2. Silid Karunungan Booking Requests
-        $silid = SilidKarununganRequest::whereBetween('preferred_date', [$startDate, $endDate])->get();
-        foreach ($silid as $item) {
-            $events[] = [
-                'id' => 'silid_' . $item->id,
-                'title' => 'Study Room Booking: ' . $item->requestor_first_name . ' ' . $item->requestor_last_name,
-                'start' => $item->preferred_date->format('Y-m-d') . 'T' . ($item->preferred_time ?? '09:00:00'),
-                'url' => route('dashboard.requests.show', ['silid', $item->id]),
-                'backgroundColor' => '#fdf2f8',
-                'borderColor' => '#ec4899',
-                'textColor' => '#be185d',
-                'extendedProps' => [
-                    'type' => 'silid',
-                    'status' => $item->status,
-                    'time' => $item->preferred_time
-                ]
-            ];
-        }
-
         // 3. Sports Registrations
         $sports = SportsRegistration::whereBetween('event_date', [$startDate, $endDate])->get();
         foreach ($sports as $item) {
@@ -97,24 +59,6 @@ class CalendarController extends Controller
             ];
         }
 
-        // 4. Medicine Delivery Requests
-        $medicine = MedicineRequest::whereBetween('created_at', [$startDate, $endDate])->get();
-        foreach ($medicine as $item) {
-            $events[] = [
-                'id' => 'medicine_' . $item->id,
-                'title' => 'Medicine Delivery: ' . $item->requestor_first_name . ' ' . $item->requestor_last_name,
-                'start' => $item->created_at->format('Y-m-d\TH:i:s'),
-                'url' => route('dashboard.requests.show', ['medicine', $item->id]),
-                'backgroundColor' => '#f5f3ff',
-                'borderColor' => '#8b5cf6',
-                'textColor' => '#6d28d9',
-                'extendedProps' => [
-                    'type' => 'medicine',
-                    'status' => $item->status,
-                    'address' => $item->complete_address
-                ]
-            ];
-        }
 
         // 5. News Articles
         $articles = NewsArticle::whereBetween('published_at', [$startDate, $endDate])->get();
