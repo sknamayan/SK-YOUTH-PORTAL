@@ -50,7 +50,7 @@
                 { name: 'ACCESSIBILITY AID', url: '#', active: false }
             ]
         },
-        'peace-building': {
+        'peace-building, Disaster Risk Reduction Management': {
             label: 'PEACE BUILDING',
             subtopics: [
                 { name: 'TRACK REQUEST', url: '{{ route('track.index') }}', active: true },

@@ -670,7 +670,7 @@
                                 </svg>
                                 <span
                                     class="text-xs font-semibold text-blue-100 group-hover:text-white transition leading-snug">Peace
-                                    Building</span>
+                                    Building, DRRM</span>
                             </a>
                             <a href="{{ route('projects.committee', ['project_slug' => 'sk-namayan-youth-services', 'committee_slug' => 'environment']) }}"
                                 @click="mobileMenuOpen = false"
