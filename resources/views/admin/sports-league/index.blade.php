@@ -924,9 +924,9 @@
                     <div id="admin-reg-step-4" x-show="adminRegStep === 4" class="space-y-4">
                         <!-- Case A: Adult Uploads -->
                         <div x-show="adminAge >= 18" class="space-y-4">
-                            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2 font-display">Step 4: Voter's verification document</h4>
+                            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2 font-display">Step 4: Valid Goverment ID</h4>
                             <div>
-                                <label for="admin_reg_voter" class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">Voter's Certificate / ID (Optional)</label>
+                                <label for="admin_reg_voter" class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">UPLOAD YOUR VALID GOVERMENT ID, FOR SK VERIFICATION(Optional)</label>
                                 <input type="file" name="voter_cert" id="admin_reg_voter"
                                        class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-[9px] file:font-black file:uppercase file:bg-blue-50 file:text-[#1e40af] hover:file:bg-blue-100 cursor-pointer">
                             </div>
