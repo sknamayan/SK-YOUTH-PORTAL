@@ -102,6 +102,22 @@ Route::middleware(['auth', 'throttle:forms'])->group(function () {
         return redirect()->route('projects.index');
     })->name('forms.silid.store');
 
+    Route::get('/api/silid-karunungan/booked-slots', function (\Illuminate\Http\Request $request) {
+        $date = $request->query('date');
+        if (!$date) {
+            return response()->json(['booked_slots' => []]);
+        }
+
+        $bookedSlots = \App\Models\SilidKarununganRequest::where('preferred_date', $date)
+            ->whereIn('status', ['pending', 'approved', 'review', 'confirmed'])
+            ->pluck('preferred_time')
+            ->toArray();
+
+        return response()->json([
+            'booked_slots' => array_values(array_unique($bookedSlots))
+        ]);
+    })->name('api.silid.booked-slots');
+
     Route::middleware('kk.profile.completed')->group(function () {
         Route::get('/forms/sports-registration', [\App\Http\Controllers\SportsRegistrationController::class, 'showRegistrationForm'])->name('forms.sports.create');
         Route::post('/forms/sports-registration', [\App\Http\Controllers\SportsRegistrationController::class, 'submitRegistration'])->name('forms.sports.store');
@@ -235,6 +251,7 @@ Route::middleware(['auth', 'admin.dpo'])->group(function () {
     Route::post('/admin/sports-league/bulk-archive', [SportsLeagueController::class, 'bulkArchive'])->name('admin.sports-league.bulk-archive');
     Route::get('/admin/sports-league/register', [SportsLeagueController::class, 'create'])->name('admin.sports-league.create');
     Route::post('/admin/sports-league/register', [SportsLeagueController::class, 'store'])->name('admin.sports-league.store');
+
     Route::get('/admin/sports-league/{id}', [SportsLeagueController::class, 'show'])->name('admin.sports-league.show');
     Route::patch('/admin/sports-league/{id}/status/{status}', [SportsLeagueController::class, 'updateStatus'])->name('admin.sports-league.status');
     Route::get('/admin/sports-league/{id}/edit', [SportsLeagueController::class, 'edit'])->name('admin.sports-league.edit');

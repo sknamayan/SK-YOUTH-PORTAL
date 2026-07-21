@@ -483,7 +483,29 @@ if (activeForm) {
                 </div>
 
                 <!-- 4. SILID KARUNUNGAN BOOKING FORM -->
-                <div x-show="activeForm === 'silid'" class="w-full relative">
+                <div x-show="activeForm === 'silid'" class="w-full relative" x-cloak
+                     x-data="{
+                         preferredDate: '',
+                         preferredTime: '',
+                         loadingSlots: false,
+                         bookedSlots: [],
+                         async fetchSlots() {
+                             if (!this.preferredDate) return;
+                             this.loadingSlots = true;
+                             try {
+                                 const res = await fetch(`{{ route('api.silid.booked-slots') }}?date=${this.preferredDate}`);
+                                 const data = await res.json();
+                                 this.bookedSlots = data.booked_slots || [];
+                                 if (this.bookedSlots.includes(this.preferredTime)) {
+                                     this.preferredTime = '';
+                                 }
+                             } catch (e) {
+                                 console.error('Failed to fetch booked slots:', e);
+                             } finally {
+                                 this.loadingSlots = false;
+                             }
+                         }
+                     }">
                     <button type="button" @click="activeForm = null"
                             class="absolute right-4 top-4 text-white hover:text-slate-200 bg-white/10 hover:bg-white/20 p-2 rounded-full transition z-20 focus:outline-none focus:ring-2 focus:ring-white/50">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -507,8 +529,45 @@ if (activeForm) {
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <x-form-input label="Preferred Date" name="preferred_date" type="date" min="{{ date('Y-m-d') }}" required="true" />
-                            <x-form-select label="Preferred Time Slot" name="preferred_time" required="true" :options="$timeOptions" />
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
+                                    Preferred Date <span class="text-rose-500">*</span>
+                                </label>
+                                <input type="date" 
+                                       name="preferred_date" 
+                                       x-model="preferredDate" 
+                                       @change="fetchSlots()" 
+                                       min="{{ date('Y-m-d') }}" 
+                                       required 
+                                       class="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-2.5 text-sm font-medium text-slate-800 dark:text-slate-100 transition">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
+                                    Preferred Time Slot <span class="text-rose-500">*</span>
+                                </label>
+                                <select name="preferred_time" 
+                                        x-model="preferredTime" 
+                                        :disabled="!preferredDate || loadingSlots" 
+                                        required 
+                                        class="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-2.5 text-sm font-medium text-slate-800 dark:text-slate-100 disabled:opacity-50 transition">
+                                    <option value="">-- Choose Time Slot --</option>
+                                    @foreach($timeOptions as $val => $label)
+                                        <option value="{{ $val }}" 
+                                                :disabled="bookedSlots.includes('{{ $val }}')"
+                                                x-text="'{{ $label }}' + (bookedSlots.includes('{{ $val }}') ? ' ❌ (Fully Booked)' : '')">
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <p x-show="loadingSlots" class="text-[10px] text-blue-600 dark:text-blue-400 font-bold mt-1" x-cloak>
+                                    Checking slot availability...
+                                </p>
+                            </div>
+                        </div>
+
+                        <div x-show="preferredTime && bookedSlots.includes(preferredTime)" class="p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-rose-600 dark:text-rose-400 rounded-xl text-xs font-bold flex items-center gap-2 mt-2" x-cloak>
+                            <span>⚠️ The selected time slot is already booked. Please choose an available slot.</span>
                         </div>
 
                         @php $silidInit = $initiatives['forms.silid.create'] ?? null; @endphp
@@ -530,7 +589,11 @@ if (activeForm) {
                         @endif
 
                         <div class="pt-4">
-                            <button type="submit" class="btn-primary w-full">Submit Booking Request</button>
+                            <button type="submit" 
+                                    :disabled="loadingSlots || (preferredTime && bookedSlots.includes(preferredTime))" 
+                                    class="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed">
+                                Submit Booking Request
+                            </button>
                         </div>
                     </x-form-card>
                 </div>

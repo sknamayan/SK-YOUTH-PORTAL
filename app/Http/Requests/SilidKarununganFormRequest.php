@@ -43,7 +43,23 @@ class SilidKarununganFormRequest extends FormRequest
             'email' => ['required', 'email', 'max:255'],
             'contact_number' => ['required', 'string', 'max:20'],
             'preferred_date' => ['required', 'date', 'after_or_equal:today'],
-            'preferred_time' => ['required', 'string'],
+            'preferred_time' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    $date = $this->input('preferred_date');
+                    if ($date) {
+                        $exists = \App\Models\SilidKarununganRequest::where('preferred_date', $date)
+                            ->where('preferred_time', $value)
+                            ->whereIn('status', ['pending', 'approved', 'review', 'confirmed'])
+                            ->exists();
+
+                        if ($exists) {
+                            $fail("The selected time slot ({$value}) on {$date} is already booked. Please choose an available time slot.");
+                        }
+                    }
+                },
+            ],
         ];
 
         if ($initiative && is_array($initiative->custom_fields)) {

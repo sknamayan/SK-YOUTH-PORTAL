@@ -310,12 +310,12 @@
               x-transition:leave-end="opacity-0 scale-95">
 
               <!-- Modal Header -->
-              <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between shrink-0">
-                  <div>
-                      <h3 class="text-sm font-black text-slate-804 dark:text-white uppercase tracking-wider font-display">League Registration Form</h3>
-                      <p class="text-[10px] text-slate-450 dark:text-slate-505 mt-0.5">Please provide correct details. Minors will require guardian validation.</p>
+              <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800 flex items-start justify-between shrink-0 gap-4">
+                  <div class="flex-1 min-w-0">
+                      <h3 class="text-sm font-black text-slate-800 dark:text-white uppercase tracking-wider font-display truncate">League Registration Form</h3>
+                      <p class="text-[10px] text-slate-450 dark:text-slate-500 mt-0.5">Please provide correct details. Minors will require guardian validation.</p>
                   </div>
-                  <button @click="showFormModal = false" type="button" class="text-slate-400 hover:text-slate-650 dark:hover:text-slate-200 p-2 rounded-xl transition cursor-pointer">
+                  <button @click="showFormModal = false" type="button" class="shrink-0 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2 rounded-xl transition cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 -mr-2 -mt-1 focus:outline-none">
                       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                   </button>
               </div>
@@ -517,23 +517,6 @@
                           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
                               <div>
                                   <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
-                                      Registered in KK Profiling? <span class="text-rose-500">*</span>
-                                  </label>
-                                  <div class="flex gap-4 mt-2">
-                                      <label class="inline-flex items-center gap-2 text-xs text-slate-700 dark:text-slate-350 cursor-pointer">
-                                          <input type="radio" name="kk_profiling_status" value="Yes" {{ old('kk_profiling_status', $kkProfile ? 'Yes' : 'No') === 'Yes' ? 'checked' : '' }} required
-                                                 class="rounded-full border-slate-300 dark:border-slate-750 text-[#1e40af] focus:ring-0">
-                                          <span>Yes</span>
-                                      </label>
-                                      <label class="inline-flex items-center gap-2 text-xs text-slate-700 dark:text-slate-350 cursor-pointer">
-                                          <input type="radio" name="kk_profiling_status" value="No" {{ old('kk_profiling_status', $kkProfile ? 'Yes' : 'No') === 'No' ? 'checked' : '' }} required
-                                                 class="rounded-full border-slate-300 dark:border-slate-755 text-[#1e40af] focus:ring-0">
-                                          <span>No</span>
-                                      </label>
-                                  </div>
-                              </div>
-                              <div>
-                                  <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
                                       Profile Picture (2x2 / Passport size) <span class="text-rose-500">*</span>
                                   </label>
                                   <input type="file" name="profile_picture" :required="!showFormModal"
@@ -722,10 +705,10 @@
     </div>
 </div>
 
-<x-mobile-bottom-action 
-    x-show="showFormModal" 
-    @click="regStep < 5 ? nextRegStep() : (validateRegStep(5) ? (showConfirm = true) : null)" 
-    x-bind:disabled="loading" 
+<x-mobile-bottom-action
+    x-show="showFormModal"
+    @click="regStep < 5 ? nextRegStep() : (validateRegStep(5) ? (showConfirm = true) : null)"
+    x-bind:disabled="loading"
     x-cloak
 >
     <span x-show="regStep < 5">Next Step &rarr;</span>
