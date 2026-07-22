@@ -7,26 +7,26 @@
     $activeTab = in_array($activeTab, $validTabs, true) ? $activeTab : 'account';
 @endphp
 
-<div x-data="{ activeTab: '{{ $activeTab }}' }" class="flex-1 flex flex-col min-h-screen">
+<div x-data="{ activeTab: '{{ $activeTab }}' }" class="flex-1 flex flex-col min-h-screen w-full max-w-full overflow-x-hidden">
     @if(Auth::user()->canAccessDashboard())
-        <div x-data="{}" class="flex-1 flex flex-col md:flex-row bg-[#f8fafc] dark:bg-slate-950">
+        <div x-data="{}" class="flex-1 flex flex-col md:flex-row bg-[#f8fafc] dark:bg-slate-950 w-full max-w-full overflow-x-hidden">
 
             <!-- Left Master Sidebar -->
             @include('layouts.dashboard-sidebar')
 
             <!-- Main Content Pane -->
-            <div class="flex-1 flex flex-col min-w-0">
+            <div class="flex-1 flex flex-col min-w-0 w-full max-w-full overflow-x-hidden">
 
-                <div class="p-6 md:p-8 space-y-6 flex-1 overflow-y-auto">
-                    <div class="max-w-4xl space-y-6">
+                <div class="p-4 sm:p-6 md:p-8 space-y-6 flex-1 overflow-y-auto w-full max-w-full">
+                    <div class="max-w-4xl w-full mx-auto space-y-6">
                         <div>
                             <span class="text-[10px] font-black tracking-widest text-[#1e40af] dark:text-blue-400 uppercase font-display block">{{ __('Settings Portal') }}</span>
-                            <h1 class="text-2xl font-black tracking-tight text-slate-800 dark:text-slate-100 font-display uppercase mt-1">{{ __('Settings & Preferences') }}</h1>
-                            <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">{{ __('Manage your account settings, dark mode preferences, security sessions, and data privacy.') }}</p>
+                            <h1 class="text-xl sm:text-2xl font-black tracking-tight text-slate-800 dark:text-slate-100 font-display uppercase mt-1">{{ __('Settings & Preferences') }}</h1>
+                            <p class="text-xs text-slate-400 dark:text-slate-500 mt-1 leading-relaxed">{{ __('Manage your account settings, dark mode preferences, security sessions, and data privacy.') }}</p>
                         </div>
 
                         <!-- Horizontal Settings Tab Navigation -->
-                        <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-3 border-b border-slate-150 dark:border-slate-800 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide shrink-0">
+                        <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-3 border-b border-slate-150 dark:border-slate-800 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide shrink-0 w-full">
                             <button @click="activeTab = 'account'"
                                     :class="activeTab === 'account' ? 'bg-[#1e40af] text-white shadow-sm' : 'bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-white'"
                                     class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all shrink-0">
@@ -70,7 +70,7 @@
                         </div>
 
                         <!-- Forms Content Area -->
-                        <div class="space-y-6">
+                        <div class="space-y-6 w-full max-w-full">
                             @include('profile.partials.edit-forms')
                         </div>
                     </div>
@@ -79,7 +79,7 @@
         </div>
     @else
         <!-- Citizen Base Dashboard -->
-        <section class="bg-gradient-to-br from-slate-900 via-slate-800 to-[#1e3a8a] text-white shrink-0">
+        <section class="bg-gradient-to-br from-slate-900 via-slate-800 to-[#1e3a8a] text-white shrink-0 w-full">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[max(1.5rem,env(safe-area-inset-top))] pb-8 md:py-16">
                 <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-5 min-w-0">
                     <a href="{{ route('landing') }}" class="hover:text-white active:scale-95 shrink-0">Home</a>
@@ -96,11 +96,11 @@
             </div>
         </section>
 
-        <div class="max-w-4xl mx-auto px-4 sm:px-8 py-8 md:py-10 flex-1 font-sans space-y-6">
+        <div class="max-w-4xl mx-auto px-4 sm:px-8 py-8 md:py-10 flex-1 font-sans space-y-6 w-full max-w-full overflow-x-hidden">
             @include('profile.partials.citizen-nav')
 
             <!-- Horizontal Settings Tab Navigation (Citizen View) -->
-            <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-3 border-b border-slate-150 dark:border-slate-800 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide shrink-0">
+            <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-3 border-b border-slate-150 dark:border-slate-800 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide shrink-0 w-full">
                 <button @click="activeTab = 'account'"
                         :class="activeTab === 'account' ? 'bg-[#1e40af] text-white shadow-sm' : 'bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-white'"
                         class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all shrink-0">
@@ -144,7 +144,7 @@
             </div>
 
             <!-- Forms Content Area -->
-            <div class="space-y-6">
+            <div class="space-y-6 w-full max-w-full">
                 @include('profile.partials.edit-forms')
             </div>
         </div>

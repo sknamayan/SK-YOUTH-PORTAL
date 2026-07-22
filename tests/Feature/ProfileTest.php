@@ -22,7 +22,7 @@ class ProfileTest extends TestCase
             ->get('/profile/edit');
 
         $response->assertOk();
-        $response->assertSee('Choose New Photo', false);
+        $response->assertSee('Display Name', false);
     }
 
     public function test_profile_information_can_be_updated(): void

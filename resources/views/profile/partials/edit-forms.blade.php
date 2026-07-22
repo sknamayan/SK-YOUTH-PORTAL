@@ -4,114 +4,40 @@
 
 <!-- TAB 1: Account Settings / Personal Info -->
 <div x-show="activeTab === 'account'" class="space-y-6" x-cloak>
-    <!-- Avatar Edit Card -->
-    <div class="card space-y-6" x-data="{
-        selectedImage: null,
-        cropper: null,
-        initCropper() {
-            const image = document.getElementById('cropper-target');
-            if (this.cropper) {
-                this.cropper.destroy();
-            }
-            this.cropper = new Cropper(image, {
-                aspectRatio: 1,
-                viewMode: 1,
-                dragMode: 'move',
-                autoCropArea: 1,
-                restore: false,
-                guides: true,
-                center: true,
-                highlight: false,
-                cropBoxMovable: true,
-                cropBoxResizable: false,
-                toggleDragModeOnDblclick: false
-            });
-        },
-        handleFileSelect(e) {
-            const files = e.target.files;
-            if (files && files.length > 0) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    this.selectedImage = event.target.result;
-                    $nextTick(() => {
-                        this.initCropper();
-                    });
-                };
-                reader.readAsDataURL(files[0]);
-                $dispatch('open-modal', 'cropper-modal');
-            }
-        },
-        saveCrop() {
-            if (this.cropper) {
-                const canvas = this.cropper.getCroppedCanvas({
-                    width: 250,
-                    height: 250
-                });
-                document.getElementById('avatar_base64').value = canvas.toDataURL('image/png');
-                document.getElementById('avatar-upload-form').submit();
-            }
-        }
-    }">
+    <!-- Display Name Edit Card (Replaces Avatar Photo Upload Section) -->
+    <div class="card space-y-5 bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-sm w-full">
         <div>
-            <h2 class="text-sm font-bold text-slate-800 dark:text-slate-100 font-display uppercase tracking-tight">{{ __('Profile Picture') }}</h2>
-            <p class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">{{ __('Upload and crop a professional avatar for your user account.') }}</p>
+            <h2 class="text-sm font-bold text-slate-800 dark:text-slate-100 font-display uppercase tracking-tight">{{ __('Display Name') }}</h2>
+            <p class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">{{ __('Customize your public display name shown across the SK Namayan portal.') }}</p>
         </div>
 
-        <div class="flex flex-col sm:flex-row items-center gap-6">
-            <!-- Current Avatar Render -->
-            <div class="shrink-0">
-                @if($user->avatar)
-                    <img src="{{ asset('storage/avatars/' . $user->avatar) }}" class="w-20 h-20 rounded-full object-cover border-2 border-[#1e40af] dark:border-blue-500 shadow-sm" alt="Avatar">
-                @else
-                    <div class="w-20 h-20 rounded-full bg-[#1e40af] dark:bg-blue-900 text-white font-black text-2xl flex items-center justify-center font-display shadow-md select-none">
-                        {{ strtoupper(substr($user->first_name ?? $user->name, 0, 1) . substr($user->last_name ?? '', 0, 1)) }}
-                    </div>
-                @endif
+        <form method="POST" action="{{ route('profile.update-info') }}" class="space-y-4 w-full">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="settings_tab" value="account">
+
+            <div class="space-y-1.5 w-full">
+                <label for="display_name_input" class="block text-[10px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 font-display">
+                    {{ __('Display Name') }}
+                </label>
+                <input id="display_name_input"
+                       type="text" 
+                       name="name" 
+                       value="{{ old('name', $user->name) }}" 
+                       required 
+                       placeholder="e.g. Juan Dela Cruz" 
+                       class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs text-slate-900 dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/10 transition font-sans shadow-sm">
+                <p class="text-[10px] text-slate-400 dark:text-slate-500 mt-1 leading-relaxed">
+                    {{ __('This display name will be visible to officers and displayed on your public certificates and tournament rosters.') }}
+                </p>
             </div>
 
-            <!-- Upload Controls -->
-            <div class="space-y-3 w-full sm:w-auto text-center sm:text-left">
-                <form id="avatar-upload-form" method="POST" action="{{ route('profile.update-avatar') }}">
-                    @csrf
-                    <input type="hidden" name="avatar_base64" id="avatar_base64">
-                    <input type="hidden" name="settings_tab" value="account">
-
-                    <label class="inline-flex items-center justify-center min-h-11 px-5 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 font-bold text-xs uppercase tracking-wider rounded-2xl cursor-pointer active:scale-95 transition-all shadow-sm">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                        {{ __('Choose New Photo') }}
-                        <input type="file" accept="image/png,image/jpeg,image/jpg,image/webp" class="hidden" @change="handleFileSelect">
-                    </label>
-                </form>
-                <p class="text-[9px] text-slate-400 dark:text-slate-500">{{ __('Accepted formats: PNG, JPG, JPEG or WEBP. Max file size: 5MB.') }}</p>
+            <div class="flex justify-end pt-2">
+                <button type="submit" class="w-full sm:w-auto px-5 py-2.5 bg-[#1e40af] hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition active:scale-95 shadow-sm shadow-blue-500/15 cursor-pointer">
+                    {{ __('Save Display Name') }}
+                </button>
             </div>
-        </div>
-
-        <!-- Cropper Modal Workspace -->
-        <x-modal name="cropper-modal" focusable>
-            <div class="p-6 space-y-4 text-left">
-                <div>
-                    <h2 class="text-sm font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">{{ __('Crop Profile Image') }}</h2>
-                    <p class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">{{ __('Adjust the handles to frame your profile picture correctly.') }}</p>
-                </div>
-
-                <!-- Crop Canvas Container -->
-                <div class="w-full bg-slate-50 dark:bg-slate-950 rounded-2xl overflow-hidden border border-slate-150 dark:border-slate-800 flex items-center justify-center max-h-[350px]">
-                    <template x-if="selectedImage">
-                        <img id="cropper-target" :src="selectedImage" class="max-w-full max-h-[350px] object-contain">
-                    </template>
-                </div>
-
-                <!-- Modal Actions -->
-                <div class="flex justify-end space-x-3 pt-3 border-t border-slate-100 dark:border-slate-800">
-                    <button type="button" @click="$dispatch('close')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs uppercase tracking-wider rounded-xl transition active:scale-95">
-                        {{ __('Cancel') }}
-                    </button>
-                    <button type="button" @click="saveCrop" class="px-4 py-2 bg-[#1e40af] hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition active:scale-95 shadow-sm shadow-blue-500/10">
-                        {{ __('Crop & Save') }}
-                    </button>
-                </div>
-            </div>
-        </x-modal>
+        </form>
     </div>
 
     <!-- Personal Details Form -->
