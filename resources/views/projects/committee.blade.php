@@ -138,48 +138,71 @@
                         @forelse($activeCommittee->initiatives as $init)
                             <div x-show="activeInitiativeId === 'all' || activeInitiativeId === {{ $init->id }}"
                                  x-transition
-                                 class="card bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-blue-200 dark:hover:border-slate-700 transition duration-200 overflow-hidden rounded-2xl flex flex-col justify-between h-full shadow-sm">
+                                 class="group relative bg-white dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl hover:border-blue-500/40 dark:hover:border-blue-500/40 transition-all duration-300 flex flex-col justify-between h-full transform hover:-translate-y-1">
                                 
+                                <!-- Top Image Header Container -->
                                 @if($init->picture_path)
-                                    <div class="w-full h-48 overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0">
+                                    <div class="relative w-full h-52 overflow-hidden bg-slate-900 shrink-0">
                                         <img src="{{ asset('storage/' . $init->picture_path) }}" 
                                              alt="{{ $init->title }}" 
-                                             class="w-full h-48 object-cover transition duration-300 hover:scale-105">
+                                             class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-108">
+                                        <!-- Soft Image Gradient Overlay -->
+                                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
+                                        
+                                        <!-- Top Badge Overlay on Image -->
+                                        <div class="absolute top-4 left-4 z-10">
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full bg-slate-950/70 backdrop-blur-md border border-white/20 text-blue-300 text-[9px] font-black uppercase tracking-widest font-mono shadow-lg">
+                                                {{ $activeCommittee->name }}
+                                            </span>
+                                        </div>
                                     </div>
-                                @endif
-
-                                <div class="p-6 space-y-3 flex-1">
-                                    <div>
-                                        <span class="inline-flex px-2.5 py-1 rounded-md bg-blue-50 dark:bg-blue-950/60 border border-blue-100 dark:border-blue-800 text-[#1e40af] dark:text-blue-300 text-[9px] font-black uppercase tracking-widest font-mono">
+                                @else
+                                    <!-- Fallback Decorative Header Pattern when no photo is uploaded -->
+                                    <div class="relative w-full h-24 bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 flex items-end shrink-0">
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-blue-200 text-[9px] font-black uppercase tracking-widest font-mono">
                                             {{ $activeCommittee->name }}
                                         </span>
                                     </div>
-                                    <h3 class="text-base font-black text-slate-900 dark:text-white uppercase tracking-tight font-display leading-snug">
+                                @endif
+
+                                <!-- Body Content Container -->
+                                <div class="p-6 sm:p-7 space-y-3 flex-1">
+                                    @if($init->picture_path)
+                                        <!-- Category tag if photo header is present (mobile text variant) -->
+                                        <div class="hidden">
+                                            <span class="text-[9px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 font-mono">{{ $activeCommittee->name }}</span>
+                                        </div>
+                                    @endif
+
+                                    <h3 class="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight font-display leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                                         {{ $init->title }}
                                     </h3>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                                    
+                                    <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium line-clamp-3">
                                         {{ $init->description }}
                                     </p>
                                 </div>
                                 
-                                <!-- Card Actions Button Group -->
-                                <div class="p-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mt-auto">
+                                <!-- Card Footer & Interactive Action Button Bar -->
+                                <div class="p-6 pt-4 bg-slate-50/50 dark:bg-slate-950/40 border-t border-slate-100 dark:border-slate-800/80 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mt-auto">
                                     <a href="{{ route('projects.explorer', ['project_slug' => $project->slug, 'committee_slug' => $activeCommittee->slug, 'initiative_id' => $init->id]) }}" 
-                                       class="text-xs font-black text-[#1e40af] dark:text-blue-400 hover:underline uppercase tracking-wider transition inline-flex items-center gap-1">
-                                        View Stepper &rarr;
+                                       class="text-xs font-black text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 uppercase tracking-wider transition-colors inline-flex items-center gap-1.5 py-1">
+                                        <span>View Stepper</span>
+                                        <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                                     </a>
+
                                     <div class="grid grid-cols-2 gap-2.5 w-full sm:w-auto">
                                         <a href="{{ route('track.index') }}" 
-                                           class="px-3.5 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-750 font-bold rounded-xl text-[10px] uppercase tracking-wider text-center transition active:scale-95">
+                                           class="px-4 py-2.5 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-750 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-extrabold rounded-xl text-[10px] uppercase tracking-wider text-center transition-all shadow-sm active:scale-95">
                                             Track Progress
                                         </a>
                                         @if($init->is_coming_soon)
-                                            <span class="px-3.5 py-2.5 bg-slate-100 dark:bg-slate-800/60 text-slate-400 font-bold rounded-xl text-[10px] uppercase tracking-wider text-center select-none">
+                                            <span class="px-4 py-2.5 bg-slate-100 dark:bg-slate-800/60 text-slate-400 font-extrabold rounded-xl text-[10px] uppercase tracking-wider text-center select-none cursor-not-allowed">
                                                 Coming Soon
                                             </span>
                                         @else
                                             <a href="{{ route('forms.custom.create', $init->id) }}" 
-                                               class="px-3.5 py-2.5 bg-[#1e40af] text-white hover:bg-blue-700 font-bold rounded-xl text-[10px] uppercase tracking-wider text-center transition active:scale-95 shadow-sm shadow-blue-500/10">
+                                               class="px-4 py-2.5 bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-600 hover:to-indigo-600 text-white font-extrabold rounded-xl text-[10px] uppercase tracking-wider text-center transition-all shadow-md shadow-blue-700/20 active:scale-95">
                                                 Apply Now
                                             </a>
                                         @endif
