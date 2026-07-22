@@ -13,12 +13,18 @@
          age: '{{ old('age', $kkProfile?->age ?? '') }}',
          regStep: {{ $errors->any() ? '5' : "(localStorage.getItem('sports_reg_step') ? parseInt(localStorage.getItem('sports_reg_step')) : 1)" }},
          validateRegStep(s) {
-             const fields = document.querySelectorAll(`#reg-step-${s} [required]`);
+             const stepContainer = document.getElementById(`reg-step-${s}`);
+             if (!stepContainer) return true;
+             const fields = stepContainer.querySelectorAll('[required]');
              let valid = true;
              let firstInvalid = null;
              fields.forEach(field => {
+                 // Ignore fields that are not visible in the DOM
+                 if (field.offsetParent === null && field.type !== 'file') {
+                     return;
+                 }
                  const rect = field.getBoundingClientRect();
-                 if (rect.width === 0 && rect.height === 0) {
+                 if (rect.width === 0 && rect.height === 0 && field.type !== 'file') {
                      return;
                  }
                  if (field.type === 'file') {
