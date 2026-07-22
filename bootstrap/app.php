@@ -24,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'dpo.clearance' => \App\Http\Middleware\EnsureDpoClearance::class,
             'kk.profile.completed' => \App\Http\Middleware\EnsureKkProfileCompleted::class,
             'idor.prevent' => \App\Http\Middleware\PreventIdor::class,
+            'ensure.otp' => \App\Http\Middleware\EnsureOtpVerified::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
