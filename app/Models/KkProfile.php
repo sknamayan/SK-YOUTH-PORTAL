@@ -58,7 +58,6 @@ class KkProfile extends Model
             'street_address' => SafeEncrypted::class,
             'contact_number' => SafeEncrypted::class,
             'middle_name' => SafeEncrypted::class,
-            'email' => SafeEncrypted::class,
         ];
     }
 

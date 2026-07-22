@@ -250,8 +250,11 @@ class KkProfileController extends Controller
     public function selfCreate(Request $request): View|\Illuminate\Http\RedirectResponse
     {
         // Check if citizen has already completed profiling
-        $existingProfile = KkProfile::where('user_id', auth()->id())
-            ->orWhere('email', auth()->user()->email)
+        $existingProfile = KkProfile::withoutGlobalScopes()
+            ->where(function($q) {
+                $q->where('user_id', auth()->id())
+                  ->orWhere('email', auth()->user()->email);
+            })
             ->first();
         if ($existingProfile && $existingProfile->status !== 'declined') {
             return redirect()->route('profile.my-requests')
