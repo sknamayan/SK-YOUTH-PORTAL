@@ -35,45 +35,62 @@ class ProfileController extends Controller
 
     public function myRequests(Request $request): View
     {
-        $user = auth()->user();
-        $email = $user->email;
+        try {
+            $user = auth()->user();
+            $email = $user ? $user->email : '';
 
-        $requests = \App\Models\CustomRequest::where('citizen_email', $email)
-            ->orWhere('email', $email)
-            ->latest()
-            ->get();
+            $requests = \App\Models\CustomRequest::where('citizen_email', $email)
+                ->orWhere('email', $email)
+                ->latest()
+                ->get();
 
-        $sportsRegistrations = \App\Models\SportsRegistration::where('email', $email)
-            ->latest()
-            ->get();
+            $sportsRegistrations = \App\Models\SportsRegistration::where('email', $email)
+                ->latest()
+                ->get();
 
-        $kkProfile = \App\Models\KkProfile::where('user_id', $user->id)
-            ->orWhere('email', $email)
-            ->first();
+            $kkProfile = \App\Models\KkProfile::where('user_id', $user->id)
+                ->orWhere('email', $email)
+                ->first();
 
-        $profile = $kkProfile;
+            $profile = $kkProfile;
 
-        // Combine requests & sportsRegistrations into unified $results collection
-        $mappedRequests = $requests->map(function($req) {
-            $req->type_label = $req->type ?? 'Custom Request';
-            $req->detail = $req->description ?? $req->details ?? 'N/A';
-            return $req;
-        });
+            // Combine requests & sportsRegistrations into unified $results collection
+            $mappedRequests = $requests->map(function($req) {
+                $req->type_label = object_get($req, 'type', 'Custom Request');
+                $req->detail = object_get($req, 'description') ?? object_get($req, 'details') ?? 'N/A';
+                return $req;
+            });
 
-        $mappedSports = $sportsRegistrations->map(function($sport) {
-            $sport->type_label = 'SIKLAB Sports (' . $sport->sport . ' - ' . $sport->division . ')';
-            $sport->detail = 'Position: ' . $sport->position . ($sport->team_name ? ' | Team: ' . $sport->team_name : '');
-            return $sport;
-        });
+            $mappedSports = $sportsRegistrations->map(function($sport) {
+                $sport->type_label = 'SIKLAB Sports (' . object_get($sport, 'sport', 'Tournament') . ' - ' . object_get($sport, 'division', 'General') . ')';
+                $sport->detail = 'Position: ' . object_get($sport, 'position', 'N/A') . (object_get($sport, 'team_name') ? ' | Team: ' . object_get($sport, 'team_name') : '');
+                return $sport;
+            });
 
-        $results = $mappedRequests->concat($mappedSports)->sortByDesc('created_at');
+            $results = $mappedRequests->concat($mappedSports)->sortByDesc('created_at');
 
-        $total = $results->count();
-        $pending = $results->where('status', 'pending')->count();
-        $approved = $results->whereIn('status', ['approved', 'confirmed', 'completed'])->count();
-        $declined = $results->whereIn('status', ['declined', 'rejected', 'cancelled'])->count();
+            $total = $results->count();
+            $pending = $results->where('status', 'pending')->count();
+            $approved = $results->whereIn('status', ['approved', 'confirmed', 'completed'])->count();
+            $declined = $results->whereIn('status', ['declined', 'rejected', 'cancelled'])->count();
 
-        return view('profile.my-requests', compact('user', 'requests', 'kkProfile', 'profile', 'sportsRegistrations', 'results', 'total', 'pending', 'approved', 'declined'));
+            return view('profile.my-requests', compact('user', 'requests', 'kkProfile', 'profile', 'sportsRegistrations', 'results', 'total', 'pending', 'approved', 'declined'));
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Error loading myRequests page: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
+            
+            $user = auth()->user();
+            $requests = collect();
+            $sportsRegistrations = collect();
+            $kkProfile = null;
+            $profile = null;
+            $results = collect();
+            $total = 0;
+            $pending = 0;
+            $approved = 0;
+            $declined = 0;
+
+            return view('profile.my-requests', compact('user', 'requests', 'kkProfile', 'profile', 'sportsRegistrations', 'results', 'total', 'pending', 'approved', 'declined'));
+        }
     }
 
     public function edit(Request $request): View
