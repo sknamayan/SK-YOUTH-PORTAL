@@ -41,25 +41,7 @@ Route::get('/clear-cache', function() {
         \Illuminate\Support\Facades\Artisan::call('view:clear');
         \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
 
-        $user = auth()->user();
-        $debug = [];
-        if ($user) {
-            $email = $user->email;
-            $all = \App\Models\KkProfile::withoutGlobalScopes()->get();
-            $matched = $all->first(function($p) use ($user, $email) {
-                return $p->user_id == $user->id || strtolower($p->email) == strtolower($email);
-            });
-            $debug = [
-                'user_id' => $user->id,
-                'user_email' => $email,
-                'total_profiles_in_db' => $all->count(),
-                'matched_profile_id' => $matched?->id,
-                'matched_profile_status' => $matched?->status,
-                'matched_profile_user_id' => $matched?->user_id,
-            ];
-        }
-
-        return 'Cache cleared successfully! Debug info: ' . json_encode($debug, JSON_PRETTY_PRINT);
+        return 'Laravel Cache cleared and database migrations run successfully!';
     } catch (\Exception $e) {
         return 'Error clearing cache: ' . $e->getMessage();
     }
