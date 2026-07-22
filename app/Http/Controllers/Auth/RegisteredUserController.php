@@ -73,6 +73,7 @@ class RegisteredUserController extends Controller
         }
 
         session([
+            'temp_user_id' => $user->id,
             'pending_otp_email' => $user->email,
             'demo_otp' => config('app.debug') ? $otp : null,
         ]);
@@ -86,9 +87,21 @@ class RegisteredUserController extends Controller
      */
     public function showOtpPrompt(): View|RedirectResponse
     {
+        $userId = session('temp_user_id');
         $email = session('pending_otp_email');
-        if (!$email) {
+
+        if (!$userId && !$email) {
             return redirect()->route('register');
+        }
+
+        if ($userId && !$email) {
+            $user = User::find($userId);
+            if ($user) {
+                $email = $user->email;
+                session(['pending_otp_email' => $email]);
+            } else {
+                return redirect()->route('register');
+            }
         }
 
         return view('auth.verify-otp', compact('email'));
@@ -152,6 +165,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
         session()->forget('pending_otp_email');
+        session()->forget('temp_user_id');
 
         return response()->json([
             'success'      => true,
