@@ -49,11 +49,17 @@ class ProfileController extends Controller
                 ->get();
 
             $kkProfile = \App\Models\KkProfile::withoutGlobalScopes()
-                ->where(function($q) use ($user, $email) {
-                    $q->where('user_id', $user->id)
-                      ->orWhere('email', $email);
-                })
+                ->where('user_id', $user->id)
                 ->first();
+
+            if (!$kkProfile && $email) {
+                // Search for profile matching user's email (encrypted or plain text)
+                $kkProfile = \App\Models\KkProfile::withoutGlobalScopes()
+                    ->get()
+                    ->first(function ($p) use ($email) {
+                        return strtolower($p->email) === strtolower($email);
+                    });
+            }
 
             $profile = $kkProfile;
 
