@@ -38,6 +38,23 @@ class KkProfileController extends Controller
             $categoryFilter = 'sk_youth';
         }
 
+        if ($request->has('debug_pending')) {
+            dd([
+                'DIAGNOSTIC_1_CURRENT_URL_STATUS_PARAM' => $request->input('status'),
+                'DIAGNOSTIC_2_GENERATED_SQL' => (clone $query)->whereRaw('LOWER(status) = ?', ['pending'])->toRawSql(),
+                'DIAGNOSTIC_3_DISTINCT_DB_STATUSES' => KkProfile::withoutGlobalScopes()
+                    ->select('status', \Illuminate\Support\Facades\DB::raw('count(*) as count'))
+                    ->groupBy('status')
+                    ->get()
+                    ->toArray(),
+                'DIAGNOSTIC_4_LATEST_SUBMITTED_RECORDS' => KkProfile::withoutGlobalScopes()
+                    ->latest()
+                    ->take(5)
+                    ->get(['id', 'first_name', 'surname', 'status', 'category', 'age', 'purok_id', 'created_at'])
+                    ->toArray(),
+            ]);
+        }
+
         if ($showArchive) {
             $query = KkProfile::withoutGlobalScopes()
                 ->withTrashed()
