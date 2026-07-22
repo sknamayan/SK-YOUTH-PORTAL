@@ -229,6 +229,10 @@ class KkProfileController extends Controller
             $category = 'sk_youth';
         }
 
+        if (!isset($validated['interested_in_joining']) || $validated['interested_in_joining'] === null) {
+            $validated['interested_in_joining'] = false;
+        }
+
         $profile = KkProfile::create(array_merge($validated, [
             'processed_by' => auth()->id(),
             'category' => $category,
@@ -343,6 +347,10 @@ class KkProfileController extends Controller
             $category = 'adult';
         } else {
             $category = 'sk_youth';
+        }
+
+        if (!isset($validated['interested_in_joining']) || $validated['interested_in_joining'] === null) {
+            $validated['interested_in_joining'] = false;
         }
 
         $profile = KkProfile::create(array_merge($validated, [
