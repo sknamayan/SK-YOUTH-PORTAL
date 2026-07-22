@@ -53,7 +53,27 @@ class ProfileController extends Controller
 
         $profile = $kkProfile;
 
-        return view('profile.my-requests', compact('user', 'requests', 'kkProfile', 'profile', 'sportsRegistrations'));
+        // Combine requests & sportsRegistrations into unified $results collection
+        $mappedRequests = $requests->map(function($req) {
+            $req->type_label = $req->type ?? 'Custom Request';
+            $req->detail = $req->description ?? $req->details ?? 'N/A';
+            return $req;
+        });
+
+        $mappedSports = $sportsRegistrations->map(function($sport) {
+            $sport->type_label = 'SIKLAB Sports (' . $sport->sport . ' - ' . $sport->division . ')';
+            $sport->detail = 'Position: ' . $sport->position . ($sport->team_name ? ' | Team: ' . $sport->team_name : '');
+            return $sport;
+        });
+
+        $results = $mappedRequests->concat($mappedSports)->sortByDesc('created_at');
+
+        $total = $results->count();
+        $pending = $results->where('status', 'pending')->count();
+        $approved = $results->whereIn('status', ['approved', 'confirmed', 'completed'])->count();
+        $declined = $results->whereIn('status', ['declined', 'rejected', 'cancelled'])->count();
+
+        return view('profile.my-requests', compact('user', 'requests', 'kkProfile', 'profile', 'sportsRegistrations', 'results', 'total', 'pending', 'approved', 'declined'));
     }
 
     public function edit(Request $request): View
