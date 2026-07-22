@@ -52,13 +52,39 @@ class ProfileController extends Controller
                 ->where('user_id', $user->id)
                 ->first();
 
-            if (!$kkProfile && $email) {
-                // Search for profile matching user's email (encrypted or plain text)
+            if (!$kkProfile) {
+                // Look up profile by user's email or matching name
                 $kkProfile = \App\Models\KkProfile::withoutGlobalScopes()
-                    ->get()
-                    ->first(function ($p) use ($email) {
-                        return strtolower($p->email) === strtolower($email);
-                    });
+                    ->where(function($q) use ($email, $user) {
+                        $q->where('email', $email)
+                          ->orWhere(function($sub) use ($user) {
+                              if ($user->first_name && $user->last_name) {
+                                  $sub->where('first_name', $user->first_name)
+                                      ->where('surname', $user->last_name);
+                              }
+                          });
+                    })
+                    ->first();
+            }
+
+            // Fallback: search all profiles with decrypted safe check
+            if (!$kkProfile) {
+                $allProfiles = \App\Models\KkProfile::withoutGlobalScopes()->get();
+                $kkProfile = $allProfiles->first(function ($p) use ($email, $user) {
+                    $pEmail = strtolower((string)$p->email);
+                    $uEmail = strtolower((string)$email);
+                    if ($pEmail && $uEmail && $pEmail === $uEmail) return true;
+                    if ($user->first_name && $user->last_name) {
+                        return strtolower((string)$p->first_name) === strtolower((string)$user->first_name)
+                            && strtolower((string)$p->surname) === strtolower((string)$user->last_name);
+                    }
+                    return false;
+                });
+            }
+
+            // Automatically link user_id if matched profile has no user_id set
+            if ($kkProfile && !$kkProfile->user_id) {
+                $kkProfile->update(['user_id' => $user->id]);
             }
 
             $profile = $kkProfile;
