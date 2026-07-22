@@ -50,16 +50,18 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        // Account approval check bypassed. All registered users are approved by default.
-        // $user = Auth::user();
-        // if (!$user->is_approved) {
-        //     Auth::logout();
-        //     RateLimiter::hit($this->throttleKey());
-        // 
-        //     throw ValidationException::withMessages([
-        //         'email' => 'Your account is pending review and approval by the Admin or Data Privacy Officer (DPO). You will be able to log in once approved.',
-        //     ]);
-        // }
+        $user = Auth::user();
+        if (!$user->is_approved) {
+            $userEmail = $user->email;
+            Auth::logout();
+            RateLimiter::hit($this->throttleKey());
+
+            session(['pending_otp_email' => $userEmail]);
+
+            throw ValidationException::withMessages([
+                'email' => 'Please verify your account via OTP first.',
+            ]);
+        }
 
         RateLimiter::clear($this->throttleKey());
     }
