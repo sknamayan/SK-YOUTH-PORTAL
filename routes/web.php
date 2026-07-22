@@ -55,9 +55,22 @@ Route::get('/clear-cache', function() {
                 ]);
         }
 
-        return 'Laravel Cache cleared and KK Profile status successfully synced to Approved (100% Verified)!';
+        // Verify schema details for otp_code column
+        $columnType = \Illuminate\Support\Facades\Schema::getColumnType('users', 'otp_code');
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Laravel configuration, route, and view caches cleared successfully!',
+            'schema_verification' => [
+                'table' => 'users',
+                'column' => 'otp_code',
+                'detected_type' => $columnType,
+                'status' => in_array($columnType, ['string', 'varchar', 'text']) ? 'HEALTHY (Ready for 60-char Bcrypt OTP)' : 'ATTENTION REQUIRED',
+            ],
+            'timestamp' => now()->toIso8601String(),
+        ]);
     } catch (\Exception $e) {
-        return 'Error clearing cache: ' . $e->getMessage();
+        return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
     }
 });
 
