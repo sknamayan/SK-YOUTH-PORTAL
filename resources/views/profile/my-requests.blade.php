@@ -298,37 +298,41 @@
                         <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 text-slate-655 dark:text-slate-300">
                             @foreach($results as $req)
                                 @php
-                                    $referenceNumber = $req->reference_number ?? ('SK-REQ-' . str_pad($req->id, 5, '0', STR_PAD_LEFT));
+                                    $referenceNumber = object_get($req, 'reference_number') ?? ('SK-REQ-' . str_pad(object_get($req, 'id', 1), 5, '0', STR_PAD_LEFT));
+                                    $status = object_get($req, 'status', 'pending');
                                     
-                                    $badgeClass = match($req->status) {
+                                    $badgeClass = match($status) {
                                         'approved' => 'badge-approved',
                                         'declined' => 'badge-declined',
                                         'review' => 'badge-review',
                                         default => 'badge-pending'
                                     };
+
+                                    $createdAt = object_get($req, 'created_at');
+                                    $formattedDate = $createdAt ? (is_string($createdAt) ? \Carbon\Carbon::parse($createdAt)->format('M d, Y') : $createdAt->format('M d, Y')) : now()->format('M d, Y');
                                 @endphp
                                 <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-950/20 transition">
                                     <td class="py-4 px-6 font-mono font-bold text-slate-800 dark:text-slate-200">{{ $referenceNumber }}</td>
                                     <td class="py-4 px-6">
-                                        <span class="px-2.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 text-blue-800 dark:text-blue-400 rounded-full text-[9px] font-extrabold uppercase tracking-wide">{{ $req->type_label }}</span>
+                                        <span class="px-2.5 py-0.5 bg-blue-50 dark:bg-blue-950/40 text-blue-800 dark:text-blue-400 rounded-full text-[9px] font-extrabold uppercase tracking-wide">{{ $req->type_label ?? 'Request' }}</span>
                                     </td>
-                                    <td class="py-4 px-6 font-medium text-slate-700 dark:text-slate-300 max-w-sm" title="{{ $req->detail }}">
-                                        <div class="line-clamp-2 leading-relaxed">{{ $req->detail }}</div>
+                                    <td class="py-4 px-6 font-medium text-slate-700 dark:text-slate-300 max-w-sm" title="{{ $req->detail ?? '' }}">
+                                        <div class="line-clamp-2 leading-relaxed">{{ $req->detail ?? 'N/A' }}</div>
                                         @if(!empty($req->custom_fields) && is_array($req->custom_fields))
                                             <div class="flex flex-wrap gap-x-2 text-[9px] text-slate-400 dark:text-slate-500 mt-1">
                                                 @foreach($req->custom_fields as $key => $val)
-                                                    <span>{{ ucwords(str_replace('_', ' ', $key)) }}: <strong class="text-slate-500 dark:text-slate-400 font-semibold">{{ $val }}</strong></span>
+                                                    <span>{{ ucwords(str_replace('_', ' ', $key)) }}: <strong class="text-slate-500 dark:text-slate-400 font-semibold">{{ is_array($val) ? json_encode($val) : $val }}</strong></span>
                                                 @endforeach
                                             </div>
                                         @endif
                                     </td>
-                                    <td class="py-4 px-6 text-slate-400 dark:text-slate-550 font-medium">{{ $req->created_at->format('M d, Y') }}</td>
+                                    <td class="py-4 px-6 text-slate-400 dark:text-slate-550 font-medium">{{ $formattedDate }}</td>
                                     <td class="py-4 px-6 text-center">
-                                        <span class="{{ $badgeClass }}">{{ ucfirst($req->status) }}</span>
+                                        <span class="{{ $badgeClass }}">{{ ucfirst($status) }}</span>
                                     </td>
                                     <td class="py-4 px-6 font-semibold text-slate-700 dark:text-slate-300">
-                                        @if(in_array($req->status, ['approved', 'declined']))
-                                            {{ (isset($req->processedBy) && $req->processedBy) ? $req->processedBy->name : 'Desk Officer' }}
+                                        @if(in_array($status, ['approved', 'declined']))
+                                            Desk Officer
                                         @else
                                             <span class="text-slate-400 dark:text-slate-500 font-medium">Pending Review</span>
                                         @endif
