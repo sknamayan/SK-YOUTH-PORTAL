@@ -33,20 +33,31 @@ class SportsRegistrationController extends Controller
 
     /**
      * Submit citizen sports registration response.
+     * Handles both AJAX JSON requests and standard HTML form POSTs cleanly.
      */
-    public function submitRegistration(SportsRegistrationFormRequest $request): RedirectResponse
+    public function submitRegistration(SportsRegistrationFormRequest $request): JsonResponse|RedirectResponse
     {
         $data = $request->validated();
 
-        // Enforce 1 citizen = 1 sports league registration constraint
+        // Enforce 1 citizen = 1 active sports league registration constraint
         $existing = SportsRegistration::where('email', $request->input('email'))
             ->whereIn('status', ['pending', 'review', 'approved'])
             ->first();
 
         if ($existing) {
+            $errorMessage = 'You already have an active registration for ' . $existing->sport . ' (' . $existing->division . '). Citizens are limited to one active tournament registration.';
+            
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $errorMessage,
+                    'errors' => ['email' => [$errorMessage]],
+                ], 409);
+            }
+
             return redirect()->back()
                 ->withInput()
-                ->with('error', 'You already have an active registration for ' . $existing->sport . ' (' . $existing->division . '). Citizens are limited to one active tournament registration.');
+                ->with('error', $errorMessage);
         }
 
         // Handle profile picture upload
@@ -85,7 +96,18 @@ class SportsRegistrationController extends Controller
             'ip_address' => request()->ip()
         ]);
 
+        $successMessage = 'Your sports league registration has been submitted successfully.';
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $successMessage,
+                'reference_number' => $registration->reference_number ?? ('SK-SPT-' . str_pad($registration->id, 5, '0', STR_PAD_LEFT)),
+                'redirect_url' => route('profile.my-requests'),
+            ], 200);
+        }
+
         return redirect()->route('forms.sports.create')
-            ->with('success', 'Your sports league registration has been submitted successfully.');
+            ->with('success', $successMessage);
     }
 }
