@@ -101,24 +101,51 @@ class CustomRequestController extends Controller
 
         $validated = $request->validate($rules, [], $customAttributes);
 
-        $customReq = CustomRequest::create([
-            'user_id' => auth()->id(),
-            'initiative_id' => $initiative->id,
-            'first_name' => $validated['first_name'],
-            'last_name' => $validated['last_name'],
-            'email' => $validated['email'],
-            'status' => 'pending',
-            'custom_fields' => $validated['custom_fields'] ?? [],
-        ]);
+        try {
+            $customReq = CustomRequest::create([
+                'user_id' => auth()->id(),
+                'initiative_id' => $initiative->id,
+                'first_name' => $validated['first_name'],
+                'last_name' => $validated['last_name'],
+                'email' => $validated['email'],
+                'status' => 'pending',
+                'custom_fields' => $validated['custom_fields'] ?? [],
+            ]);
 
-        return redirect()->route('landing')->with([
-            'submitted_success' => true,
-            'type' => $initiative->title,
-            'referenceNumber' => $customReq->reference_number ?? ('SK-REQ-' . str_pad($customReq->id, 5, '0', STR_PAD_LEFT)),
-            'name' => $customReq->first_name . ' ' . $customReq->last_name,
-            'email' => $customReq->email,
-            'detail' => 'Initiative Form Submission',
-            'date' => $customReq->created_at->format('M d, Y h:i A'),
-        ]);
+            $referenceNumber = $customReq->reference_number ?? ('SK-REQ-' . str_pad($customReq->id, 5, '0', STR_PAD_LEFT));
+
+            // Safely attempt to send confirmation mail without crashing user submission on SMTP timeouts
+            try {
+                if (class_exists(\App\Mail\ServiceRequestConfirmationMail::class)) {
+                    \Illuminate\Support\Facades\Mail::to($customReq->email)->send(new \App\Mail\ServiceRequestConfirmationMail($customReq));
+                    \Illuminate\Support\Facades\Log::info('Initiative request confirmation email sent', ['ref' => $referenceNumber]);
+                }
+            } catch (\Throwable $mailException) {
+                \Illuminate\Support\Facades\Log::error('SMTP dispatch failed on initiative request creation: ' . $mailException->getMessage(), [
+                    'reference' => $referenceNumber,
+                    'email' => $customReq->email,
+                    'trace' => $mailException->getTraceAsString(),
+                ]);
+            }
+
+            return redirect()->route('landing')->with([
+                'submitted_success' => true,
+                'type' => $initiative->title,
+                'referenceNumber' => $referenceNumber,
+                'name' => $customReq->first_name . ' ' . $customReq->last_name,
+                'email' => $customReq->email,
+                'detail' => 'Initiative Form Submission',
+                'date' => $customReq->created_at->format('M d, Y h:i A'),
+            ]);
+
+        } catch (\Throwable $dbException) {
+            \Illuminate\Support\Facades\Log::emergency('Initiative Request Creation Failed: ' . $dbException->getMessage(), [
+                'user_id' => auth()->id(),
+                'initiative' => $initiative->id,
+                'trace' => $dbException->getTraceAsString(),
+            ]);
+
+            return back()->withErrors(['error' => 'An unexpected server error occurred while processing your request. Please try again.'])->withInput();
+        }
     }
 }
