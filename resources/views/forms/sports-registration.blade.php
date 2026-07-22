@@ -525,7 +525,7 @@
                                   <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
                                       Profile Picture (2x2 / Passport size) <span class="text-rose-500">*</span>
                                   </label>
-                                  <input type="file" name="profile_picture" :required="!showFormModal"
+                                  <input type="file" name="profile_picture" :required="regStep === 3"
                                          class="w-full text-xs text-slate-505 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:uppercase file:bg-blue-50 file:text-[#1e40af] dark:file:bg-slate-800 dark:file:text-blue-300 hover:file:bg-blue-100 dark:hover:file:bg-slate-755 transition cursor-pointer">
                               </div>
                           </div>
