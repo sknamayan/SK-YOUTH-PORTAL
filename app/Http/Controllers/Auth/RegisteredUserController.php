@@ -69,10 +69,13 @@ class RegisteredUserController extends Controller
         try {
             $user->notify(new \App\Notifications\SendOtpNotification($otp));
         } catch (\Throwable $e) {
-            \Illuminate\Support\Facades\Log::error('Failed sending OTP notification: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::error('SMTP/Notification Error on registration OTP send: ' . $e->getMessage());
         }
 
-        session(['pending_otp_email' => $user->email]);
+        session([
+            'pending_otp_email' => $user->email,
+            'demo_otp' => config('app.debug') ? $otp : null,
+        ]);
 
         return redirect()->route('register.otp.prompt')
             ->with('info', 'Registration submitted! Please enter the 6-digit verification code sent to your email.');
