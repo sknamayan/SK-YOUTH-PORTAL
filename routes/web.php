@@ -151,6 +151,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/profiling', [KkProfileController::class, 'selfCreate'])->name('profile.profiling.create');
     Route::post('/profile/profiling', [KkProfileController::class, 'selfStore'])->name('profile.profiling.store');
 
+    // Citizen SKonsulta Consultation Threads API
+    Route::get('/skonsulta/api/threads', [\App\Http\Controllers\Admin\ConsultationController::class, 'getThreadsJson'])->name('skonsulta.api.threads');
+
     // Notifications
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::patch('/notifications/{notification}/read', [NotificationController::class, 'read'])->name('notifications.read');
