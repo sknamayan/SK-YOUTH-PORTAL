@@ -17,8 +17,30 @@
     age: '{{ old('age', '') }}',
     sex: '{{ old('sex', '') }}',
     gender: '{{ old('gender', '') }}',
-    dob: '{{ old('dob', '') }}',
+    dob: '{{ old('dob', $user->birthdate ? (is_string($user->birthdate) ? $user->birthdate : $user->birthdate->format('Y-m-d')) : '') }}',
     civil_status: '{{ old('civil_status', '') }}',
+
+    calculateAge() {
+        if (!this.dob) {
+            this.age = '';
+            return;
+        }
+        const birthDate = new Date(this.dob);
+        const today = new Date();
+        let calculated = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            calculated--;
+        }
+        this.age = calculated >= 0 ? calculated : 0;
+    },
+
+    init() {
+        if (this.dob) {
+            this.calculateAge();
+        }
+        this.$watch('dob', () => this.calculateAge());
+    },
     purok_id: '{{ old('purok_id', '') }}',
     street_address: '{{ old('street_address', '') }}',
     contact_number: '{{ old('contact_number', '') }}',
@@ -273,8 +295,8 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Age <span class="text-rose-500">*</span></label>
-                        <input type="number" name="age" value="{{ old('age') }}" x-model="age" min="6" max="39" required class="field focus:ring-4 focus:ring-blue-600/10 text-xs py-2 bg-slate-50/50 border border-slate-200 rounded-xl" placeholder="6 to 39">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Age <span class="text-rose-500">*</span> <span class="text-[9px] text-slate-400 font-normal lowercase">(auto-calculated)</span></label>
+                        <input type="number" name="age" value="{{ old('age') }}" x-model="age" min="6" max="39" required readonly class="field focus:ring-4 focus:ring-blue-600/10 text-xs py-2 bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl cursor-not-allowed font-mono font-bold" placeholder="Auto">
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Sex <span class="text-rose-500">*</span></label>
