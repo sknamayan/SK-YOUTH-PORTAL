@@ -137,7 +137,7 @@ class KkProfileController extends Controller
             })->count();
 
         if ($statusFilter !== 'all') {
-            $query->where('status', $statusFilter);
+            $query->whereRaw('LOWER(status) = ?', [strtolower($statusFilter)]);
         }
 
         $profiles = $query->paginate($limit)->withQueryString();

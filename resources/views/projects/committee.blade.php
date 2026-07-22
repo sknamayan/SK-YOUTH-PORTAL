@@ -138,42 +138,48 @@
                         @forelse($activeCommittee->initiatives as $init)
                             <div x-show="activeInitiativeId === 'all' || activeInitiativeId === {{ $init->id }}"
                                  x-transition
-                                 class="card bg-white border border-slate-100 hover:border-blue-150 transition overflow-hidden rounded-3xl flex flex-col justify-between h-full space-y-4 shadow-sm/5">
+                                 class="card bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-blue-200 dark:hover:border-slate-700 transition duration-200 overflow-hidden rounded-2xl flex flex-col justify-between h-full shadow-sm">
                                 
                                 @if($init->picture_path)
-                                    <div class="w-full aspect-video overflow-hidden bg-slate-100 shrink-0">
+                                    <div class="w-full h-48 overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0">
                                         <img src="{{ asset('storage/' . $init->picture_path) }}" 
                                              alt="{{ $init->title }}" 
-                                             class="w-full h-full object-cover rounded-t-3xl transition duration-300 hover:scale-105">
+                                             class="w-full h-48 object-cover transition duration-300 hover:scale-105">
                                     </div>
                                 @endif
 
-                                <div class="p-6 pb-0 space-y-2">
-                                    <span class="bg-blue-50/75 border border-blue-100/50 text-[#1e40af] text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded">
-                                        {{ $activeCommittee->name }}
-                                    </span>
-                                    <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wide font-display">{{ $init->title }}</h3>
-                                    <p class="text-xs text-slate-500 leading-relaxed">{{ $init->description }}</p>
+                                <div class="p-6 space-y-3 flex-1">
+                                    <div>
+                                        <span class="inline-flex px-2.5 py-1 rounded-md bg-blue-50 dark:bg-blue-950/60 border border-blue-100 dark:border-blue-800 text-[#1e40af] dark:text-blue-300 text-[9px] font-black uppercase tracking-widest font-mono">
+                                            {{ $activeCommittee->name }}
+                                        </span>
+                                    </div>
+                                    <h3 class="text-base font-black text-slate-900 dark:text-white uppercase tracking-tight font-display leading-snug">
+                                        {{ $init->title }}
+                                    </h3>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                                        {{ $init->description }}
+                                    </p>
                                 </div>
                                 
-                                <!-- Card Actions -->
-                                <div class="p-6 pt-4 border-t border-slate-100 flex flex-wrap gap-2.5 justify-between items-center mt-auto">
+                                <!-- Card Actions Button Group -->
+                                <div class="p-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mt-auto">
                                     <a href="{{ route('projects.explorer', ['project_slug' => $project->slug, 'committee_slug' => $activeCommittee->slug, 'initiative_id' => $init->id]) }}" 
-                                       class="text-[10px] font-black text-blue-600 hover:text-blue-800 uppercase tracking-wider transition">
+                                       class="text-xs font-black text-[#1e40af] dark:text-blue-400 hover:underline uppercase tracking-wider transition inline-flex items-center gap-1">
                                         View Stepper &rarr;
                                     </a>
-                                    <div class="flex items-center gap-2">
+                                    <div class="grid grid-cols-2 gap-2.5 w-full sm:w-auto">
                                         <a href="{{ route('track.index') }}" 
-                                           class="px-3.5 py-1.5 border border-slate-200 text-slate-600 hover:text-[#1e40af] hover:border-[#1e40af] font-bold rounded-xl text-[10px] uppercase tracking-wider transition active:scale-95">
+                                           class="px-3.5 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-750 font-bold rounded-xl text-[10px] uppercase tracking-wider text-center transition active:scale-95">
                                             Track Progress
                                         </a>
                                         @if($init->is_coming_soon)
-                                            <span class="px-3.5 py-1.5 bg-slate-100 text-slate-400 font-bold rounded-xl text-[10px] uppercase tracking-wider select-none">
+                                            <span class="px-3.5 py-2.5 bg-slate-100 dark:bg-slate-800/60 text-slate-400 font-bold rounded-xl text-[10px] uppercase tracking-wider text-center select-none">
                                                 Coming Soon
                                             </span>
                                         @else
                                             <a href="{{ route('forms.custom.create', $init->id) }}" 
-                                               class="px-3.5 py-1.5 bg-[#1e40af] text-white hover:bg-blue-700 font-bold rounded-xl text-[10px] uppercase tracking-wider transition active:scale-95">
+                                               class="px-3.5 py-2.5 bg-[#1e40af] text-white hover:bg-blue-700 font-bold rounded-xl text-[10px] uppercase tracking-wider text-center transition active:scale-95 shadow-sm shadow-blue-500/10">
                                                 Apply Now
                                             </a>
                                         @endif
