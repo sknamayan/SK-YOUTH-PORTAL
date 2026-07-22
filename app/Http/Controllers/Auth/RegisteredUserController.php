@@ -218,4 +218,28 @@ class RegisteredUserController extends Controller
             'message' => 'A fresh 6-digit verification code has been sent to your email.',
         ], 200);
     }
+
+    /**
+     * Handle direct signed URL verification link click from email.
+     */
+    public function verifySigned(Request $request, User $user): RedirectResponse
+    {
+        if (!$request->hasValidSignature()) {
+            return redirect()->route('register.otp.prompt')
+                ->with('errorMessage', 'Verification link expired or invalid. Please request a new OTP code.');
+        }
+
+        $user->update([
+            'is_approved'    => true,
+            'otp_code'       => null,
+            'otp_expires_at' => null,
+            'otp_attempts'   => 0,
+        ]);
+
+        Auth::login($user);
+        session()->forget(['pending_otp_email', 'temp_user_id']);
+
+        return redirect()->route('profile.my-requests')
+            ->with('success', 'Email verified successfully! Welcome to SK Namayan Digital Registry.');
+    }
 }

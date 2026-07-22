@@ -36,11 +36,18 @@ class SendOtpNotification extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
+        $verificationUrl = \Illuminate\Support\Facades\URL::temporarySignedRoute(
+            'register.otp.verify.signed',
+            now()->addMinutes(10),
+            ['user' => $notifiable->id]
+        );
+
         return (new MailMessage)
             ->subject('SK Namayan Digital Registry - Email Verification Code')
             ->view('emails.otp-code', [
                 'firstName' => $notifiable->first_name,
                 'otp' => $this->otp,
+                'verificationUrl' => $verificationUrl,
             ]);
     }
 }
