@@ -110,31 +110,21 @@
 
         <!-- Dynamic Content Area -->
         <template x-if="!fileName && !previewUrl">
-            <div class="flex flex-col items-center">
-                <!-- Premium Folder Icon -->
-                <div class="w-16 h-16 bg-blue-50 dark:bg-blue-950/40 rounded-2xl flex items-center justify-center text-blue-600 dark:text-blue-400 mb-4 shadow-inner">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-                    </svg>
-                </div>
+            <div class="flex flex-col items-center space-y-3">
+                <span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-black text-[9px] uppercase tracking-widest rounded-full font-mono">
+                    SELECT FILE
+                </span>
                 
                 <!-- Helper Text -->
-                <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 max-w-xs leading-relaxed mb-4">
+                <p class="text-xs font-medium text-slate-500 dark:text-slate-400 max-w-xs leading-relaxed">
                     {{ $placeholder }}
                 </p>
-                
-                <!-- Divider -->
-                <div class="flex items-center gap-3 w-40 mb-4 select-none">
-                    <div class="h-[1px] bg-slate-200 dark:bg-slate-800 flex-1"></div>
-                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">OR</span>
-                    <div class="h-[1px] bg-slate-200 dark:bg-slate-800 flex-1"></div>
-                </div>
 
                 <!-- Browse Button -->
                 <button 
                     type="button" 
                     @click="$refs.fileInput.click()"
-                    class="inline-flex items-center min-h-10 px-5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all select-none cursor-pointer"
+                    class="inline-flex items-center min-h-10 px-5 bg-[#1e40af] hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-sm active:scale-95 transition-all select-none cursor-pointer"
                 >
                     Browse files
                 </button>
