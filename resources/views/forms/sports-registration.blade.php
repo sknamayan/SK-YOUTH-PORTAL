@@ -380,7 +380,7 @@
                       </div>
                   @endif
 
-                  <form method="POST" action="{{ route('forms.sports.store') }}" enctype="multipart/form-data" class="request-form space-y-6" x-ref="regForm" id="sportsRegForm" @submit="if (!formConfirmed) { $event.preventDefault(); showConfirm = true; }">
+                  <form method="POST" action="{{ route('forms.sports.store') }}" enctype="multipart/form-data" class="request-form space-y-6" x-ref="regForm" id="sportsRegForm" novalidate @submit="if (!formConfirmed) { $event.preventDefault(); showConfirm = true; }">
                       @csrf
 
                       <!-- Step 1: Sport Selection -->
@@ -392,7 +392,7 @@
                               <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
                                   Sport <span class="text-rose-500">*</span>
                               </label>
-                              <select name="sport" x-model="sport" @change="division = ''" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition cursor-pointer">
+                              <select name="sport" x-model="sport" @change="division = ''" :required="regStep === 1" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition cursor-pointer">
                                   <option value="">Select Sport</option>
                                   <option value="Basketball">Basketball</option>
                                   <option value="Volleyball">Volleyball</option>
@@ -410,7 +410,7 @@
                                   <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
                                       Division <span class="text-rose-500">*</span>
                                   </label>
-                                  <select name="division" x-model="division" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition cursor-pointer">
+                                  <select name="division" x-model="division" :required="regStep === 2" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition cursor-pointer">
                                       <option value="">Select Division</option>
                                       <template x-for="div in divisions()" :key="div.value">
                                           <option :value="div.value" x-text="div.label" :selected="division === div.value"></option>
@@ -421,7 +421,7 @@
                                   <label class="block text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 mb-1.5 font-display">
                                       Position <span class="text-rose-500">*</span>
                                   </label>
-                                  <input type="text" name="position" value="{{ old('position') }}" required placeholder="e.g. Point Guard, Spiker"
+                                  <input type="text" name="position" value="{{ old('position') }}" :required="regStep === 2" placeholder="e.g. Point Guard, Spiker"
                                          class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-955 px-3.5 py-2.5 text-xs dark:text-white outline-none focus:border-[#1e40af] focus:ring-4 focus:ring-blue-600/5 transition font-sans">
                               </div>
                           </div>
