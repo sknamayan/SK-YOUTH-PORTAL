@@ -49,41 +49,26 @@ class ProfileController extends Controller
                 ->get();
 
             $kkProfile = \App\Models\KkProfile::withoutGlobalScopes()
-                ->where('user_id', $user->id)
+                ->where(function($q) use ($user, $email) {
+                    $q->where('user_id', $user->id);
+                    if ($email) {
+                        $q->orWhere('email', $email);
+                    }
+                })
                 ->first();
 
-            if (!$kkProfile) {
-                // Look up profile by user's email or matching name
-                $kkProfile = \App\Models\KkProfile::withoutGlobalScopes()
-                    ->where(function($q) use ($email, $user) {
-                        $q->where('email', $email)
-                          ->orWhere(function($sub) use ($user) {
-                              if ($user->first_name && $user->last_name) {
-                                  $sub->where('first_name', $user->first_name)
-                                      ->where('surname', $user->last_name);
-                              }
-                          });
-                    })
-                    ->first();
-            }
-
-            // Fallback: search all profiles with decrypted safe check
-            if (!$kkProfile) {
+            if (!$kkProfile && $user) {
+                // Decrypted / Case-insensitive fallback lookup
                 $allProfiles = \App\Models\KkProfile::withoutGlobalScopes()->get();
                 $kkProfile = $allProfiles->first(function ($p) use ($email, $user) {
+                    if ($p->user_id == $user->id) return true;
                     $pEmail = strtolower((string)$p->email);
                     $uEmail = strtolower((string)$email);
-                    if ($pEmail && $uEmail && $pEmail === $uEmail) return true;
-                    if ($user->first_name && $user->last_name) {
-                        return strtolower((string)$p->first_name) === strtolower((string)$user->first_name)
-                            && strtolower((string)$p->surname) === strtolower((string)$user->last_name);
-                    }
-                    return false;
+                    return $pEmail && $uEmail && $pEmail === $uEmail;
                 });
             }
 
-            // Automatically link user_id if matched profile has no user_id set
-            if ($kkProfile && !$kkProfile->user_id) {
+            if ($kkProfile && !$kkProfile->user_id && $user) {
                 $kkProfile->update(['user_id' => $user->id]);
             }
 
