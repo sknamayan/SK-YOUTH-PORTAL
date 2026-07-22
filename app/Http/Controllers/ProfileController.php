@@ -102,7 +102,16 @@ class ProfileController extends Controller
             $requests = collect();
             $sportsRegistrations = collect();
             $kkProfile = null;
-            $profile = null;
+            
+            if ($user) {
+                $kkProfile = \App\Models\KkProfile::withoutGlobalScopes()
+                    ->where(function($q) use ($user) {
+                        $q->where('user_id', $user->id)
+                          ->orWhere('email', $user->email);
+                    })->first();
+            }
+
+            $profile = $kkProfile;
             $results = collect();
             $total = 0;
             $pending = 0;
