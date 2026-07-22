@@ -328,7 +328,7 @@
                                     </td>
                                     <td class="py-4 px-6 font-semibold text-slate-700 dark:text-slate-300">
                                         @if(in_array($req->status, ['approved', 'declined']))
-                                            {{ $req->processedBy ? $req->processedBy->name : 'Desk Officer' }}
+                                            {{ (isset($req->processedBy) && $req->processedBy) ? $req->processedBy->name : 'Desk Officer' }}
                                         @else
                                             <span class="text-slate-400 dark:text-slate-500 font-medium">Pending Review</span>
                                         @endif
