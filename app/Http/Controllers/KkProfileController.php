@@ -209,8 +209,8 @@ class KkProfileController extends Controller
             'registered_national_voter' => ['required', 'boolean'],
             'attended_kk_assembly' => ['required', 'boolean'],
             'part_of_youth_org' => ['required', 'boolean'],
-            'youth_org_name' => ['required_if:part_of_youth_org,1', 'nullable', 'string', 'max:255'],
-            'interested_in_joining' => ['required', 'boolean'],
+            'youth_org_name' => ['required_if:part_of_youth_org,1,true', 'nullable', 'string', 'max:255'],
+            'interested_in_joining' => ['required_if:part_of_youth_org,0,false', 'nullable', 'boolean'],
 
             // Step 3: Inclusivity & Education
             'part_of_lgbtqia' => ['required', 'boolean'],
@@ -316,8 +316,8 @@ class KkProfileController extends Controller
                 'registered_national_voter' => ['required', 'boolean'],
                 'attended_kk_assembly' => ['required', 'boolean'],
                 'part_of_youth_org' => ['required', 'boolean'],
-                'youth_org_name' => ['required_if:part_of_youth_org,1', 'nullable', 'string', 'max:255'],
-                'interested_in_joining' => ['required', 'boolean'],
+                'youth_org_name' => ['required_if:part_of_youth_org,1,true', 'nullable', 'string', 'max:255'],
+                'interested_in_joining' => ['required_if:part_of_youth_org,0,false', 'nullable', 'boolean'],
 
                 // Step 3: Inclusivity & Education
                 'part_of_lgbtqia' => ['required', 'boolean'],
@@ -414,8 +414,8 @@ class KkProfileController extends Controller
             'registered_national_voter' => ['required', 'boolean'],
             'attended_kk_assembly' => ['required', 'boolean'],
             'part_of_youth_org' => ['required', 'boolean'],
-            'youth_org_name' => ['required_if:part_of_youth_org,1', 'nullable', 'string', 'max:255'],
-            'interested_in_joining' => ['required', 'boolean'],
+            'youth_org_name' => ['required_if:part_of_youth_org,1,true', 'nullable', 'string', 'max:255'],
+            'interested_in_joining' => ['required_if:part_of_youth_org,0,false', 'nullable', 'boolean'],
 
             // Step 3: Inclusivity & Education
             'part_of_lgbtqia' => ['required', 'boolean'],

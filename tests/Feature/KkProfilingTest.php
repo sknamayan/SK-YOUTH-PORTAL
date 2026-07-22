@@ -149,7 +149,7 @@ class KkProfilingTest extends TestCase
             'surname', 'first_name', 'age', 'sex', 'dob', 'civil_status', 
             'purok_id', 'youth_classification', 'contact_number', 'email',
             'registered_sk_voter', 'registered_national_voter', 'attended_kk_assembly',
-            'part_of_youth_org', 'interested_in_joining', 'part_of_lgbtqia', 
+            'part_of_youth_org', 'part_of_lgbtqia', 
             'pwd', 'highest_educational_attainment', 'consent_given'
         ]);
     }
