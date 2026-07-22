@@ -272,6 +272,13 @@ class ConsultationController extends Controller
      */
     public function getThreadsJson(Request $request): JsonResponse
     {
+        if (!auth()->check()) {
+            return response()->json([
+                'error' => 'Unauthenticated',
+                'threads' => []
+            ], 401);
+        }
+
         $threads = ConsultationRequest::where('user_id', auth()->id())
             ->latest()
             ->get();

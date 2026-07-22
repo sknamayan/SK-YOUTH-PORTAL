@@ -239,7 +239,12 @@ function skonsultaFloatingChat() {
         async fetchLatestThread() {
             this.loading = true;
             try {
-                const response = await fetch('/skonsulta/api/threads');
+                const response = await fetch('/skonsulta/api/threads', {
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
                 if (response.ok) {
                     const data = await response.json();
                     this.threads = data.threads || [];
