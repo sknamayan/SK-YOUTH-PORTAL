@@ -48,8 +48,11 @@ class ProfileController extends Controller
                 ->latest()
                 ->get();
 
-            $kkProfile = \App\Models\KkProfile::where('user_id', $user->id)
-                ->orWhere('email', $email)
+            $kkProfile = \App\Models\KkProfile::withoutGlobalScopes()
+                ->where(function($q) use ($user, $email) {
+                    $q->where('user_id', $user->id)
+                      ->orWhere('email', $email);
+                })
                 ->first();
 
             $profile = $kkProfile;
