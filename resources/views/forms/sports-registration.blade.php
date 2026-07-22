@@ -674,8 +674,8 @@
                           <div class="flex items-center gap-3">
                               <button type="button"
                                       x-show="regStep < 5"
-                                      @click="nextRegStep()"
-                                      class="inline-flex items-center px-6 py-3 rounded-xl bg-[#1e40af] hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-wider transition active:scale-95 shadow-sm select-none cursor-pointer">
+                                      @click="if (validateRegStep(regStep)) nextRegStep()"
+                                      class="inline-flex items-center px-6 py-3 rounded-xl bg-[#1e40af] hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-wider transition active:scale-95 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed select-none cursor-pointer">
                                   Next &rarr;
                               </button>
                               <button type="submit"
