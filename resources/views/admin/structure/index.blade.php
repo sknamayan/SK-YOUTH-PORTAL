@@ -450,7 +450,7 @@ class="flex-1 flex flex-col md:flex-row bg-[#f8fafc]">
                             <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
 
                             {{-- Left Column: Form Builder --}}
-                            <form method="POST" action="{{ route('admin.structure.initiative.store') }}" class="space-y-4">
+                            <form method="POST" action="{{ route('admin.structure.initiative.store') }}" enctype="multipart/form-data" class="space-y-4">
                                 @csrf
                                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                                     <div>
@@ -490,12 +490,21 @@ class="flex-1 flex flex-col md:flex-row bg-[#f8fafc]">
                                         @enderror
                                     </div>
                                 </div>
-                                <div>
-                                    <label for="title" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Initiative Title</label>
-                                    <input type="text" name="title" id="title" required class="field text-xs py-2.5 bg-white" placeholder="e.g. Alternative Learning System" value="{{ old('title') }}">
-                                    @error('title')
-                                        <p class="text-rose-600 text-[11px] mt-1 font-semibold">{{ $message }}</p>
-                                    @enderror
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="title" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Initiative Title</label>
+                                        <input type="text" name="title" id="title" required class="field text-xs py-2.5 bg-white" placeholder="e.g. Alternative Learning System" value="{{ old('title') }}">
+                                        @error('title')
+                                            <p class="text-rose-600 text-[11px] mt-1 font-semibold">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div>
+                                        <label for="thumbnail" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Project Thumbnail (Optional)</label>
+                                        <input type="file" name="thumbnail" id="thumbnail" accept="image/png,image/jpeg,image/jpg,image/webp" class="field text-xs py-2 bg-white">
+                                        @error('thumbnail')
+                                            <p class="text-rose-600 text-[11px] mt-1 font-semibold">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                 </div>
                                 <div>
                                     <label for="description" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Description</label>
@@ -831,16 +840,21 @@ class="flex-1 flex flex-col md:flex-row bg-[#f8fafc]">
                      </button>
                  </div>
 
-                 <form :action="`{{ url('/admin/structure/initiatives') }}/${editInitiative.id}`" method="POST" class="space-y-6 overflow-y-auto flex-1 pr-2 no-scrollbar">
+                 <form :action="`{{ url('/admin/structure/initiatives') }}/${editInitiative.id}`" method="POST" enctype="multipart/form-data" class="space-y-6 overflow-y-auto flex-1 pr-2 no-scrollbar">
                      @csrf
                      @method('PUT')
 
                      <div class="space-y-4">
-                          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                               <div>
-                                   <label for="edit_title" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Initiative Title</label>
-                                   <input type="text" name="title" id="edit_title" required x-model="editInitiative.title" class="field text-xs py-2.5 bg-white" placeholder="e.g. Alternative Learning System">
-                               </div>
+                          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div>
+                                  <label for="edit_title" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Initiative Title</label>
+                                  <input type="text" name="title" id="edit_title" x-model="editInitiative.title" required class="field text-xs py-2.5 bg-white">
+                              </div>
+                              <div>
+                                  <label for="edit_thumbnail" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Update Project Thumbnail</label>
+                                  <input type="file" name="thumbnail" id="edit_thumbnail" accept="image/png,image/jpeg,image/jpg,image/webp" class="field text-xs py-2 bg-white">
+                              </div>
+                          </div>
                                <div>
                                    <label for="edit_is_coming_soon" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Publishing Status</label>
                                    <select name="is_coming_soon" id="edit_is_coming_soon" x-model="editInitiative.is_coming_soon" class="field text-xs py-2.5 pr-8 bg-white">

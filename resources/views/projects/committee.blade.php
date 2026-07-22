@@ -138,8 +138,17 @@
                         @forelse($activeCommittee->initiatives as $init)
                             <div x-show="activeInitiativeId === 'all' || activeInitiativeId === {{ $init->id }}"
                                  x-transition
-                                 class="card bg-white border border-slate-100 hover:border-blue-150 transition p-6 rounded-3xl flex flex-col justify-between h-full space-y-4 shadow-sm/5">
-                                <div class="space-y-2">
+                                 class="card bg-white border border-slate-100 hover:border-blue-150 transition overflow-hidden rounded-3xl flex flex-col justify-between h-full space-y-4 shadow-sm/5">
+                                
+                                @if($init->picture_path)
+                                    <div class="w-full aspect-video overflow-hidden bg-slate-100 shrink-0">
+                                        <img src="{{ asset('storage/' . $init->picture_path) }}" 
+                                             alt="{{ $init->title }}" 
+                                             class="w-full h-full object-cover rounded-t-3xl transition duration-300 hover:scale-105">
+                                    </div>
+                                @endif
+
+                                <div class="p-6 pb-0 space-y-2">
                                     <span class="bg-blue-50/75 border border-blue-100/50 text-[#1e40af] text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded">
                                         {{ $activeCommittee->name }}
                                     </span>
@@ -148,7 +157,7 @@
                                 </div>
                                 
                                 <!-- Card Actions -->
-                                <div class="pt-4 border-t border-slate-100 flex flex-wrap gap-2.5 justify-between items-center mt-auto">
+                                <div class="p-6 pt-4 border-t border-slate-100 flex flex-wrap gap-2.5 justify-between items-center mt-auto">
                                     <a href="{{ route('projects.explorer', ['project_slug' => $project->slug, 'committee_slug' => $activeCommittee->slug, 'initiative_id' => $init->id]) }}" 
                                        class="text-[10px] font-black text-blue-600 hover:text-blue-800 uppercase tracking-wider transition">
                                         View Stepper &rarr;

@@ -82,6 +82,7 @@ class StructureManagementController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'form_route' => ['nullable', 'string', 'max:255'],
+            'thumbnail' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
             'is_coming_soon' => ['nullable', 'boolean'],
             'show_in_quick_forms' => ['nullable', 'boolean'],
             'is_highlighted' => ['nullable', 'boolean'],
@@ -96,6 +97,11 @@ class StructureManagementController extends Controller
 
         if ($request->boolean('is_highlighted') && Initiative::where('is_highlighted', true)->count() >= 3) {
             return back()->withErrors(['is_highlighted' => 'You can only have a maximum of 3 highlighted programs. Please unhighlight another program first.'])->withInput();
+        }
+
+        $picturePath = null;
+        if ($request->hasFile('thumbnail')) {
+            $picturePath = $request->file('thumbnail')->store('thumbnails', 'public');
         }
 
         $customFields = [];
@@ -120,6 +126,7 @@ class StructureManagementController extends Controller
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'form_route' => $request->input('form_route'),
+            'picture_path' => $picturePath,
             'is_coming_soon' => $request->boolean('is_coming_soon'),
             'show_in_quick_forms' => $request->boolean('show_in_quick_forms'),
             'is_highlighted' => $request->boolean('is_highlighted'),
@@ -138,6 +145,7 @@ class StructureManagementController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'form_route' => ['nullable', 'string', 'max:255'],
+            'thumbnail' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
             'is_coming_soon' => ['nullable', 'boolean'],
             'show_in_quick_forms' => ['nullable', 'boolean'],
             'is_highlighted' => ['nullable', 'boolean'],
@@ -152,6 +160,14 @@ class StructureManagementController extends Controller
 
         if ($request->boolean('is_highlighted') && Initiative::where('is_highlighted', true)->where('id', '!=', $initiative->id)->count() >= 3) {
             return back()->withErrors(['is_highlighted' => 'You can only have a maximum of 3 highlighted programs. Please unhighlight another program first.'])->withInput();
+        }
+
+        $picturePath = $initiative->picture_path;
+        if ($request->hasFile('thumbnail')) {
+            if ($initiative->picture_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($initiative->picture_path)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($initiative->picture_path);
+            }
+            $picturePath = $request->file('thumbnail')->store('thumbnails', 'public');
         }
 
         $customFields = [];
@@ -175,6 +191,7 @@ class StructureManagementController extends Controller
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'form_route' => $request->input('form_route'),
+            'picture_path' => $picturePath,
             'is_coming_soon' => $request->boolean('is_coming_soon'),
             'show_in_quick_forms' => $request->boolean('show_in_quick_forms'),
             'is_highlighted' => $request->boolean('is_highlighted'),
