@@ -39,7 +39,11 @@ Route::get('/clear-cache', function() {
         \Illuminate\Support\Facades\Artisan::call('cache:clear');
         \Illuminate\Support\Facades\Artisan::call('route:clear');
         \Illuminate\Support\Facades\Artisan::call('view:clear');
-        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        try {
+            \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Artisan migrate call skipped in clear-cache: ' . $e->getMessage());
+        }
 
         // Ensure active user's KK Profile is explicitly linked and marked approved in DB
         $user = auth()->user();
@@ -56,7 +60,12 @@ Route::get('/clear-cache', function() {
         }
 
         // Verify schema details for otp_code column
-        $columnType = \Illuminate\Support\Facades\Schema::getColumnType('users', 'otp_code');
+        $columnType = 'unknown';
+        try {
+            $columnType = \Illuminate\Support\Facades\Schema::getColumnType('users', 'otp_code');
+        } catch (\Throwable $e) {
+            $columnType = 'error: ' . $e->getMessage();
+        }
 
         return response()->json([
             'status' => 'success',
