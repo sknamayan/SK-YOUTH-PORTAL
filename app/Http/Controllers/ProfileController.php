@@ -43,15 +43,17 @@ class ProfileController extends Controller
             ->latest()
             ->get();
 
-        $kkProfile = \App\Models\KkProfile::where('user_id', $user->id)
-            ->orWhere('email', $email)
-            ->first();
-
         $sportsRegistrations = \App\Models\SportsRegistration::where('email', $email)
             ->latest()
             ->get();
 
-        return view('profile.my-requests', compact('user', 'requests', 'kkProfile', 'sportsRegistrations'));
+        $kkProfile = \App\Models\KkProfile::where('user_id', $user->id)
+            ->orWhere('email', $email)
+            ->first();
+
+        $profile = $kkProfile;
+
+        return view('profile.my-requests', compact('user', 'requests', 'kkProfile', 'profile', 'sportsRegistrations'));
     }
 
     public function edit(Request $request): View
