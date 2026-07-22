@@ -1,15 +1,47 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen bg-slate-950 font-sans flex items-center justify-center p-4 sm:p-6"
+<div class="min-h-[85vh] bg-slate-950 font-sans flex items-center justify-center p-4 sm:p-6 relative overflow-hidden"
      x-data="{
-         otp: '',
+         otp: ['', '', '', '', '', ''],
          loading: false,
          resending: false,
+         cooldown: 0,
          errorMessage: '',
          successMessage: '',
+         get fullOtp() {
+             return this.otp.join('');
+         },
+         handleInput(e, index) {
+             const val = e.target.value;
+             if (!/^\d*$/.test(val)) {
+                 this.otp[index] = '';
+                 return;
+             }
+             this.otp[index] = val.slice(-1);
+             if (val && index < 5) {
+                 this.$refs[`otp${index + 1}`].focus();
+             }
+             if (this.fullOtp.length === 6) {
+                 this.verify();
+             }
+         },
+         handleKeyDown(e, index) {
+             if (e.key === 'Backspace' && !this.otp[index] && index > 0) {
+                 this.$refs[`otp${index - 1}`].focus();
+             }
+         },
+         handlePaste(e) {
+             e.preventDefault();
+             const pasted = (e.clipboardData || window.clipboardData).getData('text').trim();
+             if (/^\d{6}$/.test(pasted)) {
+                 this.otp = pasted.split('');
+                 this.$refs.otp5.focus();
+                 this.verify();
+             }
+         },
          async verify() {
-             if (this.otp.length !== 6) return;
+             if (this.fullOtp.length !== 6) return;
              this.loading = true;
              this.errorMessage = '';
              this.successMessage = '';
@@ -20,13 +52,13 @@
                          'Content-Type': 'application/json',
                          'X-CSRF-TOKEN': '{{ csrf_token() }}'
                      },
-                     body: JSON.stringify({ email: '{{ $email }}', otp: this.otp })
+                     body: JSON.stringify({ email: '{{ $email }}', otp: this.fullOtp })
                  });
                  const data = await res.json();
                  if (res.ok && data.success) {
                      window.location.href = data.redirect_url;
                  } else {
-                     this.errorMessage = data.message || 'Verification failed.';
+                     this.errorMessage = data.message || 'Verification code failed.';
                  }
              } catch (e) {
                  this.errorMessage = 'Network error. Please check your connection.';
@@ -35,6 +67,7 @@
              }
          },
          async resend() {
+             if (this.cooldown > 0 || this.resending) return;
              this.resending = true;
              this.errorMessage = '';
              this.successMessage = '';
@@ -50,6 +83,7 @@
                  const data = await res.json();
                  if (res.ok && data.success) {
                      this.successMessage = data.message;
+                     this.startCooldown(60);
                  } else {
                      this.errorMessage = data.message || 'Resend failed.';
                  }
@@ -58,56 +92,83 @@
              } finally {
                  this.resending = false;
              }
+         },
+         startCooldown(seconds) {
+             this.cooldown = seconds;
+             const timer = setInterval(() => {
+                 this.cooldown--;
+                 if (this.cooldown <= 0) clearInterval(timer);
+             }, 1000);
          }
      }">
-    <div class="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl text-slate-100 animate-fade-in">
-        <div class="text-center space-y-2">
-            <div class="w-12 h-12 rounded-2xl bg-blue-600/10 border border-blue-500/20 text-blue-400 flex items-center justify-center mx-auto text-xl font-bold">
-                ✉
+    
+    <!-- Background Glow Effects -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-600/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+    <div class="w-full max-w-lg bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-10 space-y-8 shadow-2xl backdrop-blur-xl relative z-10 text-slate-100 animate-fade-in">
+        
+        <!-- Header & Branding -->
+        <div class="text-center space-y-3">
+            <div class="inline-flex px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest font-display">
+                Barangay Namayan Youth Registry
             </div>
-            <h3 class="text-xl font-black font-display uppercase tracking-tight text-white">Email OTP Verification</h3>
-            <p class="text-xs text-slate-400 leading-relaxed">
-                We sent a 6-digit verification code to <span class="font-bold text-slate-200">{{ $email }}</span>. Enter it below to activate your account.
+            <h2 class="text-2xl sm:text-3xl font-black font-display uppercase tracking-tight text-white">
+                Verify Your Account
+            </h2>
+            <p class="text-xs text-slate-400 leading-relaxed max-w-sm mx-auto">
+                We've sent a 6-digit security code to <strong class="text-slate-200 font-semibold">{{ $email }}</strong>. Please enter the code below to complete your registration.
             </p>
         </div>
 
         @if(session('info'))
-            <div class="p-3 bg-blue-950/40 border border-blue-900/30 rounded-2xl text-xs text-blue-400 font-medium text-center">
-                {{ session('info') }}
+            <div class="p-3.5 bg-blue-950/50 border border-blue-800/40 rounded-2xl text-xs text-blue-300 font-medium text-center flex items-center justify-center gap-2">
+                <span>ℹ️</span> {{ session('info') }}
             </div>
         @endif
 
-        <div class="space-y-3">
-            <input type="text" 
-                   x-model="otp" 
-                   maxlength="6" 
-                   @input="if(otp.length === 6) verify()"
-                   placeholder="000000"
-                   class="w-full text-center tracking-[0.5em] font-mono text-2xl py-3.5 rounded-2xl border border-slate-700 bg-slate-955 text-white outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition font-bold">
+        <!-- 6 Digit Input Group -->
+        <div class="space-y-4">
+            <div class="flex justify-center items-center gap-2 sm:gap-3" @paste="handlePaste">
+                <template x-for="(digit, i) in otp" :key="i">
+                    <input type="text"
+                           :x-ref="`otp${i}`"
+                           maxlength="1"
+                           x-model="otp[i]"
+                           @input="handleInput($event, i)"
+                           @keydown="handleKeyDown($event, i)"
+                           class="w-11 h-14 sm:w-13 sm:h-16 text-center font-mono text-xl sm:text-2xl font-black rounded-2xl border border-slate-700 bg-slate-955 text-white outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/15 transition shadow-inner">
+                </template>
+            </div>
 
+            <!-- Error Notification -->
             <template x-if="errorMessage">
-                <div x-text="errorMessage" class="p-3 bg-rose-950/40 border border-rose-900/30 rounded-2xl text-xs font-bold text-rose-400 text-center"></div>
+                <div x-text="errorMessage" class="p-3.5 bg-rose-950/50 border border-rose-900/50 rounded-2xl text-xs font-bold text-rose-400 text-center animate-shake"></div>
             </template>
 
+            <!-- Success Notification -->
             <template x-if="successMessage">
-                <div x-text="successMessage" class="p-3 bg-emerald-950/40 border border-emerald-900/30 rounded-2xl text-xs font-bold text-emerald-400 text-center"></div>
+                <div x-text="successMessage" class="p-3.5 bg-emerald-950/50 border border-emerald-900/50 rounded-2xl text-xs font-bold text-emerald-400 text-center"></div>
             </template>
         </div>
 
-        <button @click="verify()" 
-                :disabled="otp.length !== 6 || loading"
-                class="w-full py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black text-xs uppercase tracking-wider transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-lg shadow-blue-600/20">
-            <span x-text="loading ? 'Verifying...' : 'Verify Code & Activate'"></span>
+        <!-- Submit Button -->
+        <button type="button" 
+                @click="verify()" 
+                :disabled="fullOtp.length !== 6 || loading"
+                class="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-black text-xs uppercase tracking-widest transition active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2">
+            <span x-text="loading ? 'VERIFYING CODE...' : 'COMPLETE REGISTRATION'"></span>
+            <span x-show="!loading" aria-hidden="true">&rarr;</span>
         </button>
 
-        <div class="pt-4 border-t border-slate-800 text-center">
+        <!-- Resend Footer Link -->
+        <div class="pt-4 border-t border-slate-800/80 text-center">
             <p class="text-xs text-slate-400">
-                Didn't receive code? 
+                Didn't receive the email? 
                 <button type="button" 
                         @click="resend()" 
-                        :disabled="resending"
-                        class="font-bold text-blue-400 hover:underline cursor-pointer disabled:opacity-50">
-                    <span x-text="resending ? 'Sending...' : 'Click to Resend'"></span>
+                        :disabled="cooldown > 0 || resending"
+                        class="font-black text-blue-400 hover:text-blue-300 hover:underline cursor-pointer disabled:opacity-50 disabled:hover:no-underline ml-1">
+                    <span x-text="resending ? 'Sending Code...' : (cooldown > 0 ? `Resend Code in ${cooldown}s` : 'Resend Code')"></span>
                 </button>
             </p>
         </div>

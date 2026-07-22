@@ -38,10 +38,9 @@ class SendOtpNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->subject('SK Namayan Digital Registry - Email Verification Code')
-            ->greeting('Mabuhay, ' . $notifiable->first_name . '!')
-            ->line('Your One-Time Verification Password (OTP) for SK Namayan Digital Registry registration is:')
-            ->line('**' . $this->otp . '**')
-            ->line('This code will expire in 10 minutes.')
-            ->line('If you did not request this verification, please ignore this message.');
+            ->view('emails.otp-code', [
+                'firstName' => $notifiable->first_name,
+                'otp' => $this->otp,
+            ]);
     }
 }
