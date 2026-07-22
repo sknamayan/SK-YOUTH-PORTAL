@@ -657,7 +657,7 @@ class KkProfilingTest extends TestCase
             'password_confirmation' => 'password123',
         ]);
 
-        $response2->assertRedirect('/');
+        $response2->assertRedirect('/register/verify-otp');
         $this->assertDatabaseHas('users', [
             'first_name' => 'Jane',
             'last_name' => 'Doe',

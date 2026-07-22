@@ -26,16 +26,16 @@ class RegistrationTest extends TestCase
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
- 
-        $this->assertAuthenticated();
-        $response->assertRedirect('/');
+
+        $response->assertRedirect('/register/verify-otp');
+        $this->assertFalse(auth()->check());
     }
  
     public function test_registration_links_existing_profile(): void
     {
         // Create Purok and pre-encoded KkProfile record
         $purok = \App\Models\Purok::create(['purok_name' => 'Purok 1']);
-        $profile = \App\Models\KkProfile::create([
+        $profile = \App\Models\KkProfile::withoutGlobalScopes()->create([
             'first_name' => 'Jane',
             'surname' => 'Doe', // surname matches last_name
             'dob' => '2005-05-15',
@@ -58,7 +58,7 @@ class RegistrationTest extends TestCase
             'status' => 'pending',
             'user_id' => null,
         ]);
- 
+
         // Perform registration with matching name and birthdate (case-insensitive)
         $response = $this->post('/register', [
             'first_name' => 'JANE',
@@ -68,10 +68,12 @@ class RegistrationTest extends TestCase
             'password' => 'Password123!',
             'password_confirmation' => 'Password123!',
         ]);
- 
-        $this->assertAuthenticated();
-        $user = auth()->user();
- 
+
+        $response->assertRedirect('/register/verify-otp');
+        
+        $user = \App\Models\User::where('email', 'jane.doe@example.com')->first();
+        $this->assertNotNull($user);
+
         // Assert the profile was linked and approved
         $profile->refresh();
         $this->assertEquals($user->id, $profile->user_id);

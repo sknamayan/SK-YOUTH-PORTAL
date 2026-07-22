@@ -3,28 +3,45 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SendOtpNotification extends Notification
+class SendOtpNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public string $otp) {}
+    public string $otp;
 
+    /**
+     * Create a new notification instance.
+     */
+    public function __construct(string $otp)
+    {
+        $this->otp = $otp;
+    }
+
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @return array<int, string>
+     */
     public function via(object $notifiable): array
     {
         return ['mail'];
     }
 
+    /**
+     * Get the mail representation of the notification.
+     */
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('SK Namayan - Email Verification Code')
-            ->greeting("Hello {$notifiable->first_name},")
-            ->line("Your 6-digit email verification code is:")
-            ->line("**{$this->otp}**")
-            ->line('This code is valid for 10 minutes. Do not share this code with anyone.')
-            ->line('If you did not request this code, please ignore this email.');
+            ->subject('SK Namayan Digital Registry - Email Verification Code')
+            ->greeting('Mabuhay, ' . $notifiable->first_name . '!')
+            ->line('Your One-Time Verification Password (OTP) for SK Namayan Digital Registry registration is:')
+            ->line('**' . $this->otp . '**')
+            ->line('This code will expire in 10 minutes.')
+            ->line('If you did not request this verification, please ignore this message.');
     }
 }

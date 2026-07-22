@@ -10,8 +10,10 @@ class UserApprovalTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_newly_registered_users_start_approved_and_logged_in_immediately(): void
+    public function test_newly_registered_users_require_otp_verification(): void
     {
+        \Illuminate\Support\Facades\Notification::fake();
+
         $response = $this->post('/register', [
             'first_name' => 'John',
             'last_name' => 'Citizen',
@@ -21,18 +23,17 @@ class UserApprovalTest extends TestCase
             'password_confirmation' => 'Citizen@12345!',
         ]);
 
-        // Assert redirect to landing page (not login page) and is authenticated
-        $response->assertRedirect('/');
-        $this->assertTrue(auth()->check());
+        // Assert redirect to OTP verification prompt page
+        $response->assertRedirect('/register/verify-otp');
+        $this->assertFalse(auth()->check());
 
-        $this->assertDatabaseHas('users', [
-            'email' => 'john@namayan.local',
-            'role' => 'user',
-            'is_approved' => true,
-        ]);
+        $user = User::where('email', 'john@namayan.local')->first();
+        $this->assertNotNull($user);
+        $this->assertFalse((bool)$user->is_approved);
+        $this->assertNotNull($user->otp_code);
 
-        // Assert session has success message
-        $response->assertSessionHas('success', 'Account created successfully! Welcome to the SK Namayan Youth Portal.');
+        // Verify Notification dispatched
+        \Illuminate\Support\Facades\Notification::assertSentTo($user, \App\Notifications\SendOtpNotification::class);
     }
 
     public function test_approved_users_can_login_successfully(): void
