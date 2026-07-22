@@ -120,14 +120,13 @@
                     {{ $placeholder }}
                 </p>
 
-                <!-- Browse Button -->
-                <button 
-                    type="button" 
-                    @click="$refs.fileInput.click()"
-                    class="inline-flex items-center min-h-10 px-5 bg-[#1e40af] hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-sm active:scale-95 transition-all select-none cursor-pointer"
+                <!-- Browse Label Button bound to input via for attribute -->
+                <label 
+                    for="{{ $inputId }}"
+                    class="inline-flex items-center justify-center min-h-10 px-5 bg-[#1e40af] hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-sm active:scale-95 transition-all select-none cursor-pointer"
                 >
                     Browse files
-                </button>
+                </label>
             </div>
         </template>
 
