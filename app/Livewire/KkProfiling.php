@@ -10,6 +10,8 @@ use App\Models\ActivityLog;
 
 class KkProfiling extends Component
 {
+    public $isAlreadyProfiled = false;
+    public $existingStatus;
     public $currentStep = 1;
     public $totalSteps = 4;
 
@@ -127,6 +129,10 @@ class KkProfiling extends Component
             ->first();
 
         if ($existingProfile) {
+            if ($existingProfile->status !== 'declined') {
+                $this->isAlreadyProfiled = true;
+                $this->existingStatus = $existingProfile->status;
+            }
             $this->surname = $existingProfile->surname;
             $this->first_name = $existingProfile->first_name;
             $this->middle_name = $existingProfile->middle_name;
