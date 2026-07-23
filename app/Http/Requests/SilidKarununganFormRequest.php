@@ -13,9 +13,9 @@ class SilidKarununganFormRequest extends FormRequest
      * Fields to automatically convert to uppercase.
      */
     protected array $uppercaseFields = [
-        'requestor_first_name',
-        'requestor_last_name',
-        'requestor_middle_name',
+        'first_name',
+        'last_name',
+        'middle_name',
         'preferred_time',
     ];
 
@@ -36,10 +36,10 @@ class SilidKarununganFormRequest extends FormRequest
         $initiative = \App\Models\Initiative::where('form_route', $formRoute)->first();
 
         $rules = [
-            'requestor_first_name' => ['required', 'string', 'max:255'],
-            'requestor_last_name' => ['required', 'string', 'max:255'],
-            'requestor_middle_name' => ['required', 'string', 'max:50'],
-            'requestor_age' => ['required', 'integer', 'min:0', 'max:120'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'middle_name' => ['nullable', 'string', 'max:255'],
+            'age' => ['required', 'integer', 'min:0', 'max:120'],
             'email' => ['required', 'email', 'max:255'],
             'contact_number' => ['required', 'string', 'max:20'],
             'preferred_date' => ['required', 'date', 'after_or_equal:today'],
@@ -47,9 +47,18 @@ class SilidKarununganFormRequest extends FormRequest
                 'required',
                 'string',
                 function ($attribute, $value, $fail) {
+                    $time = strtotime($value);
+                    $startTime = strtotime('10:00:00');
+                    $endTime = strtotime('20:00:00');
+
+                    if ($time < $startTime || $time > $endTime) {
+                        $fail("Booking time must be strictly between 10:00 AM and 8:00 PM.");
+                        return;
+                    }
+
                     $date = $this->input('preferred_date');
                     if ($date) {
-                        $exists = \App\Models\SilidKarununganRequest::where('preferred_date', $date)
+                        $exists = \App\Models\SilidKarununganRequest::whereDate('preferred_date', $date)
                             ->where('preferred_time', $value)
                             ->whereIn('status', ['pending', 'approved', 'review', 'confirmed'])
                             ->exists();

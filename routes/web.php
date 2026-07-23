@@ -252,18 +252,8 @@ Route::middleware(['auth', 'throttle:forms'])->group(function () {
     Route::get('/forms/silid-karunungan', function() {
         return redirect()->route('landing', ['form' => 'silid']);
     })->name('forms.silid.create');
-    Route::post('/forms/silid-karunungan', function(\Illuminate\Http\Request $request) {
-        $validated = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'middle_name' => 'nullable|string|max:255',
-            'age' => 'required|integer|min:0',
-            'email' => 'required|email|max:255',
-            'contact_number' => 'required|string',
-            'preferred_date' => 'required|date',
-            'preferred_time' => 'required|string',
-            'custom_fields' => 'nullable|array',
-        ]);
+    Route::post('/forms/silid-karunungan', function(\App\Http\Requests\SilidKarununganFormRequest $request) {
+        $validated = $request->validated();
 
         $req = \App\Models\SilidKarununganRequest::create([
             'user_id' => auth()->id(),
