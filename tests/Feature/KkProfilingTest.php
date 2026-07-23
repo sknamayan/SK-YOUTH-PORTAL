@@ -308,7 +308,7 @@ class KkProfilingTest extends TestCase
 
         // Citizens can submit their profile details
         $responsePost = $this->actingAs($citizen)->post('/profile/profiling', $payload);
-        $responsePost->assertRedirect('/profile/edit');
+        $responsePost->assertRedirect('/profile/my-requests');
         $responsePost->assertSessionHas('success');
 
         // Verify database entry has citizen's own email and is processed_by the citizen
@@ -744,7 +744,7 @@ class KkProfilingTest extends TestCase
 
         // Cannot access KK-protected service (redirected back to my-requests with warning)
         $response = $this->actingAs($citizen)->get('/skonsulta');
-        $response->assertRedirect('/profile/edit');
+        $response->assertRedirect('/profile/my-requests');
         $response->assertSessionHas('error', 'Your KK Profiling registry is currently pending review by our desk officers. All services will be unlocked once approved.');
 
         // Approve profile as admin
@@ -756,7 +756,7 @@ class KkProfilingTest extends TestCase
 
         // Citizen can now access forms successfully
         $responseSuccess = $this->actingAs($citizen)->get('/skonsulta');
-        $responseSuccess->assertRedirect(route('profile.edit', ['skonsulta' => 'open']));
+        $responseSuccess->assertRedirect(route('profile.my-requests', ['skonsulta' => 'open']));
     }
 
     public function test_citizen_can_resubmit_profiling_if_declined(): void
@@ -797,7 +797,7 @@ class KkProfilingTest extends TestCase
 
         // Citizen tries to access forms - blocked with declined warning
         $responseBlock = $this->actingAs($citizen)->get('/skonsulta');
-        $responseBlock->assertRedirect('/profile/edit');
+        $responseBlock->assertRedirect('/profile/my-requests');
         $responseBlock->assertSessionHas('error', 'Your KK Profiling registry has been declined. Please re-submit your profiling details.');
 
         // Citizen can view self-profiling form again
@@ -827,7 +827,7 @@ class KkProfilingTest extends TestCase
             'highest_educational_attainment' => 'High School Student',
             'consent_given' => true,
         ]);
-        $responseResubmit->assertRedirect('/profile/edit');
+        $responseResubmit->assertRedirect('/profile/my-requests');
 
         // Assert old record was deleted and new record is pending
         $this->assertSoftDeleted('kk_profiles', ['id' => $profile->id]);

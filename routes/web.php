@@ -318,6 +318,7 @@ Route::middleware('auth')->group(function () {
         ->name('attachments.download')
         ->where('path', '.*');
 
+    Route::get('/profile/my-requests', [ProfileController::class, 'myRequests'])->name('profile.my-requests');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile/info', [ProfileController::class, 'updateInfo'])->name('profile.update-info');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');

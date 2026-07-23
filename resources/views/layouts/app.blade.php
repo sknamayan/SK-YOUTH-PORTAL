@@ -147,6 +147,28 @@
                     <div class="h-96 rounded-2xl border border-slate-100 dark:border-slate-800 skeleton-shimmer"></div>
                 </div>
             </div>
+        @elseif(request()->routeIs('profile.my-requests'))
+            <!-- 2. Citizen Requests Dashboard Skeleton -->
+            <div class="max-w-7xl mx-auto w-full p-6 md:p-8 space-y-6 flex-1 overflow-hidden">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div class="space-y-2">
+                        <div class="w-48 h-6 rounded-lg skeleton-shimmer"></div>
+                        <div class="w-72 h-3.5 rounded-lg skeleton-shimmer"></div>
+                    </div>
+                    <div class="w-28 h-10 rounded-xl skeleton-shimmer"></div>
+                </div>
+                <!-- Metrics grid -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="h-24 rounded-2xl border border-slate-100 dark:border-slate-800 skeleton-shimmer"></div>
+                    <div class="h-24 rounded-2xl border border-slate-100 dark:border-slate-800 skeleton-shimmer"></div>
+                    <div class="h-24 rounded-2xl border border-slate-100 dark:border-slate-800 skeleton-shimmer"></div>
+                    <div class="h-24 rounded-2xl border border-slate-100 dark:border-slate-800 skeleton-shimmer"></div>
+                </div>
+                <!-- Table card skeleton -->
+                <div
+                    class="h-96 rounded-2xl md:rounded-3xl border border-slate-100 dark:border-slate-800 skeleton-shimmer">
+                </div>
+            </div>
         @else
             <!-- 3. Public Landing / General Pages Skeleton -->
             <div class="max-w-7xl mx-auto w-full p-6 md:p-8 space-y-8 flex-1 overflow-hidden">
@@ -411,6 +433,16 @@
                                                     d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
                                             </svg>
                                             <span>Dashboard</span>
+                                        </a>
+                                    @else
+                                        <a href="{{ route('profile.my-requests') }}" @click="profileOpen = false"
+                                            class="flex items-center space-x-2 px-4 py-2 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-850 transition">
+                                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                                            </svg>
+                                            <span>My Requests</span>
                                         </a>
                                     @endif
                                     <a href="{{ route('profile.edit') }}" @click="profileOpen = false"
@@ -698,6 +730,15 @@
                                         class="block px-4 pb-2 text-[9px] font-black text-blue-250 uppercase tracking-widest">Citizen
                                         Portal</span>
 
+                                    <a href="{{ route('profile.my-requests') }}" @click="mobileMenuOpen = false"
+                                        class="flex items-center space-x-3 px-4 py-3 rounded-xl text-blue-100 hover:text-white hover:bg-white/10 hover:translate-x-1 font-bold font-display uppercase tracking-wider text-[11px] transition-all duration-300">
+                                        <svg class="w-4 h-4 text-blue-205" fill="none" stroke="currentColor"
+                                            stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                                        </svg>
+                                        <span>My Requests</span>
+                                    </a>
                                     <a href="{{ route('forms.sports.create') }}" @click="mobileMenuOpen = false"
                                         class="flex items-center space-x-3 px-4 py-3 rounded-xl text-blue-100 hover:text-white hover:bg-white/10 hover:translate-x-1 font-bold font-display uppercase tracking-wider text-[11px] transition-all duration-300">
                                         <svg class="w-4 h-4 text-blue-205" fill="none" stroke="currentColor"

@@ -11,9 +11,9 @@
         <span style="font-weight: 700; color: #d97706; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">{{ ucfirst($profile->status ?? 'pending') }}</span>
     </div>
     <p>Your profile registry details are now queued for review by our SK Namayan secretariat. Once approved, all community portal transactions (service requests and tournament registrations) will be unlocked for you.</p>
-    <p style="margin-top: 25px;">You can track your profile verification status by visiting your account settings:</p>
+    <p style="margin-top: 25px;">You can track your profile verification status or submit requests by visiting your account dashboard:</p>
     <div style="text-align: center;">
-        <a href="{{ route('profile.edit') }}" class="btn" style="color: #ffffff;">Visit Account Settings</a>
+        <a href="{{ route('profile.my-requests') }}" class="btn" style="color: #ffffff;">Visit Your Dashboard</a>
     </div>
 </div>
 @endsection

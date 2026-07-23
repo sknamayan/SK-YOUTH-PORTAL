@@ -170,7 +170,7 @@ class RegisteredUserController extends Controller
         return response()->json([
             'success'      => true,
             'message'      => 'Account verified successfully! Welcome to SK Namayan.',
-            'redirect_url' => route('profile.edit'),
+            'redirect_url' => route('profile.my-requests'),
         ], 200);
     }
 
@@ -239,7 +239,7 @@ class RegisteredUserController extends Controller
         Auth::login($user);
         session()->forget(['pending_otp_email', 'temp_user_id']);
 
-        return redirect()->route('profile.edit')
+        return redirect()->route('profile.my-requests')
             ->with('success', 'Email verified successfully! Welcome to SK Namayan Digital Registry.');
     }
 }

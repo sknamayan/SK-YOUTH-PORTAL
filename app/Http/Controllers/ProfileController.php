@@ -33,9 +33,9 @@ class ProfileController extends Controller
             ->with($flashKey, $message);
     }
 
-    public function myRequests(Request $request): RedirectResponse
+    public function myRequests(Request $request): View
     {
-        return redirect()->route('profile.edit');
+        return view('profile.my-requests');
     }
 
     public function edit(Request $request): View

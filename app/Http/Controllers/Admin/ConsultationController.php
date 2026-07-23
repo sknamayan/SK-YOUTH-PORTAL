@@ -50,7 +50,7 @@ class ConsultationController extends Controller
      */
     public function citizenIndex(Request $request): RedirectResponse
     {
-        return redirect()->route('profile.edit', ['skonsulta' => 'open']);
+        return redirect()->route('profile.my-requests', ['skonsulta' => 'open']);
     }
 
     /**
@@ -64,7 +64,7 @@ class ConsultationController extends Controller
         }
 
         if (auth()->user()->role === 'user') {
-            return redirect()->route('profile.edit', [
+            return redirect()->route('profile.my-requests', [
                 'skonsulta' => 'open',
                 'thread_id' => $consultation->id
             ]);

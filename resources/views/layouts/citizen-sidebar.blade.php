@@ -14,6 +14,14 @@
 
         <!-- Menu links -->
         <nav class="space-y-1.5">
+            <!-- My Requests Link -->
+            <a href="{{ route('profile.my-requests') }}"
+               class="flex items-center justify-between w-full px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs uppercase tracking-wider transition {{ request()->routeIs('profile.my-requests') ? '!bg-white/20 !text-white' : '!text-white/80 hover:!bg-white/10 hover:!text-white' }}">
+                <div class="flex items-center gap-3 min-w-0">
+                    <x-category-icon name="dashboard" class="w-6 h-6 shrink-0" />
+                    <span class="leading-snug break-words">My Requests</span>
+                </div>
+            </a>
 
             <!-- Sports League Link -->
             <a href="{{ route('forms.sports.create') }}"

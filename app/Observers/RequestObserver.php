@@ -42,7 +42,7 @@ class RequestObserver
                     'user_id' => $user->id,
                     'title' => $isSports ? 'Sports League Registration Submitted' : 'Request Submitted',
                     'message' => $isSports ? 'Your sports league registration has been submitted successfully.' : 'Your service request has been submitted successfully.',
-                    'url' => route('profile.edit'),
+                    'url' => route('profile.my-requests'),
                     'type' => $type,
                 ]);
             }

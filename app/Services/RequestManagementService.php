@@ -136,7 +136,7 @@ class RequestManagementService
                 'user_id' => $user->id,
                 'title' => 'Request Under Review',
                 'message' => 'Your ' . $this->resolveTypeName($type) . ' request is now under review.',
-                'url' => route('profile.edit'),
+                'url' => route('profile.my-requests'),
                 'type' => ($type === 'sports') ? 'sports_league' : 'service_request',
             ]);
         }
@@ -166,7 +166,7 @@ class RequestManagementService
                 'user_id' => $user->id,
                 'title' => 'Request Status: ' . ucfirst($status),
                 'message' => 'Your ' . $this->resolveTypeName($type) . ' request status has been updated to ' . ucfirst($status) . '.',
-                'url' => route('profile.edit'),
+                'url' => route('profile.my-requests'),
                 'type' => ($type === 'sports') ? 'sports_league' : 'service_request',
             ]);
         }
