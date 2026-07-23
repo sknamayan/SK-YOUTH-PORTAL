@@ -22,8 +22,7 @@ class MyRequests extends Component
 
         $requests = CustomRequest::where(function($q) use ($user, $email) {
                 if ($email) {
-                    $q->whereRaw('LOWER(email) = ?', [$email])
-                      ->orWhereRaw('LOWER(citizen_email) = ?', [$email]);
+                    $q->whereRaw('LOWER(email) = ?', [$email]);
                 }
                 if ($user) {
                     $q->orWhere('user_id', $user->id);
