@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex-1 bg-slate-50 dark:bg-slate-955 font-sans min-h-screen">
+<div class="flex-1 bg-slate-950 font-sans min-h-screen">
 
     <section class="bg-gradient-to-br from-slate-900 via-slate-800 to-[#1e3a8a] text-white shrink-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-8 pt-[max(1.5rem,env(safe-area-inset-top))] pb-8 md:py-16">
