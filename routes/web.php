@@ -535,3 +535,43 @@ Route::get('/storage/{path}', function ($path) {
 
 // Standalone Authentication Routes
 require __DIR__.'/auth.php';
+
+Route::get('/debug-my-requests', function() {
+    $user = auth()->user();
+    if (!$user) {
+        return "Not logged in";
+    }
+    $email = trim(strtolower($user->email));
+    
+    $res = [];
+    $res['user'] = [
+        'id' => $user->id,
+        'email' => $user->email,
+    ];
+    
+    $res['counts'] = [
+        'custom_requests' => \App\Models\CustomRequest::count(),
+        'sports_registrations' => \App\Models\SportsRegistration::count(),
+        'health_requests' => \App\Models\HealthRequest::count(),
+        'medicine_requests' => \App\Models\MedicineRequest::count(),
+        'silid_karunungan_requests' => \App\Models\SilidKarununganRequest::count(),
+        'registration_responses' => \App\Models\RegistrationResponse::count(),
+    ];
+    
+    $res['custom_requests_by_user_id'] = \App\Models\CustomRequest::where('user_id', $user->id)->get()->toArray();
+    $res['custom_requests_by_email'] = \App\Models\CustomRequest::whereRaw('LOWER(email) = ?', [$email])->get()->toArray();
+    
+    $res['sports_by_user_id'] = \App\Models\SportsRegistration::where('user_id', $user->id)->get()->toArray();
+    $res['sports_by_email'] = \App\Models\SportsRegistration::whereRaw('LOWER(email) = ?', [$email])->get()->toArray();
+    
+    $res['health_by_user_id'] = \App\Models\HealthRequest::where('user_id', $user->id)->get()->toArray();
+    $res['health_by_email'] = \App\Models\HealthRequest::whereRaw('LOWER(email) = ?', [$email])->get()->toArray();
+
+    $res['medicine_by_user_id'] = \App\Models\MedicineRequest::where('user_id', $user->id)->get()->toArray();
+    $res['medicine_by_email'] = \App\Models\MedicineRequest::whereRaw('LOWER(email) = ?', [$email])->get()->toArray();
+
+    $res['silid_by_user_id'] = \App\Models\SilidKarununganRequest::where('user_id', $user->id)->get()->toArray();
+    $res['silid_by_email'] = \App\Models\SilidKarununganRequest::whereRaw('LOWER(email) = ?', [$email])->get()->toArray();
+
+    return response()->json($res);
+});
