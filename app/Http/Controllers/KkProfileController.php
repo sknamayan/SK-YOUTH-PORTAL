@@ -277,10 +277,7 @@ class KkProfileController extends Controller
                   ->orWhere('email', auth()->user()->email);
             })
             ->first();
-        if ($existingProfile && $existingProfile->status !== 'declined') {
-            return redirect()->route('profile.my-requests')
-                ->with('info', 'Your Katipunan ng Kabataan profile is already registered.');
-        }
+
 
         $puroks = Purok::orderBy('purok_name')->get();
         $user = auth()->user();
