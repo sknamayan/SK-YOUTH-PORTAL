@@ -29,7 +29,7 @@
         @include('profile.partials.citizen-nav')
 
         <!-- Livewire KK Profiling Form Wizard -->
-        <div class="bg-white border border-slate-100 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
+        <div class="bg-white dark:bg-slate-900 border border-slate-150 dark:border-slate-800 rounded-3xl overflow-hidden shadow-md p-6 md:p-8">
             <livewire:kk-profiling />
         </div>
     </div>

@@ -157,6 +157,17 @@ class KkProfiling extends Component
             $this->registered_disability = $existingProfile->registered_disability;
             $this->highest_educational_attainment = $existingProfile->highest_educational_attainment;
             $this->consent_given = $existingProfile->consent_given;
+        } else {
+            $this->first_name = $user->first_name;
+            $this->surname = $user->last_name;
+
+            $dobVal = \App\Models\SportsRegistration::where('user_id', $user->id)->value('birthdate')
+                ?? \App\Models\SportsRegistration::where('email', $user->email)->value('birthdate');
+
+            if ($dobVal) {
+                $this->dob = $dobVal instanceof \Carbon\Carbon ? $dobVal->format('Y-m-d') : ($dobVal instanceof \DateTime ? $dobVal->format('Y-m-d') : $dobVal);
+                $this->updatedDob($this->dob);
+            }
         }
     }
 

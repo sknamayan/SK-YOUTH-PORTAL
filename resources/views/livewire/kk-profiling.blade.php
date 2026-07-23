@@ -95,13 +95,13 @@
             </div>
 
             <!-- Form Completeness Progress Card -->
-            <div class="bg-blue-50/40 dark:bg-slate-900/40 border border-blue-100/50 dark:border-slate-800/80 p-5 rounded-2xl mb-6">
-                <div class="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">
-                    <span class="uppercase tracking-wider text-slate-500 dark:text-slate-400 font-display">Profile Completeness</span>
-                    <span class="text-[#1e40af] dark:text-blue-400 text-sm font-black">{{ $this->completeness }}%</span>
+            <div class="bg-blue-55/10 dark:bg-slate-900/60 border border-blue-150/30 dark:border-slate-850 p-5 rounded-2xl mb-6 shadow-sm">
+                <div class="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-205 mb-2">
+                    <span class="uppercase tracking-wider text-slate-500 dark:text-slate-400 font-display text-[10px]">Profile Completeness</span>
+                    <span class="text-blue-600 dark:text-blue-400 text-sm font-black">{{ $this->completeness }}%</span>
                 </div>
-                <div class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700/50 h-3 rounded-full overflow-hidden">
-                    <div class="bg-gradient-to-r from-blue-500 to-[#1e40af] h-full rounded-full transition-all duration-300" style="width: {{ $this->completeness }}%"></div>
+                <div class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200/60 dark:border-slate-800 h-4.5 rounded-full overflow-hidden p-0.5">
+                    <div class="bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 h-full rounded-full transition-all duration-550 ease-out shadow-[0_0_8px_rgba(59,130,246,0.5)]" style="width: {{ $this->completeness }}%"></div>
                 </div>
             </div>
 
@@ -120,7 +120,7 @@
                 </div>
             @endif
 
-            <div class="profiling-form p-6 md:p-8 space-y-6">
+            <div class="profiling-form py-4 space-y-6">
                 <!-- STEP 1: Data Privacy Consent -->
                 @if ($currentStep === 1)
                     <div class="space-y-4">
