@@ -91,10 +91,26 @@ class ProjectStructureSeeder extends Seeder
             ['name' => 'Global Mobility']
         );
 
-        // Default Initiative for testing / accomplishment reports
+        // Seed Silid Karunungan Studying Spaces Initiative
         Initiative::updateOrCreate(
-            ['title' => 'Test Initiative', 'committee_id' => $edu->id],
-            ['description' => 'Default initiative for testing']
+            ['form_route' => 'forms.silid.create', 'committee_id' => $edu->id],
+            [
+                'title' => 'Silid Karunungan Studying Spaces',
+                'description' => 'Reserve a study table and resource slot at the Silid Karunungan educational center.',
+                'show_in_quick_forms' => true,
+                'is_coming_soon' => false,
+            ]
+        );
+
+        // Seed TTPD Printing Service Initiative
+        Initiative::updateOrCreate(
+            ['title' => 'TTPD Printing Service', 'committee_id' => $edu->id],
+            [
+                'description' => 'Free community printing services for students and researchers at the Silid Karunungan hub.',
+                'form_route' => 'forms.silid.create',
+                'show_in_quick_forms' => true,
+                'is_coming_soon' => false,
+            ]
         );
     }
 }
