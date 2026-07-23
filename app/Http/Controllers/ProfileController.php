@@ -37,26 +37,57 @@ class ProfileController extends Controller
     {
         try {
             $user = auth()->user();
-            $email = $user ? $user->email : '';
+            $email = $user ? trim(strtolower($user->email)) : '';
 
-            $requests = \App\Models\CustomRequest::where('citizen_email', $email)
-                ->orWhere('email', $email)
+            $requests = \App\Models\CustomRequest::where(function($q) use ($user, $email) {
+                    if ($email) {
+                        $q->whereRaw('LOWER(email) = ?', [$email])
+                          ->orWhereRaw('LOWER(citizen_email) = ?', [$email]);
+                    }
+                    if ($user) {
+                        $q->orWhere('user_id', $user->id);
+                    }
+                })
                 ->latest()
                 ->get();
 
-            $sportsRegistrations = \App\Models\SportsRegistration::where('email', $email)
+            $sportsRegistrations = \App\Models\SportsRegistration::where(function($q) use ($email) {
+                    if ($email) {
+                        $q->whereRaw('LOWER(email) = ?', [$email]);
+                    }
+                })
                 ->latest()
                 ->get();
 
-            $healthRequests = \App\Models\HealthRequest::where('email', $email)
+            $healthRequests = \App\Models\HealthRequest::where(function($q) use ($email) {
+                    if ($email) {
+                        $q->whereRaw('LOWER(email) = ?', [$email]);
+                    }
+                })
                 ->latest()
                 ->get();
 
-            $medicineRequests = \App\Models\MedicineRequest::where('email', $email)
+            $medicineRequests = \App\Models\MedicineRequest::where(function($q) use ($email) {
+                    if ($email) {
+                        $q->whereRaw('LOWER(email) = ?', [$email]);
+                    }
+                })
                 ->latest()
                 ->get();
 
-            $silidRequests = \App\Models\SilidKarununganRequest::where('email', $email)
+            $silidRequests = \App\Models\SilidKarununganRequest::where(function($q) use ($email) {
+                    if ($email) {
+                        $q->whereRaw('LOWER(email) = ?', [$email]);
+                    }
+                })
+                ->latest()
+                ->get();
+
+            $registrationResponses = \App\Models\RegistrationResponse::where(function($q) use ($email) {
+                    if ($email) {
+                        $q->whereRaw('LOWER(citizen_email) = ?', [$email]);
+                    }
+                })
                 ->latest()
                 ->get();
 
@@ -64,7 +95,7 @@ class ProfileController extends Controller
                 ->where(function($q) use ($user, $email) {
                     $q->where('user_id', $user->id);
                     if ($email) {
-                        $q->orWhere('email', $email);
+                        $q->orWhereRaw('LOWER(email) = ?', [$email]);
                     }
                 })
                 ->first();
@@ -86,7 +117,7 @@ class ProfileController extends Controller
 
             $profile = $kkProfile;
 
-            // Combine requests, sportsRegistrations, health, medicine, and silid into unified $results collection
+            // Combine requests, sportsRegistrations, health, medicine, silid, and dynamic registration responses into unified $results collection
             $mappedRequests = $requests->map(function($req) {
                 $req->type_label = object_get($req, 'type', 'Custom Request');
                 $req->detail = object_get($req, 'description') ?? object_get($req, 'details') ?? 'N/A';
@@ -119,17 +150,24 @@ class ProfileController extends Controller
                 return $req;
             });
 
+            $mappedResponses = $registrationResponses->map(function($resp) {
+                $resp->type_label = 'Sports Registration (' . ($resp->registrationForm?->division_name ?? 'Dynamic') . ')';
+                $resp->detail = 'Citizen: ' . ($resp->citizen_name ?? 'N/A');
+                return $resp;
+            });
+
             $results = $mappedRequests
                 ->concat($mappedSports)
                 ->concat($mappedHealth)
                 ->concat($mappedMedicine)
                 ->concat($mappedSilid)
+                ->concat($mappedResponses)
                 ->sortByDesc('created_at');
 
             $total = $results->count();
-            $pending = $results->where('status', 'pending')->count();
-            $approved = $results->whereIn('status', ['approved', 'confirmed', 'completed'])->count();
-            $declined = $results->whereIn('status', ['declined', 'rejected', 'cancelled'])->count();
+            $pending = $results->whereIn('status', ['pending', 'Pending', 'review', 'under_review'])->count();
+            $approved = $results->whereIn('status', ['approved', 'Approved', 'confirmed', 'completed'])->count();
+            $declined = $results->whereIn('status', ['declined', 'Declined', 'rejected', 'cancelled'])->count();
 
             return view('profile.my-requests', compact('user', 'requests', 'kkProfile', 'profile', 'sportsRegistrations', 'results', 'total', 'pending', 'approved', 'declined'));
         } catch (\Throwable $e) {
