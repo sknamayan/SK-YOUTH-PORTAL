@@ -78,6 +78,9 @@ class SportsRegistrationController extends Controller
         // Assign non-null required database columns
         $data['event_date'] = now()->toDateString();
         $data['status'] = 'pending';
+        if (auth()->check()) {
+            $data['user_id'] = auth()->id();
+        }
 
         $registration = SportsRegistration::create($data);
 

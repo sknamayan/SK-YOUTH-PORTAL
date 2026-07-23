@@ -15,6 +15,7 @@ class SportsRegistration extends Model
 
     protected $fillable = [
         'reference_number',
+        'user_id',
         'first_name',
         'last_name',
         'middle_name',

@@ -15,6 +15,7 @@ class RegistrationResponse extends Model
 
     protected $fillable = [
         'registration_form_id',
+        'user_id',
         'citizen_name',
         'citizen_email',
         'answers',

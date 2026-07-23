@@ -130,6 +130,7 @@ Route::middleware(['auth', 'throttle:forms'])->group(function () {
         ]);
 
         $req = \App\Models\HealthRequest::create([
+            'user_id' => auth()->id(),
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
             'middle_name' => $validated['middle_name'] ?? null,
@@ -176,6 +177,7 @@ Route::middleware(['auth', 'throttle:forms'])->group(function () {
         ]);
 
         $req = \App\Models\HealthRequest::create([
+            'user_id' => auth()->id(),
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
             'middle_name' => $validated['middle_name'] ?? null,
@@ -219,6 +221,7 @@ Route::middleware(['auth', 'throttle:forms'])->group(function () {
         ]);
 
         $req = \App\Models\MedicineRequest::create([
+            'user_id' => auth()->id(),
             'requestor_first_name' => $validated['first_name'],
             'requestor_last_name' => $validated['last_name'],
             'requestor_age' => $validated['age'],
@@ -260,6 +263,7 @@ Route::middleware(['auth', 'throttle:forms'])->group(function () {
         ]);
 
         $req = \App\Models\SilidKarununganRequest::create([
+            'user_id' => auth()->id(),
             'requestor_first_name' => $validated['first_name'],
             'requestor_last_name' => $validated['last_name'],
             'requestor_middle_name' => $validated['middle_name'] ?? null,

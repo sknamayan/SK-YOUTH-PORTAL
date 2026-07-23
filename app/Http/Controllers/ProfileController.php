@@ -51,41 +51,56 @@ class ProfileController extends Controller
                 ->latest()
                 ->get();
 
-            $sportsRegistrations = \App\Models\SportsRegistration::where(function($q) use ($email) {
+            $sportsRegistrations = \App\Models\SportsRegistration::where(function($q) use ($user, $email) {
                     if ($email) {
                         $q->whereRaw('LOWER(email) = ?', [$email]);
+                    }
+                    if ($user) {
+                        $q->orWhere('user_id', $user->id);
                     }
                 })
                 ->latest()
                 ->get();
 
-            $healthRequests = \App\Models\HealthRequest::where(function($q) use ($email) {
+            $healthRequests = \App\Models\HealthRequest::where(function($q) use ($user, $email) {
                     if ($email) {
                         $q->whereRaw('LOWER(email) = ?', [$email]);
+                    }
+                    if ($user) {
+                        $q->orWhere('user_id', $user->id);
                     }
                 })
                 ->latest()
                 ->get();
 
-            $medicineRequests = \App\Models\MedicineRequest::where(function($q) use ($email) {
+            $medicineRequests = \App\Models\MedicineRequest::where(function($q) use ($user, $email) {
                     if ($email) {
                         $q->whereRaw('LOWER(email) = ?', [$email]);
+                    }
+                    if ($user) {
+                        $q->orWhere('user_id', $user->id);
                     }
                 })
                 ->latest()
                 ->get();
 
-            $silidRequests = \App\Models\SilidKarununganRequest::where(function($q) use ($email) {
+            $silidRequests = \App\Models\SilidKarununganRequest::where(function($q) use ($user, $email) {
                     if ($email) {
                         $q->whereRaw('LOWER(email) = ?', [$email]);
+                    }
+                    if ($user) {
+                        $q->orWhere('user_id', $user->id);
                     }
                 })
                 ->latest()
                 ->get();
 
-            $registrationResponses = \App\Models\RegistrationResponse::where(function($q) use ($email) {
+            $registrationResponses = \App\Models\RegistrationResponse::where(function($q) use ($user, $email) {
                     if ($email) {
                         $q->whereRaw('LOWER(citizen_email) = ?', [$email]);
+                    }
+                    if ($user) {
+                        $q->orWhere('user_id', $user->id);
                     }
                 })
                 ->latest()

@@ -16,6 +16,7 @@ class MedicineRequest extends Model
 
     protected $fillable = [
         'reference_number',
+        'user_id',
         'requestor_first_name',
         'requestor_last_name',
         'requestor_age',
