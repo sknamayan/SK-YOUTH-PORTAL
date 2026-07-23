@@ -48,6 +48,18 @@ class ProfileController extends Controller
                 ->latest()
                 ->get();
 
+            $healthRequests = \App\Models\HealthRequest::where('email', $email)
+                ->latest()
+                ->get();
+
+            $medicineRequests = \App\Models\MedicineRequest::where('email', $email)
+                ->latest()
+                ->get();
+
+            $silidRequests = \App\Models\SilidKarununganRequest::where('email', $email)
+                ->latest()
+                ->get();
+
             $kkProfile = \App\Models\KkProfile::withoutGlobalScopes()
                 ->where(function($q) use ($user, $email) {
                     $q->where('user_id', $user->id);
@@ -74,7 +86,7 @@ class ProfileController extends Controller
 
             $profile = $kkProfile;
 
-            // Combine requests & sportsRegistrations into unified $results collection
+            // Combine requests, sportsRegistrations, health, medicine, and silid into unified $results collection
             $mappedRequests = $requests->map(function($req) {
                 $req->type_label = object_get($req, 'type', 'Custom Request');
                 $req->detail = object_get($req, 'description') ?? object_get($req, 'details') ?? 'N/A';
@@ -87,7 +99,32 @@ class ProfileController extends Controller
                 return $sport;
             });
 
-            $results = $mappedRequests->concat($mappedSports)->sortByDesc('created_at');
+            $mappedHealth = $healthRequests->map(function($req) {
+                $req->type_label = 'Health Request';
+                $req->detail = 'Concerns: ' . (object_get($req, 'concerns') ?? 'N/A');
+                return $req;
+            });
+
+            $mappedMedicine = $medicineRequests->map(function($req) {
+                $req->type_label = 'Medicine Request';
+                $req->detail = 'Complete Address: ' . (object_get($req, 'complete_address') ?? 'N/A');
+                return $req;
+            });
+
+            $mappedSilid = $silidRequests->map(function($req) {
+                $req->type_label = 'Silid Karunungan Request';
+                $preferredDate = object_get($req, 'preferred_date');
+                $dateStr = $preferredDate instanceof \Carbon\Carbon ? $preferredDate->format('Y-m-d') : ($preferredDate ?? 'N/A');
+                $req->detail = 'Preferred Date: ' . $dateStr . ' | Time: ' . (object_get($req, 'preferred_time') ?? 'N/A');
+                return $req;
+            });
+
+            $results = $mappedRequests
+                ->concat($mappedSports)
+                ->concat($mappedHealth)
+                ->concat($mappedMedicine)
+                ->concat($mappedSilid)
+                ->sortByDesc('created_at');
 
             $total = $results->count();
             $pending = $results->where('status', 'pending')->count();
