@@ -170,7 +170,6 @@
                     <p class="text-xs text-amber-605 dark:text-amber-500 mt-0.5 leading-relaxed">
                         You already have an active registration for **{{ $alreadyRegistered->sport }}** ({{ $alreadyRegistered->division }} Division).
                         To maintain league rules, citizens are permitted only **one active registration** across all sports tournaments.
-                        You can track your request status under <a href="{{ route('profile.my-requests') }}" class="font-bold underline text-[#1e40af] dark:text-blue-400">My Requests</a>.
                     </p>
                 </div>
             </div>

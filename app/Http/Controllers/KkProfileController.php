@@ -278,7 +278,7 @@ class KkProfileController extends Controller
             })
             ->first();
         if ($existingProfile && $existingProfile->status !== 'declined') {
-            return redirect()->route('profile.my-requests')
+            return redirect()->route('profile.edit')
                 ->with('info', 'Your Katipunan ng Kabataan profile is already registered.');
         }
 
@@ -307,7 +307,7 @@ class KkProfileController extends Controller
             if ($existingProfile->status === 'declined') {
                 $existingProfile->delete();
             } else {
-                return redirect()->route('profile.my-requests')
+                return redirect()->route('profile.edit')
                     ->with('info', 'Your Katipunan ng Kabataan profile is already registered.');
             }
         }
@@ -386,7 +386,7 @@ class KkProfileController extends Controller
             'self_profiled' => true
         ], auth()->id());
 
-        return redirect()->route('profile.my-requests')
+        return redirect()->route('profile.edit')
             ->with('success', 'Your Katipunan ng Kabataan profile has been successfully registered!');
     }
 
@@ -494,7 +494,7 @@ class KkProfileController extends Controller
                 'user_id' => $user->id,
                 'title' => 'KK Profile Approved',
                 'message' => 'Your Katipunan ng Kabataan profile registry has been approved. All service requests are now unlocked.',
-                'url' => route('profile.my-requests')
+                'url' => route('profile.edit')
             ]);
         }
 
@@ -521,7 +521,7 @@ class KkProfileController extends Controller
                 'user_id' => $user->id,
                 'title' => 'KK Profile Declined',
                 'message' => 'Your Katipunan ng Kabataan profile registry has been declined. Please re-submit your details.',
-                'url' => route('profile.my-requests')
+                'url' => route('profile.edit')
             ]);
         }
 

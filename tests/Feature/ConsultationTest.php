@@ -90,7 +90,7 @@ class ConsultationTest extends TestCase
         $user = $this->createProfiledUser();
  
         $response = $this->actingAs($user)->get(route('skonsulta.index'));
-        $response->assertRedirect(route('profile.my-requests', ['skonsulta' => 'open']));
+        $response->assertRedirect(route('profile.edit', ['skonsulta' => 'open']));
     }
  
     /**
@@ -152,7 +152,7 @@ class ConsultationTest extends TestCase
         ]);
  
         $responseShow = $this->actingAs($user)->get(route('skonsulta.show', $consultation));
-        $responseShow->assertRedirect(route('profile.my-requests', [
+        $responseShow->assertRedirect(route('profile.edit', [
             'skonsulta' => 'open',
             'thread_id' => $consultation->id
         ]));

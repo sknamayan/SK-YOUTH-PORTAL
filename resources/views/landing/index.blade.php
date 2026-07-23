@@ -170,7 +170,7 @@ if (activeForm) {
                         @if(Auth::user()->canAccessDashboard())
                             <a href="{{ route('dashboard.index') }}" class="px-5 py-2.5 bg-white text-blue-900 hover:bg-blue-50 font-bold text-xs uppercase tracking-wider rounded-xl transition active:scale-95 shadow-md">View Admin Dashboard</a>
                         @else
-                            <a href="{{ route('profile.my-requests') }}" class="px-5 py-2.5 bg-white text-blue-900 hover:bg-blue-50 font-bold text-xs uppercase tracking-wider rounded-xl transition active:scale-95 shadow-md">View My Dashboard</a>
+                            <a href="{{ route('profile.edit') }}" class="px-5 py-2.5 bg-white text-blue-900 hover:bg-blue-50 font-bold text-xs uppercase tracking-wider rounded-xl transition active:scale-95 shadow-md">View Profile Settings</a>
                         @endif
                     @endguest
                 </div>

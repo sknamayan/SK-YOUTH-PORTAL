@@ -229,7 +229,7 @@ class SportsLeagueController extends Controller
                     'user_id' => $user->id,
                     'title' => 'Sports Request Under Review',
                     'message' => 'Your sports registration request is now under review.',
-                    'url' => route('profile.my-requests'),
+                    'url' => route('profile.edit'),
                     'type' => 'sports_league',
                 ]);
             }
@@ -296,7 +296,7 @@ class SportsLeagueController extends Controller
                 'user_id' => $user->id,
                 'title' => 'Sports Request Status: ' . $mappedStatus,
                 'message' => 'Your sports registration has been marked as ' . $mappedStatus . '.',
-                'url' => route('profile.my-requests'),
+                'url' => route('profile.edit'),
                 'type' => 'sports_league',
             ]);
         }

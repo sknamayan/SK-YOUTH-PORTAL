@@ -158,7 +158,7 @@
                     <h1 class="text-2xl sm:text-3xl md:text-4xl font-black font-display uppercase tracking-tight leading-tight">Katipunan ng Kabataan Self Profiling</h1>
                     <p class="text-sm text-slate-300 leading-relaxed">Please complete all steps of the KK Profiling registry form to verify your residency and citizen status.</p>
                 </div>
-                <a href="{{ route('profile.my-requests') }}" class="inline-flex items-center justify-center min-h-11 px-5 bg-white/10 hover:bg-white/20 border border-white/20 font-bold text-xs uppercase tracking-wider rounded-2xl active:scale-95 transition-all text-white shrink-0 self-start sm:self-center">
+                <a href="{{ route('profile.edit') }}" class="inline-flex items-center justify-center min-h-11 px-5 bg-white/10 hover:bg-white/20 border border-white/20 font-bold text-xs uppercase tracking-wider rounded-2xl active:scale-95 transition-all text-white shrink-0 self-start sm:self-center">
                     Return to Portal
                 </a>
             </div>

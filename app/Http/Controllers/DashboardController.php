@@ -84,8 +84,8 @@ class DashboardController extends Controller
             ));
         }
  
-        // Citizen Dashboard: redirect to my-requests page directly
-        return redirect()->route('profile.my-requests');
+        // Citizen Dashboard: redirect to profile.edit page directly
+        return redirect()->route('profile.edit');
     }
 
     /**

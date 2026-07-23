@@ -106,7 +106,7 @@ class SportsRegistrationController extends Controller
                 'success' => true,
                 'message' => $successMessage,
                 'reference_number' => $registration->reference_number ?? ('SK-SPT-' . str_pad($registration->id, 5, '0', STR_PAD_LEFT)),
-                'redirect_url' => route('profile.my-requests'),
+                'redirect_url' => route('profile.edit'),
             ], 200);
         }
 
