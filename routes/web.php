@@ -114,29 +114,175 @@ Route::middleware(['auth', 'throttle:forms'])->group(function () {
     Route::get('/forms/health-consultation', function() {
         return redirect()->route('landing', ['form' => 'health']);
     })->name('forms.health.create');
-    Route::post('/forms/health-consultation', function() {
-        return redirect()->route('projects.index');
+    Route::post('/forms/health-consultation', function(\Illuminate\Http\Request $request) {
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'age' => 'required|integer|min:0',
+            'gender' => 'required|string',
+            'email' => 'required|email|max:255',
+            'contact_number' => 'required|string',
+            'concerns' => 'required|string',
+            'preferred_date' => 'required|date',
+            'preferred_time' => 'required|string',
+            'custom_fields' => 'nullable|array',
+        ]);
+
+        $req = \App\Models\HealthRequest::create([
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'middle_name' => $validated['middle_name'] ?? null,
+            'age' => $validated['age'],
+            'gender' => $validated['gender'],
+            'email' => $validated['email'],
+            'contact_number' => $validated['contact_number'],
+            'concerns' => $validated['concerns'],
+            'preferred_date' => $validated['preferred_date'],
+            'preferred_time' => $validated['preferred_time'],
+            'custom_fields' => $validated['custom_fields'] ?? [],
+            'status' => 'pending',
+        ]);
+
+        $referenceNumber = $req->reference_number ?? ('SK-REQ-' . str_pad($req->id, 5, '0', STR_PAD_LEFT));
+
+        return redirect()->route('landing')->with([
+            'submitted_success' => true,
+            'type' => 'Health Consultation',
+            'referenceNumber' => $referenceNumber,
+            'name' => $req->first_name . ' ' . $req->last_name,
+            'email' => $req->email,
+            'detail' => 'Consultation date: ' . (\Carbon\Carbon::parse($req->preferred_date)->format('Y-m-d')),
+            'date' => $req->created_at->format('M d, Y h:i A'),
+        ]);
     })->name('forms.health.store');
 
     Route::get('/forms/mental-health', function() {
         return redirect()->route('landing', ['form' => 'mental-health']);
     })->name('forms.mental-health.create');
-    Route::post('/forms/mental-health', function() {
-        return redirect()->route('projects.index');
+    Route::post('/forms/mental-health', function(\Illuminate\Http\Request $request) {
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'age' => 'required|integer|min:0',
+            'gender' => 'required|string',
+            'email' => 'required|email|max:255',
+            'contact_number' => 'required|string',
+            'concerns' => 'required|string',
+            'preferred_date' => 'required|date',
+            'preferred_time' => 'required|string',
+            'custom_fields' => 'nullable|array',
+        ]);
+
+        $req = \App\Models\HealthRequest::create([
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'middle_name' => $validated['middle_name'] ?? null,
+            'age' => $validated['age'],
+            'gender' => $validated['gender'],
+            'email' => $validated['email'],
+            'contact_number' => $validated['contact_number'],
+            'concerns' => '[Mental Health] ' . $validated['concerns'],
+            'preferred_date' => $validated['preferred_date'],
+            'preferred_time' => $validated['preferred_time'],
+            'custom_fields' => $validated['custom_fields'] ?? [],
+            'status' => 'pending',
+        ]);
+
+        $referenceNumber = $req->reference_number ?? ('SK-REQ-' . str_pad($req->id, 5, '0', STR_PAD_LEFT));
+
+        return redirect()->route('landing')->with([
+            'submitted_success' => true,
+            'type' => 'Mental Health Consultation',
+            'referenceNumber' => $referenceNumber,
+            'name' => $req->first_name . ' ' . $req->last_name,
+            'email' => $req->email,
+            'detail' => 'Consultation date: ' . (\Carbon\Carbon::parse($req->preferred_date)->format('Y-m-d')),
+            'date' => $req->created_at->format('M d, Y h:i A'),
+        ]);
     })->name('forms.mental-health.store');
 
     Route::get('/forms/pabili-medicine', function() {
         return redirect()->route('landing', ['form' => 'medicine']);
     })->name('forms.medicine.create');
-    Route::post('/forms/pabili-medicine', function() {
-        return redirect()->route('projects.index');
+    Route::post('/forms/pabili-medicine', function(\Illuminate\Http\Request $request) {
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'age' => 'required|integer|min:0',
+            'gender' => 'required|string',
+            'email' => 'required|email|max:255',
+            'contact_number' => 'required|string',
+            'complete_address' => 'required|string',
+            'custom_fields' => 'nullable|array',
+        ]);
+
+        $req = \App\Models\MedicineRequest::create([
+            'requestor_first_name' => $validated['first_name'],
+            'requestor_last_name' => $validated['last_name'],
+            'requestor_age' => $validated['age'],
+            'requestor_gender' => $validated['gender'],
+            'email' => $validated['email'],
+            'contact_number' => $validated['contact_number'],
+            'complete_address' => $validated['complete_address'],
+            'custom_fields' => $validated['custom_fields'] ?? [],
+            'status' => 'pending',
+        ]);
+
+        $referenceNumber = $req->reference_number ?? ('SK-REQ-' . str_pad($req->id, 5, '0', STR_PAD_LEFT));
+
+        return redirect()->route('landing')->with([
+            'submitted_success' => true,
+            'type' => 'Medicine Request',
+            'referenceNumber' => $referenceNumber,
+            'name' => $req->requestor_first_name . ' ' . $req->requestor_last_name,
+            'email' => $req->email,
+            'detail' => 'Address: ' . $req->complete_address,
+            'date' => $req->created_at->format('M d, Y h:i A'),
+        ]);
     })->name('forms.medicine.store');
 
     Route::get('/forms/silid-karunungan', function() {
         return redirect()->route('landing', ['form' => 'silid']);
     })->name('forms.silid.create');
-    Route::post('/forms/silid-karunungan', function() {
-        return redirect()->route('projects.index');
+    Route::post('/forms/silid-karunungan', function(\Illuminate\Http\Request $request) {
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'age' => 'required|integer|min:0',
+            'email' => 'required|email|max:255',
+            'contact_number' => 'required|string',
+            'preferred_date' => 'required|date',
+            'preferred_time' => 'required|string',
+            'custom_fields' => 'nullable|array',
+        ]);
+
+        $req = \App\Models\SilidKarununganRequest::create([
+            'requestor_first_name' => $validated['first_name'],
+            'requestor_last_name' => $validated['last_name'],
+            'requestor_middle_name' => $validated['middle_name'] ?? null,
+            'requestor_age' => $validated['age'],
+            'email' => $validated['email'],
+            'contact_number' => $validated['contact_number'],
+            'preferred_date' => $validated['preferred_date'],
+            'preferred_time' => $validated['preferred_time'],
+            'custom_fields' => $validated['custom_fields'] ?? [],
+            'status' => 'pending',
+        ]);
+
+        $referenceNumber = $req->reference_number ?? ('SK-REQ-' . str_pad($req->id, 5, '0', STR_PAD_LEFT));
+
+        return redirect()->route('landing')->with([
+            'submitted_success' => true,
+            'type' => 'Silid Karunungan Request',
+            'referenceNumber' => $referenceNumber,
+            'name' => $req->requestor_first_name . ' ' . $req->requestor_last_name,
+            'email' => $req->email,
+            'detail' => 'Preferred Date: ' . (\Carbon\Carbon::parse($req->preferred_date)->format('Y-m-d')) . ' | Time: ' . $req->preferred_time,
+            'date' => $req->created_at->format('M d, Y h:i A'),
+        ]);
     })->name('forms.silid.store');
 
     Route::get('/api/silid-karunungan/booked-slots', function (\Illuminate\Http\Request $request) {
