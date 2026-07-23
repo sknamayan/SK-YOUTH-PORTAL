@@ -23,10 +23,18 @@ class RequestManagementService
 {
     private const TYPE_MAP = [
         'custom' => CustomRequest::class,
+        'health' => HealthRequest::class,
+        'medicine' => MedicineRequest::class,
+        'silid' => SilidKarununganRequest::class,
+        'sports' => SportsRegistration::class,
     ];
 
     private const TYPE_LABELS = [
         'custom' => 'Custom Request',
+        'health' => 'Health Request',
+        'medicine' => 'Medicine Request',
+        'silid' => 'Silid Karunungan Request',
+        'sports' => 'Sports Registration',
     ];
 
     public function __construct(
