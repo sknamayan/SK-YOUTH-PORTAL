@@ -34,6 +34,9 @@ Route::get('/news/{slug}', [LandingController::class, 'showNews'])->name('news.s
 
 // Helper to clear config cache and run database migrations in production hosting
 Route::get('/clear-cache', function() {
+    if (function_exists('opcache_reset')) {
+        opcache_reset();
+    }
     try {
         \Illuminate\Support\Facades\Artisan::call('config:clear');
         \Illuminate\Support\Facades\Artisan::call('cache:clear');
