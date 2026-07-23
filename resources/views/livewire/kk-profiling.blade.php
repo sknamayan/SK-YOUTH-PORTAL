@@ -98,10 +98,10 @@
             <div class="bg-blue-50/40 dark:bg-slate-900/40 border border-blue-100/50 dark:border-slate-800/80 p-5 rounded-2xl mb-6">
                 <div class="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">
                     <span class="uppercase tracking-wider text-slate-500 dark:text-slate-400 font-display">Profile Completeness</span>
-                    <span class="text-[#1e40af] dark:text-blue-400 text-sm font-black">{{ ($currentStep / $totalSteps) * 100 }}%</span>
+                    <span class="text-[#1e40af] dark:text-blue-400 text-sm font-black">{{ $this->completeness }}%</span>
                 </div>
                 <div class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700/50 h-3 rounded-full overflow-hidden">
-                    <div class="bg-gradient-to-r from-blue-500 to-[#1e40af] h-full rounded-full transition-all duration-300" style="width: {{ ($currentStep / $totalSteps) * 100 }}%"></div>
+                    <div class="bg-gradient-to-r from-blue-500 to-[#1e40af] h-full rounded-full transition-all duration-300" style="width: {{ $this->completeness }}%"></div>
                 </div>
             </div>
 

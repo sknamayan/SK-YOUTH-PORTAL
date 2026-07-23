@@ -247,6 +247,54 @@ class KkProfiling extends Component
         return redirect()->route('profile.my-requests');
     }
 
+    public function getCompletenessProperty()
+    {
+        $requiredFields = [
+            $this->consent_given,
+            $this->surname,
+            $this->first_name,
+            $this->middle_name,
+            $this->age,
+            $this->sex,
+            $this->dob,
+            $this->civil_status,
+            $this->purok_id,
+            $this->contact_number,
+            $this->registered_sk_voter,
+            $this->registered_national_voter,
+            $this->attended_kk_assembly,
+            $this->part_of_youth_org,
+            $this->part_of_lgbtqia,
+            $this->pwd,
+            $this->highest_educational_attainment
+        ];
+
+        if ($this->part_of_youth_org === '1' || $this->part_of_youth_org === 1 || $this->part_of_youth_org === true) {
+            $requiredFields[] = $this->youth_org_name;
+        } elseif ($this->part_of_youth_org === '0' || $this->part_of_youth_org === 0 || $this->part_of_youth_org === false) {
+            $requiredFields[] = $this->interested_in_joining;
+        }
+
+        if ($this->pwd === '1' || $this->pwd === 1 || $this->pwd === true) {
+            $requiredFields[] = $this->registered_disability;
+        }
+
+        $filled = 0;
+        foreach ($requiredFields as $val) {
+            if ($val === true || $val === 1 || $val === '1') {
+                $filled++;
+            } elseif ($val !== false && $val !== '' && $val !== null && $val !== '0' && $val !== 0) {
+                if (is_string($val) && trim($val) !== '') {
+                    $filled++;
+                } elseif (is_numeric($val)) {
+                    $filled++;
+                }
+            }
+        }
+
+        return round(($filled / count($requiredFields)) * 100);
+    }
+
     public function render()
     {
         return view('livewire.kk-profiling', [
