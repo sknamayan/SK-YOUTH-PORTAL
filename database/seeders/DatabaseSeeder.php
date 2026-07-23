@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
             AnnouncementSeeder::class,
             ProjectStructureSeeder::class,
             PurokSeeder::class,
-            KkProfileSeeder::class,
             GovernanceSeeder::class,
         ]);
     }
