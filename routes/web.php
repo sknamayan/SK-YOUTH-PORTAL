@@ -578,3 +578,13 @@ Route::get('/debug-my-requests', function() {
 
     return response()->json($res);
 });
+
+Route::get('/debug-logs', function() {
+    $path = storage_path('logs/laravel.log');
+    if (!file_exists($path)) {
+        return "Log file not found.";
+    }
+    $lines = file($path);
+    $lastLines = array_slice($lines, -100);
+    return response("<pre>" . implode("", $lastLines) . "</pre>");
+});
