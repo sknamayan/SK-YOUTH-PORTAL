@@ -73,36 +73,47 @@
         <div class="p-6 md:p-8 space-y-8 flex-1 overflow-y-auto max-w-5xl w-full mx-auto">
             
             <!-- Committee Hero Header -->
-            <div class="bg-white border border-slate-100 rounded-3xl p-6 md:p-8 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6 relative overflow-hidden">
-                <div class="space-y-3 relative z-10 flex-1">
-                    <span class="bg-blue-50 text-[#1e40af] border border-blue-100 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
+            <div class="bg-white border border-slate-100 rounded-3xl p-6 md:p-8 shadow-sm relative overflow-hidden space-y-6">
+                <!-- Row 1: Title Section -->
+                <div class="space-y-2 relative z-10">
+                    <span class="inline-flex bg-blue-50 text-[#1e40af] border border-blue-100 text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
                         10 Centers of Youth Participation Portal
                     </span>
                     <h1 class="text-2xl md:text-3xl font-black text-slate-800 font-display uppercase tracking-tight">{{ $activeCommittee->name }}</h1>
-                    <p class="text-xs text-slate-500 leading-relaxed font-medium">
-                        Explore transparency reports, check public progress steps, or file requests for this committee's primary initiatives below.
-                    </p>
                 </div>
 
-                @if($chairperson)
-                    <div class="relative z-10 flex items-center gap-4 bg-slate-50/50 dark:bg-slate-900/30 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl md:max-w-xs w-full shrink-0">
-                        @if($chairperson->photo_path)
-                            <img src="{{ $chairperson->photoUrl() }}" alt="{{ $chairperson->name }}" class="w-14 h-14 rounded-xl object-cover shrink-0">
-                        @else
-                            <div class="w-14 h-14 rounded-xl bg-blue-50 text-[#1e40af] flex items-center justify-center font-bold text-sm shrink-0">
-                                {{ $chairperson->initials() }}
+                <!-- Row 2: Content Grid (2 Columns) -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10 items-start">
+                    <!-- Left Column: Description (Wider) -->
+                    <div class="md:col-span-2">
+                        <p class="text-xs md:text-sm text-slate-500 leading-relaxed font-medium">
+                            Explore transparency reports, check public progress steps, or file requests for this committee's primary initiatives below.
+                        </p>
+                    </div>
+
+                    <!-- Right Column: Committee Head Card -->
+                    <div>
+                        @if($chairperson)
+                            <div class="flex items-center gap-4 bg-slate-50/50 border border-slate-100 p-4 rounded-2xl w-full">
+                                @if($chairperson->photo_path)
+                                    <img src="{{ $chairperson->photoUrl() }}" alt="{{ $chairperson->name }}" class="w-14 h-14 rounded-xl object-cover shrink-0">
+                                @else
+                                    <div class="w-14 h-14 rounded-xl bg-blue-50 text-[#1e40af] flex items-center justify-center font-bold text-xs shrink-0">
+                                        {{ $chairperson->initials() }}
+                                    </div>
+                                @endif
+                                <div class="min-w-0">
+                                    <span class="text-[8px] font-black text-[#1e40af] uppercase tracking-wider block">Committee Head</span>
+                                    <h4 class="text-xs font-black text-slate-800 uppercase tracking-tight truncate mt-0.5">{{ $chairperson->name }}</h4>
+                                    <p class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mt-0.5 truncate">{{ $chairperson->position }}</p>
+                                    @if($chairperson->email)
+                                        <p class="text-[9px] text-slate-400 mt-1 truncate font-mono">{{ $chairperson->email }}</p>
+                                    @endif
+                                </div>
                             </div>
                         @endif
-                        <div class="min-w-0">
-                            <span class="text-[8px] font-black text-[#1e40af] uppercase tracking-wider block">Committee Head</span>
-                            <h4 class="text-xs font-black text-slate-800 uppercase tracking-tight truncate mt-0.5">{{ $chairperson->name }}</h4>
-                            <p class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mt-0.5 truncate">{{ $chairperson->position }}</p>
-                            @if($chairperson->email)
-                                <p class="text-[9px] text-slate-400 mt-1 truncate font-mono">{{ $chairperson->email }}</p>
-                            @endif
-                        </div>
                     </div>
-                @endif
+                </div>
             </div>
 
             <!-- Committee Leadership & Members -->
