@@ -369,6 +369,15 @@
                 </div>
                 <span>View Website</span>
             </a>
+
+            <!-- About Us Link -->
+            <a href="{{ route('about') }}"
+               class="flex items-center px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('about') ? 'bg-blue-600 text-white shadow-sm font-semibold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
+                <div class="w-8 flex items-center justify-start shrink-0">
+                    <x-category-icon name="about" class="w-6 h-6" />
+                </div>
+                <span>About Us</span>
+            </a>
         </nav>
     </div>
 </aside>

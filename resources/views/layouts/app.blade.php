@@ -579,6 +579,16 @@
                         <span>Track Request</span>
                     </a>
 
+                    <a href="{{ route('about') }}" @click="mobileMenuOpen = false"
+                        class="flex items-center space-x-3 px-4 py-3 rounded-xl text-blue-100 hover:text-white hover:bg-white/10 hover:translate-x-1 font-bold font-display uppercase tracking-wider text-[11px] transition-all duration-300">
+                        <svg class="w-4 h-4 text-blue-200" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>About Us</span>
+                    </a>
+
                     <!-- Our Services Dropdown -->
                     <div class="space-y-1 md:hidden">
                         <button @click="servicesOpen = !servicesOpen" type="button"
@@ -767,6 +777,15 @@
                                                 d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0v-1" />
                                         </svg>
                                         <span>Account Settings</span>
+                                    </a>
+                                    <a href="{{ route('about') }}" @click="mobileMenuOpen = false"
+                                        class="flex items-center space-x-3 px-4 py-3 rounded-xl text-blue-100 hover:text-white hover:bg-white/10 hover:translate-x-1 font-bold font-display uppercase tracking-wider text-[11px] transition-all duration-300">
+                                        <svg class="w-4 h-4 text-blue-205" fill="none" stroke="currentColor"
+                                            stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span>About Us</span>
                                     </a>
                                 </div>
                             @endif

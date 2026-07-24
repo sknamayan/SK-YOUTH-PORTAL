@@ -52,6 +52,13 @@
                 <x-category-icon name="website" class="w-6 h-6 shrink-0" />
                 <span class="leading-snug break-words">View Website</span>
             </a>
+
+            <!-- About Us Link -->
+            <a href="{{ route('about') }}"
+               class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs uppercase tracking-wider transition {{ request()->routeIs('about') ? '!bg-white/20 !text-white' : '!text-white/80 hover:!bg-white/10 hover:!text-white' }}">
+                <x-category-icon name="about" class="w-6 h-6 shrink-0" />
+                <span class="leading-snug break-words">About Us</span>
+            </a>
         </nav>
     </div>
 
