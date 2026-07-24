@@ -255,31 +255,55 @@ Route::middleware(['auth', 'throttle:forms'])->group(function () {
     Route::post('/forms/silid-karunungan', function(\App\Http\Requests\SilidKarununganFormRequest $request) {
         $validated = $request->validated();
 
-        $req = \App\Models\SilidKarununganRequest::create([
-            'user_id' => auth()->id(),
-            'requestor_first_name' => $validated['first_name'],
-            'requestor_last_name' => $validated['last_name'],
-            'requestor_middle_name' => $validated['middle_name'] ?? null,
-            'requestor_age' => $validated['age'],
-            'email' => $validated['email'],
-            'contact_number' => $validated['contact_number'],
-            'preferred_date' => $validated['preferred_date'],
-            'preferred_time' => $validated['preferred_time'],
-            'custom_fields' => $validated['custom_fields'] ?? [],
-            'status' => 'pending',
-        ]);
+        try {
+            $req = \App\Models\SilidKarununganRequest::create([
+                'user_id' => auth()->id(),
+                'requestor_first_name' => $validated['first_name'],
+                'requestor_last_name' => $validated['last_name'],
+                'requestor_middle_name' => $validated['middle_name'] ?? null,
+                'requestor_age' => $validated['age'],
+                'email' => $validated['email'],
+                'contact_number' => $validated['contact_number'],
+                'preferred_date' => $validated['preferred_date'],
+                'preferred_time' => $validated['preferred_time'],
+                'custom_fields' => $validated['custom_fields'] ?? [],
+                'status' => 'pending',
+            ]);
 
-        $referenceNumber = $req->reference_number ?? ('SK-REQ-' . str_pad($req->id, 5, '0', STR_PAD_LEFT));
+            $referenceNumber = $req->reference_number ?? ('SK-REQ-' . str_pad($req->id, 5, '0', STR_PAD_LEFT));
 
-        return redirect()->route('landing')->with([
-            'submitted_success' => true,
-            'type' => 'Silid Karunungan Request',
-            'referenceNumber' => $referenceNumber,
-            'name' => $req->requestor_first_name . ' ' . $req->requestor_last_name,
-            'email' => $req->email,
-            'detail' => 'Preferred Date: ' . (\Carbon\Carbon::parse($req->preferred_date)->format('Y-m-d')) . ' | Time: ' . $req->preferred_time,
-            'date' => $req->created_at->format('M d, Y h:i A'),
-        ]);
+            // Safely attempt to send confirmation mail without crashing user submission on SMTP timeouts
+            try {
+                if (class_exists(\App\Mail\RequestReceivedMail::class)) {
+                    \Illuminate\Support\Facades\Mail::to($req->email)->send(new \App\Mail\RequestReceivedMail($req));
+                    \Illuminate\Support\Facades\Log::info('Silid Karunungan booking confirmation email sent', ['ref' => $referenceNumber]);
+                }
+            } catch (\Throwable $mailException) {
+                \Illuminate\Support\Facades\Log::error('SMTP dispatch failed on Silid Karunungan booking creation: ' . $mailException->getMessage(), [
+                    'reference' => $referenceNumber,
+                    'email' => $req->email,
+                    'trace' => $mailException->getTraceAsString(),
+                ]);
+            }
+
+            return redirect()->route('landing')->with([
+                'submitted_success' => true,
+                'type' => 'Silid Karunungan Request',
+                'referenceNumber' => $referenceNumber,
+                'name' => $req->requestor_first_name . ' ' . $req->requestor_last_name,
+                'email' => $req->email,
+                'detail' => 'Preferred Date: ' . (\Carbon\Carbon::parse($req->preferred_date)->format('Y-m-d')) . ' | Time: ' . $req->preferred_time,
+                'date' => $req->created_at->format('M d, Y h:i A'),
+            ]);
+
+        } catch (\Throwable $dbException) {
+            \Illuminate\Support\Facades\Log::emergency('Silid Karunungan Request Creation Failed: ' . $dbException->getMessage(), [
+                'user_id' => auth()->id(),
+                'trace' => $dbException->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->withErrors(['error' => 'Database error. Failed to submit booking.'])->withInput();
+        }
     })->name('forms.silid.store');
 
     Route::get('/api/silid-karunungan/booked-slots', function (\Illuminate\Http\Request $request) {

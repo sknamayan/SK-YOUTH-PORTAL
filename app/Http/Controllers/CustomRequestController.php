@@ -117,8 +117,8 @@ class CustomRequestController extends Controller
 
             // Safely attempt to send confirmation mail without crashing user submission on SMTP timeouts
             try {
-                if (class_exists(\App\Mail\ServiceRequestConfirmationMail::class)) {
-                    \Illuminate\Support\Facades\Mail::to($customReq->email)->send(new \App\Mail\ServiceRequestConfirmationMail($customReq));
+                if (class_exists(\App\Mail\RequestReceivedMail::class)) {
+                    \Illuminate\Support\Facades\Mail::to($customReq->email)->send(new \App\Mail\RequestReceivedMail($customReq));
                     \Illuminate\Support\Facades\Log::info('Initiative request confirmation email sent', ['ref' => $referenceNumber]);
                 }
             } catch (\Throwable $mailException) {

@@ -21,56 +21,80 @@ class MyRequests extends Component
         $email = $user ? trim(strtolower($user->email)) : '';
 
         $requests = CustomRequest::where(function($q) use ($user, $email) {
-                if ($email) {
-                    $q->whereRaw('LOWER(email) = ?', [$email]);
-                }
                 if ($user) {
-                    $q->orWhere('user_id', $user->id);
+                    $q->where('user_id', $user->id);
+                    if ($email) {
+                        $q->orWhereRaw('LOWER(email) = ?', [$email]);
+                    }
+                } elseif ($email) {
+                    $q->whereRaw('LOWER(email) = ?', [$email]);
+                } else {
+                    $q->whereRaw('1 = 0');
                 }
             })->latest()->get();
 
         $sportsRegistrations = SportsRegistration::where(function($q) use ($user, $email) {
-                if ($email) {
-                    $q->whereRaw('LOWER(email) = ?', [$email]);
-                }
                 if ($user) {
-                    $q->orWhere('user_id', $user->id);
+                    $q->where('user_id', $user->id);
+                    if ($email) {
+                        $q->orWhereRaw('LOWER(email) = ?', [$email]);
+                    }
+                } elseif ($email) {
+                    $q->whereRaw('LOWER(email) = ?', [$email]);
+                } else {
+                    $q->whereRaw('1 = 0');
                 }
             })->latest()->get();
 
         $healthRequests = HealthRequest::where(function($q) use ($user, $email) {
-                if ($email) {
-                    $q->whereRaw('LOWER(email) = ?', [$email]);
-                }
                 if ($user) {
-                    $q->orWhere('user_id', $user->id);
+                    $q->where('user_id', $user->id);
+                    if ($email) {
+                        $q->orWhereRaw('LOWER(email) = ?', [$email]);
+                    }
+                } elseif ($email) {
+                    $q->whereRaw('LOWER(email) = ?', [$email]);
+                } else {
+                    $q->whereRaw('1 = 0');
                 }
             })->latest()->get();
 
         $medicineRequests = MedicineRequest::where(function($q) use ($user, $email) {
-                if ($email) {
-                    $q->whereRaw('LOWER(email) = ?', [$email]);
-                }
                 if ($user) {
-                    $q->orWhere('user_id', $user->id);
+                    $q->where('user_id', $user->id);
+                    if ($email) {
+                        $q->orWhereRaw('LOWER(email) = ?', [$email]);
+                    }
+                } elseif ($email) {
+                    $q->whereRaw('LOWER(email) = ?', [$email]);
+                } else {
+                    $q->whereRaw('1 = 0');
                 }
             })->latest()->get();
 
         $silidRequests = SilidKarununganRequest::where(function($q) use ($user, $email) {
-                if ($email) {
-                    $q->whereRaw('LOWER(email) = ?', [$email]);
-                }
                 if ($user) {
-                    $q->orWhere('user_id', $user->id);
+                    $q->where('user_id', $user->id);
+                    if ($email) {
+                        $q->orWhereRaw('LOWER(email) = ?', [$email]);
+                    }
+                } elseif ($email) {
+                    $q->whereRaw('LOWER(email) = ?', [$email]);
+                } else {
+                    $q->whereRaw('1 = 0');
                 }
             })->latest()->get();
 
         $registrationResponses = RegistrationResponse::where(function($q) use ($user, $email) {
-                if ($email) {
-                    $q->whereRaw('LOWER(citizen_email) = ?', [$email]);
-                }
                 if ($user) {
-                    $q->orWhere('user_id', $user->id);
+                    $q->where('user_id', $user->id);
+                    if ($email) {
+                        $q->orWhereRaw('LOWER(citizen_email) = ?', [$email]);
+                    }
+                } elseif ($email) {
+                    $q->whereRaw('LOWER(citizen_email) = ?', [$email]);
+                } else {
+                    $q->whereRaw('1 = 0');
                 }
             })->latest()->get();
 
