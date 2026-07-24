@@ -54,11 +54,12 @@
                     @enderror
                 </div>
 
-                @if(!empty($initiative->custom_fields) && is_array($initiative->custom_fields))
+                @php $fields = $initiative->form_structure ?? $initiative->custom_fields; @endphp
+                @if(!empty($fields) && is_array($fields))
                     <div class="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800">
                         <span class="text-[10px] font-black text-[#1e40af] dark:text-blue-400 uppercase tracking-widest block font-display">Additional Information Required</span>
                         <div class="space-y-4">
-                            @foreach($initiative->custom_fields as $field)
+                            @foreach($fields as $field)
                                 @php
                                     $fieldName = $field['name'];
                                     $oldVal = old("custom_fields.{$fieldName}");

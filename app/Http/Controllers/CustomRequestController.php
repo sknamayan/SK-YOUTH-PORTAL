@@ -75,9 +75,10 @@ class CustomRequestController extends Controller
         ];
 
         $customAttributes = [];
-        if ($initiative && is_array($initiative->custom_fields)) {
+        $fields = $initiative->form_structure ?? $initiative->custom_fields;
+        if ($initiative && is_array($fields)) {
             $rules['custom_fields'] = ['nullable', 'array'];
-            foreach ($initiative->custom_fields as $field) {
+            foreach ($fields as $field) {
                 $fieldName = $field['name'] ?? null;
                 if (!$fieldName) continue;
 
