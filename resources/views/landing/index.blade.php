@@ -702,87 +702,85 @@ if (activeForm) {
          <div class="flex min-h-screen items-center justify-center p-4">
 
              <!-- Modal Box -->
-             <div class="bg-white rounded-3xl overflow-hidden shadow-2xl border border-slate-100 max-w-lg w-full relative z-10 p-6 sm:p-8 text-center space-y-6"
+             <div class="bg-white dark:bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-200/80 max-w-lg w-full relative z-10 p-6 sm:p-8 text-center space-y-6"
                   @click.stop>
 
                   <!-- Close Button -->
                   <button type="button" @click="showSuccess = false"
-                          class="absolute right-4 top-4 text-slate-400 hover:text-slate-600 p-2 rounded-full transition focus:outline-none">
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                          class="absolute right-6 top-6 text-slate-400 hover:text-slate-650 hover:bg-slate-100 p-2 rounded-xl transition focus:outline-none">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
                   </button>
 
-                  <!-- Animated Success Checkmark -->
-                  <div class="relative flex items-center justify-center w-20 h-20 mx-auto">
-                      <span class="animate-ping absolute inline-flex h-16 w-16 rounded-full bg-emerald-400 opacity-20"></span>
-                      <div class="relative rounded-full w-16 h-16 bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600">
-                          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+                  <!-- Success Checkmark Header -->
+                  <div class="pt-4">
+                      <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-500 text-white shadow-lg shadow-emerald-500/20">
+                          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
                       </div>
                   </div>
 
                   <div>
-                      <h2 class="text-2xl font-black font-display text-slate-800 uppercase tracking-tight">Request Submitted!</h2>
-                      <p class="text-xs text-slate-400 mt-2">Thank you! Your digital request has been successfully filed with the SK council.</p>
+                      <h2 class="text-xl font-black font-display text-slate-850 uppercase tracking-wider">Request Submitted!</h2>
+                      <p class="text-xs text-slate-500 mt-2 font-medium">Thank you! Your digital request has been successfully filed with the SK council.</p>
                   </div>
 
-                  <!-- Reference card with dashed border -->
+                  <!-- Reference Code Card -->
                   <div class="p-5 bg-blue-50/50 border-2 border-dashed border-blue-200 rounded-2xl max-w-sm mx-auto text-center space-y-1">
-                      <span class="text-[9px] font-black text-blue-500 uppercase tracking-widest block font-display">Reference Number</span>
-                      <span class="text-xl font-mono font-black text-[#1e40af] select-all">{{ session('referenceNumber') }}</span>
-                      <p class="text-[10px] text-slate-400 pt-1">Copy this code to track your status at any time.</p>
+                      <span class="text-[9px] font-black text-blue-600 uppercase tracking-widest block font-display">Reference Number</span>
+                      <span class="text-xl font-mono font-black text-blue-900 select-all tracking-wider">{{ session('referenceNumber') }}</span>
+                      <p class="text-[10px] text-slate-450">Copy this code to track your status at any time.</p>
                   </div>
 
-                  <!-- Details summary table -->
-                  <div class="card p-0 overflow-hidden text-left border border-slate-100 text-xs">
-                      <div class="bg-slate-50 border-b border-slate-100 px-5 py-2.5">
-                          <span class="font-bold text-slate-700 font-display uppercase tracking-wider">Submission Summary</span>
+                  <!-- Submission Summary Card -->
+                  <div class="border border-slate-200/80 rounded-2xl overflow-hidden bg-slate-50/50 text-left text-xs">
+                      <div class="bg-slate-100/70 border-b border-slate-200/80 px-4 py-2.5">
+                          <span class="text-[9px] font-black text-slate-500 font-display uppercase tracking-wider block">Submission Summary</span>
                       </div>
-                      <table class="w-full">
-                          <tbody class="divide-y divide-slate-100 text-slate-600">
+                      <table class="w-full border-collapse">
+                          <tbody class="divide-y divide-slate-150 text-slate-650">
                               <tr>
-                                  <td class="px-5 py-2.5 font-semibold text-slate-400 w-1/3">Request Type</td>
-                                  <td class="px-5 py-2.5 font-bold text-slate-800">{{ session('type') }}</td>
+                                  <td class="px-4 py-2.5 font-bold text-slate-400 uppercase tracking-wider text-[10px] w-1/3">Request Type</td>
+                                  <td class="px-4 py-2.5 font-bold text-slate-800">{{ session('type') }}</td>
                               </tr>
                               <tr>
-                                  <td class="px-5 py-2.5 font-semibold text-slate-400">Requestor Name</td>
-                                  <td class="px-5 py-2.5 text-slate-800 font-medium">{{ session('name') }}</td>
+                                  <td class="px-4 py-2.5 font-bold text-slate-400 uppercase tracking-wider text-[10px]">Requestor Name</td>
+                                  <td class="px-4 py-2.5 text-slate-800 font-bold uppercase">{{ session('name') }}</td>
                               </tr>
                               <tr>
-                                  <td class="px-5 py-2.5 font-semibold text-slate-400">Email Address</td>
-                                  <td class="px-5 py-2.5 text-slate-800 font-mono">{{ session('email') }}</td>
+                                  <td class="px-4 py-2.5 font-bold text-slate-400 uppercase tracking-wider text-[10px]">Email Address</td>
+                                  <td class="px-4 py-2.5 text-slate-800 font-mono font-medium">{{ session('email') }}</td>
                               </tr>
                               <tr>
-                                  <td class="px-5 py-2.5 font-semibold text-slate-400">Preferred Details</td>
-                                  <td class="px-5 py-2.5 text-slate-800 font-medium">{{ session('detail') }}</td>
+                                  <td class="px-4 py-2.5 font-bold text-slate-400 uppercase tracking-wider text-[10px]">Preferred Details</td>
+                                  <td class="px-4 py-2.5 text-slate-800 font-medium">{{ session('detail') }}</td>
                               </tr>
                               <tr>
-                                  <td class="px-5 py-2.5 font-semibold text-slate-400">Initial Status</td>
-                                  <td class="px-5 py-2.5">
-                                      <span class="badge-pending">Pending</span>
+                                  <td class="px-4 py-2.5 font-bold text-slate-400 uppercase tracking-wider text-[10px]">Initial Status</td>
+                                  <td class="px-4 py-2.5">
+                                      <span class="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase bg-amber-500/10 text-amber-700 border border-amber-500/20">Pending</span>
                                   </td>
                               </tr>
                               <tr>
-                                  <td class="px-5 py-2.5 font-semibold text-slate-400">Date Submitted</td>
-                                  <td class="px-5 py-2.5 text-slate-800">{{ session('date') }}</td>
+                                  <td class="px-4 py-2.5 font-bold text-slate-400 uppercase tracking-wider text-[10px]">Date Submitted</td>
+                                  <td class="px-4 py-2.5 text-slate-800 font-medium">{{ session('date') }}</td>
                               </tr>
                           </tbody>
                       </table>
                   </div>
 
-                  <!-- Email note -->
-                  <div class="p-4 bg-emerald-50 border border-emerald-100 rounded-2xl text-xs text-emerald-800 max-w-md mx-auto leading-relaxed flex items-start space-x-3 shadow-sm text-left">
-                      <span class="text-xl shrink-0">✉️</span>
+                  <!-- Email Notification Card -->
+                  <div class="p-4 bg-emerald-50 border border-emerald-100 rounded-2xl text-xs text-emerald-850 leading-relaxed flex items-start space-x-3 text-left">
+                      <span class="text-base shrink-0">✉️</span>
                       <div>
-                          <span class="font-bold block text-emerald-950 text-sm mb-0.5">Confirmation Email Sent!</span>
-                          A receipt and confirmation details have been sent to <span class="font-semibold underline text-emerald-950 font-mono">{{ session('email') }}</span>. Please check your inbox (and spam folder) for updates.
+                          <span class="font-black block text-emerald-950 text-xs uppercase tracking-wider mb-0.5">Confirmation Email Sent!</span>
+                          A receipt and confirmation details have been sent to <span class="font-bold underline text-emerald-950 font-mono">{{ session('email') }}</span>. Please check your inbox (and spam folder) for updates.
                       </div>
                   </div>
 
-                  <!-- Action buttons -->
+                  <!-- Action Buttons -->
                   <div class="flex items-center justify-center gap-3 pt-2">
-                      <a href="{{ route('track.index') }}?email={{ urlencode(session('email')) }}" class="btn-primary">Track Request</a>
-                      <button type="button" @click="showSuccess = false" class="btn-outline">Close</button>
+                      <a href="{{ route('track.index') }}?email={{ urlencode(session('email')) }}" class="btn-primary py-2.5 px-6 rounded-xl font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition">Track Request</a>
+                      <button type="button" @click="showSuccess = false" class="btn-outline py-2.5 px-6 rounded-xl font-bold text-xs uppercase tracking-wider transition">Close</button>
                   </div>
-
              </div>
          </div>
     </div>
