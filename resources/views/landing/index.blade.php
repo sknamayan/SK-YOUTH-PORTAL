@@ -584,9 +584,8 @@ if (activeForm) {
                             </div>
                         @endif
 
-                        <div class="pt-4" x-data="{ submitting: false }">
+                        <div class="pt-4">
                             <button type="submit" 
-                                    @click="submitting = true"
                                     :disabled="loadingSlots || (preferredTime && bookedSlots.includes(preferredTime)) || submitting" 
                                     class="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                                 <span x-show="!submitting">Submit Booking Request</span>
