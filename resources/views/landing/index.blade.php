@@ -693,22 +693,22 @@ if (activeForm) {
     <div x-data="{ showSuccess: true }"
          x-init="showSuccess = true"
          x-show="showSuccess"
-         class="fixed inset-0 z-50 overflow-y-auto"
+         class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-hidden"
          x-cloak>
 
          <!-- Backdrop shadow -->
          <div class="fixed inset-0 bg-slate-950/45 backdrop-blur-sm transition-opacity" @click="showSuccess = false"></div>
 
          <!-- Modal Wrapper -->
-         <div class="flex min-h-screen items-center justify-center p-4">
+         <div class="relative z-10 w-full max-w-md flex items-center justify-center">
 
              <!-- Modal Box -->
-             <div class="bg-white dark:bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-200/80 max-w-lg w-full relative z-10 p-6 sm:p-8 text-center space-y-6"
+             <div class="bg-white rounded-[2.5rem] shadow-2xl border border-slate-200/80 w-full p-6 sm:p-8 text-center space-y-6 max-h-[85vh] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent relative"
                   @click.stop>
 
                   <!-- Close Button -->
                   <button type="button" @click="showSuccess = false"
-                          class="absolute right-6 top-6 text-slate-400 hover:text-slate-650 hover:bg-slate-100 p-2 rounded-xl transition focus:outline-none">
+                          class="absolute right-6 top-6 text-slate-400 hover:text-slate-650 hover:bg-slate-105 p-2 rounded-xl transition focus:outline-none">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
                   </button>
 
@@ -727,7 +727,7 @@ if (activeForm) {
                   <!-- Reference Code Card -->
                   <div class="p-5 bg-blue-50/50 border-2 border-dashed border-blue-200 rounded-2xl max-w-sm mx-auto text-center space-y-1">
                       <span class="text-[9px] font-black text-blue-600 uppercase tracking-widest block font-display">Reference Number</span>
-                      <span class="text-xl font-mono font-black text-blue-900 select-all tracking-wider">{{ session('referenceNumber') }}</span>
+                      <span class="text-lg font-mono font-black text-blue-900 select-all tracking-wider">{{ session('referenceNumber') }}</span>
                       <p class="text-[10px] text-slate-450">Copy this code to track your status at any time.</p>
                   </div>
 
@@ -769,12 +769,14 @@ if (activeForm) {
                   </div>
 
                   <!-- Email Notification Card -->
-                  <div class="p-4 bg-emerald-50 border border-emerald-100 rounded-2xl text-xs text-emerald-850 leading-relaxed flex items-start space-x-3 text-left">
-                      <span class="text-base shrink-0">✉️</span>
-                      <div>
-                          <span class="font-black block text-emerald-950 text-xs uppercase tracking-wider mb-0.5">Confirmation Email Sent!</span>
-                          A receipt and confirmation details have been sent to <span class="font-bold underline text-emerald-950 font-mono">{{ session('email') }}</span>. Please check your inbox (and spam folder) for updates.
+                  <div class="p-4 bg-emerald-50/60 border border-emerald-100/70 rounded-2xl text-xs text-emerald-800 leading-relaxed text-left">
+                      <div class="flex items-center gap-2 mb-1">
+                          <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                          <span class="font-black text-emerald-950 text-[10px] uppercase tracking-wider">Confirmation Email Sent!</span>
                       </div>
+                      <p class="text-emerald-800 pl-3.5 leading-normal">
+                          A receipt has been sent to <span class="font-bold underline text-emerald-950 font-mono">{{ session('email') }}</span>. Please check your inbox and spam folder.
+                      </p>
                   </div>
 
                   <!-- Action Buttons -->
