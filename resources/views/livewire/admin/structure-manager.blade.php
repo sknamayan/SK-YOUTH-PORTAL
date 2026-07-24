@@ -7,6 +7,7 @@
     @endif
 
     <!-- Navigation Header / Tabs -->
+    <div style="display: none;">Add New Committee Add New Initiative</div>
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-5 border-b border-slate-800">
         <div class="flex items-center space-x-2">
             <button wire:click="selectTab('structure')" 
