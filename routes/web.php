@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\FormBuilderController;
 use App\Http\Controllers\Admin\CarouselSlideController;
 use App\Http\Controllers\Admin\SportsLeagueController;
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ConfirmationController;
@@ -448,6 +449,16 @@ Route::middleware(['auth', 'admin.dpo'])->group(function () {
         'edit' => 'admin.transparency.edit',
         'update' => 'admin.transparency.update',
         'destroy' => 'admin.transparency.destroy',
+    ])->except(['show']);
+
+    // Announcements management
+    Route::resource('/admin/announcements', AnnouncementController::class)->names([
+        'index' => 'admin.announcements.index',
+        'create' => 'admin.announcements.create',
+        'store' => 'admin.announcements.store',
+        'edit' => 'admin.announcements.edit',
+        'update' => 'admin.announcements.update',
+        'destroy' => 'admin.announcements.destroy',
     ])->except(['show']);
 
     // Sports League Management

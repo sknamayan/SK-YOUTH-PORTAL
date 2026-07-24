@@ -48,8 +48,7 @@
 
         <!-- Menu links -->
         <nav x-data="{ 
-            activeGroup: '{{ 
-                request()->routeIs('admin.news.*') || request()->routeIs('admin.officials.*') || request()->routeIs('admin.transparency.*') ? 'content' : (
+            activeGroup: '{{ request()->routeIs('admin.news.*') || request()->routeIs('admin.officials.*') || request()->routeIs('admin.transparency.*') || request()->routeIs('admin.announcements.*') ? 'content' : (
                 request()->routeIs('admin.logs.*') || request()->routeIs('admin.structure.*') || request()->routeIs('admin.carousel.*') ? 'admin' : (
                 request()->routeIs('admin.users.*') || request()->routeIs('profile.edit') || request()->routeIs('admin.recycle-bin.*') ? 'settings' : ''
             )) }}' 
@@ -165,7 +164,7 @@
             <!-- Content Management Group -->
             @if(Auth::user()->isAdmin())
             @php
-                $contentActive = request()->routeIs('admin.news.*') || request()->routeIs('admin.transparency.*') || request()->routeIs('admin.officials.*');
+                $contentActive = request()->routeIs('admin.news.*') || request()->routeIs('admin.transparency.*') || request()->routeIs('admin.officials.*') || request()->routeIs('admin.announcements.*');
             @endphp
             <div class="space-y-1">
                 <button type="button" @click="activeGroup = (activeGroup === 'content' ? '' : 'content')"
@@ -214,6 +213,18 @@
                                 <x-category-icon name="users" class="w-6 h-6" />
                             </div>
                             <span>SK Officials</span>
+                        </div>
+                    </a>
+
+                    <a href="{{ route('admin.announcements.index') }}"
+                       class="flex items-center px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition {{ request()->routeIs('admin.announcements.*') ? 'bg-blue-600 text-white shadow-sm font-semibold' : 'text-slate-550 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}">
+                        <div class="flex items-center">
+                            <div class="w-8 flex items-center justify-start shrink-0">
+                                <svg class="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                </svg>
+                            </div>
+                            <span>Announcements</span>
                         </div>
                     </a>
                 </div>
