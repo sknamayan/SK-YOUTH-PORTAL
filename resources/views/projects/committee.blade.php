@@ -107,9 +107,9 @@
                         @if($chairperson)
                             <div class="bg-transparent shrink-0">
                                 @if($chairperson->photo_path)
-                                    <img src="{{ $chairperson->photoUrl() }}" alt="{{ $chairperson->name }}" class="w-40 h-40 md:w-36 md:h-36 rounded-2xl object-cover border-2 border-white/10 shadow-2xl">
+                                    <img src="{{ $chairperson->photoUrl() }}" alt="{{ $chairperson->name }}" class="h-48 w-36 md:h-60 md:w-44 rounded-2xl object-cover border-2 border-white/10 shadow-2xl">
                                 @else
-                                    <div class="w-32 h-32 md:w-36 md:h-36 rounded-2xl bg-white/5 text-blue-300 flex items-center justify-center font-black text-2xl border border-white/10 shadow-2xl">
+                                    <div class="h-48 w-36 md:h-60 md:w-44 rounded-2xl bg-white/5 text-blue-300 flex items-center justify-center font-black text-3xl border border-white/10 shadow-2xl">
                                         {{ $chairperson->initials() }}
                                     </div>
                                 @endif
