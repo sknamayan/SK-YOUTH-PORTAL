@@ -52,7 +52,7 @@
                 </div>
                 <button
                     type="button"
-                    @click="openAddModal = true"
+                    @click="$dispatch('open-modal', 'open-add-modal')"
                     class="hidden sm:inline-flex btn-primary text-xs shrink-0 items-center gap-2 min-h-11"
                 >
                     <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -110,7 +110,7 @@
                                             type: '{{ $ann->type }}',
                                             is_active: {{ $ann->is_active ? 1 : 0 }},
                                             published_at: '{{ $ann->published_at->format('Y-m-d\TH:i') }}'
-                                        })"
+                                        }); $dispatch('open-modal', 'open-edit-modal')"
                                         class="inline-flex items-center min-h-9 px-3 py-1 bg-blue-50 dark:bg-blue-950/40 text-[#1e40af] dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-950/70 font-bold rounded-lg transition text-[10px] uppercase tracking-wider active:scale-95"
                                     >
                                         Edit
@@ -195,7 +195,7 @@
                                                         type: '{{ $ann->type }}',
                                                         is_active: {{ $ann->is_active ? 1 : 0 }},
                                                         published_at: '{{ $ann->published_at->format('Y-m-d\TH:i') }}'
-                                                    })"
+                                                    }); $dispatch('open-modal', 'open-edit-modal')"
                                                     class="inline-flex items-center min-h-9 px-2.5 py-1.5 bg-blue-50 dark:bg-blue-950/40 text-[#1e40af] dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-950/70 font-bold rounded-lg transition text-[10px] uppercase tracking-wider active:scale-95 border border-transparent"
                                                 >
                                                     Edit
@@ -240,8 +240,7 @@
 
     </div>
 
-    {{-- Create Modal --}}
-    <x-modal name="open-add-modal" show="openAddModal" focusable>
+    <x-modal name="open-add-modal" focusable>
         <form method="POST" action="{{ route('admin.announcements.store') }}" class="p-6 space-y-6">
             @csrf
             <div>
@@ -286,14 +285,14 @@
             </div>
 
             <div class="flex justify-end gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
-                <button type="button" @click="openAddModal = false" class="btn-outline text-xs py-2 px-4">Cancel</button>
+                <button type="button" @click="$dispatch('close-modal', 'open-add-modal')" class="btn-outline text-xs py-2 px-4">Cancel</button>
                 <button type="submit" class="btn-primary text-xs py-2 px-4">Publish Announcement</button>
             </div>
         </form>
     </x-modal>
 
     {{-- Edit Modal --}}
-    <x-modal name="open-edit-modal" show="openEditModal" focusable>
+    <x-modal name="open-edit-modal" focusable>
         <form method="POST" :action="`/admin/announcements/${editId}`" class="p-6 space-y-6">
             @csrf
             @method('PUT')
@@ -326,7 +325,7 @@
 
                 <div>
                     <label class="inline-flex items-center cursor-pointer select-none">
-                        <input type="checkbox" name="is_active" value="1" :checked="editIsActive" class="sr-only peer">
+                        <input type="checkbox" name="is_active" value="1" x-model="editIsActive" class="sr-only peer">
                         <div class="w-8 h-4 bg-slate-200 peer-focus:outline-none dark:bg-slate-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all dark:border-slate-600 peer-checked:bg-blue-600 relative"></div>
                         <span class="ml-2 text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Active Broadcast Status</span>
                     </label>
@@ -339,7 +338,7 @@
             </div>
 
             <div class="flex justify-end gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
-                <button type="button" @click="openEditModal = false" class="btn-outline text-xs py-2 px-4">Cancel</button>
+                <button type="button" @click="$dispatch('close-modal', 'open-edit-modal')" class="btn-outline text-xs py-2 px-4">Cancel</button>
                 <button type="submit" class="btn-primary text-xs py-2 px-4">Save Changes</button>
             </div>
         </form>
@@ -364,7 +363,9 @@
 
             init() {
                 if (config.openOnLoad) {
-                    this.openAddModal = true;
+                    this.$nextTick(() => {
+                        window.dispatchEvent(new CustomEvent('open-modal', { detail: 'open-add-modal' }));
+                    });
                 }
             },
 
@@ -375,7 +376,6 @@
                 this.editType = ann.type;
                 this.editIsActive = !!ann.is_active;
                 this.editPublishedAt = ann.published_at;
-                this.openEditModal = true;
             }
         }
     }
