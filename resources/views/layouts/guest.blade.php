@@ -12,6 +12,12 @@
 
         <!-- Fonts & Styles -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
+        <style>
+            [x-cloak] {
+                display: none !important;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased text-slate-800 bg-[#f8fafc]">
         
@@ -42,5 +48,6 @@
             </div>
         </div>
 
+        @livewireScripts
     </body>
 </html>
