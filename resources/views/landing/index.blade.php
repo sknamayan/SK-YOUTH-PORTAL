@@ -506,10 +506,6 @@ if (activeForm) {
                              }
                          }
                      }">
-                    <button type="button" @click="activeForm = null"
-                            class="absolute right-4 top-4 text-white hover:text-slate-200 bg-white/10 hover:bg-white/20 p-2 rounded-full transition z-20 focus:outline-none focus:ring-2 focus:ring-white/50">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
-                    </button>
                     <x-form-card
                         title="Silid Karunungan Booking"
                         subtitle="Book studying slots at local research library facilities with internet access."
@@ -588,11 +584,16 @@ if (activeForm) {
                             </div>
                         @endif
 
-                        <div class="pt-4">
+                        <div class="pt-4" x-data="{ submitting: false }">
                             <button type="submit" 
-                                    :disabled="loadingSlots || (preferredTime && bookedSlots.includes(preferredTime))" 
-                                    class="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed">
-                                Submit Booking Request
+                                    @click="submitting = true"
+                                    :disabled="loadingSlots || (preferredTime && bookedSlots.includes(preferredTime)) || submitting" 
+                                    class="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                                <span x-show="!submitting">Submit Booking Request</span>
+                                <span x-show="submitting" x-cloak class="flex items-center gap-2">
+                                    <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                    Submitting Request...
+                                </span>
                             </button>
                         </div>
                     </x-form-card>

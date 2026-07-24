@@ -288,7 +288,7 @@ Route::middleware(['auth', 'throttle:forms'])->group(function () {
             return response()->json(['booked_slots' => []]);
         }
 
-        $bookedSlots = \App\Models\SilidKarununganRequest::where('preferred_date', $date)
+        $bookedSlots = \App\Models\SilidKarununganRequest::whereDate('preferred_date', $date)
             ->whereIn('status', ['pending', 'approved', 'review', 'confirmed'])
             ->pluck('preferred_time')
             ->toArray();
