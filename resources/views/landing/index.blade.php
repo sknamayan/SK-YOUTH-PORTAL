@@ -13,8 +13,8 @@
             label: 'EDUCATION',
             subtopics: [
                 { name: 'SILID KARUNUNGAN', url: '{{ route('forms.silid.create') }}', active: true },
+                { name: 'TTPD PRINTING SERVICE', url: '{{ route('forms.silid.create') }}', active: true },
                 { name: 'TRACK REQUEST', url: '{{ route('track.index') }}', active: true },
-                { name: 'TIPD', url: '#', active: false },
                 { name: 'OTHER PROJECTS', url: '#', active: false }
             ]
         },
@@ -515,13 +515,13 @@ if (activeForm) {
                         enctype="multipart/form-data"
                     >
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <x-form-input label="Requestor First Name" name="requestor_first_name" required="true" value="{{ mb_strtoupper($kkProfile?->first_name, 'UTF-8') }}" />
-                            <x-form-input label="Requestor Last Name" name="requestor_last_name" required="true" value="{{ mb_strtoupper($kkProfile?->surname, 'UTF-8') }}" />
-                            <x-form-input label="Requestor Middle Name (type 'NONE' or 'N/A' if none)" name="requestor_middle_name" required="true" value="{{ mb_strtoupper($kkProfile?->middle_name, 'UTF-8') }}" />
+                            <x-form-input label="First Name" name="first_name" required="true" value="{{ mb_strtoupper($kkProfile?->first_name, 'UTF-8') }}" />
+                            <x-form-input label="Last Name" name="last_name" required="true" value="{{ mb_strtoupper($kkProfile?->surname, 'UTF-8') }}" />
+                            <x-form-input label="Middle Name (type 'NONE' or 'N/A' if none)" name="middle_name" required="true" value="{{ mb_strtoupper($kkProfile?->middle_name, 'UTF-8') }}" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <x-form-input label="Requestor Age" name="requestor_age" type="number" min="0" max="120" required="true" value="{{ $kkProfile?->age }}" />
+                            <x-form-input label="Age" name="age" type="number" min="0" max="120" required="true" value="{{ $kkProfile?->age }}" />
                             <x-form-input label="Email Address" name="email" type="email" required="true" value="{{ $kkProfile?->email ?? auth()->user()?->email }}" />
                             <x-form-input label="Contact Number" name="contact_number" required="true" placeholder="e.g. 09123456789" value="{{ $kkProfile?->contact_number }}" />
                         </div>
