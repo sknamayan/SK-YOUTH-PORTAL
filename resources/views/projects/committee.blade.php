@@ -73,23 +73,26 @@
         <div class="p-6 md:p-8 space-y-8 flex-1 overflow-y-auto max-w-5xl w-full mx-auto">
             
             <!-- Committee Hero Header -->
-            <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-[#1e3a8a] text-white border border-slate-800 rounded-3xl p-6 md:p-8 shadow-xl relative overflow-hidden space-y-6">
-                <!-- Row 1: Title Section -->
-                <div class="space-y-2 relative z-10">
-                    <span class="inline-flex bg-blue-500/10 text-blue-300 border border-blue-400/20 text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
-                        10 Centers of Youth Participation Portal
-                    </span>
-                    <h1 class="text-2xl md:text-3xl font-black text-white font-display uppercase tracking-tight">{{ $activeCommittee->name }}</h1>
-                </div>
+            <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-[#1e3a8a] text-white border border-slate-800 rounded-3xl p-6 md:p-8 shadow-xl relative overflow-hidden">
+                <!-- Main 2-Column Content Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10 items-center">
+                    
+                    <!-- Column 1: Text & Committee Head Details -->
+                    <div class="space-y-6">
+                        <!-- Badge & Title -->
+                        <div class="space-y-2">
+                            <span class="inline-flex bg-blue-500/10 text-blue-300 border border-blue-400/20 text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
+                                10 Centers of Youth Participation Portal
+                            </span>
+                            <h1 class="text-2xl md:text-3xl font-black text-white font-display uppercase tracking-tight">{{ $activeCommittee->name }}</h1>
+                        </div>
 
-                <!-- Row 2: Content Grid (2 Columns: Left ~60%, Right ~40%) -->
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-8 relative z-10 items-center">
-                    <!-- Left Column: Description & Committee Head Details -->
-                    <div class="md:col-span-3 space-y-6">
-                        <p class="text-xs md:text-sm text-slate-300 leading-relaxed font-medium">
+                        <!-- Description -->
+                        <p class="text-xs md:text-sm text-slate-355 leading-relaxed font-medium">
                             Explore transparency reports, check public progress steps, or file requests for this committee's primary initiatives below.
                         </p>
 
+                        <!-- Committee Head Details -->
                         @if($chairperson)
                             <div class="space-y-1">
                                 <span class="text-[9px] font-black text-blue-400 uppercase tracking-widest block font-display">Committee Head</span>
@@ -104,20 +107,21 @@
                         @endif
                     </div>
 
-                    <!-- Right Column: Profile Picture -->
-                    <div class="md:col-span-2 flex justify-center md:justify-end">
+                    <!-- Column 2: Chairperson Picture only -->
+                    <div class="flex justify-center md:justify-end">
                         @if($chairperson)
                             <div class="bg-transparent shrink-0">
                                 @if($chairperson->photo_path)
-                                    <img src="{{ $chairperson->photoUrl() }}" alt="{{ $chairperson->name }}" class="w-36 h-36 md:w-44 md:h-44 rounded-2xl object-cover border-2 border-white/10 shadow-2xl">
+                                    <img src="{{ $chairperson->photoUrl() }}" alt="{{ $chairperson->name }}" class="w-32 h-32 md:w-36 md:h-36 rounded-2xl object-cover border-2 border-white/10 shadow-2xl">
                                 @else
-                                    <div class="w-36 h-36 md:w-44 md:h-44 rounded-2xl bg-white/5 text-blue-300 flex items-center justify-center font-black text-3xl border border-white/10 shadow-2xl">
+                                    <div class="w-32 h-32 md:w-36 md:h-36 rounded-2xl bg-white/5 text-blue-300 flex items-center justify-center font-black text-2xl border border-white/10 shadow-2xl">
                                         {{ $chairperson->initials() }}
                                     </div>
                                 @endif
                             </div>
                         @endif
                     </div>
+                    
                 </div>
             </div>
 
