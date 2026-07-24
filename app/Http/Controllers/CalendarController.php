@@ -125,10 +125,11 @@ class CalendarController extends Controller
             ->get();
         foreach ($silidBookings as $item) {
             $serviceName = $item->initiative ? $item->initiative->title : 'Silid Karunungan Studying Spaces';
+            $timeStr = strlen($item->preferred_time) === 5 ? $item->preferred_time . ':00' : $item->preferred_time;
             $events[] = [
                 'id' => 'silid_' . $item->id,
-                'title' => $serviceName . ': ' . $item->requestor_first_name . ' ' . $item->requestor_last_name . ' (' . $item->preferred_time . ')',
-                'start' => $item->preferred_date->format('Y-m-d') . 'T' . ($item->preferred_time . ':00'),
+                'title' => $serviceName . ': ' . $item->requestor_first_name . ' ' . $item->requestor_last_name . ' (' . substr($item->preferred_time, 0, 5) . ')',
+                'start' => $item->preferred_date->format('Y-m-d') . 'T' . $timeStr,
                 'url' => route('dashboard.requests.show', ['silid', $item->id]),
                 'backgroundColor' => '#eff6ff',
                 'borderColor' => '#3b82f6',

@@ -256,7 +256,8 @@ class RequestManagementService
                 'forms.medicine.create' => MedicineRequest::with('processedBy')->latest(),
                 'forms.silid.create' => SilidKarununganRequest::where(function ($q) use ($initiative) {
                     $q->where('initiative_id', $initiative->id);
-                    if ($initiative->title === 'Silid Karunungan Studying Spaces') {
+                    $firstSilidInit = \App\Models\Initiative::where('form_route', 'forms.silid.create')->orderBy('id', 'asc')->first();
+                    if ($firstSilidInit && $initiative->id === $firstSilidInit->id) {
                         $q->orWhereNull('initiative_id');
                     }
                 })->with('processedBy')->latest(),
@@ -518,7 +519,6 @@ class RequestManagementService
     {
         $healthStats = $this->tableStats(HealthRequest::class, $cutoff);
         $medicineStats = $this->tableStats(MedicineRequest::class, $cutoff);
-        $silidStats = $this->tableStats(SilidKarununganRequest::class, $cutoff);
         $sportsStats = $this->tableStats(SportsRegistration::class, null);
 
         foreach ($initiatives as $init) {
@@ -526,7 +526,7 @@ class RequestManagementService
                 $init->stats = match ($init->form_route) {
                     'forms.health.create', 'forms.mental-health.create' => $healthStats,
                     'forms.medicine.create' => $medicineStats,
-                    'forms.silid.create' => $silidStats,
+                    'forms.silid.create' => $this->silidInitiativeStats($init->id, $cutoff),
                     'forms.sports.create' => $sportsStats,
                     default => $this->customInitiativeStats($init->id, $cutoff),
                 };
@@ -534,6 +534,53 @@ class RequestManagementService
                 $init->stats = $this->customInitiativeStats($init->id, $cutoff);
             }
         }
+    }
+
+    private function silidInitiativeStats(int $initiativeId, $cutoff): array
+    {
+        $firstSilidInit = \App\Models\Initiative::where('form_route', 'forms.silid.create')->orderBy('id', 'asc')->first();
+        $isFirst = $firstSilidInit && $initiativeId === $firstSilidInit->id;
+
+        $base = SilidKarununganRequest::where(function($q) use ($initiativeId, $isFirst) {
+            $q->where('initiative_id', $initiativeId);
+            if ($isFirst) {
+                $q->orWhereNull('initiative_id');
+            }
+        });
+
+        if ($cutoff) {
+            $base->where(fn ($q) => $q->where('status', '!=', 'approved')->orWhere('updated_at', '>=', $cutoff));
+        }
+
+        $basePending = SilidKarununganRequest::where(function($q) use ($initiativeId, $isFirst) {
+            $q->where('initiative_id', $initiativeId);
+            if ($isFirst) {
+                $q->orWhereNull('initiative_id');
+            }
+        });
+
+        $baseApproved = SilidKarununganRequest::where(function($q) use ($initiativeId, $isFirst) {
+            $q->where('initiative_id', $initiativeId);
+            if ($isFirst) {
+                $q->orWhereNull('initiative_id');
+            }
+        });
+
+        $baseDeclined = SilidKarununganRequest::where(function($q) use ($initiativeId, $isFirst) {
+            $q->where('initiative_id', $initiativeId);
+            if ($isFirst) {
+                $q->orWhereNull('initiative_id');
+            }
+        });
+
+        return [
+            'total' => (clone $base)->count(),
+            'pending' => $basePending->whereIn('status', ['pending', 'review'])->count(),
+            'approved' => $cutoff
+                ? $baseApproved->where('status', 'approved')->where('updated_at', '>=', $cutoff)->count()
+                : $baseApproved->where('status', 'approved')->count(),
+            'declined' => $baseDeclined->where('status', 'declined')->count(),
+        ];
     }
 
     private function tableStats(string $modelClass, $cutoff): array
