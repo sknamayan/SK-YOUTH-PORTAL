@@ -447,7 +447,7 @@
                             <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Confirm Password</label>
                             <div class="relative">
                                 <input :type="showPassword ? 'text' : 'password'" wire:model="confirmPassword" required class="w-full rounded-xl border border-slate-800 bg-slate-950 pl-3 pr-10 py-2 text-xs text-slate-100 outline-none focus:border-rose-500 transition">
-                                <button type="button" @click="showPassword = !showPassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-350 active:scale-95 transition focus:outline-none">
+                                <button type="button" @click="showPassword = !showPassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-350 active:scale-95 transition focus:outline-none z-10">
                                     <svg x-show="!showPassword" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
