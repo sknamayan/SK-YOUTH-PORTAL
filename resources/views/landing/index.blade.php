@@ -703,7 +703,8 @@ if (activeForm) {
          <div class="relative z-10 w-full max-w-md flex items-center justify-center">
 
              <!-- Modal Box -->
-             <div class="bg-white rounded-[2.5rem] shadow-2xl border border-slate-200/80 w-full p-6 sm:p-8 text-center space-y-6 max-h-[85vh] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent relative"
+             <div class="bg-white rounded-[2.5rem] shadow-2xl w-full p-6 sm:p-8 text-center space-y-6 max-h-[85vh] overflow-y-auto [&::-webkit-scrollbar]:hidden relative"
+                  style="scrollbar-width: none; -ms-overflow-style: none;"
                   @click.stop>
 
                   <!-- Close Button -->
@@ -725,14 +726,14 @@ if (activeForm) {
                   </div>
 
                   <!-- Reference Code Card -->
-                  <div class="p-5 bg-blue-50/50 border-2 border-dashed border-blue-200 rounded-2xl max-w-sm mx-auto text-center space-y-1">
+                  <div class="p-6 bg-blue-50/60 border-2 border-dashed border-blue-200 rounded-[1.5rem] max-w-sm mx-auto text-center space-y-1">
                       <span class="text-[9px] font-black text-blue-600 uppercase tracking-widest block font-display">Reference Number</span>
-                      <span class="text-lg font-mono font-black text-blue-900 select-all tracking-wider">{{ session('referenceNumber') }}</span>
-                      <p class="text-[10px] text-slate-450">Copy this code to track your status at any time.</p>
+                      <span class="text-2xl sm:text-3xl font-mono font-black text-blue-900 select-all tracking-wider block py-1">{{ session('referenceNumber') }}</span>
+                      <p class="text-[10px] text-slate-450 mt-1">Copy this code to track your status at any time.</p>
                   </div>
 
                   <!-- Submission Summary Card -->
-                  <div class="border border-slate-200/80 rounded-2xl overflow-hidden bg-slate-50/50 text-left text-xs">
+                  <div class="border border-slate-200/80 rounded-[1.5rem] overflow-hidden bg-slate-50/50 text-left text-xs">
                       <div class="bg-slate-100/70 border-b border-slate-200/80 px-4 py-2.5">
                           <span class="text-[9px] font-black text-slate-500 font-display uppercase tracking-wider block">Submission Summary</span>
                       </div>
@@ -769,7 +770,7 @@ if (activeForm) {
                   </div>
 
                   <!-- Email Notification Card -->
-                  <div class="p-4 bg-emerald-50/60 border border-emerald-100/70 rounded-2xl text-xs text-emerald-800 leading-relaxed text-left">
+                  <div class="p-4 bg-emerald-50/60 border border-emerald-100/70 rounded-[1.5rem] text-xs text-emerald-800 leading-relaxed text-left">
                       <div class="flex items-center gap-2 mb-1">
                           <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
                           <span class="font-black text-emerald-950 text-[10px] uppercase tracking-wider">Confirmation Email Sent!</span>
