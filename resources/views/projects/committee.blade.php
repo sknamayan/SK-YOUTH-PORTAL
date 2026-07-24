@@ -98,11 +98,6 @@
                                 <span class="text-[9px] font-black text-blue-400 uppercase tracking-widest block font-display">Committee Head</span>
                                 <h4 class="text-lg md:text-xl font-black text-white uppercase tracking-tight block">{{ $chairperson->name }}</h4>
                                 <p class="text-xs text-slate-400 font-bold uppercase tracking-wider block">{{ $chairperson->position }}</p>
-                                @if($chairperson->email)
-                                    <a href="mailto:{{ $chairperson->email }}" class="text-xs text-blue-305 hover:text-blue-200 hover:underline font-mono block mt-1 transition w-max">
-                                        {{ $chairperson->email }}
-                                    </a>
-                                @endif
                             </div>
                         @endif
                     </div>
@@ -112,7 +107,7 @@
                         @if($chairperson)
                             <div class="bg-transparent shrink-0">
                                 @if($chairperson->photo_path)
-                                    <img src="{{ $chairperson->photoUrl() }}" alt="{{ $chairperson->name }}" class="w-32 h-32 md:w-36 md:h-36 rounded-2xl object-cover border-2 border-white/10 shadow-2xl">
+                                    <img src="{{ $chairperson->photoUrl() }}" alt="{{ $chairperson->name }}" class="w-40 h-40 md:w-36 md:h-36 rounded-2xl object-cover border-2 border-white/10 shadow-2xl">
                                 @else
                                     <div class="w-32 h-32 md:w-36 md:h-36 rounded-2xl bg-white/5 text-blue-300 flex items-center justify-center font-black text-2xl border border-white/10 shadow-2xl">
                                         {{ $chairperson->initials() }}
