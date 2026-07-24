@@ -52,4 +52,9 @@ class Committee extends Model
     {
         return $this->hasMany(Initiative::class);
     }
+
+    public function officials(): HasMany
+    {
+        return $this->hasMany(SkOfficial::class)->active()->ordered();
+    }
 }

@@ -85,6 +85,36 @@
                 </div>
             </div>
 
+            <!-- SK Officials Section -->
+            @if($activeCommittee->officials && $activeCommittee->officials->isNotEmpty())
+                <div class="space-y-4 animate-fade-in-up">
+                    <div class="px-1">
+                        <span class="text-[9px] font-black text-[#1e40af] uppercase tracking-widest block font-display">Committee Leadership & Members</span>
+                        <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wide font-display mt-0.5">Assigned SK Officials</h2>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                        @foreach($activeCommittee->officials as $official)
+                            <div class="bg-white border border-slate-100 rounded-3xl p-5 flex items-center space-x-4 shadow-sm hover:shadow-md transition duration-200">
+                                @if($official->photo_path)
+                                    <img src="{{ $official->photoUrl() }}" alt="{{ $official->name }}" class="w-12 h-12 rounded-2xl object-cover shrink-0">
+                                @else
+                                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-[#1e40af] flex items-center justify-center font-bold text-xs shrink-0">
+                                        {{ $official->initials() }}
+                                    </div>
+                                @endif
+                                <div class="min-w-0">
+                                    <h4 class="text-xs font-black text-slate-800 uppercase tracking-tight truncate">{{ $official->name }}</h4>
+                                    <p class="text-[10px] text-[#1e40af] uppercase font-bold tracking-wider mt-0.5 truncate">{{ $official->position }}</p>
+                                    @if($official->email)
+                                        <p class="text-[9px] text-slate-400 mt-1 truncate">{{ $official->email }}</p>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             <!-- Redesigned Dual Filter Tab System (Matching reference image) -->
             <div class="space-y-6">
                 <!-- Top Tabs Bar (Styled exactly like reference image) -->

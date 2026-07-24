@@ -32,4 +32,23 @@ class ProjectExplorerTest extends TestCase
 
         $response->assertNotFound();
     }
+
+    public function test_committee_page_displays_assigned_officials(): void
+    {
+        $this->seed(ProjectStructureSeeder::class);
+
+        $committee = Committee::where('slug', 'education')->firstOrFail();
+        $official = \App\Models\SkOfficial::create([
+            'name' => 'JUAN DELA CRUZ',
+            'position' => 'Committee Member',
+            'committee_id' => $committee->id,
+            'is_active' => true,
+            'sort_order' => 1,
+        ]);
+
+        $response = $this->get('/projects/sk-namayan-youth-services/committees/education');
+        $response->assertOk();
+        $response->assertSee('JUAN DELA CRUZ');
+        $response->assertSee('Committee Member');
+    }
 }

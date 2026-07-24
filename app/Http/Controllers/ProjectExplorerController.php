@@ -49,9 +49,9 @@ class ProjectExplorerController extends Controller
 
         // 2. Fetch active Committee
         $activeCommittee = Committee::where('slug', $committee_slug)
-            ->where('project_id', $project->id)
-            ->with(['initiatives'])
-            ->firstOrFail();
+             ->where('project_id', $project->id)
+             ->with(['initiatives', 'officials'])
+             ->firstOrFail();
 
         // 3. Get all accomplishment reports for the active committee's initiatives
         $initiativeIds = $activeCommittee->initiatives->pluck('id');
