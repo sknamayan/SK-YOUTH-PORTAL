@@ -53,6 +53,15 @@ class ProjectExplorerController extends Controller
              ->with(['initiatives', 'officials'])
              ->firstOrFail();
 
+        $chairperson = $activeCommittee->officials->first(function ($official) {
+            $pos = strtolower($official->position);
+            return str_contains($pos, 'chairperson') || str_contains($pos, 'chair');
+        });
+
+        $members = $activeCommittee->officials->filter(function ($official) use ($chairperson) {
+            return !$chairperson || $official->id !== $chairperson->id;
+        });
+
         // 3. Get all accomplishment reports for the active committee's initiatives
         $initiativeIds = $activeCommittee->initiatives->pluck('id');
         $accomplishmentReports = AccomplishmentReport::whereIn('initiative_id', $initiativeIds)
@@ -63,6 +72,8 @@ class ProjectExplorerController extends Controller
         return view('projects.committee', [
             'project' => $project,
             'activeCommittee' => $activeCommittee,
+            'chairperson' => $chairperson,
+            'members' => $members,
             'accomplishmentReports' => $accomplishmentReports,
         ]);
     }
