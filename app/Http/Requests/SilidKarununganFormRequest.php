@@ -58,12 +58,8 @@ class SilidKarununganFormRequest extends FormRequest
 
                     $date = $this->input('preferred_date');
                     if ($date) {
-                        $exists = \App\Models\SilidKarununganRequest::whereDate('preferred_date', $date)
-                            ->where('preferred_time', $value)
-                            ->whereIn('status', ['pending', 'approved', 'review', 'confirmed'])
-                            ->exists();
-
-                        if ($exists) {
+                        $bookingService = app(\App\Services\BookingService::class);
+                        if (!$bookingService->checkAvailability($date, $value)) {
                             $fail("The selected time slot ({$value}) on {$date} is already booked. Please choose an available time slot.");
                         }
                     }

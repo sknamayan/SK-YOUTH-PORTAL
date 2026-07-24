@@ -267,7 +267,6 @@ Route::middleware(['auth', 'throttle:forms'])->group(function () {
                 'preferred_date' => $validated['preferred_date'],
                 'preferred_time' => $validated['preferred_time'],
                 'custom_fields' => $validated['custom_fields'] ?? [],
-                'status' => 'pending',
             ]);
 
             $referenceNumber = $req->reference_number ?? ('SK-REQ-' . str_pad($req->id, 5, '0', STR_PAD_LEFT));
@@ -312,10 +311,7 @@ Route::middleware(['auth', 'throttle:forms'])->group(function () {
             return response()->json(['booked_slots' => []]);
         }
 
-        $bookedSlots = \App\Models\SilidKarununganRequest::whereDate('preferred_date', $date)
-            ->whereIn('status', ['pending', 'approved', 'review', 'confirmed'])
-            ->pluck('preferred_time')
-            ->toArray();
+        $bookedSlots = app(\App\Services\BookingService::class)->getBookedSlotsForDate($date);
 
         return response()->json([
             'booked_slots' => array_values(array_unique($bookedSlots))

@@ -50,6 +50,40 @@ class SilidKarununganRequest extends Model
     {
         static::created(function ($model) {
             app(\App\Services\MailDispatchService::class)->queueRequestReceived($model);
+
+            if ($model->preferred_date && $model->preferred_time) {
+                $dateStr = $model->preferred_date instanceof \Carbon\Carbon 
+                    ? $model->preferred_date->format('Y-m-d') 
+                    : $model->preferred_date;
+                
+                \App\Models\Booking::updateOrCreate([
+                    'bookable_type' => get_class($model),
+                    'bookable_id' => $model->id,
+                ], [
+                    'user_id' => $model->user_id,
+                    'booking_date' => $dateStr,
+                    'booking_time' => $model->preferred_time,
+                    'status' => $model->status ?? 'pending',
+                ]);
+            }
+        });
+
+        static::updated(function ($model) {
+            if ($model->preferred_date && $model->preferred_time) {
+                $dateStr = $model->preferred_date instanceof \Carbon\Carbon 
+                    ? $model->preferred_date->format('Y-m-d') 
+                    : $model->preferred_date;
+
+                \App\Models\Booking::updateOrCreate([
+                    'bookable_type' => get_class($model),
+                    'bookable_id' => $model->id,
+                ], [
+                    'user_id' => $model->user_id,
+                    'booking_date' => $dateStr,
+                    'booking_time' => $model->preferred_time,
+                    'status' => $model->status ?? 'pending',
+                ]);
+            }
         });
     }
 }
