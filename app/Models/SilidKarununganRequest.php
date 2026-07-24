@@ -16,6 +16,7 @@ class SilidKarununganRequest extends Model
     protected $fillable = [
         'reference_number',
         'user_id',
+        'initiative_id',
         'requestor_first_name',
         'requestor_last_name',
         'requestor_middle_name',
@@ -35,6 +36,14 @@ class SilidKarununganRequest extends Model
     public function processedBy()
     {
         return $this->belongsTo(User::class, 'processed_by');
+    }
+
+    /**
+     * Relationship: A request belongs to an initiative.
+     */
+    public function initiative()
+    {
+        return $this->belongsTo(Initiative::class, 'initiative_id');
     }
 
     protected function casts(): array

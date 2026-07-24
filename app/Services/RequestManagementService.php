@@ -254,7 +254,12 @@ class RequestManagementService
                 // Highlighted programs: show all records without cutoff filter
                 'forms.health.create', 'forms.mental-health.create' => HealthRequest::with('processedBy')->latest(),
                 'forms.medicine.create' => MedicineRequest::with('processedBy')->latest(),
-                'forms.silid.create' => SilidKarununganRequest::with('processedBy')->latest(),
+                'forms.silid.create' => SilidKarununganRequest::where(function ($q) use ($initiative) {
+                    $q->where('initiative_id', $initiative->id);
+                    if ($initiative->title === 'Silid Karunungan Studying Spaces') {
+                        $q->orWhereNull('initiative_id');
+                    }
+                })->with('processedBy')->latest(),
                 // Sports retains existing behavior (includes cutoff filter)
                 'forms.sports.create' => SportsRegistration::with('processedBy')->latest(),
                 // Custom initiatives keep existing cutoff logic

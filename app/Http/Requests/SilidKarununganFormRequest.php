@@ -32,10 +32,13 @@ class SilidKarununganFormRequest extends FormRequest
      */
     public function rules(): array
     {
-        $formRoute = 'forms.silid.create';
-        $initiative = \App\Models\Initiative::where('form_route', $formRoute)->first();
+        $initiativeId = $this->input('initiative_id');
+        $initiative = $initiativeId 
+            ? \App\Models\Initiative::find($initiativeId)
+            : \App\Models\Initiative::where('form_route', 'forms.silid.create')->first();
 
         $rules = [
+            'initiative_id' => ['nullable', 'exists:initiatives,id'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['nullable', 'string', 'max:255'],
@@ -96,8 +99,11 @@ class SilidKarununganFormRequest extends FormRequest
     public function attributes(): array
     {
         $attributes = [];
-        $formRoute = 'forms.silid.create';
-        $initiative = \App\Models\Initiative::where('form_route', $formRoute)->first();
+        $initiativeId = $this->input('initiative_id');
+        $initiative = $initiativeId 
+            ? \App\Models\Initiative::find($initiativeId)
+            : \App\Models\Initiative::where('form_route', 'forms.silid.create')->first();
+
         if ($initiative && is_array($initiative->custom_fields)) {
             foreach ($initiative->custom_fields as $field) {
                 $fieldName = $field['name'] ?? null;
@@ -111,7 +117,10 @@ class SilidKarununganFormRequest extends FormRequest
 
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
-        session()->flash('failed_form', 'silid');
+        $initiativeId = $this->input('initiative_id');
+        $initiative = $initiativeId ? \App\Models\Initiative::find($initiativeId) : null;
+        $formName = ($initiative && $initiative->title === 'TTPD Printing Service') ? 'ttpd' : 'silid';
+        session()->flash('failed_form', $formName);
         parent::failedValidation($validator);
     }
 }

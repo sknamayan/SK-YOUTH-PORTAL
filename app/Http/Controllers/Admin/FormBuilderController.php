@@ -67,7 +67,6 @@ class FormBuilderController extends Controller
             'forms.health.create',
             'forms.mental-health.create',
             'forms.medicine.create',
-            'forms.silid.create',
             'forms.sports.create',
         ];
 

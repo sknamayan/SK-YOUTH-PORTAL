@@ -271,6 +271,7 @@ Route::middleware(['auth', 'throttle:forms'])->group(function () {
         try {
             $req = \App\Models\SilidKarununganRequest::create([
                 'user_id' => auth()->id(),
+                'initiative_id' => $validated['initiative_id'] ?? null,
                 'requestor_first_name' => $validated['first_name'],
                 'requestor_last_name' => $validated['last_name'],
                 'requestor_middle_name' => $validated['middle_name'] ?? null,
@@ -298,9 +299,12 @@ Route::middleware(['auth', 'throttle:forms'])->group(function () {
                 ]);
             }
 
+            $initiative = $req->initiative_id ? \App\Models\Initiative::find($req->initiative_id) : null;
+            $typeLabel = $initiative ? $initiative->title : 'Silid Karunungan Studying Spaces';
+
             return redirect()->route('landing')->with([
                 'submitted_success' => true,
-                'type' => 'Silid Karunungan Request',
+                'type' => $typeLabel,
                 'referenceNumber' => $referenceNumber,
                 'name' => $req->requestor_first_name . ' ' . $req->requestor_last_name,
                 'email' => $req->email,

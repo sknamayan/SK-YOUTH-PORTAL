@@ -123,7 +123,7 @@
                             @endif
                         </button>
                          @foreach($initiatives as $init)
-                             @if(in_array($init->form_route, ['forms.health.create','forms.mental-health.create','forms.medicine.create','forms.silid.create','forms.sports.create']))
+                             @if(in_array($init->form_route, ['forms.health.create','forms.mental-health.create','forms.medicine.create','forms.sports.create']))
                                  @continue
                              @endif
                             @php

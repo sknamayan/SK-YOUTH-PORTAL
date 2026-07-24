@@ -12,8 +12,8 @@
         'education': {
             label: 'EDUCATION',
             subtopics: [
-                { name: 'SILID KARUNUNGAN', url: '{{ route('forms.silid.create') }}', active: true },
-                { name: 'TTPD PRINTING SERVICE', url: '{{ route('forms.silid.create') }}', active: true },
+                { name: 'SILID KARUNUNGAN', url: '{{ route('forms.silid.create') }}?form=silid', active: true },
+                { name: 'TTPD PRINTING SERVICE', url: '{{ route('forms.silid.create') }}?form=ttpd', active: true },
                 { name: 'TRACK REQUEST', url: '{{ route('track.index') }}', active: true },
                 { name: 'OTHER PROJECTS', url: '#', active: false }
             ]
@@ -108,7 +108,7 @@
     },
     handleCtaClick(url) {
         if (!url || url === '#') return;
-        if (url.includes('health-consultation') || url.includes('mental-health') || url.includes('pabili-medicine') || url.includes('silid-karunungan')) {
+        if (url.includes('health-consultation') || url.includes('mental-health') || url.includes('pabili-medicine') || url.includes('silid-karunungan') || url.includes('form=silid') || url.includes('form=ttpd')) {
             if (!this.isAuthenticated) {
                 window.location.href = '{{ route('login') }}';
                 return;
@@ -120,7 +120,9 @@
             this.activeForm = 'mental-health';
         } else if (url.includes('pabili-medicine')) {
             this.activeForm = 'medicine';
-        } else if (url.includes('silid-karunungan')) {
+        } else if (url.includes('form=ttpd')) {
+            this.activeForm = 'ttpd';
+        } else if (url.includes('silid-karunungan') || url.includes('form=silid')) {
             this.activeForm = 'silid';
         } else {
             window.location.href = url;
@@ -507,13 +509,15 @@ if (activeForm) {
                                  this.loadingSlots = false;
                              }
                          }
-                     }">
+                      }">
                     <x-form-card
                         title="Silid Karunungan Booking"
                         subtitle="Book studying slots at local research library facilities with internet access."
                         action="{{ route('forms.silid.store') }}"
                         enctype="multipart/form-data"
                     >
+                        <input type="hidden" name="initiative_id" value="{{ $silidStudyingInit?->id }}">
+
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <x-form-input label="First Name" name="first_name" required="true" value="{{ mb_strtoupper($kkProfile?->first_name, 'UTF-8') }}" />
                             <x-form-input label="Last Name" name="last_name" required="true" value="{{ mb_strtoupper($kkProfile?->surname, 'UTF-8') }}" />
@@ -568,12 +572,11 @@ if (activeForm) {
                             <span>⚠️ The selected time slot is already booked. Please choose an available slot.</span>
                         </div>
 
-                        @php $silidInit = $initiatives['forms.silid.create'] ?? null; @endphp
-                        @if($silidInit && is_array($silidInit->custom_fields) && count($silidInit->custom_fields) > 0)
+                        @if($silidStudyingInit && is_array($silidStudyingInit->custom_fields) && count($silidStudyingInit->custom_fields) > 0)
                             <div class="space-y-4 pt-4 border-t border-slate-100 mt-4">
                                 <span class="text-[10px] font-black text-[#1e40af] uppercase tracking-widest block font-display">Additional Information Required</span>
                                 <div class="grid grid-cols-1 gap-4">
-                                    @foreach($silidInit->custom_fields as $field)
+                                    @foreach($silidStudyingInit->custom_fields as $field)
                                         <x-form-input
                                             label="{{ $field['label'] }}"
                                             name="custom_fields[{{ $field['name'] }}]"
@@ -591,6 +594,125 @@ if (activeForm) {
                                     :disabled="loadingSlots || (preferredTime && bookedSlots.includes(preferredTime)) || submitting" 
                                     class="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                                 <span x-show="!submitting">Submit Booking Request</span>
+                                <span x-show="submitting" x-cloak class="flex items-center gap-2">
+                                    <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                    Submitting Request...
+                                </span>
+                            </button>
+                        </div>
+                    </x-form-card>
+                </div>
+
+                <!-- 5. TTPD PRINTING SERVICE BOOKING FORM -->
+                <div x-show="activeForm === 'ttpd'" class="w-full relative" x-cloak
+                     x-data="{
+                         preferredDate: '',
+                         preferredTime: '',
+                         loadingSlots: false,
+                         bookedSlots: [],
+                         async fetchSlots() {
+                             if (!this.preferredDate) return;
+                             this.loadingSlots = true;
+                             try {
+                                 const res = await fetch(`{{ route('api.silid.booked-slots') }}?date=${this.preferredDate}`, {
+                                     headers: { 'Accept': 'application/json' }
+                                 });
+                                 const data = await res.json();
+                                 this.bookedSlots = data.booked_slots || [];
+                                 if (this.bookedSlots.includes(this.preferredTime)) {
+                                     this.preferredTime = '';
+                                 }
+                             } catch (e) {
+                                 console.error('Failed to fetch booked slots:', e);
+                             } finally {
+                                 this.loadingSlots = false;
+                             }
+                         }
+                      }">
+                    <x-form-card
+                        title="TTPD Printing Service Booking"
+                        subtitle="Apply for free community printing services for students and researchers at the Silid Karunungan hub."
+                        action="{{ route('forms.silid.store') }}"
+                        enctype="multipart/form-data"
+                    >
+                        <input type="hidden" name="initiative_id" value="{{ $ttpdPrintingInit?->id }}">
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <x-form-input label="First Name" name="first_name" required="true" value="{{ mb_strtoupper($kkProfile?->first_name, 'UTF-8') }}" />
+                            <x-form-input label="Last Name" name="last_name" required="true" value="{{ mb_strtoupper($kkProfile?->surname, 'UTF-8') }}" />
+                            <x-form-input label="Middle Name (type 'NONE' or 'N/A' if none)" name="middle_name" required="true" value="{{ mb_strtoupper($kkProfile?->middle_name, 'UTF-8') }}" />
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <x-form-input label="Age" name="age" type="number" min="0" max="120" required="true" value="{{ $kkProfile?->age }}" />
+                            <x-form-input label="Email Address" name="email" type="email" required="true" value="{{ $kkProfile?->email ?? auth()->user()?->email }}" />
+                            <x-form-input label="Contact Number" name="contact_number" required="true" placeholder="e.g. 09123456789" value="{{ $kkProfile?->contact_number }}" />
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
+                                    Preferred Date <span class="text-rose-500">*</span>
+                                </label>
+                                <input type="date" 
+                                       name="preferred_date" 
+                                       x-model="preferredDate" 
+                                       @change="fetchSlots()" 
+                                       min="{{ date('Y-m-d') }}" 
+                                       required 
+                                       class="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-2.5 text-sm font-medium text-slate-800 dark:text-slate-100 transition">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
+                                    Preferred Time Slot <span class="text-rose-500">*</span>
+                                </label>
+                                <select name="preferred_time" 
+                                        x-model="preferredTime" 
+                                        :disabled="!preferredDate || loadingSlots" 
+                                        required 
+                                        class="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-2.5 text-sm font-medium text-slate-800 dark:text-slate-100 disabled:opacity-50 transition">
+                                    <option value="">-- Choose Time Slot --</option>
+                                    @foreach($timeOptions as $val => $label)
+                                        <option value="{{ $val }}" 
+                                                :disabled="bookedSlots.includes('{{ $val }}')"
+                                                x-text="'{{ $label }}' + (bookedSlots.includes('{{ $val }}') ? ' ❌ (Fully Booked)' : '')">
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <p x-show="loadingSlots" class="text-[10px] text-blue-600 dark:text-blue-400 font-bold mt-1" x-cloak>
+                                    Checking slot availability...
+                                </p>
+                            </div>
+                        </div>
+
+                        <div x-show="preferredTime && bookedSlots.includes(preferredTime)" class="p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-rose-600 dark:text-rose-400 rounded-xl text-xs font-bold flex items-center gap-2 mt-2" x-cloak>
+                            <span>⚠️ The selected time slot is already booked. Please choose an available slot.</span>
+                        </div>
+
+                        @if($ttpdPrintingInit && is_array($ttpdPrintingInit->custom_fields) && count($ttpdPrintingInit->custom_fields) > 0)
+                            <div class="space-y-4 pt-4 border-t border-slate-100 mt-4">
+                                <span class="text-[10px] font-black text-[#1e40af] uppercase tracking-widest block font-display">Additional Information Required</span>
+                                <div class="grid grid-cols-1 gap-4">
+                                    @foreach($ttpdPrintingInit->custom_fields as $field)
+                                        <x-form-input
+                                            label="{{ $field['label'] }}"
+                                            name="custom_fields[{{ $field['name'] }}]"
+                                            type="{{ $field['type'] ?? 'text' }}"
+                                            required="{{ ($field['required'] ?? false) ? 'true' : 'false' }}"
+                                            placeholder="{{ $field['placeholder'] ?? '' }}"
+                                        />
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+
+                        <div class="pt-4">
+                            <button type="submit" 
+                                    :disabled="loadingSlots || (preferredTime && bookedSlots.includes(preferredTime)) || submitting" 
+                                    class="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                                <span x-show="!submitting">Submit Printing Request</span>
                                 <span x-show="submitting" x-cloak class="flex items-center gap-2">
                                     <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                                     Submitting Request...

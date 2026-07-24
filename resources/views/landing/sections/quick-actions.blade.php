@@ -30,7 +30,7 @@
                 $formName = match($qi->form_route) {
                     'forms.health.create' => 'health',
                     'forms.mental-health.create' => 'mental-health',
-                    'forms.silid.create' => 'silid',
+                    'forms.silid.create' => (str_contains(strtolower($qi->title), 'ttpd') ? 'ttpd' : 'silid'),
                     'forms.medicine.create' => 'medicine',
                     default => null
                 };
@@ -91,7 +91,7 @@
                 $formName = match($qi->form_route) {
                     'forms.health.create' => 'health',
                     'forms.mental-health.create' => 'mental-health',
-                    'forms.silid.create' => 'silid',
+                    'forms.silid.create' => (str_contains(strtolower($qi->title), 'ttpd') ? 'ttpd' : 'silid'),
                     'forms.medicine.create' => 'medicine',
                     default => null
                 };

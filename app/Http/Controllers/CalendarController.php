@@ -118,6 +118,29 @@ class CalendarController extends Controller
             ];
         }
 
+        // 8. Silid Karunungan & TTPD Printing Approved Bookings
+        $silidBookings = SilidKarununganRequest::where('status', 'approved')
+            ->whereBetween('preferred_date', [$startDate, $endDate])
+            ->with('initiative')
+            ->get();
+        foreach ($silidBookings as $item) {
+            $serviceName = $item->initiative ? $item->initiative->title : 'Silid Karunungan Studying Spaces';
+            $events[] = [
+                'id' => 'silid_' . $item->id,
+                'title' => $serviceName . ': ' . $item->requestor_first_name . ' ' . $item->requestor_last_name . ' (' . $item->preferred_time . ')',
+                'start' => $item->preferred_date->format('Y-m-d') . 'T' . ($item->preferred_time . ':00'),
+                'url' => route('dashboard.requests.show', ['silid', $item->id]),
+                'backgroundColor' => '#eff6ff',
+                'borderColor' => '#3b82f6',
+                'textColor' => '#1d4ed8',
+                'extendedProps' => [
+                    'type' => 'silid',
+                    'status' => $item->status,
+                    'time' => $item->preferred_time,
+                ]
+            ];
+        }
+
         return response()->json($events);
     }
 

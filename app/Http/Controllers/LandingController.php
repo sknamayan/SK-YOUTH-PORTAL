@@ -94,7 +94,10 @@ class LandingController extends Controller
             ->limit(3)
             ->get();
 
-        $initiatives = \App\Models\Initiative::whereNotNull('form_route')->get()->keyBy('form_route');
+        $allInitiatives = \App\Models\Initiative::whereNotNull('form_route')->get();
+        $initiatives = $allInitiatives->keyBy('form_route');
+        $silidStudyingInit = $allInitiatives->firstWhere('title', 'Silid Karunungan Studying Spaces');
+        $ttpdPrintingInit = $allInitiatives->firstWhere('title', 'TTPD Printing Service');
         $highlightedInitiatives = \App\Models\Initiative::where('is_highlighted', true)->get();
 
         $kkProfile = null;
@@ -110,6 +113,8 @@ class LandingController extends Controller
             'featuredArticle',
             'recentArticles',
             'initiatives',
+            'silidStudyingInit',
+            'ttpdPrintingInit',
             'highlightedInitiatives',
             'kkProfile'
         ));
