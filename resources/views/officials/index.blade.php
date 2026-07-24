@@ -38,43 +38,48 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
                 @foreach($officials as $official)
                     <div class="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm flex flex-col justify-between hover:shadow-md transition duration-200">
-                        <!-- Top Image Area -->
-                        <div class="relative w-full aspect-square bg-slate-50 dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800/60">
-                            @if($official->photoUrl())
-                                <img src="{{ $official->photoUrl() }}" alt="{{ $official->name }}" class="w-full h-full object-cover object-top">
-                            @else
-                                <div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-950 dark:to-slate-900">
-                                    <span class="w-16 h-16 rounded-2xl bg-blue-500/10 dark:bg-blue-400/10 text-blue-600 dark:text-blue-400 text-2xl font-black font-display flex items-center justify-center border border-blue-500/20">
-                                        {{ $official->initials() }}
-                                    </span>
-                                </div>
-                            @endif
-                        </div>
-
-                        <!-- Card Details -->
-                        <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
-                            <div class="space-y-2">
-                                <span class="inline-flex px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-[9px] font-extrabold uppercase tracking-wide">
-                                    {{ $official->position }}
-                                </span>
-                                <h3 class="text-base font-bold text-slate-800 dark:text-slate-200 font-display uppercase tracking-tight">
-                                    {{ $official->name }}
-                                </h3>
-                                @if($official->term)
-                                    <span class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider block">
-                                        Term: {{ $official->term }}
-                                    </span>
+                        <a href="{{ route('projects.committee', ['project_slug' => 'sk-namayan-youth-services', 'committee_slug' => $official->committee->slug ?? 'education']) }}" class="block group/link flex-1">
+                            <!-- Top Image Area -->
+                            <div class="relative w-full aspect-square bg-slate-50 dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800/60 overflow-hidden">
+                                @if($official->photoUrl())
+                                    <img src="{{ $official->photoUrl() }}" alt="{{ $official->name }}" class="w-full h-full object-cover object-top transition duration-300 group-hover/link:scale-103">
+                                @else
+                                    <div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-955 dark:to-slate-900">
+                                        <span class="w-16 h-16 rounded-2xl bg-blue-500/10 dark:bg-blue-400/10 text-blue-600 dark:text-blue-400 text-2xl font-black font-display flex items-center justify-center border border-blue-500/20">
+                                            {{ $official->initials() }}
+                                        </span>
+                                    </div>
                                 @endif
                             </div>
 
-                            @if($official->bio)
-                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3">
-                                    {{ strip_tags($official->bio) }}
-                                </p>
-                            @endif
+                            <!-- Card Details -->
+                            <div class="p-6 space-y-4">
+                                <div class="space-y-2">
+                                    <span class="inline-flex px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-[9px] font-extrabold uppercase tracking-wide">
+                                        {{ $official->position }}
+                                    </span>
+                                    <h3 class="text-base font-bold text-slate-800 dark:text-slate-200 font-display uppercase tracking-tight transition duration-150 group-hover/link:text-[#1e40af] dark:group-hover/link:text-blue-400">
+                                        {{ $official->name }}
+                                    </h3>
+                                    @if($official->term)
+                                        <span class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider block">
+                                            Term: {{ $official->term }}
+                                        </span>
+                                    @endif
+                                </div>
 
+                                @if($official->bio)
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3">
+                                        {{ strip_tags($official->bio) }}
+                                    </p>
+                                @endif
+                            </div>
+                        </a>
+
+                        <!-- Contact details footer stays outside anchor -->
+                        <div class="px-6 pb-6">
                             <div class="pt-4 border-t border-slate-100 dark:border-slate-800/60 space-y-2">
-                                <div class="flex items-center gap-2 text-xs text-slate-650 dark:text-slate-350 min-w-0">
+                                <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400 min-w-0">
                                     <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                     </svg>
@@ -83,7 +88,7 @@
                                     </span>
                                 </div>
                                 @if($official->contact_number)
-                                    <div class="flex items-center gap-2 text-xs text-slate-655 dark:text-slate-350">
+                                    <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
                                         <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                         </svg>

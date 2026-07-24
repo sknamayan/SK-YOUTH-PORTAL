@@ -106,7 +106,7 @@
                                         <div class="flex gap-2">
                                             <button
                                                 type="button"
-                                                @click="editOfficial({ id: {{ $official->id }}, name: '{{ addslashes($official->name) }}', position: '{{ addslashes($official->position) }}', bio: '{{ addslashes(str_replace(["\r", "\n"], ' ', $official->bio ?? '')) }}', email: '{{ addslashes($official->email ?? '') }}', contact_number: '{{ addslashes($official->contact_number ?? '') }}', term: '{{ addslashes($official->term ?? '') }}', sort_order: {{ $official->sort_order ?? 0 }}, is_active: {{ $official->is_active ? 1 : 0 }}, photo_url: '{{ $official->photoUrl() ?? '' }}' })"
+                                                @click="editOfficial({ id: {{ $official->id }}, name: '{{ addslashes($official->name) }}', position: '{{ addslashes($official->position) }}', committee_id: {{ $official->committee_id ?? 'null' }}, bio: '{{ addslashes(str_replace(["\r", "\n"], ' ', $official->bio ?? '')) }}', email: '{{ addslashes($official->email ?? '') }}', contact_number: '{{ addslashes($official->contact_number ?? '') }}', term: '{{ addslashes($official->term ?? '') }}', sort_order: {{ $official->sort_order ?? 0 }}, is_active: {{ $official->is_active ? 1 : 0 }}, photo_url: '{{ $official->photoUrl() ?? '' }}' })"
                                                 class="text-[10px] font-bold uppercase text-[#1e40af] dark:text-blue-300 px-3 py-2 bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-950/70 rounded-lg min-h-9 inline-flex items-center transition"
                                             >
                                                 Edit
@@ -186,7 +186,7 @@
                                                     <a href="{{ route('officials.show', $official->slug) }}" target="_blank" class="inline-flex items-center min-h-9 px-2.5 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-350 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold rounded-lg transition text-[10px] uppercase tracking-wider active:scale-95 border border-transparent">View</a>
                                                     <button
                                                         type="button"
-                                                        @click="editOfficial({ id: {{ $official->id }}, name: '{{ addslashes($official->name) }}', position: '{{ addslashes($official->position) }}', bio: '{{ addslashes(str_replace(["\r", "\n"], ' ', $official->bio ?? '')) }}', email: '{{ addslashes($official->email ?? '') }}', contact_number: '{{ addslashes($official->contact_number ?? '') }}', term: '{{ addslashes($official->term ?? '') }}', sort_order: {{ $official->sort_order ?? 0 }}, is_active: {{ $official->is_active ? 1 : 0 }}, photo_url: '{{ $official->photoUrl() ?? '' }}' })"
+                                                        @click="editOfficial({ id: {{ $official->id }}, name: '{{ addslashes($official->name) }}', position: '{{ addslashes($official->position) }}', committee_id: {{ $official->committee_id ?? 'null' }}, bio: '{{ addslashes(str_replace(["\r", "\n"], ' ', $official->bio ?? '')) }}', email: '{{ addslashes($official->email ?? '') }}', contact_number: '{{ addslashes($official->contact_number ?? '') }}', term: '{{ addslashes($official->term ?? '') }}', sort_order: {{ $official->sort_order ?? 0 }}, is_active: {{ $official->is_active ? 1 : 0 }}, photo_url: '{{ $official->photoUrl() ?? '' }}' })"
                                                         class="inline-flex items-center min-h-9 px-2.5 py-1.5 bg-blue-50 dark:bg-blue-950/40 text-[#1e40af] dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-950/70 font-bold rounded-lg transition text-[10px] uppercase tracking-wider active:scale-95 border border-transparent"
                                                     >
                                                         Edit
@@ -311,7 +311,7 @@
                     >
                         @csrf
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="space-y-1">
                                 <label for="official-name" class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Full Name</label>
                                 <input
@@ -340,6 +340,26 @@
                                     class="field focus:ring-4 focus:ring-blue-600/10 dark:bg-slate-950 dark:border-slate-700 dark:text-slate-100 dark:placeholder:text-slate-500 text-xs py-2.5 min-h-11"
                                 >
                                 @error('position')
+                                    <span class="text-rose-600 dark:text-rose-400 text-[10px] font-semibold block mt-1">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="space-y-1">
+                                <label for="official-committee" class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Committee Assignment</label>
+                                <select
+                                    id="official-committee"
+                                    name="committee_id"
+                                    required
+                                    class="field focus:ring-4 focus:ring-blue-600/10 dark:bg-slate-955 dark:border-slate-700 dark:text-slate-100 text-xs py-2.5 min-h-11 w-full cursor-pointer"
+                                >
+                                    <option value="">Select Committee</option>
+                                    @foreach($committees as $committee)
+                                        <option value="{{ $committee->id }}" {{ old('committee_id') == $committee->id ? 'selected' : '' }}>
+                                            {{ $committee->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('committee_id')
                                     <span class="text-rose-600 dark:text-rose-400 text-[10px] font-semibold block mt-1">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -535,7 +555,7 @@
                         @csrf
                         @method('PUT')
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="space-y-1">
                                 <label for="edit-official-name" class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Full Name</label>
                                 <input
@@ -560,6 +580,24 @@
                                     placeholder="e.g. SK Chairperson"
                                     class="field focus:ring-4 focus:ring-blue-600/10 dark:bg-slate-955 dark:border-slate-700 dark:text-slate-100 dark:placeholder:text-slate-500 text-xs py-2.5 min-h-11"
                                 >
+                            </div>
+
+                            <div class="space-y-1">
+                                <label for="edit-official-committee" class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Committee Assignment</label>
+                                <select
+                                    id="edit-official-committee"
+                                    name="committee_id"
+                                    required
+                                    x-model="editOfficialData.committee_id"
+                                    class="field focus:ring-4 focus:ring-blue-600/10 dark:bg-slate-955 dark:border-slate-700 dark:text-slate-100 text-xs py-2.5 min-h-11 w-full cursor-pointer"
+                                >
+                                    <option value="">Select Committee</option>
+                                    @foreach($committees as $committee)
+                                        <option value="{{ $committee->id }}">
+                                            {{ $committee->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
@@ -686,7 +724,7 @@
         Alpine.data('officialsAdmin', (config = {}) => ({
             openAddOfficialModal: config.openOnLoad ?? false,
             openEditOfficialModal: false,
-            editOfficialData: { id: null, name: '', position: '', bio: '', email: '', contact_number: '', term: '', sort_order: 1, is_active: true, photo_url: '' },
+            editOfficialData: { id: null, name: '', position: '', committee_id: '', bio: '', email: '', contact_number: '', term: '', sort_order: 1, is_active: true, photo_url: '' },
             editFormAction: '',
 
             init() {
@@ -708,6 +746,7 @@
                     id: official.id,
                     name: official.name,
                     position: official.position,
+                    committee_id: official.committee_id,
                     bio: official.bio,
                     email: official.email,
                     contact_number: official.contact_number,

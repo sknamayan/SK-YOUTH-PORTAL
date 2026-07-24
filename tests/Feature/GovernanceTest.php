@@ -43,12 +43,23 @@ class GovernanceTest extends TestCase
     {
         Storage::fake('public');
         $admin = User::factory()->create(['role' => 'admin']);
+        $project = \App\Models\Project::create([
+            'title' => 'Youth Services',
+            'slug' => 'sk-namayan-youth-services',
+            'description' => 'Test Description',
+        ]);
+        $committee = \App\Models\Committee::create([
+            'name' => 'Education Committee',
+            'slug' => 'education-committee',
+            'project_id' => $project->id,
+        ]);
 
         $photo = UploadedFile::fake()->create('official.jpg', 100, 'image/jpeg');
 
         $this->actingAs($admin)->post(route('admin.officials.store'), [
             'name' => 'New Councilor',
             'position' => 'SK Councilor',
+            'committee_id' => $committee->id,
             'bio' => 'Serving the youth.',
             'photo' => $photo,
             'sort_order' => 5,

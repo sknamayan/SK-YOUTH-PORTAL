@@ -13,9 +13,10 @@ class OfficialController extends Controller
 {
     public function index(): View
     {
-        $officials = SkOfficial::ordered()->paginate(15);
+        $officials = SkOfficial::with('committee')->ordered()->paginate(15);
+        $committees = \App\Models\Committee::orderBy('name')->get();
 
-        return view('admin.officials.index', compact('officials'));
+        return view('admin.officials.index', compact('officials', 'committees'));
     }
 
     public function create(): RedirectResponse
@@ -76,6 +77,7 @@ class OfficialController extends Controller
         return $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'position' => ['required', 'string', 'max:255'],
+            'committee_id' => ['required', 'exists:committees,id'],
             'bio' => ['nullable', 'string', 'max:5000'],
             'photo' => [$id ? 'nullable' : 'required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:4096'],
             'email' => ['nullable', 'email', 'max:255'],
