@@ -1,13 +1,13 @@
 @extends('layouts.app')
  
 @section('content')
-<div class="flex-1 flex flex-col md:flex-row bg-slate-50 dark:bg-slate-955 min-h-[calc(100vh-4rem)] p-3 md:p-0 flex items-center justify-center">
+<div class="flex-1 flex flex-col md:flex-row bg-slate-50 dark:bg-slate-955 min-h-[calc(100vh-4rem)] p-3 md:p-0 min-w-0">
  
     <!-- Left Dashboard Sidebar -->
     @include('layouts.dashboard-sidebar')
  
-    <!-- Main Dashboard Chat Content Pane (h-[92vh] w-full md:h-[calc(100vh-4rem)] md:w-full to look floating on mobile and fill screen on desktop) -->
-    <div class="h-[92vh] w-full md:h-[calc(100vh-4rem)] md:w-full bg-white dark:bg-slate-900 md:border-0 border border-slate-150 dark:border-slate-800/80 rounded-[2rem] md:rounded-none shadow-xl md:shadow-none overflow-hidden flex flex-col md:flex-row"
+    <!-- Main Dashboard Chat Content Pane -->
+    <div class="flex-1 flex flex-col md:flex-row bg-white dark:bg-slate-900 md:border-0 border border-slate-150 dark:border-slate-800/80 rounded-[2rem] md:rounded-none shadow-xl md:shadow-none overflow-hidden min-w-0 h-[92vh] md:h-[calc(100vh-4rem)]"
          x-data="skonsultaAdminChat()">
         
         <!-- Left Pane: Thread List Sidebar -->
