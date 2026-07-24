@@ -199,7 +199,7 @@
                                     <span class="text-[9px] text-slate-450 dark:text-slate-500">Edad 6 hanggang 12 taong gulang</span>
                                 </div>
                                 @if(!$alreadyRegistered)
-                                    <button @click="sport = 'Basketball'; division = 'Midget'; if(!position) position='Player'; regStep = 3; showFormModal = true; calculateAge()"
+                                    <button @click="sport = 'Basketball'; division = 'Midget'; if(!position) position='Player'; regStep = 2; showFormModal = true; calculateAge()"
                                             class="px-3.5 py-1.5 bg-[#1e40af] hover:bg-blue-700 text-white text-[9px] font-black uppercase tracking-wider rounded-lg transition active:scale-95 cursor-pointer">
                                         Register
                                     </button>
@@ -215,7 +215,7 @@
                                     <span class="text-[9px] text-slate-450 dark:text-slate-500">Edad 13 hanggang 17 taong gulang</span>
                                 </div>
                                 @if(!$alreadyRegistered)
-                                    <button @click="sport = 'Basketball'; division = 'Juniors'; if(!position) position='Player'; regStep = 3; showFormModal = true; calculateAge()"
+                                    <button @click="sport = 'Basketball'; division = 'Juniors'; if(!position) position='Player'; regStep = 2; showFormModal = true; calculateAge()"
                                             class="px-3.5 py-1.5 bg-[#1e40af] hover:bg-blue-700 text-white text-[9px] font-black uppercase tracking-wider rounded-lg transition active:scale-95 cursor-pointer">
                                         Register
                                     </button>
@@ -231,7 +231,7 @@
                                     <span class="text-[9px] text-slate-450 dark:text-slate-500">Edad 18 hanggang 39 taong gulang</span>
                                 </div>
                                 @if(!$alreadyRegistered)
-                                    <button @click="sport = 'Basketball'; division = 'Seniors'; if(!position) position='Player'; regStep = 3; showFormModal = true; calculateAge()"
+                                    <button @click="sport = 'Basketball'; division = 'Seniors'; if(!position) position='Player'; regStep = 2; showFormModal = true; calculateAge()"
                                             class="px-3.5 py-1.5 bg-[#1e40af] hover:bg-blue-700 text-white text-[9px] font-black uppercase tracking-wider rounded-lg transition active:scale-95 cursor-pointer">
                                         Register
                                     </button>
@@ -263,7 +263,7 @@
                                     <span class="text-[9px] text-slate-450 dark:text-slate-500">Edad 15 pataas (Ages 15 and above)</span>
                                 </div>
                                 @if(!$alreadyRegistered)
-                                    <button @click="sport = 'Volleyball'; division = 'Mens'; if(!position) position='Player'; regStep = 3; showFormModal = true; calculateAge()"
+                                    <button @click="sport = 'Volleyball'; division = 'Mens'; if(!position) position='Player'; regStep = 2; showFormModal = true; calculateAge()"
                                             class="px-3.5 py-1.5 bg-[#1e40af] hover:bg-blue-700 text-white text-[9px] font-black uppercase tracking-wider rounded-lg transition active:scale-95 cursor-pointer">
                                         Register
                                     </button>
@@ -279,7 +279,7 @@
                                     <span class="text-[9px] text-slate-450 dark:text-slate-500">Edad 15 pataas (Ages 15 and above)</span>
                                 </div>
                                 @if(!$alreadyRegistered)
-                                    <button @click="sport = 'Volleyball'; division = 'Womens'; if(!position) position='Player'; regStep = 3; showFormModal = true; calculateAge()"
+                                    <button @click="sport = 'Volleyball'; division = 'Womens'; if(!position) position='Player'; regStep = 2; showFormModal = true; calculateAge()"
                                             class="px-3.5 py-1.5 bg-[#1e40af] hover:bg-blue-700 text-white text-[9px] font-black uppercase tracking-wider rounded-lg transition active:scale-95 cursor-pointer">
                                         Register
                                     </button>
