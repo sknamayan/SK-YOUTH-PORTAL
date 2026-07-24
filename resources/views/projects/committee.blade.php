@@ -103,13 +103,13 @@
                     </div>
 
                     <!-- Column 2: Chairperson Picture only -->
-                    <div class="flex justify-center md:justify-end">
+                    <div class="order-first md:order-last w-full flex justify-center md:justify-end">
                         @if($chairperson)
-                            <div class="bg-transparent shrink-0">
+                            <div class="bg-transparent shrink-0 w-full md:w-auto">
                                 @if($chairperson->photo_path)
-                                    <img src="{{ $chairperson->photoUrl() }}" alt="{{ $chairperson->name }}" class="h-48 w-36 md:h-60 md:w-44 rounded-2xl object-cover border-2 border-white/10 shadow-2xl">
+                                    <img src="{{ $chairperson->photoUrl() }}" alt="{{ $chairperson->name }}" class="w-full h-52 sm:h-64 md:w-44 md:h-60 rounded-2xl object-cover border-2 border-white/10 shadow-2xl">
                                 @else
-                                    <div class="h-48 w-36 md:h-60 md:w-44 rounded-2xl bg-white/5 text-blue-300 flex items-center justify-center font-black text-3xl border border-white/10 shadow-2xl">
+                                    <div class="w-full h-52 sm:h-64 md:w-44 md:h-60 rounded-2xl bg-white/5 text-blue-300 flex items-center justify-center font-black text-3xl border border-white/10 shadow-2xl">
                                         {{ $chairperson->initials() }}
                                     </div>
                                 @endif
