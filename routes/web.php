@@ -110,6 +110,19 @@ Route::put('/track/{type}/{id}', [TrackRequestController::class, 'update'])->mid
 Route::delete('/track/{type}/{id}', [TrackRequestController::class, 'cancel'])->middleware('idor.prevent')->name('track.cancel');
 
 
+Route::get('/api/silid-karunungan/booked-slots', function (\Illuminate\Http\Request $request) {
+    $date = $request->query('date');
+    if (!$date) {
+        return response()->json(['booked_slots' => []]);
+    }
+
+    $bookedSlots = app(\App\Services\BookingService::class)->getBookedSlotsForDate($date);
+
+    return response()->json([
+        'booked_slots' => array_values(array_unique($bookedSlots))
+    ]);
+})->name('api.silid.booked-slots');
+
 Route::middleware(['auth', 'throttle:forms'])->group(function () {
     Route::get('/forms/initiative/{initiative}', [\App\Http\Controllers\CustomRequestController::class, 'create'])->name('forms.custom.create');
     Route::post('/forms/initiative/{initiative}', [\App\Http\Controllers\CustomRequestController::class, 'store'])->name('forms.custom.store');
@@ -304,19 +317,6 @@ Route::middleware(['auth', 'throttle:forms'])->group(function () {
             return redirect()->back()->withErrors(['error' => 'Database error. Failed to submit booking.'])->withInput();
         }
     })->name('forms.silid.store');
-
-    Route::get('/api/silid-karunungan/booked-slots', function (\Illuminate\Http\Request $request) {
-        $date = $request->query('date');
-        if (!$date) {
-            return response()->json(['booked_slots' => []]);
-        }
-
-        $bookedSlots = app(\App\Services\BookingService::class)->getBookedSlotsForDate($date);
-
-        return response()->json([
-            'booked_slots' => array_values(array_unique($bookedSlots))
-        ]);
-    })->name('api.silid.booked-slots');
 
     Route::get('/forms/sports-registration', [\App\Http\Controllers\SportsRegistrationController::class, 'showRegistrationForm'])->name('forms.sports.create');
     Route::post('/forms/sports-registration', [\App\Http\Controllers\SportsRegistrationController::class, 'submitRegistration'])->name('forms.sports.store');

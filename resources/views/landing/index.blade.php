@@ -493,7 +493,9 @@ if (activeForm) {
                              if (!this.preferredDate) return;
                              this.loadingSlots = true;
                              try {
-                                 const res = await fetch(`{{ route('api.silid.booked-slots') }}?date=${this.preferredDate}`);
+                                 const res = await fetch(`{{ route('api.silid.booked-slots') }}?date=${this.preferredDate}`, {
+                                     headers: { 'Accept': 'application/json' }
+                                 });
                                  const data = await res.json();
                                  this.bookedSlots = data.booked_slots || [];
                                  if (this.bookedSlots.includes(this.preferredTime)) {
