@@ -94,20 +94,20 @@
                     <!-- Right Column: Committee Head Card -->
                     <div>
                         @if($chairperson)
-                            <div class="flex items-center gap-4 bg-slate-50/50 border border-slate-100 p-4 rounded-2xl w-full">
+                            <div class="flex flex-col items-center justify-center text-center gap-4 bg-slate-50/50 border border-slate-100 p-6 rounded-2xl w-full">
                                 @if($chairperson->photo_path)
-                                    <img src="{{ $chairperson->photoUrl() }}" alt="{{ $chairperson->name }}" class="w-14 h-14 rounded-xl object-cover shrink-0">
+                                    <img src="{{ $chairperson->photoUrl() }}" alt="{{ $chairperson->name }}" class="w-28 h-28 rounded-2xl object-cover border border-slate-100 shadow-sm shrink-0">
                                 @else
-                                    <div class="w-14 h-14 rounded-xl bg-blue-50 text-[#1e40af] flex items-center justify-center font-bold text-xs shrink-0">
+                                    <div class="w-28 h-28 rounded-2xl bg-blue-50 text-[#1e40af] flex items-center justify-center font-bold text-xl border border-slate-100 shadow-sm shrink-0">
                                         {{ $chairperson->initials() }}
                                     </div>
                                 @endif
-                                <div class="min-w-0">
-                                    <span class="text-[8px] font-black text-[#1e40af] uppercase tracking-wider block">Committee Head</span>
-                                    <h4 class="text-xs font-black text-slate-800 uppercase tracking-tight truncate mt-0.5">{{ $chairperson->name }}</h4>
-                                    <p class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mt-0.5 truncate">{{ $chairperson->position }}</p>
+                                <div class="space-y-1 w-full">
+                                    <span class="text-[8px] font-black text-[#1e40af] uppercase tracking-widest block font-display">Committee Head</span>
+                                    <h4 class="text-xs font-black text-slate-800 uppercase tracking-tight block">{{ $chairperson->name }}</h4>
+                                    <p class="text-[9px] text-slate-500 font-bold uppercase tracking-wider block">{{ $chairperson->position }}</p>
                                     @if($chairperson->email)
-                                        <p class="text-[9px] text-slate-400 mt-1 truncate font-mono">{{ $chairperson->email }}</p>
+                                        <p class="text-[9px] text-slate-400 truncate font-mono block mt-1 select-all" title="{{ $chairperson->email }}">{{ $chairperson->email }}</p>
                                     @endif
                                 </div>
                             </div>
