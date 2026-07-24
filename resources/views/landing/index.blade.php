@@ -686,6 +686,7 @@ if (activeForm) {
             </div>
         </div>
     </div>
+    </div>
 
     <!-- Submission Success Confirmation Modal -->
     @if(session('submitted_success'))
