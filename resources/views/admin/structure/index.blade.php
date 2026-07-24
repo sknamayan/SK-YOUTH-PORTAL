@@ -840,9 +840,12 @@ class="flex-1 flex flex-col md:flex-row bg-[#f8fafc]">
                      </button>
                  </div>
 
-                 <form :action="`{{ url('/admin/structure/initiatives') }}/${editInitiative.id}`" method="POST" enctype="multipart/form-data" class="space-y-6 overflow-y-auto flex-1 pr-2 no-scrollbar">
+                 <form :action="`{{ url('/admin/structure/initiatives') }}/${editInitiative.id}`" method="POST" enctype="multipart/form-data" class="flex flex-col flex-1 overflow-hidden">
                      @csrf
                      @method('PUT')
+
+                     <!-- Scrollable Form Inputs Area -->
+                     <div class="space-y-6 overflow-y-auto flex-1 pr-2 py-2">
 
                      <div class="space-y-4">
                           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -966,7 +969,8 @@ class="flex-1 flex flex-col md:flex-row bg-[#f8fafc]">
                                       </div>
                                   </div>
                               </template>
-                          </div>
+                           </div>
+                       </div>
                       </div>
 
                      <div class="flex items-center justify-end gap-3 pt-5 border-t border-slate-100 shrink-0">
