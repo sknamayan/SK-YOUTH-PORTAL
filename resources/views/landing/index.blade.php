@@ -606,10 +606,10 @@ if (activeForm) {
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                     
-                    <div class="card max-w-2xl mx-auto overflow-hidden">
-                        <div class="bg-gradient-to-r from-blue-700 to-blue-900 -mx-6 -mt-6 md:-mx-8 md:-mt-8 px-6 md:px-8 py-5 text-white mb-6">
-                            <h2 class="text-lg font-bold tracking-tight text-white font-display uppercase" x-text="customInitiative?.title"></h2>
-                            <p class="text-xs text-blue-200 mt-1" x-text="customInitiative?.description"></p>
+                    <div class="card max-w-2xl mx-auto overflow-hidden border border-slate-800 dark:border-slate-750 bg-slate-900 shadow-2xl">
+                        <div class="bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 -mx-6 -mt-6 md:-mx-8 md:-mt-8 px-6 md:px-8 py-5 text-white mb-6 border-b border-slate-800">
+                            <h2 class="text-sm font-black tracking-wider text-white font-display uppercase" x-text="customInitiative?.title"></h2>
+                            <p class="text-[11px] text-slate-400 mt-1 font-medium" x-text="customInitiative?.description"></p>
                         </div>
 
                         <form method="POST" :action="'/forms/initiative/' + customInitiative?.id" class="space-y-5" enctype="multipart/form-data">
